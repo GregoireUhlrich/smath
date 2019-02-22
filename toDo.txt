@@ -1,0 +1,5 @@
+Factorization of order 2 polynomial, roots
+
+Dirac delta(Polynome(x))
+
+Integral and resolution with delta
