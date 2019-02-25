@@ -6,6 +6,7 @@
 #include "support.h"
 #include <chrono>
 #include <cmath>
+#pragma GCC diagnostic ignored "-Wunused-result"
 using namespace std;
 
 string convertTime(chrono::duration<double> dur)

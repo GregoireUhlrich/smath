@@ -27,13 +27,13 @@ class AbstractVectorial: public Abstract{
 
     Expr evaluate() override;
 
-    int getDim() const { return dim;}
+    int getDim() const override { return dim;}
 
-    PrimaryType getPrimaryType() const { return VECTORIAL;}
+    PrimaryType getPrimaryType() const override { return VECTORIAL;}
 
     int getNArgs(int axis=0) const override;
 
-    const Expr& getArgument(int iArg=0) const override;
+    Expr getArgument(int iArg=0) const override;
 
     Expr getArgument(const std::initializer_list<int>& indices) const override;
 
@@ -41,7 +41,7 @@ class AbstractVectorial: public Abstract{
 
     const std::vector<Expr >& getVectorArgument() const override;
 
-    std::vector<int> getShape() const;
+    std::vector<int> getShape() const override;
 
     void setArgument(const Expr& t_abstract, int iArg=0) override;
 
@@ -55,31 +55,33 @@ class AbstractVectorial: public Abstract{
 
     bool exactMatchShape(const Expr& t_abstract) const;
 
-    Expr getSum() const;
+    Expr getSum() const override;
 
-    Expr getProduct() const;
+    Expr getProduct() const override;
 
-    Expr getSubVectorial(const std::vector<int>& exceptions) const;
+    Expr getSubVectorial(const std::vector<int>& exceptions) const override;
 
-    Expr getVectorialModulus() const;
+    Expr getVectorialModulus() const override;
 
-    Expr dot(const Expr& t_abstract) const;
+    Expr dot(const Expr& t_abstract) const override;
 
     Expr addition_own(const Expr& t_abstract) const override;
 
     Expr multiplication_own(const Expr& t_abstract) const override;
 
-    Expr tensor_dot(const Expr& t_abstract) const;
+    Expr tensor_dot(const Expr& t_abstract) const override;
 
-    Expr trace(int axis1, int axis2) const;
+    Expr trace(int axis1, int axis2) const override;
 
-    Expr develop(bool full=false) const;
+    Expr develop(bool full=false) override;
 
-    Expr factor(bool full=false) const;
+    Expr factor(bool full=false) override;
 
-    Expr factor(const Expr& t_abstract, bool full=false) const;
+    Expr factor(const Expr& t_abstract, bool full=false) override;
 
-    bool operator==(const Expr& t_abstract) const;
+    bool operator==(const Expr& t_abstract) const override;
+
+    Expr& operator[](int iArg) override;
 };
 
 class Vector: public AbstractVectorial{
@@ -88,21 +90,22 @@ class Vector: public AbstractVectorial{
 
     Vector();
 
-    Vector(int t_nElements);
+    explicit Vector(int t_nElements);
 
     Vector(int t_nElements, const Expr& t_abstract, const Expr& index);
 
-    Vector(const std::vector<Expr >& t_argument);
+    explicit Vector(const std::vector<Expr >& t_argument);
 
     ~Vector(){};
 
-    Type getType() const { return VECTOR;}
+    Type getType() const override { return VECTOR;}
 
-    Expr getSubVectorial(int iExcept) const;
+    using AbstractVectorial::getSubVectorial;
+    Expr getSubVectorial(int iExcept) const override;
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 Expr _vector_(int t_nElements);
@@ -117,37 +120,39 @@ class Matrix: public AbstractVectorial{
 
     Matrix();
 
-    Matrix(int t_nArgs);
+    explicit Matrix(int t_nArgs);
 
     Matrix(int t_x_nArgs, int t_y_nArgs);
 
     Matrix(int t_x_nArgs, int t_y_nArgs, const Expr& t_abstract, const Expr& index_x, const Expr& index_y);
 
-    Matrix(const std::vector<Expr >& t_argument);
+    explicit Matrix(const std::vector<Expr >& t_argument);
 
     ~Matrix(){};
 
-    Type getType() const { return MATRIX;}
+    Type getType() const override { return MATRIX;}
 
-    Expr determinant() const;
+    Expr determinant() const override;
 
-    Expr trace() const;
+    using AbstractVectorial::trace;
+    Expr trace() const override;
 
-    Expr transpose() const;
+    Expr transpose() const override;
 
     Expr transposedCoMatrix() const;
 
-    Expr inverseMatrix() const;
+    Expr inverseMatrix() const override;
 
-    Expr symmetrise() const;
+    Expr symmetrise() const override;
 
-    Expr antisymmetrise() const;
+    Expr antisymmetrise() const override;
 
-    Expr getSubVectorial(int iExcept, int jExcept) const;
+    using AbstractVectorial::getSubVectorial;
+    Expr getSubVectorial(int iExcept, int jExcept) const override;
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 Expr _matrix_(int t_nArgs);
@@ -164,17 +169,17 @@ class HighDTensor: public AbstractVectorial{
 
     HighDTensor();
 
-    HighDTensor(const std::vector<int>& shape);
+    explicit HighDTensor(const std::vector<int>& shape);
 
-    HighDTensor(const std::vector<Expr >& t_argument);
+    explicit HighDTensor(const std::vector<Expr >& t_argument);
 
     ~HighDTensor(){};
 
-    Type getType() const { return HIGHDTENSOR;}
+    Type getType() const override { return HIGHDTENSOR;}
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 Expr highDTensor(const std::vector<int>& shape);

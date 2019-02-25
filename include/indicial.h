@@ -19,7 +19,7 @@ class Index{
 
     Index();
 
-    Index(std::string t_name);
+    explicit Index(std::string t_name);
 
     Index(std::string t_name, int t_max);
 
@@ -101,7 +101,7 @@ class ITensor: public AbstractIndicial{
 
     ~ITensor(){};
 
-    Type getType() const { return ITENSOR;}
+    Type getType() const override { return ITENSOR;}
 
     void print(int mode=0) const override;
 
@@ -109,11 +109,11 @@ class ITensor: public AbstractIndicial{
 
     Expr evaluate() override;
 
-    bool operator==(const Expr& t_abstract) const;
+    bool operator==(const Expr& t_abstract) const override;
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 class ITerm: public AbstractIndicial{
@@ -139,21 +139,21 @@ class ITerm: public AbstractIndicial{
 
     Expr evaluate() override;
 
-    Type getType() const { return ITERM;}
+    Type getType() const override { return ITERM;}
 
-    int getNArgs(int axis=0) const;
+    int getNArgs(int axis=0) const override;
 
-    const Expr& getArgument(int iArg=0) const;
+    Expr getArgument(int iArg=0) const override;
 
     const std::vector<Expr >& getVectorArgument() const override;
 
     bool mergeTerms();
 
-    bool operator==(const Expr& t_abstract) const;
+    bool operator==(const Expr& t_abstract) const override;
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 class ITimes: public Times{

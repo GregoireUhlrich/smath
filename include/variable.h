@@ -7,7 +7,8 @@
 #include "support.h"
 #include <iostream>
 
-class AbstractBuildingBlock: public AbstractScalar{
+class AbstractBuildingBlock: public AbstractScalar,
+                             public std::enable_shared_from_this<Abstract>{
     public:
 
     AbstractBuildingBlock();
@@ -15,6 +16,14 @@ class AbstractBuildingBlock: public AbstractScalar{
     virtual ~AbstractBuildingBlock(){}
 
     bool isBuildingBlock() const override { return true;}
+
+    Expr develop(bool full=false) override;
+    Expr factor(bool full=false) override;
+    Expr factor(const Expr& t_abstract, bool full=false) override;
+    Expr getTerm() override;
+    Expr getRealPart() override;
+    Expr getComplexModulus() override;
+    Expr getPolynomialTerm(const Expr& t_abstract, int order) override;
 };
 
 class AbstractNumerical: public AbstractBuildingBlock{
@@ -77,20 +86,20 @@ class Integer: public AbstractNumerical{
     /*! \brief Returns the \b type corresponding to an object Integer.
      * \return 0
      */
-    Type getType() const;
+    Type getType() const override;
 
-    bool isInteger() const { return true;}
+    bool isInteger() const override { return true;}
 
     /*! \brief Sets the \b value of the Integer.
      * \param t_value New \b value for the Integer.
      */
-    void setValue(double t_value);
+    void setValue(double t_value) override;
 
     void print(int mode=0) const override;
 
     std::string printLaTeX(int mode=0) const override;
 
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     Expr evaluate() override;
 
@@ -122,11 +131,11 @@ class Integer: public AbstractNumerical{
      */
     void operator=(int t_value);
    
-    bool operator==(const Expr& t_abstract) const;
+    bool operator==(const Expr& t_abstract) const override;
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 
@@ -159,20 +168,20 @@ class Double: public AbstractNumerical{
     /*! \brief Returns the \b type corresponding to an object Double.
      * \return 0
      */
-    Type getType() const;
+    Type getType() const override;
 
-    bool isInteger() const { return (value==round(value));}
+    bool isInteger() const override { return (value==round(value));}
 
     /*! \brief Sets the \b value of the Double.
      * \param t_value New \b value for the Double.
      */
-    void setValue(double t_value);
+    void setValue(double t_value) override;
 
     void print(int mode=0) const override;
 
     std::string printLaTeX(int mode=0) const override;
 
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     Expr evaluate() override;
 
@@ -207,13 +216,13 @@ class Double: public AbstractNumerical{
     /*! \brief Sets value to t_value
      * \param t_value
      */
-    void operator=(double t_value);
+    void operator=(double t_value) override;
 
-    bool operator==(const Expr& t_abstract) const;
+    bool operator==(const Expr& t_abstract) const override;
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 /*! \class CFraction
@@ -253,17 +262,17 @@ class CFraction: public AbstractNumerical{
     /*! \brief Gives the \b type of a CFraction.
      * \return 2
      */
-    Type getType() const;
+    Type getType() const override;
 
     /*! \brief Returns the numerator.
      * \return \b num
      */
-    int getNum() const;
+    int getNum() const override;
 
     /*! \brief Return the denominator.
      * \return \b denom
      */
-    int getDenom() const;
+    int getDenom() const override;
 
     void print(int mode=0) const override;
 
@@ -272,7 +281,7 @@ class CFraction: public AbstractNumerical{
     /*! \brief Evaluates the CFraction.
      * \return double(\b num/\b denom)
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     Expr evaluate() override;
 
@@ -308,13 +317,13 @@ class CFraction: public AbstractNumerical{
     /*! \brief Sets num to t_value and denom to 1.
      * \param t_value
      */
-    void operator=(double t_value);
+    void operator=(double t_value) override;
 
-    bool operator==(const Expr& t_abstract) const;
+    bool operator==(const Expr& t_abstract) const override;
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 /////
@@ -366,21 +375,21 @@ class Constant: public AbstractLiteral{
      * of others and that is real-valued.
      * \return \b 1
      */
-    PrimaryType getPrimaryType() const;
+    PrimaryType getPrimaryType() const override;
 
     /*! \brief Gives the \b type of a Constant.
      * \return \b 1
      */
-    Type getType() const;
+    Type getType() const override;
 
-    bool getValued() const;
+    bool getValued() const override;
 
     /*! \brief Sets the \b value.
      * \details Allows to associate a number to each Constant 
      * before evaluating an expression.
      * \param t_value New \b value for the Constant.
      */
-    void setValue(double t_value);
+    void setValue(double t_value) override;
 
     /*! \brief Displays the Constant on standard output.
      * \details If mode==0 prints the Constant alone with its \b value, else prints the Constant considering it in a larger expression.
@@ -390,7 +399,7 @@ class Constant: public AbstractLiteral{
 
     std::string printLaTeX(int mode=0) const override;
 
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     Expr evaluate() override;
 
@@ -401,7 +410,7 @@ class Constant: public AbstractLiteral{
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
     /*! \brief Sets value to t_value
      * \param t_value
      */
@@ -410,18 +419,18 @@ class Constant: public AbstractLiteral{
     /*! \brief Sets value to t_value
      * \param t_value
      */
-    void operator=(double t_value);
+    void operator=(double t_value) override;
 
     /*! \brief Compares \b value with another Abstract.
      * \param t_abstract Abstract to compare.
      * \return \b 1 if t_abstract is a Constant with the **same name**.
      * \return \b 0 else.
      */
-    bool operator==(const Expr& t_abstract) const;
+    bool operator==(const Expr& t_abstract) const override;
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 /*! \class Variable
@@ -462,21 +471,21 @@ class Variable: public AbstractLiteral{
      * of others and that is real-valued.
      * \return \b 1
      */
-    PrimaryType getPrimaryType() const;
+    PrimaryType getPrimaryType() const override;
 
     /*! \brief Gives the \b type of a Variable.
      * \return \b 1
      */
-    Type getType() const;
+    Type getType() const override;
 
-    bool getValued() const;
+    bool getValued() const override;
 
     /*! \brief Sets the \b value.
      * \details Allows to associate a number to each Variable 
      * before evaluating an expression.
      * \param t_value New \b value for the Variable.
      */
-    void setValue(double t_value);
+    void setValue(double t_value) override;
 
     /*! \brief Displays the Variable on standard output.
      * \details If mode==0 prints the Variable alone with its \b value, else prints the Variable considering it in a larger expression.
@@ -486,7 +495,7 @@ class Variable: public AbstractLiteral{
 
     std::string printLaTeX(int mode=0) const override;
 
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     Expr evaluate() override;
 
@@ -497,7 +506,7 @@ class Variable: public AbstractLiteral{
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
     /*! \brief Sets value to t_value
      * \param t_value
      */
@@ -506,18 +515,18 @@ class Variable: public AbstractLiteral{
     /*! \brief Sets value to t_value
      * \param t_value
      */
-    void operator=(double t_value);
+    void operator=(double t_value) override;
 
     /*! \brief Compares \b value with another Abstract.
      * \param t_abstract Abstract to compare.
      * \return \b 1 if t_abstract is a Variable with the **same name**.
      * \return \b 0 else.
      */
-    bool operator==(const Expr& t_abstract) const;
+    bool operator==(const Expr& t_abstract) const override;
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 /*! \class CFactorial
@@ -553,23 +562,23 @@ class CFactorial: public AbstractLiteral{
      * it is **different from the return \b value of evaluateScalar()**.
      * \return \b value
      */
-    int getValue() const { return value;}
+    int getValue() const override { return value;}
 
     /*! \brief Gives the **primary type** of a CFraction.
      * \details The **primary type** is the same as the one of Variable.
      * \return \b 1
      */
-    PrimaryType getPrimaryType() const { return LITERAL;};
+    PrimaryType getPrimaryType() const override { return LITERAL;};
 
     /*! \brief Gives the \b type of a CFraction.
      * \return \b 3
      */
-    Type getType() const { return CFACTORIAL;};
+    Type getType() const override { return CFACTORIAL;};
 
     /*! \brief Sets the \b value from which we want the \b factorial.
      * \param t_value
      */
-    void setValue(int t_value);
+    void setValue(double t_value) override;
 
     void print(int mode=0) const override;
 
@@ -597,11 +606,11 @@ class CFactorial: public AbstractLiteral{
      * \return 1 if t_abstract is a CFactorial with the same value
      * \return 0 else
      */
-    bool operator==(const Expr& t_abstract) const;
+    bool operator==(const Expr& t_abstract) const override;
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 /*! \class Imaginary
@@ -626,20 +635,20 @@ class Imaginary: public AbstractLiteral{
     /*! Gives the **primary type** of the Imaginary.
      * \return \b 1
      */
-    PrimaryType getPrimaryType() const { return LITERAL;}
+    PrimaryType getPrimaryType() const override { return LITERAL;}
 
     /*! \brief Gives the \b type of the Imaginary.
      * \return \b 4
      */
-    Type getType() const { return IMAGINARY;}
+    Type getType() const override { return IMAGINARY;}
 
-    Expr getRealPart();
+    Expr getRealPart() override;
 
-    Expr getImaginaryPart() const;
+    Expr getImaginaryPart() const override;
 
-    Expr getComplexModulus();
+    Expr getComplexModulus() override;
     
-    Expr getComplexArgument();
+    Expr getComplexArgument() override;
     
     void print(int mode=0) const override;
 
@@ -650,7 +659,7 @@ class Imaginary: public AbstractLiteral{
      * because \b i should not be interpreted as a real in a calculation.
      * \return \b 0
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     /*! \brief \b Tries to evaluate the Imaginary.
      * \details This function should return the object itself since we cannot
@@ -666,11 +675,11 @@ class Imaginary: public AbstractLiteral{
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    bool operator==(const Expr& t_abstract) const; 
+    bool operator==(const Expr& t_abstract) const override; 
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 /////

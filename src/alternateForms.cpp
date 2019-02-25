@@ -41,12 +41,12 @@ void reduceAlternate(vector<Expr >& alternateForms)
 void clearRedundancyAlternate(vector<Expr > alternateForms)
 {
     vector<Expr >::iterator it, pos;
-    for (it = alternateForms.begin(); it != alternateForms.end(); it++)
+    for (it = alternateForms.begin(); it != alternateForms.end(); ++it)
     {
         do{
             pos = find(it+1, alternateForms.end(), *it);
             if (pos != alternateForms.end())
-                alternateForms.erase(pos);
+                --it = alternateForms.erase(pos);
         }while(pos != alternateForms.end());
     }
 }
@@ -67,14 +67,14 @@ vector<Expr > getRecursiveAlternateForms(const Expr& t_abstract, int depth)
         alternateForms = toReturn;
         toReturn = vector<Expr >(0);
         Expr foo;
-        for (int j=size; j<alternateForms.size(); j++)
+        for (size_t j=size; j<alternateForms.size(); j++)
         {
             //taking alternate of alternate
             fooVec = internalRecursiveAlternateForms(alternateForms[j],depth-1);
             if (fooVec.size() == 0)
                 fooVec.push_back(Copy(alternateForms[j]));
             
-            for (int k=0; k<fooVec.size(); k++)
+            for (size_t k=0; k<fooVec.size(); k++)
                 addAlternateForm(toReturn, fooVec[k]);
         }
         size = alternateForms.size();
@@ -94,23 +94,19 @@ vector<Expr > internalRecursiveAlternateForms(const Expr& t_abstract, int depth)
     {
         vector<Expr > argument = t_abstract->getVectorArgument();
         vector<Expr > fooVec;
-        vector<Expr > fooVec2;
         Expr foo;
-        vector<vector<Expr > > newArguments(0), copy;
+        vector<vector<Expr > > newArguments(0);
         if (nArgs > 1)
         {
             fooVec = internalRecursiveAlternateForms(argument[0],depth-1);
             if (fooVec.size() == 0) // if no alternate, we keep at least the argument itself
                 fooVec = vector<Expr >(1,Copy(argument[0]));
-            newArguments = vector<vector<Expr > >(fooVec.size(), vector<Expr >(nArgs));
-            for (int j=0; j<fooVec.size(); j++)
-                newArguments[j][0] = fooVec[j];
             for (int i=1; i<nArgs; i++)
             {
                 fooVec = internalRecursiveAlternateForms(argument[i],depth-1);
                 if (fooVec.size() == 0)
                     fooVec = vector<Expr >(1,Copy(argument[i]));
-                for (int j=0; j<fooVec.size()-1; j++) // We take 1+n-1 copies of actual alternates
+                for (size_t j=0; j<fooVec.size()-1; j++) // We take 1+n-1 copies of actual alternates
                 {
                     foo = Copy(t_abstract);
                     foo->setArgument(fooVec[j],i);
@@ -135,7 +131,7 @@ vector<Expr > internalRecursiveAlternateForms(const Expr& t_abstract, int depth)
         else
         {
             fooVec = internalRecursiveAlternateForms(t_abstract->getArgument(),depth-1);
-            for (int i=0; i<fooVec.size(); i++)
+            for (size_t i=0; i<fooVec.size(); i++)
             {
                 alternateForms.push_back(Copy(t_abstract));
                 alternateForms[i]->setArgument(fooVec[i]);
@@ -147,12 +143,12 @@ vector<Expr > internalRecursiveAlternateForms(const Expr& t_abstract, int depth)
         if (alternateForms.size() == 0)
             alternateForms.push_back(Copy(t_abstract));
         vector<Expr > toReturn(0);
-        for (int i=0; i<alternateForms.size(); i++)
+        for (size_t i=0; i<alternateForms.size(); i++)
         {
             fooVec = alternateForms[i]->getAlternateForms();
             if (fooVec.size() == 0)
                 fooVec.push_back(Copy(alternateForms[i]));
-            for (int j=0; j<fooVec.size(); j++)
+            for (size_t j=0; j<fooVec.size(); j++)
                 addAlternateForm(toReturn, Refresh(fooVec[j]));
         }
         reduceAlternate(toReturn);
@@ -196,7 +192,7 @@ Expr Simplify(const Expr& t_abstract, int depth)
         simplified = false;
 
         trials = getRecursiveAlternateForms(simplifiedAbstract, depth);
-        for (int i=0; i<trials.size(); i++)
+        for (size_t i=0; i<trials.size(); i++)
         {
             trials[i] = Refresh(trials[i]);
             if (*trials[i] < simplifiedAbstract)
@@ -344,11 +340,10 @@ vector<Expr > Times::getAlternateForms() const
     int size;
 
     alternateForms = vector<Expr >(0);
-    int type;
     bool cosProdFound = false;
     for (int i=0; i<nArgs; i++)
     {
-        type = argument[i]->getType();
+        int type = argument[i]->getType();
         if (not cosProdFound and type == COS)
         {
             for (int j=i+1; j<nArgs; j++)

@@ -163,6 +163,7 @@ double Symbol::evaluateScalar()
 {
     if (abstract->getDim() == 0)
         return abstract->evaluateScalar();
+    return 0;
 }
 
 Symbol Symbol::evaluate()
@@ -527,7 +528,7 @@ Symbol vector_(int t_nElements, const Symbol& t_symbol, const Symbol& index)
 Symbol vector_(const vector<Symbol>& t_argument)
 {
     vector<Expr > foo(t_argument.size());
-    for (int i=0; i<foo.size(); i++)
+    for (size_t i=0; i<foo.size(); i++)
         foo[i] = t_argument[i].getAbstract();
     return Symbol(vector_(foo));
 }
@@ -552,10 +553,10 @@ Symbol matrix_(const vector<vector<Symbol> >& t_argument)
     Expr foo = make_shared<Vector>(t_argument.size());
     vector<Expr > fooVec;
     vector<Expr > result(0);
-    for (int i=0; i<t_argument.size(); i++)
+    for (size_t i=0; i<t_argument.size(); i++)
     {
         fooVec.clear();
-        for (int j=0; j<t_argument[i].size(); j++)
+        for (size_t j=0; j<t_argument[i].size(); j++)
             fooVec.push_back(t_argument[i][j].getAbstract());
         result.push_back(make_shared<Vector>(fooVec));
     }
@@ -594,8 +595,7 @@ Symbol scalarDot(const Symbol& t_symbol1, const Symbol& t_symbol2)
 
 Symbol dot(const Symbol& t_symbol1, const Symbol& t_symbol2)
 {
-    int type1 = t_symbol1.getPrimaryType();
-    int type2 = t_symbol2.getPrimaryType();
+    PrimaryType type1 = t_symbol1.getPrimaryType();
     if (t_symbol1.getDim() == 0 or t_symbol2.getDim() == 0)
         return t_symbol1*t_symbol2;
     if (type1 == VECTORIAL)
@@ -610,12 +610,12 @@ Symbol Taylor(const Symbol& t_symbol, const Symbol& t_variable, unsigned int max
     Taylor = Taylor.replace(t_variable, ZERO);
     Symbol derivative = Copy(t_symbol);
     Symbol foo;
-    for (int order=1; order<=max_order; order++) 
+    for (size_t order=1; order<=max_order; order++) 
     {
         derivative = derivative.derive(t_variable);
         foo = Copy(derivative);
         foo = foo.replace(t_variable,ZERO);
-        Taylor = Taylor + (fraction_(pow_(t_variable,order),Symbol(cfactorial_(order)))*foo);
+        Taylor = Taylor + (fraction_(pow_(t_variable,(int)order),Symbol(cfactorial_(order)))*foo);
     }
     return Refresh(Taylor);
 }
@@ -790,7 +790,7 @@ Expr Copy(const Abstract* t_abstract)
 {    
     if (t_abstract == nullptr) return ZERO;
     int type = t_abstract->getType();
-    Expr newAbstract = nullptr;
+    Expr newAbstract;
     bool commutable = t_abstract->getCommutable();
     switch(type)
     {
@@ -819,11 +819,11 @@ Expr Copy(const Abstract* t_abstract)
         break;
 
         case PLUS:
-        newAbstract = make_shared<Plus>(t_abstract->getVectorArgument());
+        newAbstract = make_shared<Plus>(t_abstract->getVectorArgument(), true);
         break;
     
         case TIMES:
-        newAbstract = make_shared<Times>(t_abstract->getVectorArgument());
+        newAbstract = make_shared<Times>(t_abstract->getVectorArgument(), true);
         break;
     
         case FRACTION:
@@ -978,16 +978,16 @@ Expr DeepCopy(const Abstract* t_abstract)
 
         case PLUS:
         foo = t_abstract->getVectorArgument();
-        for (int i=0; i<foo.size(); i++)
+        for (size_t i=0; i<foo.size(); i++)
             foo2.push_back(DeepCopy(foo[i]));
-        return make_shared<Plus>(foo2);
+        return make_shared<Plus>(foo2, true);
         break;
 
         case TIMES:
         foo = t_abstract->getVectorArgument();
-        for (int i=0; i<foo.size(); i++)
+        for (size_t i=0; i<foo.size(); i++)
             foo2.push_back(DeepCopy(foo[i]));
-        return make_shared<Times>(foo2);
+        return make_shared<Times>(foo2,true);
         break;
 
         case FRACTION:
@@ -1078,21 +1078,21 @@ Expr DeepCopy(const Abstract* t_abstract)
 
         case VECTOR:
         foo = t_abstract->getVectorArgument();
-        for (int i=0; i<foo.size(); i++)
+        for (size_t i=0; i<foo.size(); i++)
             foo2.push_back(DeepCopy(foo[i]));
         return make_shared<Vector>(foo2);
         break;
 
         case MATRIX:
         foo = t_abstract->getVectorArgument();
-        for (int i=0; i<foo.size(); i++)
+        for (size_t i=0; i<foo.size(); i++)
             foo2.push_back(DeepCopy(foo[i]));
         return make_shared<Matrix>(foo2);
         break;
 
         case HIGHDTENSOR:
         foo = t_abstract->getVectorArgument();
-        for (int i=0; i<foo.size(); i++)
+        for (size_t i=0; i<foo.size(); i++)
             foo2.push_back(DeepCopy(foo[i]));
         return make_shared<HighDTensor>(foo2);
         break;
@@ -1110,6 +1110,7 @@ Expr DeepCopy(const Abstract* t_abstract)
 
         default: 
         cout<<"Warning: type "<<type<<" not recognized in DeepCopy function.\n";
+        return ZERO;
     }
 }
 Expr DeepCopy(const Expr& t_abstract)
@@ -1124,7 +1125,6 @@ Expr Refresh(const Abstract* t_abstract)
     Expr newAbstract = nullptr;
     vector<Expr > foo;
     Expr foo2;
-    int nArgs;
     bool commutable = t_abstract->getCommutable();
     vector<Expr > newArgument(0);
     switch(type)
@@ -1292,7 +1292,6 @@ Expr Refresh(const Expr& t_abstract)
     Expr newAbstract = nullptr;
     vector<Expr > foo;
     Expr foo2;
-    int nArgs;
     bool commutable = t_abstract->getCommutable();
     vector<Expr > newArgument(0);
     switch(type)
@@ -1507,7 +1506,7 @@ Expr DeepRefresh(const Expr& t_abstract)
 
         case POLYNOMIAL:
         foo = t_abstract->getVectorArgument();
-        for (int i=0; i<foo.size(); i++)
+        for (size_t i=0; i<foo.size(); i++)
             foo[i] = DeepRefresh(foo[i]);
         foo2 = t_abstract->getVariable();
         newAbstract = polynomial_(foo, foo2);
@@ -1654,7 +1653,7 @@ Expr Replace(const Expr& t_abstract, const Expr& old_abstract, const Expr& new_a
         foo = Refresh(foo);
         return foo;
     }
-    if (type < 20 or type < 100)
+    if (type < 100)
     {
         Expr foo = Copy(t_abstract);
         if (t_abstract->getType() == POLYNOMIAL and *old_abstract == t_abstract->getVariable())

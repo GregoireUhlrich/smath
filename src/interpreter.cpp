@@ -130,7 +130,7 @@ Symbol Interpreter::evaluateSymbol(vector<string> split, bool minusSign)
         if (split[0] == "(")
         {
             parenthesis = 1;
-            for (int i=1; i<split.size(); i++)
+            for (size_t i=1; i<split.size(); i++)
             {
                 if (split[i] == "(") parenthesis ++;
                 else if (split[i] == ")") parenthesis--;
@@ -143,7 +143,7 @@ Symbol Interpreter::evaluateSymbol(vector<string> split, bool minusSign)
             return evaluateSymbol(subVector(split,1,split.size()),true);
         }
         parenthesis = 0;
-        for (int i=0; i<split.size(); i++)
+        for (size_t i=0; i<split.size(); i++)
         {
             if (split[i] == "(") parenthesis ++;
             else if (split[i] == ")") parenthesis --;
@@ -156,7 +156,7 @@ Symbol Interpreter::evaluateSymbol(vector<string> split, bool minusSign)
             }
         }
         parenthesis = 0;
-        for (int i=0; i<split.size(); i++)
+        for (size_t i=0; i<split.size(); i++)
         {
             if (split[i] == "(") parenthesis ++;
             else if (split[i] == ")") parenthesis --;
@@ -169,7 +169,7 @@ Symbol Interpreter::evaluateSymbol(vector<string> split, bool minusSign)
             }
         }
         parenthesis = 0;
-        for (int i=0; i<split.size(); i++)
+        for (size_t i=0; i<split.size(); i++)
         {
             if (split[i] == "(") parenthesis ++;
             else if (split[i] == ")") parenthesis --;
@@ -392,12 +392,11 @@ vector<string> splitString(string line)
 {
     vector<string> splitLine(0);
     int i = -1;
-    char c;
     int nString = 0;
     while (i < (int)line.length()-1)
     {
         i++;
-        c = line[i];
+        char c = line[i];
         if (c == ' ') continue;
         nString += 1;
         splitLine.push_back("");
@@ -425,11 +424,10 @@ vector<string> splitString(string line)
 
 bool isNumber(string str)
 {
-    char c;
     int nPoints = 0;
     for (int i=0; i<(int)str.length(); i++)
     {
-        c = str[i];
+        char c = str[i];
         if (c != '0' and c != '1' and c != '2' and c != '3' and c != '4' and c != '5' and c != '6' and c != '7' and c != '8' and c != '9' and c != '.') return false;
         if (c == '.') nPoints ++;
     }
@@ -643,11 +641,10 @@ Symbol Interpreter::readSingleSymbol(vector<string>& split, bool minusSign)
 
 bool checkVariable(string name)
 {
-    char c;
     if (name == "print" or name == "printExp" or name == "q" or name == "quit" or name == "eval" or name == "VARS") return false;
-    for (int i=0; i<name.length(); i++)
+    for (size_t i=0; i<name.length(); i++)
     {
-        c = name[i];
+        char c = name[i];
         if (c=='+' or c=='-' or c=='*' or c=='/' or c=='^' or c=='=') return false;
     }
     return true;
@@ -655,7 +652,7 @@ bool checkVariable(string name)
 
 bool checkOperator(string name)
 {
-    if (name == "+" or name == "-" or name == "-" or name == "/" or name == "^" or name == "=") return true;
+    if (name == "+" or name == "-" or name == "/" or name == "^" or name == "=") return true;
     return false;
 }
 

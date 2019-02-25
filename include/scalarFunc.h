@@ -39,16 +39,16 @@ class AbstractFunc: public AbstractScalar{
     /*! Gives the **primary type** of an AbstractFunc.
      * \return \b 20
      */
-    PrimaryType getPrimaryType() const { return SCALAR_FUNCTION;}
+    PrimaryType getPrimaryType() const override { return SCALAR_FUNCTION;}
 
     /*! \brief Tells if the AbstractFunc is commutable.
      * \details The commutability of a function depends on the one of its \b argument.
      * \return \b True if the AbstractFunc is commutable.
      * \return \b False else.
      */
-    bool getCommutable() const;
+    bool getCommutable() const override;
 
-    int getNArgs(int axis=0) const;
+    int getNArgs(int axis=0) const override;
 
     /*! \brief Returns the \b argument of the function.
      * \details The parameter \a iArg is usefull for AbstractMultiFunc. It is present 
@@ -56,9 +56,9 @@ class AbstractFunc: public AbstractScalar{
      * \param iArg Index of the argument, silent here.
      * \return \b argument
      */
-    const Expr& getArgument(int iArg=0) const override;
+    Expr getArgument(int iArg=0) const override;
 
-    Expr getComplexConjugate() const;
+    Expr getComplexConjugate() override;
 
     /*! \brief Replace the \b argument of the AbstractFunc.
      * \details The parameter \a iArg is usefull for AbstractMultiFunc. It is present 
@@ -68,14 +68,15 @@ class AbstractFunc: public AbstractScalar{
      */
     void setArgument(const Expr& t_argument, int iArg=0) override;
 
-    virtual Expr factor(bool full=false);
+    virtual Expr factor(bool full=false) override;
 
-    virtual Expr factor(const Expr& t_abstract, bool full=false);
+    virtual Expr factor(const Expr& t_abstract, bool full=false) override;
 
-    Expr develop(bool full=false);
-    bool dependsOn(const Expr& t_abstract) const;
+    Expr develop(bool full=false) override;
 
-    int isPolynomial(const Expr& t_abstract);
+    bool dependsOn(const Expr& t_abstract) const override;
+
+    int isPolynomial(const Expr& t_abstract) const override;
 
     virtual void print(int mode=0) const override = 0;
 
@@ -86,11 +87,11 @@ class AbstractFunc: public AbstractScalar{
      */
     Expr evaluate() override;
 
-    bool operator==(const Expr& t_abstract) const;
+    bool operator==(const Expr& t_abstract) const override;
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 
@@ -123,7 +124,7 @@ class AbstractDuoFunc: public AbstractScalar{
     /*! \brief Gives the **primary type** of an AbstractDuoFunc.
      * \return 10
      */
-    virtual PrimaryType getPrimaryType() const { return MULTI_SCALAR_FUNCTION   ;}
+    virtual PrimaryType getPrimaryType() const override { return MULTI_SCALAR_FUNCTION   ;}
 
     /*! \brief Tells if the AbstractDuoFunc is commutable.
      * \details The commutability of a multi-function depends on the one of its \b arguments
@@ -136,13 +137,13 @@ class AbstractDuoFunc: public AbstractScalar{
     /*! \brief Returns the **number of arguments** of the AbstractDuoFunc.
      * \return \b nArgs
      */
-    int getNArgs(int axis=0) const { return 2;}
+    int getNArgs(int axis=0) const override { return 2;}
 
     /*! \brief Returns one particular \b argument.
      * \param iArg(default=0) Index of the argument to return in the std::array \b argument.
      * \return \b argument[iArg]
      */
-    const Expr& getArgument(int iArg=0) const override;
+    Expr getArgument(int iArg=0) const override;
 
     /*! \brief Replaces one particular \b argument.
      * \param t_argument      New argument.
@@ -150,19 +151,19 @@ class AbstractDuoFunc: public AbstractScalar{
      */
     void setArgument(const Expr& t_argument, int iArg=0) override;
 
-    virtual Expr factor(bool full=false);
+    virtual Expr factor(bool full=false) override;
 
-    virtual Expr factor(const Expr& t_abstract, bool full=false);
+    virtual Expr factor(const Expr& t_abstract, bool full=false) override;
 
-    virtual Expr develop(bool full=false);
+    virtual Expr develop(bool full=false) override;
 
-    bool dependsOn(const Expr& t_abstract) const;
+    bool dependsOn(const Expr& t_abstract) const override;
 
-    int isPolynomial(const Expr& t_abstract);
+    int isPolynomial(const Expr& t_abstract) const override;
 
     virtual void print(int mode=0) const override = 0;
 
-    virtual bool operator==(const Expr& t_argument) const { return false;}
+    virtual bool operator==(const Expr& t_argument) const override { return false;}
 };
 
 /*! \class AbstractMultiFunc
@@ -196,7 +197,7 @@ class AbstractMultiFunc: public AbstractScalar{
     /*! \brief Gives the **primary type** of an AbstractMultiFunc.
      * \return 10
      */
-    virtual PrimaryType getPrimaryType() const { return MULTI_SCALAR_FUNCTION   ;}
+    virtual PrimaryType getPrimaryType() const override { return MULTI_SCALAR_FUNCTION   ;}
 
     /*! \brief Tells if the AbstractMultiFunc is commutable.
      * \details The commutability of a multi-function depends on the one of its \b arguments
@@ -204,12 +205,12 @@ class AbstractMultiFunc: public AbstractScalar{
      * \return \b True if the AbstractFunc is commutable.
      * \return \b False else.
      */
-    bool getCommutable() const;
+    bool getCommutable() const override;
 
     /*! \brief Returns the **number of arguments** of the AbstractMultiFunc.
      * \return \b nArgs
      */
-    int getNArgs(int axis=0) const { return nArgs;}
+    int getNArgs(int axis=0) const override { return nArgs;}
 
     /*! \brief Returns the std::vector \b argument directly.
      * \return \b argument
@@ -220,7 +221,7 @@ class AbstractMultiFunc: public AbstractScalar{
      * \param iArg(default=0) Index of the argument to return in the std::vector \b argument.
      * \return \b argument[iArg]
      */
-    const Expr& getArgument(int iArg=0) const override;
+    Expr getArgument(int iArg=0) const override;
 
     /*! \brief Replaces one particular \b argument.
      * \param t_argument      New argument.
@@ -228,21 +229,21 @@ class AbstractMultiFunc: public AbstractScalar{
      */
     void setArgument(const Expr& t_argument, int iArg=0) override;
 
-    void setVectorArgument(const std::vector<Expr >& t_argument);
+    void setVectorArgument(const std::vector<Expr >& t_argument) override;
 
-    virtual Expr factor(bool full=false);
+    virtual Expr factor(bool full=false) override;
 
-    virtual Expr factor(const Expr& t_abstract, bool full=false);
+    virtual Expr factor(const Expr& t_abstract, bool full=false) override;
 
-    virtual Expr develop(bool full=false);
+    virtual Expr develop(bool full=false) override;
 
-    bool dependsOn(const Expr& t_abstract) const;
+    bool dependsOn(const Expr& t_abstract) const override;
 
-    int isPolynomial(const Expr& t_abstract);
+    int isPolynomial(const Expr& t_abstract) const override;
 
     virtual void print(int mode=0) const override = 0;
 
-    virtual bool operator==(const Expr& t_argument) const { return false;}
+    virtual bool operator==(const Expr& t_argument) const override { return false;}
 };
 
 /////

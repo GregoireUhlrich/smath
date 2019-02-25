@@ -23,7 +23,7 @@ class Plus: public AbstractMultiFunc{
     /*! \brief Initializes \b argument to \a operands (copy each element)
      * \param operands Operands of the sum, copied in the object.
      */
-    explicit Plus(const std::vector<Expr >& operands);
+    Plus(const std::vector<Expr >& operands, bool explicitPlus=false);
 
     /*! \brief Creates the sum of \& leftOperand and \a rightOperand.
      * \param leftOperand  Left operand.
@@ -38,19 +38,19 @@ class Plus: public AbstractMultiFunc{
     /*! \brief Gives the **type** of a Plus object.
      * \return 10
      */
-    Type getType() const { return PLUS;}
+    Type getType() const override { return PLUS;}
 
-    Expr getRealPart();
+    Expr getRealPart() override;
 
-    Expr getImaginaryPart() const;
+    Expr getImaginaryPart() const override;
 
-    Expr getComplexModulus();
+    Expr getComplexModulus() override;
     
-    Expr getComplexArgument();
+    Expr getComplexArgument() override;
 
-    std::vector<Index> getIndexStructure() const;
+    std::vector<Index> getIndexStructure() const override;
 
-    void insert(const Expr& t_abstract);
+    void insert(const Expr& t_abstract, bool side=0) override;
 
     void print(int mode=0) const override;
 
@@ -60,7 +60,7 @@ class Plus: public AbstractMultiFunc{
      * \return The sum of the scalar evaluation of all the arguments.
      * \note For this function to be justified, all the arguments must be \b scalar and \b real.
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     Expr evaluate() override;
 
@@ -83,23 +83,23 @@ class Plus: public AbstractMultiFunc{
     /*! \brief Factors the expression if common factors are found.
      * \param full If \b true factors recursively all the arguments.
      */
-    Expr factor(bool full=false);
+    Expr factor(bool full=false) override;
 
     /*! \brief Factors the expression by t_abstract if it is a common factor.
      * \param t_abstract Factor.
      * \param full       If \b true factors recursively all the arguments.
      */
-    Expr factor(const Expr& t_abstract, bool full=false);
+    Expr factor(const Expr& t_abstract, bool full=false) override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 
-    bool operator==(const Expr& t_abstract) const;
+    bool operator==(const Expr& t_abstract) const override;
 
-    std::vector<Expr > getAlternateForms() const;
+    std::vector<Expr > getAlternateForms() const override;
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 /*! \class Polynomial
@@ -138,11 +138,11 @@ class Polynomial: public AbstractMultiFunc{
     /*! \brief Gives the **type** of a Polynomial object.
      * \return 14
      */
-    Type getType() const { return POLYNOMIAL;}
+    Type getType() const override { return POLYNOMIAL;}
 
-    int getOrder() const;
+    int getOrder() const override;
 
-    Expr getVariable() const;
+    Expr getVariable() const override;
 
     void print(int mode=0) const override;
 
@@ -152,7 +152,7 @@ class Polynomial: public AbstractMultiFunc{
      * \return The polynomial of the scalar evaluation of all the arguments.
      * \note For this function to be justified, all the arguments must be \b scalar and \b real.
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     Expr evaluate() override;
 
@@ -162,9 +162,9 @@ class Polynomial: public AbstractMultiFunc{
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 
-    Expr getRegularExpression() const;
+    Expr getRegularExpression() const override;
 
     Expr addition_own(const Expr& t_abstract) const override;
 
@@ -174,11 +174,11 @@ class Polynomial: public AbstractMultiFunc{
 
     Expr factor(bool full=false) override;
 
-    bool operator==(const Expr& t_abstract) const;
+    bool operator==(const Expr& t_abstract) const override;
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 /*! \class Times
@@ -212,40 +212,40 @@ class Times: public AbstractMultiFunc{
     /*! \brief Gives the **type** of a Times object.
      * \return 11
      */
-    Type getType() const { return TIMES;}
+    Type getType() const override { return TIMES;}
 
-    Expr getRealPart();
+    Expr getRealPart() override;
 
-    Expr getImaginaryPart() const;
+    Expr getImaginaryPart() const override;
 
-    Expr getComplexModulus();
+    Expr getComplexModulus() override;
     
-    Expr getComplexArgument();
+    Expr getComplexArgument() override;
 
     /*! \return The numerical factor of the product.
      */
-    Expr getNumericalFactor() const;
+    Expr getNumericalFactor() const override;
 
     /*! \return The product of all the terms but the nunmerical factor.
      */
-    Expr getTerm();
+    Expr getTerm() override;
 
     /*! \brief Returns the number of possible factors in the expression.
      * \return \b nArgs
      */
-    int getNFactor() const;
+    int getNFactor() const override;
 
     /*! \brief Returns all the possible factors.
      * \return The concatenation of all possible factors for the arguments.
      */
-    std::vector<Expr > getFactors() const;
+    std::vector<Expr > getFactors() const override;
 
     /*! \brief Tells if the factor \a t_abstract appear in the product.
      * \param t_abstract Factor to test.
      * \return \b True if t_abstract can factor the product.
      * \return \b False else.
      */
-    bool askTerm(const Expr& t_abstract, bool exact=false) const;
+    bool askTerm(const Expr& t_abstract, bool exact=false) const override;
 
     /*! \brief Suppresses the term t_abstract in the product.
      * \warning This function supposes that the function askTerm() has been called 
@@ -253,9 +253,9 @@ class Times: public AbstractMultiFunc{
      * \param t_abstract Factor to suppress in the product.
      * \return \b The product amputated of \b t_abstract.
      */
-    Expr suppressTerm(const Expr& t_abstract) const;
+    Expr suppressTerm(const Expr& t_abstract) const override;
 
-    void insert(const Expr& t_abstract);
+    void insert(const Expr& t_abstract, bool side=0) override;
 
     void print(int mode=0) const override;
 
@@ -265,7 +265,7 @@ class Times: public AbstractMultiFunc{
      * \return The product of the scalar evaluation of all the arguments.
      * \note For this function to be justified, all the arguments must be \b scalar and \b real.
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     Expr evaluate() override;
 
@@ -289,21 +289,21 @@ class Times: public AbstractMultiFunc{
      * \param full If true the development is \b recursive through all the Abstract.
      * \return The developed product.
      */
-    Expr develop(bool full=false);
+    Expr develop(bool full=false) override;
 
-    int isPolynomial(const Expr& t_abstract) const;
+    int isPolynomial(const Expr& t_abstract) const override;
 
-    Expr getPolynomialTerm(const Expr& t_variable, int order);
+    Expr getPolynomialTerm(const Expr& t_variable, int order) override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
     
-    bool operator==(const Expr& t_abstract) const;
+    bool operator==(const Expr& t_abstract) const override;
 
-    std::vector<Expr > getAlternateForms() const;
+    std::vector<Expr > getAlternateForms() const override;
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 /*! \class Fraction
@@ -330,24 +330,24 @@ class Fraction: public AbstractDuoFunc{
     /*! \brief Gives the **type** of a Fraction object.
      * \return 12
      */
-    Type getType() const { return FRACTION;}
+    Type getType() const override { return FRACTION;}
 
     /*! \brief Returns the number of possible factors in the expression.
      * \return \b The sum of the number of factors of the 2 arguments.
      */
-    int getNFactor() const;
+    int getNFactor() const override;
 
     /*! \brief Returns all the possible factors.
      * \return The concatenation of all possible factors for the arguments.
      */
-    std::vector<Expr > getFactors() const;
+    std::vector<Expr > getFactors() const override;
 
     /*! \brief Tells if the factor \a t_abstract appear in the fraction.
      * \param t_abstract Factor to test.
      * \return \b True if t_abstract can factor the fraction.
      * \return \b False else.
      */
-    bool askTerm(const Expr& t_abstract, bool exact=false) const;
+    bool askTerm(const Expr& t_abstract, bool exact=false) const override;
 
     /*! \brief Suppresses the term t_abstract in the fraction.
      * \warning This function supposes that the function askTerm() has been called 
@@ -355,7 +355,7 @@ class Fraction: public AbstractDuoFunc{
      * \param t_abstract Factor to suppress in the fraction.
      * \return \b The fraction divided by \b t_abstract.
      */
-    Expr suppressTerm(const Expr& t_abstract) const;
+    Expr suppressTerm(const Expr& t_abstract) const override;
 
     void print(int mode=0) const override;
 
@@ -365,7 +365,7 @@ class Fraction: public AbstractDuoFunc{
      * \return The division of the scalar evaluation of the two arguments.
      * \note For this function to be justified, all the arguments must be \b scalar and \b real.
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     Expr evaluate() override;
 
@@ -383,17 +383,17 @@ class Fraction: public AbstractDuoFunc{
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int isPolynomial(const Expr& t_abstract) const;
+    int isPolynomial(const Expr& t_abstract) const override;
 
-    Expr getPolynomialTerm(const Expr& t_variable, int order);
+    Expr getPolynomialTerm(const Expr& t_variable, int order) override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
     
-    bool operator==(const Expr& t_abstract) const;
+    bool operator==(const Expr& t_abstract) const override;
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 /*! \class Pow
@@ -420,25 +420,25 @@ class Pow: public AbstractDuoFunc{
     /*! \brief Gives the **type** of a Pow object.
      * \return 13
      */
-    Type getType() const { return POW;}
+    Type getType() const override { return POW;}
 
     /*! \brief Returns the number of possible factors in the expression.
      * \return \b A function of the exponent if it is a Number.
      * \return \b 1 else.
      */
-    int getNFactor() const;
+    int getNFactor() const override;
 
     /*! \brief Returns all the possible factors.
      * \return The concatenation of all possible factors for the arguments.
      */
-    std::vector<Expr > getFactors() const;
+    std::vector<Expr > getFactors() const override;
 
     /*! \brief Tells if the factor \a t_abstract appear in the exponentiation.
      * \param t_abstract Factor to test.
      * \return \b True if t_abstract can factor the exponentiation.
      * \return \b False else.
      */
-    bool askTerm(const Expr& t_abstract, bool exact=false) const;
+    bool askTerm(const Expr& t_abstract, bool exact=false) const override;
 
     /*! \brief Suppresses the term t_abstract in the exponentiation.
      * \warning This function supposes that the function askTerm() has been called 
@@ -446,7 +446,7 @@ class Pow: public AbstractDuoFunc{
      * \param t_abstract Factor to suppress in the exponentiation.
      * \return \b The exponentiation divided by \b t_abstract.
      */
-    Expr suppressTerm(const Expr& t_abstract) const;
+    Expr suppressTerm(const Expr& t_abstract) const override;
 
     void print(int mode=0) const override;
 
@@ -456,7 +456,7 @@ class Pow: public AbstractDuoFunc{
      * \return The exponentiation of the scalar evaluation of the two arguments.
      * \note For this function to be justified, all the arguments must be \b scalar and \b real.
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     Expr evaluate() override;
 
@@ -478,29 +478,29 @@ class Pow: public AbstractDuoFunc{
      * \param full If true the development is \b recursive through all the Abstract.
      * \return The developed exponentiation.
      */
-    Expr develop(bool full=false);
+    Expr develop(bool full=false) override;
 
-    Expr getRealPart();
+    Expr getRealPart() override;
 
-    Expr getImaginaryPart() const;
+    Expr getImaginaryPart() const override;
 
-    Expr getComplexModulus();
+    Expr getComplexModulus() override;
 
-    Expr getComplexArgument();
+    Expr getComplexArgument() override;
 
-    int isPolynomial(const Expr& t_abstract) const;
+    int isPolynomial(const Expr& t_abstract) const override;
 
-    Expr getPolynomialTerm(const Expr& t_variable, int order);
+    Expr getPolynomialTerm(const Expr& t_variable, int order) override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
     
-    bool operator==(const Expr& t_abstract) const;
+    bool operator==(const Expr& t_abstract) const override;
 
-    std::vector<Expr > getAlternateForms() const;
+    std::vector<Expr > getAlternateForms() const override;
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 
@@ -544,9 +544,9 @@ class Derivative: public AbstractDuoFunc{
     /*! \brief Gives the **type** of a Derivative object.
      * \return 29
      */
-    Type getType() const { return DERIVATIVE;}
+    Type getType() const override { return DERIVATIVE;}
 
-    int getOrder() const;
+    int getOrder() const override;
 
     void print(int mode=0) const override;
 
@@ -556,7 +556,7 @@ class Derivative: public AbstractDuoFunc{
      * \return The derivative of the scalar evaluation of the two arguments.
      * \note For this function to be justified, all the arguments must be \b scalar and \b real.
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     Expr evaluate() override;
 
@@ -566,13 +566,13 @@ class Derivative: public AbstractDuoFunc{
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
     
-    bool operator==(const Expr& t_abstract) const;
+    bool operator==(const Expr& t_abstract) const override;
 
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
 };
 
 /////

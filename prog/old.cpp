@@ -14,12 +14,12 @@ int main(){
     Symbol xS("x");
     Symbol yS("y");
 
-    yS = xS + 1+2+3+4+5+6;
+    yS = Symbol(1)/3+xS+Symbol(5)/7 + 1+2+3+4+5+6;
     xS = 3;
     cout<<"xS = "<<xS.evaluateScalar()<<endl;
     cout<<"xS = 3\n";
     cout<<"yS = "<<yS.evaluateScalar()<<endl;
-    cout<<"yS = 24\n";
+    cout<<"yS = 523/21\n";
     yS.clear();
 
     shared_ptr<Abstract> copy = xS.getAbstract();
@@ -28,6 +28,8 @@ int main(){
 
     Symbol derivative("d");
     Symbol zero;
+    (xS*xS).print();
+    cout<<"x^2\n";
     derivative = xS*xS*yS-3*xS*exp_(cos_(xS))*sin_(xS)+exp_(sin_(zero))*cos_(zero)+pow_(yS,xS)+pow_(xS,yS);
     derivative.print();
     cout<<"1 + x^y + y^x + x^2*y + (-3)*sin(x)*exp(cos(x))*x"<<endl;
@@ -62,11 +64,6 @@ int main(){
 
     // First test to set the structure of diagnostic.cpp
     cout<<"First basic arithmetic test...\n";
-    if ((true == true) != true)
-    {
-        cout<<"Wow there is an issue with basic arithmetic operations... This is rough...\n";
-        everythingOK = false;
-    }
 
     // Basic test of scalar variables
     cout<<"Basic test of scalar variables...\n";
@@ -212,10 +209,11 @@ int main(){
     cout<<"(1 + 3/4*x^2)*x^2\n";
     
     toFactor = pow_(x,fraction_(1,3))+3*pow_(x,fraction_(4,3));
+    toFactor.print();
     toFactor = toFactor.factor();
     toFactor.print();
     cout<<"(1 + 3*x)*x^(1/3)\n";
-    
+
     toFactor = pow_(x,-1)+fraction_(1,x);
     toFactor = toFactor.factor();
     toFactor.print();
@@ -429,7 +427,12 @@ int main(){
     yS.print();
 
     xS.clear();
+    cout<<"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG\n";
     Symbol pol1("P1"), pol2("P2");
+    pol2 = polynomial_(xS+pow_(F,Symbol(1)/2),xS);
+    pol2.print();
+    sqrt_(F).print();
+    pow_(F,Symbol(1)/2).print();
     pol1 = polynomial_(xS*xS-1,xS);
     pol2 = polynomial_(xS+1,xS);
     cout<<"(x^2 - 1)/(x + 1) = ";pol1.polynomialDivision(pol2).print();
@@ -444,7 +447,7 @@ int main(){
     cout<<"(x^2 - F^2)/(x + F) = ";pol1.polynomialDivision(pol2).print();
     pol1 = polynomial_(xS*xS-F,xS);
     pol2 = polynomial_(xS+pow_(F,Symbol(1)/2),xS);
-    cout<<"(x - F)/(x + sqrt(F)) = ";pol1.polynomialDivision(pol2).print();
+    cout<<"(x^2 - F)/(x + sqrt(F)) = ";pol1.polynomialDivision(pol2).print();
     pol1 = polynomial_(12*pow_(xS,5)+8*pow_(xS,4)+56*pow_(xS,3)+24*xS*xS+60*xS,xS);
     pol2 = polynomial_(3*xS*xS+2*xS+5,xS);
     cout<<"(12x^5 - 8x^4 + 56x^3 + 24x^2 + 60x)/(3x^2 + 2x + 5) = ";pol1.polynomialDivision(pol2).print();
@@ -573,11 +576,12 @@ int main(){
     {
         for (int j=0; j<2; j++)
         {
-            if (i != j)
+            if (i != j) {
                 if (i == 0)
                     eps.setArgument(1,i,j);
                 else
                     eps.setArgument(-1,i,j);
+            }
         }
     }
     yS = eps;
@@ -756,7 +760,7 @@ int main(){
                 {
                     if (i!=j and i!=k and i!=l and j!=k and j!=l and k!=l)
                     {
-                        int _i(i), _j(j), _k(k), _l(l);
+                        int _i(i), _j(j), _k(k);
                         int permut = 1;
                         if (i != 0)
                         {
@@ -765,16 +769,12 @@ int main(){
                                 _j = _i;
                             if (_k == 0)
                                 _k = _i;
-                            if (_l == 0)
-                                _l = _i;
                         }
                         if (_j != 1)
                         {
                             permut *= -1;
                             if (_k == 1)
                                 _k = _j;
-                            if (_l == 1)
-                                _l = _j;
                         }
                         if (_k != 2)
                             permut *= -1;
@@ -814,19 +814,19 @@ int main(){
     (A_ij-A_ji).print();
     vector<Index> indices = (A_ij-A_ji).getAbstract()->getIndexStructure();
     cout<<"    -> structure: ";
-    for (int i=0; i<indices.size(); i++)
+    for (size_t i=0; i<indices.size(); i++)
         indices[i].print();
     cout<<endl;
     (A_ij+B_ij).print();
     indices = (A_ij+B_ij).getAbstract()->getIndexStructure();
     cout<<"    -> structure: ";
-    for (int i=0; i<indices.size(); i++)
+    for (size_t i=0; i<indices.size(); i++)
         indices[i].print();
     cout<<endl;
     (A_ij-A_ij).print();
     indices = (A_ij-A_ij).getAbstract()->getIndexStructure();
     cout<<"    -> structure: ";
-    for (int i=0; i<indices.size(); i++)
+    for (size_t i=0; i<indices.size(); i++)
         indices[i].print();
     cout<<endl;
 

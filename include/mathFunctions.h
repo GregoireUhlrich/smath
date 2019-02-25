@@ -45,14 +45,14 @@ class Abs: public AbstractFunc{
     /*! \brief \b Evaluates the function on the \b argument.
      * \return \b abs(argument.evaluate())
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     /*! \brief \b Derives the abs function.
      * \return sign(argument)
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 };
 
 /*! \fn Expr abs_(const Expr& t_abstract)
@@ -92,13 +92,13 @@ class Exp: public AbstractFunc{
      */
     Type getType() const override { return EXP;}
 
-    Expr getRealPart();
+    Expr getRealPart() override;
 
-    Expr getImaginaryPart() const;
+    Expr getImaginaryPart() const override;
 
-    Expr getComplexModulus();
+    Expr getComplexModulus() override;
 
-    Expr getComplexArgument();
+    Expr getComplexArgument() override;
 
     void print(int mode=0) const override;
 
@@ -107,14 +107,14 @@ class Exp: public AbstractFunc{
     /*! \brief \b Evaluates the function on the \b argument.
      * \return \b exp(argument.evaluate())
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     /*! \brief \b Derives the exponential function.
      * \return (derivative of the \b argument)*\b exp(\b argument)
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 };
 
 /*! \fn Expr exp_(const Expr& t_abstract)
@@ -153,13 +153,13 @@ class Log: public AbstractFunc{
      */
     Type getType() const override { return LOG;}
 
-    Expr getRealPart();
+    Expr getRealPart() override;
 
-    Expr getImaginaryPart() const;
+    Expr getImaginaryPart() const override;
 
-    Expr getComplexModulus();
+    Expr getComplexModulus() override;
 
-    Expr getComplexArgument();
+    Expr getComplexArgument() override;
 
     void print(int mode=0) const override;
 
@@ -168,14 +168,14 @@ class Log: public AbstractFunc{
     /*! \brief \b Evaluates the function on the \b argument.
      * \return \b log(argument.evaluate())
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     /*! \brief \b Derives the logarithm function.
      * \return (derivative of the \b argument)*1/\b argument 
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 };
 
 /*! \fn Expr log_(const Expr& t_abstract)
@@ -214,13 +214,13 @@ class Cos: public AbstractFunc{
      */
     Type getType() const override { return COS;}
 
-    Expr getRealPart();
+    Expr getRealPart() override;
 
-    Expr getImaginaryPart() const;
+    Expr getImaginaryPart() const override;
 
-    Expr getComplexModulus();
+    Expr getComplexModulus() override;
 
-    Expr getComplexArgument();
+    Expr getComplexArgument() override;
 
     void print(int mode=0) const override;
 
@@ -229,16 +229,16 @@ class Cos: public AbstractFunc{
     /*! \brief \b Evaluates the function on the \b argument.
      * \return \b cos(argument.evaluate())
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     /*! \brief \b Derives the cos function.
      * \return (derivative of the \b argument)*-\b sin(\b argument)
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 
-    std::vector<Expr > getAlternateForms() const;
+    std::vector<Expr > getAlternateForms() const override;
 };
 
 /*! \fn Expr cos_(const Expr& t_abstract)
@@ -277,13 +277,13 @@ class Sin: public AbstractFunc{
      */
     Type getType() const override { return SIN;}
 
-    Expr getRealPart();
+    Expr getRealPart() override;
 
-    Expr getImaginaryPart() const;
+    Expr getImaginaryPart() const override;
 
-    Expr getComplexModulus();
+    Expr getComplexModulus() override;
 
-    Expr getComplexArgument();
+    Expr getComplexArgument() override;
 
     void print(int mode=0) const override;
 
@@ -292,16 +292,16 @@ class Sin: public AbstractFunc{
     /*! \brief \b Evaluates the function on the \b argument.
      * \return \b sin(argument.evaluate())
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     /*! \brief \b Derives the sin function.
      * \return (derivative of the \b argument)*\b cos(\b argument)
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 
-    std::vector<Expr > getAlternateForms() const;
+    std::vector<Expr > getAlternateForms() const override;
 };
 
 /*! \fn Expr sin_(const Expr& t_abstract)
@@ -340,13 +340,13 @@ class Tan: public AbstractFunc{
      */
     Type getType() const override { return TAN;}
 
-    Expr getRealPart();
+    Expr getRealPart() override;
 
-    Expr getImaginaryPart() const;
+    Expr getImaginaryPart() const override;
 
-    Expr getComplexModulus();
+    Expr getComplexModulus() override;
 
-    Expr getComplexArgument();
+    Expr getComplexArgument() override;
 
     void print(int mode=0) const override;
 
@@ -355,16 +355,16 @@ class Tan: public AbstractFunc{
     /*! \brief \b Evaluates the function on the \b argument.
      * \return \b tan(argument.evaluate())
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     /*! \brief \b Derives the tan function.
      * \return derivative(argument)*(1+tan^2(argument))
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 
-    std::vector<Expr > getAlternateForms() const;
+    std::vector<Expr > getAlternateForms() const override;
 };
 
 /*! \fn Expr tan_(const Expr& t_abstract)
@@ -403,13 +403,13 @@ class ACos: public AbstractFunc{
      */
     Type getType() const override { return ACOS;}
 
-    Expr getRealPart();
+    Expr getRealPart() override;
 
-    Expr getImaginaryPart() const;
+    Expr getImaginaryPart() const override;
 
-    Expr getComplexModulus();
+    Expr getComplexModulus() override;
 
-    Expr getComplexArgument();
+    Expr getComplexArgument() override;
 
     void print(int mode=0) const override;
 
@@ -418,14 +418,14 @@ class ACos: public AbstractFunc{
     /*! \brief \b Evaluates the function on the \b argument.
      * \return \b acos(argument.evaluate())
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     /*! \brief \b Derives the acos function.
      * \return (derivative of the \b argument)*-\b asin(\b argument)
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 };
 
 /*! \fn Expr acos_(const Expr& t_abstract)
@@ -464,13 +464,13 @@ class ASin: public AbstractFunc{
      */
     Type getType() const override { return ASIN;}
 
-    Expr getRealPart();
+    Expr getRealPart() override;
 
-    Expr getImaginaryPart() const;
+    Expr getImaginaryPart() const override;
 
-    Expr getComplexModulus();
+    Expr getComplexModulus() override;
 
-    Expr getComplexArgument();
+    Expr getComplexArgument() override;
 
     void print(int mode=0) const override;
 
@@ -479,14 +479,14 @@ class ASin: public AbstractFunc{
     /*! \brief \b Evaluates the function on the \b argument.
      * \return \b asin(argument.evaluate())
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     /*! \brief \b Derives the asin function.
      * \return (derivative of the \b argument)*\b acos(\b argument)
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 };
 
 /*! \fn Expr asin_(const Expr& t_abstract)
@@ -533,14 +533,14 @@ class ATan: public AbstractFunc{
     /*! \brief \b Evaluates the function on the \b argument.
      * \return \b atan(argument.evaluate())
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     /*! \brief \b Derives the atan function.
      * \return derivative(argument)/(1+argument^2)
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 };
 
 /*! \fn Expr atan_(const Expr& t_abstract)
@@ -594,7 +594,7 @@ class Angle: public AbstractDuoFunc{
      * \return The \b angle defined by the point that has the two arguments as coordinates in the plane.
      * \note For this function to be justified, all the arguments must be \b scalar and \b real.
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     Expr evaluate() override;
 
@@ -604,13 +604,13 @@ class Angle: public AbstractDuoFunc{
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    bool operator==(const Expr& t_abstract) const;
+    bool operator==(const Expr& t_abstract) const override;
 
-    bool operator<(const Expr& t_abstract) const;
+    bool operator<(const Expr& t_abstract) const override;
     
-    bool operator>(const Expr& t_abstract) const;
+    bool operator>(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 };
 
 /*! \class Cosh
@@ -638,13 +638,13 @@ class Cosh: public AbstractFunc{
      */
     Type getType() const override { return COSH;}
 
-    Expr getRealPart();
+    Expr getRealPart() override;
 
-    Expr getImaginaryPart() const;
+    Expr getImaginaryPart() const override;
 
-    Expr getComplexModulus();
+    Expr getComplexModulus() override;
 
-    Expr getComplexArgument();
+    Expr getComplexArgument() override;
 
     void print(int mode=0) const override;
 
@@ -653,16 +653,16 @@ class Cosh: public AbstractFunc{
     /*! \brief \b Evaluates the function on the \b argument.
      * \return \b cosh(argument.evaluate())
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     /*! \brief \b Derives the cosh function.
      * \return (derivative of the \b argument)*\b sinh(\b argument)
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 
-    std::vector<Expr > getAlternateForms() const;
+    std::vector<Expr > getAlternateForms() const override;
 };
 
 /*! \fn Expr cosh_(const Expr& t_abstract)
@@ -701,13 +701,13 @@ class Sinh: public AbstractFunc{
      */
     Type getType() const override{ return SINH;}
 
-    Expr getRealPart();
+    Expr getRealPart() override;
 
-    Expr getImaginaryPart() const;
+    Expr getImaginaryPart() const override;
 
-    Expr getComplexModulus();
+    Expr getComplexModulus() override;
 
-    Expr getComplexArgument();
+    Expr getComplexArgument() override;
 
     void print(int mode=0) const override;
 
@@ -716,16 +716,16 @@ class Sinh: public AbstractFunc{
     /*! \brief \b Evaluates the function on the \b argument.
      * \return \b sinh(argument.evaluate())
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     /*! \brief \b Derives the sinh function.
      * \return (derivative of the \b argument)*\b cosh(\b argument)
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 
-    std::vector<Expr > getAlternateForms() const;
+    std::vector<Expr > getAlternateForms() const override;
 };
 
 /*! \fn Expr sinh_(const Expr& t_abstract)
@@ -764,13 +764,13 @@ class Tanh: public AbstractFunc{
      */
     Type getType() const override { return TANH;}
 
-    Expr getRealPart();
+    Expr getRealPart() override;
 
-    Expr getImaginaryPart() const;
+    Expr getImaginaryPart() const override;
 
-    Expr getComplexModulus();
+    Expr getComplexModulus() override;
 
-    Expr getComplexArgument();
+    Expr getComplexArgument() override;
 
     void print(int mode=0) const override;
 
@@ -779,16 +779,16 @@ class Tanh: public AbstractFunc{
     /*! \brief \b Evaluates the function on the \b argument.
      * \return \b tanh(argument.evaluate())
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     /*! \brief \b Derives the tanh function.
      * \return derivative(argument)*(1-tanh^2(argument))
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 
-    std::vector<Expr > getAlternateForms() const;
+    std::vector<Expr > getAlternateForms() const override;
 };
 
 /*! \fn Expr tanh_(const Expr& t_abstract)
@@ -827,13 +827,13 @@ class ACosh: public AbstractFunc{
      */
     Type getType() const override { return ACOSH;}
 
-    Expr getRealPart();
+    Expr getRealPart() override;
 
-    Expr getImaginaryPart() const;
+    Expr getImaginaryPart() const override;
 
-    Expr getComplexModulus();
+    Expr getComplexModulus() override;
 
-    Expr getComplexArgument();
+    Expr getComplexArgument() override;
 
     void print(int mode=0) const override;
 
@@ -842,14 +842,14 @@ class ACosh: public AbstractFunc{
     /*! \brief \b Evaluates the function on the \b argument.
      * \return \b acosh(argument.evaluate())
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     /*! \brief \b Derives the acosh function.
      * \return (derivative of the \b argument)*\b asinh(\b argument)
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 };
 
 /*! \fn Expr acosh_(const Expr& t_abstract)
@@ -888,13 +888,13 @@ class ASinh: public AbstractFunc{
      */
     Type getType() const override { return ASINH;}
 
-    Expr getRealPart();
+    Expr getRealPart() override;
 
-    Expr getImaginaryPart() const;
+    Expr getImaginaryPart() const override;
 
-    Expr getComplexModulus();
+    Expr getComplexModulus() override;
 
-    Expr getComplexArgument();
+    Expr getComplexArgument() override;
 
     void print(int mode=0) const override;
 
@@ -903,14 +903,14 @@ class ASinh: public AbstractFunc{
     /*! \brief \b Evaluates the function on the \b argument.
      * \return \b asinh(argument.evaluate())
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     /*! \brief \b Derives the asinh function.
      * \return (derivative of the \b argument)*\b acosh(\b argument)
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 };
 
 /*! \fn Expr asinh_(const Expr& t_abstract)
@@ -949,13 +949,13 @@ class ATanh: public AbstractFunc{
      */
     Type getType() const override { return ATANH;}
 
-    Expr getRealPart();
+    Expr getRealPart() override;
 
-    Expr getImaginaryPart() const;
+    Expr getImaginaryPart() const override;
 
-    Expr getComplexModulus();
+    Expr getComplexModulus() override;
 
-    Expr getComplexArgument();
+    Expr getComplexArgument() override;
 
     void print(int mode=0) const override;
 
@@ -964,14 +964,14 @@ class ATanh: public AbstractFunc{
     /*! \brief \b Evaluates the function on the \b argument.
      * \return \b atanh(argument.evaluate())
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     /*! \brief \b Derives the atanh function.
      * \return derivative(argument)*(1-atanh^2(argument))
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 };
 
 /*! \fn Expr atanh_(const Expr& t_abstract)
@@ -1025,14 +1025,14 @@ class Factorial: public AbstractFunc{
      * \warning If the \b argument does not evaluate to an int, a warning is
      * printed in standard output and the calculation is done with round(argument).
      */
-    double evaluateScalar() const;
+    double evaluateScalar() const override;
 
     /*! \brief \b Derives the factorial function, returns always \b 0: a factorial cannot be derived.
      * \return \b 0
      */
     Expr derive(const Expr& t_abstract) const override;
 
-    int getParity(const Expr& t_variable) const;
+    int getParity(const Expr& t_variable) const override;
 };
 
 /////

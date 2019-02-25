@@ -188,6 +188,7 @@ Index AbstractIndicial::getIndex(int i) const
 {
     if (i < nIndices) return index[i];
     cout<<"Warning: dimension "<<i<<" out of bounds for "<<name<<".\n";
+    return Index();
 }
 
 vector<Index> AbstractIndicial::getIndexStructure() const
@@ -197,16 +198,15 @@ vector<Index> AbstractIndicial::getIndexStructure() const
 
 bool AbstractIndicial::checkIndexStructure(const vector<Index>& t_indices) const
 {
-    if (nIndices != t_indices.size()) return false;
+    if (nIndices != (int)t_indices.size()) return false;
     vector<int> indicesLeft(nIndices);
     for (int i=0; i<nIndices;i++) indicesLeft[i] = i;
 
-    bool matched;
     Index foo;
     for (int i=0; i<nIndices; i++)
     {
-        matched = 0;
-        for (int j=0; j<indicesLeft.size(); j++)
+        bool matched = 0;
+        for (size_t j=0; j<indicesLeft.size(); j++)
         {
             foo = t_indices[indicesLeft[j]];
             if (index[i] == foo)
@@ -400,7 +400,7 @@ string ITerm::printLaTeX(int mode) const
 
 Expr ITerm::evaluate()
 {
-    return shared_from_this();
+    return Copy(this);
 }
 
 int ITerm::getNArgs(int axis) const
@@ -408,10 +408,11 @@ int ITerm::getNArgs(int axis) const
     return nArgs;
 }
 
-const Expr& ITerm::getArgument(int iArg) const
+Expr ITerm::getArgument(int iArg) const
 {
     if (iArg < nArgs) return argument[iArg];
     else cout<<"Warning: index "<<iArg<<" out of bound of ITerm.\n";
+    return ZERO;
 }
 
 const vector<Expr >& ITerm::getVectorArgument() const
@@ -455,12 +456,11 @@ bool ITerm::operator==(const Expr& t_abstract) const
     vector<int> indicesLeft(nArgs);
     for (int i=0; i<nArgs;i++) indicesLeft[i] = i;
 
-    bool matched;
     Expr foo;
     for (int i=0; i<nArgs; i++)
     {
-        matched = 0;
-        for (int j=0; j<indicesLeft.size(); j++)
+        bool matched = 0;
+        for (size_t j=0; j<indicesLeft.size(); j++)
         {
             foo = t_abstract->getArgument(indicesLeft[j]);
             if (!argument[i]-> getCommutable() and !foo->getCommutable() and *argument[i]!=foo) break;

@@ -1,4 +1,5 @@
 #include "simplification.h"
+#pragma GCC diagnostic ignored "-Wunused-variable"
 
 using namespace std;
 

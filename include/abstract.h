@@ -4,6 +4,7 @@
  * \brief Base classes for all expressions in the program.
  */
 
+#pragma GCC diagnostic ignored "-Wunused-parameter"
 #ifndef ABSTRACT_H_INCLUDED
 #define ABSTRACT_H_INCLUDED
 #include <string>
@@ -89,7 +90,7 @@ class Index;
  * \note Some functions are not documented here because not every derived class use them. For 
  * example getNum() and getDenom() that are effectively used only by CFraction.
  */
-class Abstract: public std::enable_shared_from_this<Abstract>{
+class Abstract{
 
     protected:
 
@@ -112,10 +113,6 @@ class Abstract: public std::enable_shared_from_this<Abstract>{
     /*! \brief Destructor.*/
     virtual ~Abstract(){}
 
-
-    Expr getSharedFromThis();
-
-    const constExpr getConstSharedFromThis() const;
     /*! \brief Returns the Abstract's name.
      * \return \a name
      */
@@ -168,7 +165,7 @@ class Abstract: public std::enable_shared_from_this<Abstract>{
 
     virtual std::vector<int> getShape() const;
 
-    virtual const Expr& getArgument(int iArg=0) const; 
+    virtual Expr getArgument(int iArg=0) const; 
 
     virtual Expr getArgument(const std::initializer_list<int>& indices) const;
 
@@ -224,7 +221,7 @@ class Abstract: public std::enable_shared_from_this<Abstract>{
     /*! \brief \b Evaluates the **argument in the complex plane** of the Abstract and returns it.
      * \return The argument part of the Abstract.
      */
-    virtual Expr getComplexArgument() const;
+    virtual Expr getComplexArgument();
 
     virtual Expr getComplexConjugate();
 
@@ -248,7 +245,7 @@ class Abstract: public std::enable_shared_from_this<Abstract>{
 
     virtual void setVectorArgument(const std::vector<Expr >& t_argument);
 
-    virtual void insert(const Expr& t_abstract);
+    virtual void insert(const Expr& t_abstract, bool side=0);
 
     /*! \brief Displays the abstract in standard output.
      * \param mode Tells if the Abstract is printed alone (default) or in another expression.
@@ -359,9 +356,9 @@ class Abstract: public std::enable_shared_from_this<Abstract>{
      * \return \b True if the two Abstracts are the same (or have the same name).
      * \return \b False else.
      */
-    virtual bool operator==(const Expr& t_abstract) const; 
+    virtual bool operator==(const Expr& t_abstract) const = 0; 
 
-    virtual const Expr& operator[](int iArg) const;
+    virtual Expr& operator[](int iArg);
 
     virtual std::vector<Expr > getAlternateForms() const;
 
@@ -424,12 +421,6 @@ class AbstractScalar: public Abstract{
 // Inline functions (non-virtual and very short)
 inline Abstract::Abstract(): name(""), commutable(true){}
 inline Abstract::Abstract(const std::string& t_name): name(t_name), commutable(true){}
-inline Expr Abstract::getSharedFromThis() {
-    return shared_from_this();
-}
-inline const constExpr Abstract::getConstSharedFromThis() const{
-    return shared_from_this();
-}
 inline std::string Abstract::getName() const{
     return name;
 }

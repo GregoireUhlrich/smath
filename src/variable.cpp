@@ -3,6 +3,31 @@
 
 using namespace std;
 
+
+Expr AbstractBuildingBlock::develop(bool full){
+    return shared_from_this(); 
+}
+Expr AbstractBuildingBlock::factor(bool full){
+    return shared_from_this(); 
+}
+Expr AbstractBuildingBlock::factor(const Expr& t_abstract, bool full){
+    return shared_from_this(); 
+}
+Expr AbstractBuildingBlock::getTerm(){
+    return shared_from_this(); 
+}
+
+Expr AbstractBuildingBlock::getRealPart(){
+    return shared_from_this(); 
+}
+Expr AbstractBuildingBlock::getComplexModulus(){
+    return shared_from_this(); 
+}
+Expr AbstractBuildingBlock::getPolynomialTerm(const Expr& t_abstract, int order){
+    if (order == 1 and *this==t_abstract) return ONE;
+    else if (order == 0) return shared_from_this();
+    return ZERO;
+}
 Type Double::getType() const { return DOUBLE;}
 
 void Double::setValue(double t_value)
@@ -324,9 +349,12 @@ Expr Constant::derive(const Expr& t_abstract) const
     return int_((t_abstract->getType() == CONSTANT) and (t_abstract->getName() == name));
 }
 
-void CFactorial::setValue(int t_value)
+void CFactorial::setValue(double t_value)
 {
-    value = t_value;
+    if (round(value) == value)
+        value = t_value;
+    else 
+        callWarning(Factorial_float,"CFactorial::setValue(double t_value)");
 }
 
 void CFactorial::print(int mode) const

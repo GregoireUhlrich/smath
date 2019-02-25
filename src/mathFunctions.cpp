@@ -288,7 +288,7 @@ int Cos::getParity(const Expr& t_variable) const
 
 Expr cos_(const Expr& t_abstract)
 {
-    int type = t_abstract->getPrimaryType();
+    //int type = t_abstract->getPrimaryType();
     if (*t_abstract == ZERO)
         return int_(1);
     {

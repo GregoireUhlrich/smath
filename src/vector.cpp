@@ -90,10 +90,11 @@ int AbstractVectorial::getNArgs(int axis) const
     return argument[0]->getNArgs(axis-1);
 }
 
-const Expr& AbstractVectorial::getArgument(int iArg) const
+Expr AbstractVectorial::getArgument(int iArg) const
 {
     if (iArg < nArgs)
         return argument[iArg];
+    print();
     callError(Out_of_bounds, "AbstractVectorial::getArgument(int iArg) const",iArg);
     return ZERO;
 }
@@ -221,7 +222,7 @@ bool AbstractVectorial::exactMatchShape(const Expr& t_abstract) const
     if (dim != t_dim) return false;
     vector<int> shape1(getShape()), shape2(t_abstract->getShape());
     if (shape1.size() != shape2.size()) return false;
-    for (int i=0; i<shape1.size(); i++)
+    for (size_t i=0; i<shape1.size(); i++)
         if (shape1[i] != shape2[i])
             return false;
     return true;
@@ -261,7 +262,7 @@ Expr AbstractVectorial::getProduct() const
 
 Expr AbstractVectorial::getSubVectorial(const vector<int>& exceptions) const
 {
-    if (exceptions.size() != dim)
+    if ((int)exceptions.size() != dim)
     {
         cout<<"Warning: taking subVectorial with wrong number of dimensions.\n";
         return ZERO;
@@ -342,9 +343,9 @@ Expr AbstractVectorial::dot(const Expr& t_abstract) const
             cout<<"Warning: shapes do not match in dot product.\n";
             return ZERO;
         }
-        for (int i=0; i<shape1.size()-1; i++)
+        for (size_t i=0; i<shape1.size()-1; i++)
             newShape[i] = shape1[i];
-        for (int j=shape1.size()-1; j<newShape.size(); j++)
+        for (size_t j=shape1.size()-1; j<newShape.size(); j++)
             newShape[j] = shape2[2+j-shape1.size()];
 
         Expr foo = tensor_(newShape);
@@ -463,7 +464,7 @@ Expr AbstractVectorial::trace(int axis1, int axis2) const
     for (int i=0; i<dim; i++)
         if (i == axis1 or i == axis2)
             newShape[i] = 1;
-    for (int i=0; i<newShape.size(); i++)
+    for (size_t i=0; i<newShape.size(); i++)
     {
         if (newShape[i] == 1)
         {
@@ -505,7 +506,7 @@ Expr AbstractVectorial::trace(int axis1, int axis2) const
     return foo;
 }
 
-Expr AbstractVectorial::develop(bool full) const
+Expr AbstractVectorial::develop(bool full)
 {
     Expr foo = tensor_(getShape());
     for (int i=0; i<nArgs; i++)
@@ -514,7 +515,7 @@ Expr AbstractVectorial::develop(bool full) const
     return foo;
 }
 
-Expr AbstractVectorial::factor(bool full) const
+Expr AbstractVectorial::factor(bool full)
 {
     Expr foo = tensor_(getShape());
     for (int i=0; i<nArgs; i++)
@@ -523,7 +524,7 @@ Expr AbstractVectorial::factor(bool full) const
     return foo;
 }
 
-Expr AbstractVectorial::factor(const Expr& t_abstract, bool full) const
+Expr AbstractVectorial::factor(const Expr& t_abstract, bool full)
 {
     Expr foo = tensor_(getShape());
     for (int i=0; i<nArgs; i++)
@@ -542,6 +543,14 @@ bool AbstractVectorial::operator==(const Expr& t_abstract) const
     return true;
 }
 
+Expr& AbstractVectorial::operator[](int iArg)
+{
+    if (iArg < 0 or iArg >= nArgs) {
+        print();
+        callError(Out_of_bounds, "AbstractVectorial::operator[](int iArg)", iArg);
+    }
+    return argument[iArg];
+}
 
 Vector::Vector(): AbstractVectorial()
 {
@@ -559,6 +568,7 @@ Vector::Vector(int t_nElements): Vector()
 Vector::Vector(int t_nElements, const Expr& t_abstract, const Expr& index): Vector()
 {
     if (t_abstract->getDim() > 0) {
+        print();
         callError(Element_sequence, "Vector::Vector(int t_nElements, const Expr& t_abstract, const Expr& index): Vector()");
     }
     else {
@@ -580,8 +590,10 @@ Vector::Vector(const vector<Expr >& t_argument): Vector()
             break;
         }
     }
-    if (!dimOk)
+    if (!dimOk) {
+        print();
         callError(Element_sequence, "Vector::Vector(const vector<Expr >& t_argument): Vector()");
+    }
     else {
         argument = t_argument;
         nArgs = argument.size();
@@ -628,7 +640,7 @@ Matrix::Matrix(int t_nArgs): Matrix()
 {
     nArgs = t_nArgs;
     argument = vector<Expr >(nArgs, make_shared<Vector>(nArgs));
-    shape = vector<int>(nArgs);
+    shape = vector<int>(2,nArgs);
 }
 
 Matrix::Matrix(int t_x_nArgs, int t_y_nArgs): Matrix()
@@ -642,8 +654,10 @@ Matrix::Matrix(int t_x_nArgs, int t_y_nArgs): Matrix()
 
 Matrix::Matrix(int t_x_nArgs, int t_y_nArgs, const Expr& t_abstract, const Expr& index_x, const Expr& index_y): Matrix()
 {
-    if (t_abstract->getDim() != 0)
+    if (t_abstract->getDim() != 0) {
+        print();
         callError(Element_sequence,"Matrix::Matrix(int t_x_nArgs, int t_y_nArgs, const Expr& t_abstract, const Expr& index_x, const Expr& index_y): Matrix()");
+    }
     else {
         nArgs = t_x_nArgs;
         argument = vector<Expr >(nArgs);
@@ -668,7 +682,10 @@ Matrix::Matrix(const vector<Expr >& t_argument): Matrix()
         }
     }
     if (!dimOk)
+    {
+        print();
         callError(Element_sequence,"Matrix::Matrix(const vector<Expr >& t_argument): Matrix()");
+    }
     else {
         argument = t_argument;
         nArgs = argument.size();
@@ -706,12 +723,12 @@ Expr Matrix::determinant() const
     if (nArgs > 2 and argument[0]->getNArgs() > 2)
     {
         for (int i=0; i<nArgs; i++)
-            foo = plus_(foo, times_((*(*this)[i])[0],times_(int_(pow(-1,i)),getSubVectorial(i,0)->determinant())));    
+            foo = plus_(foo, times_(argument[i]->getArgument(0),times_(int_(pow(-1,i)),getSubVectorial(i,0)->determinant())));    
     }
     else
     {
         for (int i=0; i<nArgs; i++)
-            foo = plus_(foo, times_((*(*this)[i])[0],times_(int_(pow(-1,i)),getSubVectorial(i,0))));    
+            foo = plus_(foo, times_(argument[i]->getArgument(0),times_(int_(pow(-1,i)),getSubVectorial(i,0))));    
     }
     return foo;
 }
@@ -804,10 +821,13 @@ Expr matrix_(const vector<Expr >& t_argument)
 }
 
 HighDTensor::HighDTensor(): AbstractVectorial()
-{}
-
-HighDTensor::HighDTensor(const vector<int>& shape): AbstractVectorial()
 {
+    shape = vector<int>(0);
+}
+
+HighDTensor::HighDTensor(const vector<int>& t_shape): AbstractVectorial()
+{
+    shape = t_shape;
     dim = shape.size();
     if(dim > 0)
     {
@@ -828,13 +848,16 @@ HighDTensor::HighDTensor(const vector<int>& shape): AbstractVectorial()
 HighDTensor::HighDTensor(const vector<Expr >& t_argument)
 {
     nArgs = t_argument.size();
-    if (nArgs > 0)
-    {
+    shape = vector<int>(1,nArgs);
+    if (nArgs > 0) {
         argument = t_argument;
         dim = 1+argument[0]->getDim();
+        if (dim > 1) {
+            vector<int> followingShape = argument[0]->getShape();
+            shape.insert(shape.end(), followingShape.begin(), followingShape.end());
+        }
     }
-    else
-    {
+    else {
         argument = vector<Expr >(0);
         nArgs = 0;
         dim = 0;
