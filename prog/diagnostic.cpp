@@ -144,17 +144,14 @@ cout<<variable->evaluateScalar()<<" "<<developed->evaluateScalar()<<endl;
     Simplify(sin_(pi_/2-x)).print();
     cout<<endl;
 
-    cout<<"                                        cos(8*pi-x) = ";
-    Simplify(cos_(8*pi_-x)).print();
-    cout<<endl;
-
+    return 0;
     Symbol i("i"), j("j");
     int N = 200;
     cout<<"Creating matrix\n";
     Symbol M = matrix_(N,N,(cos_(x^i)^2)+(sin_(x^j)^2),i,j);
     cout<<"Summing matrix\n";
     //M.sum().print();
-    //Simplify(M.sum()).print();
+    Simplify(M.sum()).print();
 
     dur = chrono::system_clock::now() - start;
     cout<<"Execution ti/me: "<<convertTime(dur)<<endl;
@@ -166,7 +163,6 @@ cout<<variable->evaluateScalar()<<" "<<developed->evaluateScalar()<<endl;
     foo = Replace(foo,x.getAbstract(), ((x^2)-y+cos_(1+z)).getAbstract());
     foo = Replace(foo,z.getAbstract(), ((x^2)-y+cos_(1+z)).getAbstract());
 
-    return 0;
     foo->print();
     N = 1000;
 

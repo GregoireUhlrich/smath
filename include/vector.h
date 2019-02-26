@@ -81,7 +81,7 @@ class AbstractVectorial: public Abstract{
 
     bool operator==(const Expr& t_abstract) const override;
 
-    Expr& operator[](int iArg) override;
+    Expr operator[](int iArg) override;
 };
 
 class Vector: public AbstractVectorial{

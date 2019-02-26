@@ -338,7 +338,7 @@ bool Abstract::operator==(double t_value) const
     return 0;
 }*/
 
-Expr& Abstract::operator[](int iArg)
+Expr Abstract::operator[](int iArg)
 {
     print();
     callError(Abstract_func_called,"Abstract::operator[]");

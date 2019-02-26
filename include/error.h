@@ -12,6 +12,7 @@ enum Error{
     Element_sequence,
     Out_of_bounds,
     Eval_not_valued,
+    Undefinied_behaviour,
 
 };
 
@@ -39,6 +40,8 @@ inline void callError(Error error, const std::string& caller, T spec)
                std::cout<<"Initializing a vector element with a sequence in "<<caller<<".\n"; break;
         case Eval_not_valued:
                std::cout<<"Evaluating the value of non valued Abstract in "<<caller<<".\n"; break;
+        case Undefinied_behaviour:
+               std::cout<<"Undefined behaviour in "<<caller<<"\n."; break;
 
         default:
                std::cout<<"Type "<<(int)error<<" not recognized.\n";

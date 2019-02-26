@@ -53,7 +53,10 @@ Expr abs_(const Expr& t_abstract)
         return auto_number_(abs(t_abstract->evaluateScalar()));
     else if (type == CFRACTION)
         return _cfraction_(abs(t_abstract->getNum()),abs(t_abstract->getDenom()));
-    return make_shared<Abs>(t_abstract);
+    Expr res = make_shared<Abs>(t_abstract);
+    applyFuncParity(res);
+
+    return res;
 }
 
 int Abs::getParity(const Expr& t_variable) const
@@ -142,7 +145,10 @@ Expr exp_(const Expr& t_abstract)
     type = t_abstract->getType();
     if (type == LOG)
         return t_abstract->getArgument();
-    return make_shared<Exp>(t_abstract);
+    Expr res = make_shared<Exp>(t_abstract);
+    applyFuncParity(res);
+
+    return res;
 }
 
 Expr Log::getRealPart() {
@@ -217,7 +223,10 @@ Expr log_(const Expr& t_abstract)
         return ZERO;
     if (t_abstract->getType() == EXP)
         return t_abstract->getArgument();
-    return make_shared<Log>(t_abstract);
+    Expr res = make_shared<Log>(t_abstract);
+    applyFuncParity(res);
+
+    return res;
 }
 
 Expr Cos::getRealPart()
@@ -318,7 +327,10 @@ Expr cos_(const Expr& t_abstract)
             return times_(int_(-1),fraction_(sqrt_(int_(2)),int_(2)));
     }
     
-    return make_shared<Cos>(t_abstract);
+    Expr res = make_shared<Cos>(t_abstract);
+    applyFuncParity(res);
+
+    return res;
 }
 
 Expr Sin::getRealPart()
@@ -418,7 +430,10 @@ Expr sin_(const Expr& t_abstract)
         if (*t_abstract == times_(int_(3),fraction_(pi_,int_(4))))
             return fraction_(sqrt_(int_(2)),int_(2));
     }
-    return make_shared<Sin>(t_abstract);
+    Expr res = make_shared<Sin>(t_abstract);
+    applyFuncParity(res);
+
+    return res;
 }
 
 Expr Tan::getRealPart()
@@ -526,7 +541,10 @@ Expr tan_(const Expr& t_abstract)
         if (*t_abstract == times_(int_(3),fraction_(pi_,int_(4))))
             return int_(1);
     }
-    return make_shared<Tan>(t_abstract);
+    Expr res = make_shared<Tan>(t_abstract);
+    applyFuncParity(res);
+
+    return res;
 }
 
 Expr ACos::getRealPart()
@@ -744,7 +762,10 @@ Expr cosh_(const Expr& t_abstract)
 {
     if (t_abstract->getPrimaryType() == NUMERICAL and t_abstract->evaluate() == 0)
         return int_(1);
-    return make_shared<Cosh>(t_abstract);
+    Expr res = make_shared<Cosh>(t_abstract);
+    applyFuncParity(res);
+
+    return res;
 }
 
 Expr Sinh::getRealPart()
@@ -817,7 +838,10 @@ Expr sinh_(const Expr& t_abstract)
 {
     if (t_abstract->getPrimaryType() == NUMERICAL and t_abstract->evaluate() == 0)
         return ZERO;
-    return make_shared<Sinh>(t_abstract);
+    Expr res = make_shared<Sinh>(t_abstract);
+    applyFuncParity(res);
+
+    return res;
 }
 
 Expr Tanh::getRealPart()
@@ -897,7 +921,10 @@ Expr tanh_(const Expr& t_abstract)
 {
     if (t_abstract->getPrimaryType() == NUMERICAL and t_abstract->evaluate() == 0)
         return ZERO;
-    return make_shared<Tanh>(t_abstract);
+    Expr res = make_shared<Tanh>(t_abstract);
+    applyFuncParity(res);
+
+    return res;
 }
 
 Expr ACosh::getRealPart()
@@ -967,7 +994,10 @@ Expr acosh_(const Expr& t_abstract)
 {
     if (t_abstract->getPrimaryType() == NUMERICAL and t_abstract->evaluate() == 0)
         return int_(1);
-    return make_shared<ACosh>(t_abstract);
+    Expr res = make_shared<ACosh>(t_abstract);
+    applyFuncParity(res);
+
+    return res;
 }
 
 Expr ASinh::getRealPart()
@@ -1038,7 +1068,10 @@ Expr asinh_(const Expr& t_abstract)
 {
     if (t_abstract->getPrimaryType() == NUMERICAL and t_abstract->evaluate() == 0)
         return ZERO;
-    return make_shared<ASinh>(t_abstract);
+    Expr res = make_shared<ASinh>(t_abstract);
+    applyFuncParity(res);
+
+    return res;
 }
 
 Expr ATanh::getRealPart()
@@ -1109,7 +1142,10 @@ Expr atanh_(const Expr& t_abstract)
 {
     if (t_abstract->getPrimaryType() == NUMERICAL and t_abstract->evaluate() == 0)
         return ZERO;
-    return make_shared<ATanh>(t_abstract);
+    Expr res = make_shared<ATanh>(t_abstract);
+    applyFuncParity(res);
+
+    return res;
 }
 
 void ATan::print(int mode) const
@@ -1156,7 +1192,10 @@ Expr atan_(const Expr& t_abstract)
 {
     if (t_abstract->getPrimaryType() == NUMERICAL and t_abstract->evaluate() == 0)
         return ZERO;
-    return make_shared<ATan>(t_abstract);
+    Expr res = make_shared<ATan>(t_abstract);
+    applyFuncParity(res);
+
+    return res;
 }
 
 void Angle::print(int mode) const
@@ -1292,4 +1331,14 @@ Expr factorial_(const Expr& t_abstract)
     return make_shared<Factorial>(t_abstract);
 }
 
-
+void applyFuncParity(Expr& func) 
+{
+    if (func->getPrimaryType() != SCALAR_FUNCTION) return;
+    const Expr arg = func->getArgument();
+    const int parity = func->getParity(arg);
+    if (parity != 0 and arg->getNumericalFactor()->evaluateScalar() < 0) {
+        func->setArgument(times_(int_(-1),arg));
+        if (parity == -1)
+            func = times_(int_(-1),func);
+    }
+}

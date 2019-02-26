@@ -92,8 +92,10 @@ int AbstractVectorial::getNArgs(int axis) const
 
 Expr AbstractVectorial::getArgument(int iArg) const
 {
-    if (iArg < nArgs)
+    if (iArg >= 0 and iArg < nArgs)
         return argument[iArg];
+    else if (iArg == -1)
+        return Copy(this);
     print();
     callError(Out_of_bounds, "AbstractVectorial::getArgument(int iArg) const",iArg);
     return ZERO;
@@ -122,9 +124,12 @@ Expr AbstractVectorial::getArgument(const vector<int>& indices) const
         if (*it != -1)
             shape[distance(indices.begin(),it)] = 1;
     // We suppress dimensions of size 1
-    for (it=shape.begin(); it!=shape.end(); ++it)
-        if (*it == 1)
-            --it = shape.erase(it);
+    for (size_t i=0; i!=shape.size(); ++i) {
+        if (shape[i] == 1) {
+            shape.erase(shape.begin()+i);
+            --i;
+        }
+    }
 
     Expr foo = tensor_(shape);
     int index = indices[0];
@@ -201,7 +206,7 @@ void AbstractVectorial::setArgument(const Expr& t_abstract, const vector<int>& i
         return;
     }
     if (size == 1)
-        setArgument(t_abstract, indices[0]);
+        argument[indices[0]] = t_abstract;
     else
         argument[indices[0]]->setArgument(t_abstract,vector<int>(indices.begin()+1,indices.end()));
 }
@@ -543,7 +548,7 @@ bool AbstractVectorial::operator==(const Expr& t_abstract) const
     return true;
 }
 
-Expr& AbstractVectorial::operator[](int iArg)
+Expr AbstractVectorial::operator[](int iArg)
 {
     if (iArg < 0 or iArg >= nArgs) {
         print();
@@ -646,7 +651,9 @@ Matrix::Matrix(int t_nArgs): Matrix()
 Matrix::Matrix(int t_x_nArgs, int t_y_nArgs): Matrix()
 {
     nArgs = t_x_nArgs;
-    argument = vector<Expr >(nArgs, make_shared<Vector>(t_y_nArgs));
+    argument = vector<Expr >(nArgs);
+    for (auto& arg : argument)
+        arg = make_shared<Vector>(t_y_nArgs);
     shape = vector<int>(2);
     shape[0] = t_x_nArgs;
     shape[1] = t_y_nArgs;
@@ -829,16 +836,13 @@ HighDTensor::HighDTensor(const vector<int>& t_shape): AbstractVectorial()
 {
     shape = t_shape;
     dim = shape.size();
-    if(dim > 0)
-    {
+    if(dim > 0) {
         nArgs = shape[0];
-        vector<int> newShape = shape;
-        newShape.erase(newShape.begin());
-        if (dim > 1)
-        {
+        vector<int> newShape(shape.begin()+1, shape.end());
+        if (dim > 1) {
             argument = vector<Expr >(nArgs);
-            for (int i=0; i<nArgs; i++)
-                argument[i] = tensor_(newShape);
+            for (auto& arg : argument)
+                arg = tensor_(newShape);
         }
         else argument = vector<Expr >(nArgs, ZERO);
     }

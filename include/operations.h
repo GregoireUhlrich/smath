@@ -181,6 +181,8 @@ class Polynomial: public AbstractMultiFunc{
     bool operator<(const Expr& t_abstract) const override;
 };
 
+void getExponentStructure(const Expr& argument, Expr& term, Expr& exponent);
+
 /*! \class Times
  * \brief Handles a product, function of multiple arguments
  */
@@ -256,6 +258,8 @@ class Times: public AbstractMultiFunc{
     Expr suppressTerm(const Expr& t_abstract) const override;
 
     void insert(const Expr& t_abstract, bool side=0) override;
+    void leftInsert(const Expr& t_abstract);
+    void rightInsert(const Expr& t_abstract);
 
     void print(int mode=0) const override;
 

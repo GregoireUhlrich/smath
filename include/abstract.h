@@ -358,7 +358,7 @@ class Abstract{
      */
     virtual bool operator==(const Expr& t_abstract) const = 0; 
 
-    virtual Expr& operator[](int iArg);
+    virtual Expr operator[](int iArg);
 
     virtual std::vector<Expr > getAlternateForms() const;
 

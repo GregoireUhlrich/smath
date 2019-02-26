@@ -1126,5 +1126,6 @@ inline Factorial::Factorial(const Expr& t_argument): AbstractFunc(){
 }
 /////
 
+void applyFuncParity(Expr& func);
 
 #endif

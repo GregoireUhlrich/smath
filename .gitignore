@@ -6,6 +6,7 @@ test*
 gInterpreter.cpp
 perf.data
 perf*
+data/*
 *.data
 app*
 *~

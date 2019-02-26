@@ -13,7 +13,7 @@
 #include <algorithm>
 
 static const int SIMPLIFICATION_METHOD=1;
-static const int MAX_ALTERNATE_FORMS=10;
+static const int MAX_ALTERNATE_FORMS=5;
 static const int MAX_RECURSION_ALTERNATE=3;
 
 void printVector(const std::vector<Expr >& vector);
