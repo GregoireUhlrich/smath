@@ -2,82 +2,55 @@
 
 using namespace std;
 
-Index::Index()
+void Index::contract(Index* t_contracted) 
 {
-    name = "i";
-    free = true;
-    max = 3;
-}
-
-Index::Index(string t_name)
-{
-    name = t_name;
-    free = true;
-    max = 3;
-}
-
-Index::Index(string t_name, int t_max)
-{
-    name = t_name;
-    free = true;
-    if (t_max > 0)
-        max = t_max;
-    else
-    {
-        cout<<"Warning: initializing an index with no freedom. Taking 3 dimension (default).\n";
-        max = 3;
+    if (not free) {
+        callError(Contract_dummy, "Index::contract(const Index*& contracted) ",
+                   "("+name+" and "+t_contracted->getName());
     }
-}
-
-string Index::getName() const
-{
-    return name;
-}
-
-bool Index::getFree() const
-{
-    return free;
-}
-
-int Index::getMax() const
-{
-    return max;
-}
-
-void Index::setName(string t_name)
-{
-    if (t_name != "")
-        name = t_name;
+    if (max == t_contracted->getMax()) {
+        free = false;
+        contracted = t_contracted;
+        if (contracted->getFree())
+            contracted->contract(this);
+    }
     else
-        cout<<"Warning: an index without name is not possible.\n";
+        callError(Contraction_mismatch, "Index::contract(const Index*& contracted) ",
+                   "("+name+" and "+t_contracted->getName());
 }
 
-void Index::setFree(bool t_free)
-{
-    free = t_free;
-}
-
-void Index::print() const
-{
+void Index::print() const {
     if (not free) cout<<"%";
     cout<<name;
 }
 
-string Index::printLaTeX() const
-{
+string Index::printLaTeX() const {
     return name;
 }
 
 bool Index::operator==(const Index& t_index) const
 {
-    return (name == t_index.getName() and free == t_index.getFree() and max == t_index.getMax());
+    return (name == t_index.getName() and
+            free == t_index.getFree() and 
+            max == t_index.getMax());
 }
 
-bool Index::operator!=(const Index& t_index) const
-{
+bool Index::operator!=(const Index& t_index) const {
     return !(*this==t_index);
 }
 
+bool operator<(std::pair<int,int> a, std::pair<int,int> b)
+{
+    return (a.first < b.first or
+            (a.first == b.first and
+             a.second < b.second));
+}
+bool operator>(std::pair<int,int> a, std::pair<int,int> b)
+{
+    return (a.first > b.first or
+            (a.first == b.first and
+             a.second > b.second));
+}
 
 AbstractIndicial::AbstractIndicial(): AbstractScalar()
 {
@@ -124,7 +97,7 @@ AbstractIndicial::AbstractIndicial(string t_name, vector<Index> t_index): Abstra
         }
     }
     if (not correctExpression)
-    {
+    {s
         cout<<"Warning: wrong contraction on indices. \n";
         nIndices = 0;
         index = vector<Index>(0);

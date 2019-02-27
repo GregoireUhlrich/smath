@@ -13,6 +13,8 @@ enum Error{
     Out_of_bounds,
     Eval_not_valued,
     Undefinied_behaviour,
+    Contract_dummy,
+    Contraction_mismatch,
 
 };
 
@@ -42,9 +44,13 @@ inline void callError(Error error, const std::string& caller, T spec)
                std::cout<<"Evaluating the value of non valued Abstract in "<<caller<<".\n"; break;
         case Undefinied_behaviour:
                std::cout<<"Undefined behaviour in "<<caller<<"\n."; break;
+        case Contract_dummy:
+               std::cout<<"Contracting dummy index in "<<caller<<": "<<spec<<std::endl; break;
+        case Contraction_mismatch: 
+               std::cout<<"Mismatch in contraction ("<<caller<<"): "<<spec<<std::endl; break;
 
         default:
-               std::cout<<"Type "<<(int)error<<" not recognized.\n";
+               std::cout<<"ScmType "<<(int)error<<" not recognized.\n";
     }
     if (not STOP_ERROR_DEBUG_MODE)
         exit((int)error);
@@ -63,7 +69,7 @@ inline void callWarning(Warning warning, const std::string& caller, T spec)
     switch(warning)
     {
         case Unknown_type:
-               std::cout<<"Type "<<" unknown in function \""<<caller<<"\".\n"; break;
+               std::cout<<"ScmType "<<" unknown in function \""<<caller<<"\".\n"; break;
         case Invalid_dimension:
                std::cout<<"Invalid dimension "<<spec<<" in function "<<caller<<".\n"; break;
         case Factorial_float:
@@ -74,7 +80,7 @@ inline void callWarning(Warning warning, const std::string& caller, T spec)
                std::cout<<"Infinite result found in "<<caller<<".\n"; break;
 
         default:
-               std::cout<<"Type "<<(int)warning<<" not recognized.\n";
+               std::cout<<"ScmType "<<(int)warning<<" not recognized.\n";
     }
 }
 void callWarning(Warning warning, const std::string& caller);

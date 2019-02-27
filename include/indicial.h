@@ -5,7 +5,19 @@
 #include "variable.h"
 #include "operations.h"
 #include <map>
+#include <set>
 #include <initializer_list>
+
+enum VectorSpace {
+    Default,
+    Lorentz,
+    Dirac,
+
+};
+
+// Returns a < b with specific rules on a and b
+bool operator<(std::pair<int,int> a, std::pair<int,int> b);
+bool operator>(std::pair<int,int> a, std::pair<int,int> b);
 
 class Index{
 
@@ -13,15 +25,16 @@ class Index{
 
     std::string name;
     bool free;
-    int max;
+    const int max;
+    Index* contracted;
 
     public:
 
     Index();
 
-    explicit Index(std::string t_name);
+    explicit Index(const std::string& t_name);
 
-    Index(std::string t_name, int t_max);
+    Index(const std::string& t_name, unsigned int t_max);
 
     ~Index(){};
 
@@ -29,11 +42,11 @@ class Index{
 
     bool getFree() const;
 
-    int getMax() const;
+    const int getMax() const;
 
-    void setName(std::string t_name);
+    void setName(const std::string& t_name);
 
-    void setFree(bool t_free);
+    void contract(Index* t_contracted);
 
     void print() const;
 
@@ -44,6 +57,23 @@ class Index{
     bool operator!=(const Index& t_index) const;
 };
 
+/////
+// Inline functions
+
+inline Index::Index(): name("i"), free(true), max(3), contracted(nullptr){}
+inline Index::Index(const std::string& t_name): name(t_name), free(true),
+                                                max(3), contracted(nullptr){}
+inline Index::Index(const std::string& t_name, unsigned int t_max): name(t_name),
+                                    free(true), max(t_max), contracted(nullptr){}
+
+inline std::string Index::getName() const { return name;}
+inline bool Index::getFree() const { return free;}
+inline const int Index::getMax() const { return max;}
+
+inline void Index::setName(const std::string& t_name) { name = t_name;}
+
+/////
+
 class AbstractIndicial: public AbstractScalar{
 
     protected:
@@ -53,6 +83,10 @@ class AbstractIndicial: public AbstractScalar{
 
     int nContractedPairs;
     std::map<int,int> pair;
+
+    std::set<std::pair<int,int> > contraction;
+    std::set<std::pair<int,int> > symmetry;
+    std::set<std::pair<int,int> > antiSymmetry;
 
     public:
 

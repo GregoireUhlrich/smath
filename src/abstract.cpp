@@ -497,70 +497,43 @@ Expr Abstract::inverseMatrix() const
     return nullptr;
 }
 
-bool operator==(const Expr& a, const Expr& b)
-{
+bool operator==(const Expr& a, const Expr& b) {
     return (*a==b);
 }
-
-bool operator==(const Expr& a, int b)
-{
+bool operator==(const Expr& a, int b) {
     return (*a==b);
 }
-
-bool operator==(const Expr& a, double b)
-{
-    return (*a==b);
-}
-
-bool operator!=(const Expr& a, const Expr& b)
-{
+bool operator!=(const Expr& a, const Expr& b) {
     return (*a!=b);
 }
-
-bool operator!=(const Expr& a, int b)
-{
+bool operator!=(const Expr& a, int b) {
     return (*a!=b);
 }
-
-bool operator!=(const Expr& a, double b)
-{
+bool operator!=(const Expr& a, double b) {
     return (*a!=b);
 }
-
-bool operator>=(const Expr& a, const Expr& b)
-{
+bool operator>=(const Expr& a, const Expr& b) {
     return (*a>=b);
 }
-
-bool operator<=(const Expr& a, const Expr& b)
-{
+bool operator<=(const Expr& a, const Expr& b) {
     return (*a<=b);
 }
-
-bool operator>(const Expr& a, const Expr& b)
-{
+bool operator>(const Expr& a, const Expr& b) {
     return (*a>b);
 }
-
-bool operator<(const Expr& a, const Expr& b)
-{
+bool operator<(const Expr& a, const Expr& b) {
     return (*a<b);
 }
-
-bool operator|=(const Expr& a, const Expr& b)
-{
+bool operator|=(const Expr& a, const Expr& b) {
     return (*a|=b);
 }
-
-bool operator&=(const Expr& a, const Expr& b)
-{
+bool operator&=(const Expr& a, const Expr& b) {
     return (*a&=b);
 }
 
 ostream& operator<<(ostream& fout, Type type)
 {
-    switch(type)
-    {
+    switch(type) {
         case INTEGER:     fout<<"Integer";     break;
         case CFRACTION:   fout<<"CFraction";   break;
         case DOUBLE:      fout<<"Double";      break;
@@ -604,10 +577,9 @@ ostream& operator<<(ostream& fout, Type type)
 
 ostream& operator<<(ostream& fout, PrimaryType primaryType)
 {
-    switch(primaryType)
-    {
-        case NUMERICAL:      cout<<"Purely numerical";      break;
-        case LITERAL:    cout<<"Variable Numerical";    break;
+    switch(primaryType) {
+        case NUMERICAL:             cout<<"Purely numerical";      break;
+        case LITERAL:               cout<<"Variable Numerical";    break;
         case MULTI_SCALAR_FUNCTION: cout<<"Multi Scalar Function"; break;
         case SCALAR_FUNCTION:       cout<<"Scalar Function";       break;
         case VECTORIAL:             cout<<"Vectorial";             break;
