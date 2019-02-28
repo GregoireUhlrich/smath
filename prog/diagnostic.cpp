@@ -144,8 +144,39 @@ cout<<variable->evaluateScalar()<<" "<<developed->evaluateScalar()<<endl;
     Simplify(sin_(pi_/2-x)).print();
     cout<<endl;
 
+    int N = 3;
+    vector<int> vec(N);
+    for (int i=0; i<N; i++) vec[i] = i+1;
+    vector<vector<int> > perm = permutations(vec);
+    for (int i=0; i<perm.size(); i++)
+    {
+        cout<<"Permutation "<<i+1<<": ";
+        for (int j=0; j<perm[i].size(); j++)
+            cout<<perm[i][j]<<" ";
+        cout<<endl;
+    }
+
+    Index i("i"), j("j"), k("k");
+    Symbol eps_ijk = itensor_("eps", {i,j,k});
+    Expr foo = eps_ijk.getAbstract();
+    foo->addSymmetry(0,1);
+    foo->addAntiSymmetry(1,2);
+    vector<Expr> vecExpr = foo->getPermutations();
+    for (size_t i=0; i<vecExpr.size(); i++)
+    {
+        cout<<"Permutation "<<i+1<<": ";
+        vecExpr[i]->print();
+    }
+    foo->setFullySymmetric();
+    vecExpr = foo->getPermutations();
+    for (size_t i=0; i<vecExpr.size(); i++)
+    {
+        cout<<"Permutation "<<i+1<<": ";
+        vecExpr[i]->print();
+    }
+
     return 0;
-    Symbol i("i"), j("j");
+    /*Symbol i("i"), j("j");
     int N = 200;
     cout<<"Creating matrix\n";
     Symbol M = matrix_(N,N,(cos_(x^i)^2)+(sin_(x^j)^2),i,j);
@@ -188,6 +219,8 @@ cout<<variable->evaluateScalar()<<" "<<developed->evaluateScalar()<<endl;
         foo = Refresh(foo);
     dur = chrono::system_clock::now() - start;
     cout<<"Execution time: "<<convertTime(dur)<<endl;
+
+*/
     
     return 0;
 }

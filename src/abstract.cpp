@@ -48,6 +48,12 @@ vector<Index> Abstract::getIndexStructure() const
     return vector<Index>(0);
 }
 
+void Abstract::setIndexStructure(const vector<Index>& index)
+{
+    print();
+    callError(Abstract_func_called, "Abstract::setIndexStructure(const vector<Index>& t_index) const");
+}
+
 bool Abstract::checkIndexStructure(const vector<Index>& t_index) const
 {
     print();
@@ -55,13 +61,33 @@ bool Abstract::checkIndexStructure(const vector<Index>& t_index) const
     return (t_index.size()==0);
 }
 
-bool Abstract::checkIndexStructure(initializer_list<Index> index) const
+bool Abstract::checkIndexStructure(const initializer_list<Index>& index) const
 {
     print();
     callError(Abstract_func_called, "Abstract::checkIndexStructure(initializer_list<Index> index) const");
     return (index.size()==0);
 }
 
+void Abstract::setFullySymmetric()
+{
+    print();
+    callError(Abstract_func_called, "Abstract::setFullySymmetric() const");
+}
+void Abstract::setFullyAntiSymmetric()
+{
+    print();
+    callError(Abstract_func_called, "Abstract::setFullyAntiSymmetric() const");
+}
+void Abstract::addSymmetry(int i1, int i2)
+{
+    print();
+    callError(Abstract_func_called, "Abstract::addSymmetry() const");
+}
+void Abstract::addAntiSymmetry(int i1, int i2)
+{
+    print();
+    callError(Abstract_func_called, "Abstract::addAntiSymmetry() const");
+}
 int Abstract::getNContractedPairs() const
 {
     print();
@@ -69,11 +95,24 @@ int Abstract::getNContractedPairs() const
     return 0;
 }
 
-map<int,int> Abstract::getPair() const
+int Abstract::permut(int i1, int i2)
+{
+    print();
+    callError(Abstract_func_called, "Abstract::permut(int i1, int i2)");
+    return 0;
+}
+vector<Expr> Abstract::getPermutations() const
+{
+    print();
+    callError(Abstract_func_called, "Abstract::getPermutations() const");
+    return vector<Expr>(0);
+}
+
+set<pair<int,int> > Abstract::getContractedPair() const
 {
     print();
     callError(Abstract_func_called, "Abstract::getPair() const");
-    return map<int,int>();
+    return set<pair<int,int> >();
 }
 
 void Abstract::contractIndices(int axis1, int axis2)

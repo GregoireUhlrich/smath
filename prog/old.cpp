@@ -842,22 +842,24 @@ int main(){
     eps_ijk = itensor_("eps", {i,j,k});
     eps_ijk.print();
     foo = eps_ijk.getAbstract();
-    foo->contractIndices(1,2);
+    foo->contractIndices(0,1);
     eps_ijk.setAbstract(foo);
     eps_ijk.print();
     eps_ijk = itensor_("eps", {i,j,k});
     foo = eps_ijk.getAbstract();
-    foo->contractIndices(1,3);
+    foo->contractIndices(0,2);
     eps_ijk.setAbstract(foo);
     eps_ijk.print();
     eps_ijk = itensor_("eps", {i,i,j});
     eps_ijk.print();
-    map<int,int> pair = eps_ijk.getAbstract()->getPair();
-    for (int i=0; i<eps_ijk.getAbstract()->getNIndices(); i++)
-        if (pair[i] != -1)
-            cout<<"  -pair "<<i<<"<->"<<pair[i]<<endl;
+    set<pair<int,int> > pair_ = eps_ijk.getAbstract()->getContractedPair();
+    for (auto it=pair_.begin(); it!=pair_.end(); ++it)
+        cout<<"   -pair "<<(*it).first<<"<->"<<(*it).second<<endl;
     eps_ijk = itensor_("eps", {i,i,i});
     eps_ijk.print();
+    pair_ = eps_ijk.getAbstract()->getContractedPair();
+    for (auto it=pair_.begin(); it!=pair_.end(); ++it)
+        cout<<"   -pair "<<(*it).first<<"<->"<<(*it).second<<endl;
 
     Symbol gamma, psi, psi_bar;
     Index alpha("\\alpha",4);

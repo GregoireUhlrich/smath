@@ -10,6 +10,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <set>
 #include <map>
 #include <iostream>
 #include <memory>
@@ -185,13 +186,21 @@ class Abstract{
 
     virtual std::vector<Index> getIndexStructure() const;
 
+    virtual void setIndexStructure(const std::vector<Index>& t_index);
+
     virtual bool checkIndexStructure(const std::vector<Index>& t_index) const;
 
-    virtual bool checkIndexStructure(std::initializer_list<Index> index) const;
+    virtual bool checkIndexStructure(const std::initializer_list<Index>& index) const;
 
+    virtual void setFullySymmetric();
+    virtual void setFullyAntiSymmetric();
+    virtual void addSymmetry(int i1, int i2);
+    virtual void addAntiSymmetry(int i1, int i2);
     virtual int getNContractedPairs() const;
+    virtual int permut(int i1, int i2);
+    virtual std::vector<Expr> getPermutations() const;
 
-    virtual std::map<int,int> getPair() const;
+    virtual std::set<std::pair<int,int> > getContractedPair() const;
 
     virtual void contractIndices(int axis1, int axis2);
 

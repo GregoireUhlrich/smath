@@ -5,6 +5,7 @@
 #include "variable.h"
 #include "operations.h"
 #include <map>
+#include <string>
 #include <set>
 #include <initializer_list>
 
@@ -25,14 +26,15 @@ class Index{
 
     std::string name;
     bool free;
-    const int max;
-    Index* contracted;
+    int max;
 
     public:
 
     Index();
 
     explicit Index(const std::string& t_name);
+
+    Index(const Index& index) = default;
 
     Index(const std::string& t_name, unsigned int t_max);
 
@@ -42,15 +44,17 @@ class Index{
 
     bool getFree() const;
 
-    const int getMax() const;
+    int getMax() const;
 
     void setName(const std::string& t_name);
 
-    void contract(Index* t_contracted);
+    void setFree(bool t_free);
 
     void print() const;
 
     std::string printLaTeX() const;
+
+    Index& operator=(const Index& index) = default;
 
     bool operator==(const Index& t_index) const;
 
@@ -60,19 +64,141 @@ class Index{
 /////
 // Inline functions
 
-inline Index::Index(): name("i"), free(true), max(3), contracted(nullptr){}
+inline Index::Index(): name("i"), free(true), max(3){}
 inline Index::Index(const std::string& t_name): name(t_name), free(true),
-                                                max(3), contracted(nullptr){}
+                                                max(3){}
 inline Index::Index(const std::string& t_name, unsigned int t_max): name(t_name),
-                                    free(true), max(t_max), contracted(nullptr){}
+                                    free(true), max(t_max){}
 
 inline std::string Index::getName() const { return name;}
 inline bool Index::getFree() const { return free;}
-inline const int Index::getMax() const { return max;}
+inline int Index::getMax() const { return max;}
 
 inline void Index::setName(const std::string& t_name) { name = t_name;}
+inline void Index::setFree(bool t_free) { free = t_free;}
+/////
+
+class IndexStructure{
+
+    private:
+
+    int nIndices;
+    std::vector<Index> index;
+
+    public:
+
+    IndexStructure();
+
+    IndexStructure(const IndexStructure& t_index);
+
+    explicit IndexStructure(const std::initializer_list<Index>& t_index);
+
+    explicit IndexStructure(const std::vector<Index>& t_index);
+
+    ~IndexStructure(){}
+
+    int getNIndices() const;
+
+    std::vector<Index> getIndex() const;
+
+    std::vector<Index> getFreeIndex() const;
+
+    IndexStructure getSinglePermutation(int i1, int i2) const;
+
+    IndexStructure getPermutation(const std::vector<int>& permutation) const;
+
+    IndexStructure& operator=(const IndexStructure& t_index) = default;
+};
 
 /////
+// Inline functions
+
+inline IndexStructure::IndexStructure(): nIndices(0){}
+inline IndexStructure::IndexStructure(const IndexStructure& t_index):
+    nIndices(t_index.nIndices), index(t_index.index){}
+inline IndexStructure::IndexStructure(const std::initializer_list<Index>& t_index):
+    IndexStructure(std::vector<Index>(t_index.begin(), t_index.end())){}
+
+inline int IndexStructure::getNIndices() const{
+    return nIndices;
+}
+inline std::vector<Index> IndexStructure::getIndex() const{
+    return index;
+}
+/////
+
+template<int t_n>
+class Permutation{
+
+    private:
+
+    const int n=t_n;
+    std::array<int,t_n> permutation;
+
+    public:
+
+    Permutation();
+
+    explicit Permutation(const std::array<int,t_n>& t_permutation);
+
+    Permutation(const Permutation& permutation);
+
+    ~Permutation(){}
+
+    int getSize() const;
+    
+    std::array<int,t_n> getPermutation() const;
+
+    Permutation& operator=(const Permutation& t_permutation);
+
+    Permutation operator*(const Permutation& t_permutation);
+
+    private:
+
+    void checkPermutation(const Permutation& t_permutation);
+};
+
+/////
+// Inline functions
+
+template<int n>
+inline Permutation<n>::Permutation(){
+    for (int i=0; i<n; ++i)
+        permutation[i] = i;
+}
+
+template<int n>
+inline Permutation<n>::Permutation(const Permutation& t_permutation) {
+    checkPermutation(t_permutation);
+    for (int i=0; i<n; ++i)
+        permutation[i] = t_permutation.permutation[i];
+}
+
+template<int n>
+inline int Permutation<n>::getSize() const {
+    return n;
+}
+
+template<int n>
+inline void Permutation<n>::checkPermutation(const Permutation& t_permutation) {
+    if (n != t_permutation.getSize())
+        callError(Invalid_dimension,
+        "Permutation<n>::checkPermutation(const Permutation& t_permutation)",
+        t_permutation.getSize());
+}
+
+class Symmetry{
+
+    public:
+
+    Symmetry();
+
+    Symmetry(const Symmetry& t_symmetry);
+
+    ~Symmetry(){}
+
+    Symmetry& operator=(const Symmetry& t_symmetry) = default;
+};
 
 class AbstractIndicial: public AbstractScalar{
 
@@ -81,43 +207,48 @@ class AbstractIndicial: public AbstractScalar{
     int nIndices;
     std::vector<Index> index;
 
-    int nContractedPairs;
-    std::map<int,int> pair;
-
     std::set<std::pair<int,int> > contraction;
+    bool fullySymmetric;
     std::set<std::pair<int,int> > symmetry;
+    bool fullyAntiSymmetric;
     std::set<std::pair<int,int> > antiSymmetry;
 
     public:
 
     AbstractIndicial();
 
-    explicit AbstractIndicial(std::string t_name);
+    explicit AbstractIndicial(const std::string& t_name);
 
-    AbstractIndicial(std::string t_name, std::vector<Index> t_index);
+    explicit AbstractIndicial(const std::vector<Index>& t_index);
 
-    explicit AbstractIndicial(std::vector<Index> t_index);
+    AbstractIndicial(const AbstractIndicial& abstract) = default;
+
+    AbstractIndicial(const std::string& t_name, const std::vector<Index>& t_index);
      
     ~AbstractIndicial(){};
 
-    PrimaryType getPrimaryType() const { return INDICIAL;}
+    PrimaryType getPrimaryType() const override { return INDICIAL;}
 
-    int getNIndices() const;
+    int getNIndices() const override;
 
-    Index getIndex(int i) const;
+    Index getIndex(int i) const override;
 
-    std::vector<Index> getIndexStructure() const;
+    std::vector<Index> getIndexStructure() const override;
 
-    bool checkIndexStructure(const std::vector<Index>& t_index) const;
+    bool checkIndexStructure(const std::vector<Index>& t_index) const override;
 
-    bool checkIndexStructure(std::initializer_list<Index> index) const;
+    bool checkIndexStructure(const std::initializer_list<Index>& index) const override;
 
-    int getNContractedPairs() const;
+    int getNContractedPairs() const override;
 
-    std::map<int,int> getPair() const;
+    std::set<std::pair<int,int> > getContractedPair() const override;
 
-    void contractIndices(int axis1, int axis2);
+    void contractIndices(int axis1, int axis2) override;
+
+    void setIndexStructure(const std::vector<Index>& t_index) override;
 };
+
+std::vector<std::vector<int> > permutations(const std::vector<int>& init);
 
 class ITensor: public AbstractIndicial{
 
@@ -127,15 +258,27 @@ class ITensor: public AbstractIndicial{
 
     ITensor();
 
-    explicit ITensor(std::string t_name);
+    explicit ITensor(const std::string& t_name);
 
-    ITensor(std::string t_name, std::vector<Index> t_index);
+    ITensor(const std::string& t_name, const std::vector<Index>& t_index);
 
-    explicit ITensor(std::vector<Index> t_index);
+    explicit ITensor(const std::vector<Index>& t_index);
+
+    ITensor(const ITensor& tensor) = default;
 
     ~ITensor(){};
 
     Type getType() const override { return ITENSOR;}
+
+    bool getFullySymmetric() const;
+    bool getFullyAntiSymmetric() const;
+    void setFullySymmetric() override;
+    void setFullyAntiSymmetric() override;
+    void addSymmetry(int i1, int i2);
+    void addAntiSymmetry(int i1, int i2);
+    int permut(int i1, int i2) override;
+    Expr applyPermutation(const std::vector<int>& permutations) const;
+    std::vector<Expr> getPermutations() const override;
 
     void print(int mode=0) const override;
 
@@ -202,12 +345,12 @@ class ITimes: public Times{
 
     ~ITimes(){};
 
-    PrimaryType getPrimaryType() const { return INDICIAL;}
+    PrimaryType getPrimaryType() const override { return INDICIAL;}
 };
 
 
-Expr _itensor_(std::string name, Index index);
+Expr _itensor_(const std::string& name, Index index);
 
-Expr _itensor_(std::string name, std::initializer_list<Index> indices);
+Expr _itensor_(const std::string& name, const std::initializer_list<Index>& indices);
 
 #endif

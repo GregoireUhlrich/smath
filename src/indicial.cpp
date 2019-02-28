@@ -2,23 +2,6 @@
 
 using namespace std;
 
-void Index::contract(Index* t_contracted) 
-{
-    if (not free) {
-        callError(Contract_dummy, "Index::contract(const Index*& contracted) ",
-                   "("+name+" and "+t_contracted->getName());
-    }
-    if (max == t_contracted->getMax()) {
-        free = false;
-        contracted = t_contracted;
-        if (contracted->getFree())
-            contracted->contract(this);
-    }
-    else
-        callError(Contraction_mismatch, "Index::contract(const Index*& contracted) ",
-                   "("+name+" and "+t_contracted->getName());
-}
-
 void Index::print() const {
     if (not free) cout<<"%";
     cout<<name;
@@ -39,6 +22,84 @@ bool Index::operator!=(const Index& t_index) const {
     return !(*this==t_index);
 }
 
+IndexStructure::IndexStructure(const vector<Index>& t_index): 
+    nIndices(t_index.size()), index(t_index)
+{
+    for (auto it=index.begin(); it!=index.end()-1; ++it) {
+        for (auto jt=it+1; jt!=index.end(); ++jt) {
+            if (*it == *jt) {
+                if (it->getFree() xor jt->getFree()) {
+                    ostringstream sout;
+                    sout<<it->getName()<<"<->"<<jt->getName();
+                    callError(Contraction_mismatch,
+"AbstractIndicial::AbstractIndicial(string t_name, vector<Index> t_t_index)", 
+sout.str());
+                }
+                else if (it->getFree()){
+                    it->setFree(false);
+                    *jt = *it;
+                }
+            }
+        }
+    }
+}
+
+vector<Index> IndexStructure::getFreeIndex() const
+{
+    vector<Index> rep(0);
+    for (const auto& i: index)
+        if (i.getFree())
+            rep.push_back(i);
+
+    return rep;
+}
+
+IndexStructure IndexStructure::getSinglePermutation(int i1, int i2) const
+{
+    if (i1 < 0 or i2 < 0 or
+        i1 >= nIndices or i2 >= nIndices) {
+        callError(Out_of_bounds,
+"IndexStructure::getSinglePermutation(int i1, int i2) const",
+((i1<0 or i1>=nIndices) ? i1 : i2));
+    }
+    IndexStructure rep = *this;
+    swap(rep.index[i1],rep.index[i2]);
+
+    return rep;
+}
+
+IndexStructure IndexStructure::getPermutation(const vector<int>& permutation) const
+{
+    if ((int)permutation.size() != nIndices) {
+        callWarning(Invalid_dimension,
+"IndexStructure::getPermutation(const vector<int>& permutation) const",
+permutation.size());
+    }
+    vector<Index> newIndex(0);
+    for (int i=0; i<nIndices; ++i)
+        newIndex.push_back(index[permutation[i]]);
+
+    return IndexStructure(newIndex);
+}
+
+template<int n>
+Permutation<n>& Permutation<n>::operator=(const Permutation& t_permutation)
+{
+    checkPermutation(t_permutation);
+    for (int i=0; i<n; ++i)
+        permutation[i] = t_permutation.permutation[i];
+
+    return *this;
+}
+
+template<const int n>
+Permutation<n> Permutation<n>::operator*(const Permutation& t_permutation)
+{
+    checkPermutation(t_permutation);
+    array<int,n> newPerm;
+
+
+
 bool operator<(std::pair<int,int> a, std::pair<int,int> b)
 {
     return (a.first < b.first or
@@ -56,116 +117,62 @@ AbstractIndicial::AbstractIndicial(): AbstractScalar()
 {
     nIndices = 0;
     index = vector<Index>(0);
-
-    nContractedPairs = 0;
-    pair = map<int,int>();
+    fullySymmetric = false;
+    fullyAntiSymmetric = false;
 }
 
-AbstractIndicial::AbstractIndicial(string t_name): AbstractScalar(t_name)
+AbstractIndicial::AbstractIndicial(const string& t_name): AbstractScalar(t_name)
 {
     nIndices = 0;
     index = vector<Index>(0);
-
-    nContractedPairs = 0;
-    pair = map<int,int>();
+    fullySymmetric = false;
+    fullyAntiSymmetric = false;
 }
 
-AbstractIndicial::AbstractIndicial(string t_name, vector<Index> t_index): AbstractScalar(t_name)
+AbstractIndicial::AbstractIndicial(const string& t_name,
+                                   const vector<Index>& t_index)
+                                   :AbstractScalar(t_name)
 {
     index = t_index;
     nIndices = index.size();
+    fullySymmetric = false;
+    fullyAntiSymmetric = false;
 
-    nContractedPairs = 0;
-    pair = map<int,int>();
-
-    for (int i=0; i<nIndices; i++)
-        pair.emplace_hint(pair.end(), i, -1);
-
-    bool correctExpression = true;
-    for (int i=0; i<nIndices-1; i++)
-    {
-        for (int j=i+1; j<nIndices; j++)
-        {
-            if (index[i] == index[j])
-            {
-                nContractedPairs += 1;
-                if (pair[i] != -1 or pair[j] != -1) // index already contracted
-                    correctExpression = false;
-                pair[i] = j;
-                pair[j] = i;
+    for (int i=0; i<nIndices-1; i++) {
+        for (int j=i+1; j<nIndices; j++) {
+            if (index[i] == index[j]) {
+                if (index[i].getFree() xor index[j].getFree()) {
+                    ostringstream sout;
+                    sout<<i<<"<->"<<j;
+                    callError(Contraction_mismatch,
+"AbstractIndicial::AbstractIndicial(string t_name, vector<Index> t_index)", 
+sout.str());
+                }
+                else if (index[i].getFree()){
+                    index[i].setFree(false);
+                    index[j] = index[i];
+                    contraction.emplace(std::pair<int,int>(i,j));
+                }
             }
         }
     }
-    if (not correctExpression)
-    {s
-        cout<<"Warning: wrong contraction on indices. \n";
-        nIndices = 0;
-        index = vector<Index>(0);
-
-        nContractedPairs = 0;
-        pair = map<int,int>();
-    }
-    else
-    {
-        for (int i=0; i<nIndices; i++)
-            if (pair[i] != -1)
-                index[i].setFree(false);
-    }
 }
 
-AbstractIndicial::AbstractIndicial(vector<Index> t_index): AbstractScalar()
-{
-    index = t_index;
-    nIndices = index.size();
+AbstractIndicial::AbstractIndicial(const vector<Index>& t_index): AbstractIndicial("",t_index)
+{}
 
-    nContractedPairs = 0;
-    pair = map<int,int>();
-
-    for (int i=0; i<nIndices; i++)
-        pair.emplace_hint(pair.end(), i, -1);
-
-    bool correctExpression = true;
-    for (int i=0; i<nIndices-1; i++)
-    {
-        for (int j=i+1; j<nIndices; j++)
-        {
-            if (index[i] == index[j])
-            {
-                nContractedPairs += 1;
-                if (pair[i] != -1 or pair[j] != -1) // index already contracted
-                    correctExpression = false;
-                pair[i] = j;
-                pair[j] = i;
-                index[i].setFree(false);
-                index[j].setFree(false);
-            }
-        }
-    }
-    if (not correctExpression)
-    {
-        cout<<"Warning: wrong contraction on indices. \n";
-        nIndices = 0;
-        index = vector<Index>(0);
-
-        nContractedPairs = 0;
-        pair = map<int,int>();
-    }
-}
-
-int AbstractIndicial::getNIndices() const
-{
+int AbstractIndicial::getNIndices() const {
     return nIndices;
 }
 
 Index AbstractIndicial::getIndex(int i) const
 {
-    if (i < nIndices) return index[i];
-    cout<<"Warning: dimension "<<i<<" out of bounds for "<<name<<".\n";
+    if (i >= 0 and i < nIndices) return index[i];
+    callError(Out_of_bounds,"AbstractIndicial::getIndex(int i) const",i);
     return Index();
 }
 
-vector<Index> AbstractIndicial::getIndexStructure() const
-{
+vector<Index> AbstractIndicial::getIndexStructure() const {
     return index;
 }
 
@@ -175,70 +182,209 @@ bool AbstractIndicial::checkIndexStructure(const vector<Index>& t_indices) const
     vector<int> indicesLeft(nIndices);
     for (int i=0; i<nIndices;i++) indicesLeft[i] = i;
 
-    Index foo;
-    for (int i=0; i<nIndices; i++)
-    {
-        bool matched = 0;
-        for (size_t j=0; j<indicesLeft.size(); j++)
-        {
-            foo = t_indices[indicesLeft[j]];
-            if (index[i] == foo)
-            {
-                indicesLeft.erase(indicesLeft.begin()+j);
-                matched = 1;
-                break;
+    for (int i=0; i<nIndices; i++) {
+        if (index[i].getFree()) {
+            bool matched = 0;
+            for (size_t j=0; j<indicesLeft.size(); j++) {
+                Index foo = t_indices[indicesLeft[j]];
+                if (not foo.getFree() or index[i] == foo)
+                {
+                    indicesLeft.erase(indicesLeft.begin()+j);
+                    matched = 1;
+                    break;
+                }
             }
+            if (!matched) return false;
         }
-        if (!matched) return false;
     }
     return true;
 }
 
-bool AbstractIndicial::checkIndexStructure(initializer_list<Index> t_indices) const
-{
-    vector<Index> foo(0);
-    for ( Index index : t_indices)
-        foo.push_back(index);
-    return checkIndexStructure(foo);
+bool AbstractIndicial::checkIndexStructure(const initializer_list<Index>& t_indices) const {
+    return checkIndexStructure(vector<Index>(t_indices.begin(), t_indices.end()));
 }
 
-int AbstractIndicial::getNContractedPairs() const
-{
-    return nContractedPairs;
+int AbstractIndicial::getNContractedPairs() const {
+    return contraction.size();
 }
 
-map<int,int> AbstractIndicial::getPair() const
-{
-    return pair;
+set<pair<int,int> > AbstractIndicial::getContractedPair() const {
+    return contraction;
 }
 
 void AbstractIndicial::contractIndices(int axis1, int axis2)
 {
-    if (axis1 < nIndices and axis2 < nIndices)
-    {
-        if (index[axis1].getFree() and index[axis2].getFree())
-        {
+    if (axis1 < nIndices and axis2 < nIndices and
+        axis1 >= 0 and axis2 >= 0) {
+        if (index[axis1].getFree() and index[axis2].getFree()) {
             index[axis1].setFree(false);
             index[axis2] = index[axis1];
-            pair[axis1] = axis2;
-            pair[axis2] = axis1;
+            contraction.emplace(pair<int,int>(axis1,axis2));
         }
-        else cout<<"Warning: contracted dummy indices.\n";
+        else
+            callError(Contract_dummy,"AbstractIndicial::contractIndices(int axis1, int axis2)",
+                                     index[axis1].getName()+"<->"+index[axis2].getName());
     }
-    else cout<<"Warning: contracting axis out of bounds for indicial expression.\n";
+    else 
+        callError(Out_of_bounds,"AbstractIndicial::contractIndices(int axis1, int axis2)",
+                ((axis1<0 or axis1>=nIndices) ? axis1 : axis2));
+}
+
+void AbstractIndicial::setIndexStructure(const std::vector<Index>& t_index)
+{
+    if (nIndices != (int)index.size())
+        callWarning(Invalid_dimension,
+                "AbstractIndicial::setIndexStructure(const std::vector<Index>& t_index)",
+                index.size());
+    else
+        index = t_index;
 }
 
 ITensor::ITensor(): AbstractIndicial()
 {}
 
-ITensor::ITensor(string t_name): AbstractIndicial(t_name)
+ITensor::ITensor(const string& t_name): AbstractIndicial(t_name)
 {}
 
-ITensor::ITensor(string t_name, vector<Index> t_index): AbstractIndicial(t_name, t_index)
+ITensor::ITensor(const string& t_name, const vector<Index>& t_index): AbstractIndicial(t_name, t_index)
 {}
 
-ITensor::ITensor(vector<Index> t_index): AbstractIndicial(t_index)
+ITensor::ITensor(const vector<Index>& t_index): AbstractIndicial(t_index)
 {}
+
+bool ITensor::getFullySymmetric() const {
+    return fullySymmetric;
+}
+bool ITensor::getFullyAntiSymmetric() const {
+    return fullyAntiSymmetric;
+}
+void ITensor::setFullySymmetric() {
+    fullySymmetric = true;
+    fullyAntiSymmetric = false;
+    symmetry.clear();
+    antiSymmetry.clear();
+}
+void ITensor::setFullyAntiSymmetric() {
+    fullySymmetric = false;
+    fullyAntiSymmetric = true;
+    symmetry.clear();
+    antiSymmetry.clear();
+}
+void ITensor::addSymmetry(int i1, int i2)
+{
+    if (fullySymmetric) return;
+    if (fullyAntiSymmetric) fullyAntiSymmetric = false;
+    if (i1 < 0 or i2 < 0 or 
+        i1 >= nIndices or i2 >= nIndices)
+        callError(Out_of_bounds,"ITensor::permut(int i1, int i2)",
+                (i1<0 or i1>=nIndices) ? i1 : i2);
+    pair<int,int> couple(i1,i2);
+    auto pos = antiSymmetry.find(couple);
+    if (pos != antiSymmetry.end())
+        antiSymmetry.erase(pos);
+    symmetry.emplace(couple);
+}
+void ITensor::addAntiSymmetry(int i1, int i2)
+{
+    if (fullyAntiSymmetric) return;
+    if (fullySymmetric) fullySymmetric = false;
+    if (i1 < 0 or i2 < 0 or 
+        i1 >= nIndices or i2 >= nIndices)
+        callError(Out_of_bounds,"ITensor::permut(int i1, int i2)",
+                (i1<0 or i1>=nIndices) ? i1 : i2);
+    pair<int,int> couple(i1,i2);
+    auto pos = symmetry.find(couple);
+    if (pos != symmetry.end())
+        antiSymmetry.erase(pos);
+    antiSymmetry.emplace(couple);
+}
+int ITensor::permut(int i1, int i2) 
+{
+// Returns 1 if permutation symmetric
+// Returns -1 if permutation antisymmetric
+// Returns 0 (and does not permut) else
+    if (i1 < 0 or i2 < 0 or 
+        i1 >= nIndices or i2 >= nIndices)
+        callError(Out_of_bounds,"ITensor::permut(int i1, int i2)",
+                (i1<0 or i1>=nIndices) ? i1 : i2);
+    swap(index[i1],index[i2]);
+    return 0;
+    if (i2 < i1) swap(i1,i2);
+    const pair<int,int> toPermut(i1,i2);
+    if (symmetry.find(toPermut) != symmetry.end()) {
+        swap(index[i1],index[i2]);
+        return 1;
+    }
+    else if (antiSymmetry.find(toPermut) != antiSymmetry.end()) {
+        swap(index[i1],index[i2]);
+        return -1;
+    }
+    return 0;
+}
+
+vector<vector<int> > permutations(const vector<int>& init)
+{
+    const int n = init.size();
+    if (n == 0) return vector<vector<int> >(0);
+    if (n == 1) return vector<vector<int> >(1,init);
+
+    vector<vector<int> > rep(0);
+    vector<int> foo(init);
+    for (int i=0; i<n; ++i) {
+        foo.erase(foo.begin()+i);
+        vector<vector<int> >intermediateRep = permutations(foo);
+        for (size_t j=0; j<intermediateRep.size(); ++j)
+            intermediateRep[j].insert(intermediateRep[j].begin(), init[i]);
+        foo.insert(foo.begin()+i,init[i]);
+        rep.insert(rep.end(), intermediateRep.begin(), intermediateRep.end());
+    }
+
+    return rep;
+}
+
+Expr ITensor::applyPermutation(const vector<int>& permutations) const
+{
+    if (nIndices != (int)permutations.size())
+        callWarning(Invalid_dimension,
+                "ITensor::applyPermutation(const vector<int>& permutations) const",
+                permutations.size());
+    else {
+        vector<Index> newIndex(nIndices);
+        for (int i=0; i!=nIndices; ++i)
+            newIndex[i] = index[permutations[i]];
+        Expr res = make_shared<ITensor>(*this);
+        res->setIndexStructure(newIndex);
+        return res;
+    }
+    return ZERO;
+}
+
+vector<Expr> ITensor::getPermutations() const
+{
+    vector<Expr> res(1,Copy(this));
+    if (fullySymmetric or fullyAntiSymmetric) {
+        vector<int> initPerm(nIndices);
+        for (int i=0; i!=nIndices; ++i)
+            initPerm[i] = i;
+        vector<vector<int> > perm = permutations(initPerm);
+        res = vector<Expr>(0);
+        for (size_t i=0; i!=perm.size(); ++i)
+            res.push_back(applyPermutation(perm[i]));
+        return res;
+    }
+    for (auto sym=symmetry.begin(); sym!=symmetry.end(); ++sym) {
+        res.insert(res.end(), res.begin(), res.end());
+        for (size_t i=res.size()/2; i!=res.size(); ++i) 
+            res[i]->permut((*sym).first,(*sym).second);
+    }
+    for (auto asym=antiSymmetry.begin(); asym!=antiSymmetry.end(); ++asym) {
+        res.insert(res.end(), res.begin(), res.end());
+        for (size_t i=res.size()/2; i!=res.size(); ++i) 
+            res[i]->permut((*asym).first,(*asym).second);
+    }
+
+    return res;
+}
 
 void ITensor::print(int mode) const
 {
@@ -298,19 +444,15 @@ bool ITensor::operator==(const Expr& t_abstract) const
     return true;
 }
 
-Expr _itensor_(std::string name, Index index)
+Expr _itensor_(const std::string& name, Index index)
 {
     vector<Index> indices(1,index);
     return make_shared<ITensor>(name, indices);
 }
 
-Expr _itensor_(std::string name, initializer_list<Index> t_indices)
-{
-    vector<Index> indices(0);
-    for (Index index : t_indices)
-        indices.push_back(index);
-
-    return make_shared<ITensor>(name, indices);
+Expr _itensor_(const std::string& name, const initializer_list<Index>& t_indices) {
+    return make_shared<ITensor>(name,vector<Index>(t_indices.begin(),
+                                                   t_indices.end()));
 }
 
 
