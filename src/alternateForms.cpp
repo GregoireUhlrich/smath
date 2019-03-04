@@ -93,10 +93,10 @@ vector<Expr > internalRecursiveAlternateForms(const Expr& t_abstract, int depth)
         // could be wrong if changes occur in structure....
         ////
         if (nArgs == 1) argument = vector<Expr>(1,t_abstract->getArgument());
-        else if (t_abstract->getPrimaryType() == VECTORIAL or
-                 t_abstract->getType() == PLUS or
-                 t_abstract->getType() == TIMES or
-                 t_abstract->getType() == POLYNOMIAL)
+        else if (t_abstract->getPrimaryType() == smType::Vectorial or
+                 t_abstract->getType() == smType::Plus or
+                 t_abstract->getType() == smType::Times or
+                 t_abstract->getType() == smType::Polynomial)
             argument = t_abstract->getVectorArgument();
         else if (nArgs == 2) {
             argument = vector<Expr>(2);
@@ -104,7 +104,7 @@ vector<Expr > internalRecursiveAlternateForms(const Expr& t_abstract, int depth)
             argument[1] = t_abstract->getArgument(1);
         }
         else 
-            callError(Undefinied_behaviour,
+            callError(smError::UndefiniedBehaviour,
                     "internalRecursiveAlternateForms(const Expr& t_abstract, int depth)");
 
         vector<Expr > fooVec;
@@ -251,13 +251,13 @@ vector<Expr > Plus::getAlternateForms() const
     int nArgs2;
     for (int i=0; i<nArgs; i++)
     {
-        if (argument[i]->getType() == TIMES) // Searching fraction => same denominator
+        if (argument[i]->getType() == smType::Times) // Searching fraction => same denominator
         {
             nArgs2 = argument[i]->getNArgs();
             for (int j=0; j<nArgs2; j++)
             {
                 foo2 = Copy(argument[i]->getArgument(j));
-                if (foo2->getType() == POW)
+                if (foo2->getType() == smType::Pow)
                 {
                     if (foo2->getArgument(1)->isInteger() and foo2->getArgument(1)->evaluateScalar() < 0)
                     {
@@ -281,7 +281,7 @@ vector<Expr > Plus::getAlternateForms() const
                 }
             }
         }
-        else if (argument[i]->getType() == POW) // Searching fraction => same denominator
+        else if (argument[i]->getType() == smType::Pow) // Searching fraction => same denominator
         {
             foo2 = Copy(argument[i]);
             if (foo2->getArgument(1)->isInteger() and foo2->getArgument(1)->evaluateScalar() < 0)
@@ -304,7 +304,7 @@ vector<Expr > Plus::getAlternateForms() const
                     alternateForms.push_back(Copy(foo3));
             }
         }
-        if (false and argument[i]->getType() == TIMES and argument[i]->getNArgs() == 2)
+        if (false and argument[i]->getType() == smType::Times and argument[i]->getNArgs() == 2)
         {
             Expr number = argument[i]->getArgument(0);
             if (number->isInteger() and abs(number->evaluateScalar()) < 10) // n*X, n integer
@@ -359,12 +359,12 @@ vector<Expr > Times::getAlternateForms() const
     for (int i=0; i<nArgs; i++)
     {
         int type = argument[i]->getType();
-        if (not cosProdFound and type == COS)
+        if (not cosProdFound and type == smType::Cos)
         {
             for (int j=i+1; j<nArgs; j++)
             {
                 type = argument[j]->getType();
-                if (type == COS) // cos(a)cos(b)=cos(a+b)+sin(a)sin(b)
+                if (type == smType::Cos) // cos(a)cos(b)=cos(a+b)+sin(a)sin(b)
                 {
                     cosProdFound = true;
                     Expr a = argument[i]->getArgument();
@@ -375,7 +375,7 @@ vector<Expr > Times::getAlternateForms() const
                     foo2 = times_(foo2,plus_(cos_(plus_(a,b)),times_(sin_(a),sin_(b))));
                     alternateForms.push_back(foo2);
                 }
-                else if (type == SIN) // cos(a)sin(b) = sin(a+b)-sin(a)cos(b)
+                else if (type == smType::Sin) // cos(a)sin(b) = sin(a+b)-sin(a)cos(b)
                 {
                     cosProdFound = true;
                     Expr a = argument[i]->getArgument();
@@ -388,12 +388,12 @@ vector<Expr > Times::getAlternateForms() const
                 }
             }
         }
-        else if (not cosProdFound and type == SIN)
+        else if (not cosProdFound and type == smType::Sin)
         {
             for (int j=i+1; j<nArgs; j++)
             {
                 type = argument[j]->getType();
-                if (type == SIN) // sin(a)sin(b)=cos(a)cos(b)-cos(a+b)
+                if (type == smType::Sin) // sin(a)sin(b)=cos(a)cos(b)-cos(a+b)
                 {
                     cosProdFound = true;
                     Expr a = argument[i]->getArgument();
@@ -404,7 +404,7 @@ vector<Expr > Times::getAlternateForms() const
                     foo2 = times_(foo2,minus_(times_(cos_(a),cos_(b)),cos_(plus_(a,b))));
                     alternateForms.push_back(foo2);
                 }
-                else if (type == COS) // cos(b)sin(a) = sin(a+b)-sin(b)cos(a)
+                else if (type == smType::Cos) // cos(b)sin(a) = sin(a+b)-sin(b)cos(a)
                 {
                     cosProdFound = true;
                     Expr a = argument[i]->getArgument();
@@ -442,7 +442,7 @@ vector<Expr > Times::getAlternateForms() const
 vector<Expr > Pow::getAlternateForms() const
 {
     vector<Expr > alternateForms(0);
-    if (argument[0]->getType() == COS)
+    if (argument[0]->getType() == smType::Cos)
     {
         if (*argument[1] == 2) // cos(x)^2
         {
@@ -452,7 +452,7 @@ vector<Expr > Pow::getAlternateForms() const
         else if (*argument[1] == -2) // 1/cos(x)^2
             alternateForms.push_back(plus_(ONE,pow_(tan_(argument[0]->getArgument()),int_(2)))); // = 1 + tan(x)^2
     }
-    else if (argument[0]->getType() == SIN) // sin(x)^2
+    else if (argument[0]->getType() == smType::Sin) // sin(x)^2
     {
         if (*argument[1] == 2)
         {
@@ -460,7 +460,7 @@ vector<Expr > Pow::getAlternateForms() const
             alternateForms.push_back(times_(minus_(ONE,cos_(times_(int_(2),argument[0]->getArgument()))),_cfraction_(1,2))); // (1-cos(2x))/2
         }
     }
-    if (argument[0]->getType() == COSH)
+    if (argument[0]->getType() == smType::Cosh)
     {
         if (*argument[1] == 2) // cosh(x)^2
         {
@@ -470,7 +470,7 @@ vector<Expr > Pow::getAlternateForms() const
         else if (*argument[1] == -2) // 1/cosh(x)^2
             alternateForms.push_back(plus_(ONE,pow_(tanh_(argument[0]->getArgument()),int_(2)))); // = 1 + tanh(x)^2
     }
-    else if (argument[0]->getType() == SINH) // sinh(x)^2
+    else if (argument[0]->getType() == smType::Sinh) // sinh(x)^2
     {
         if (*argument[1] == 2)
         {
@@ -487,18 +487,18 @@ vector<Expr > Pow::getAlternateForms() const
 vector<Expr > Cos::getAlternateForms() const
 {
     vector<Expr > foo(0);
-    if (argument->getType() == PLUS and argument->getNArgs() == 2) // cos(a+b)
+    if (argument->getType() == smType::Plus and argument->getNArgs() == 2) // cos(a+b)
     {
         Expr a = argument->getArgument(0);
         Expr b = argument->getArgument(1);
         foo.push_back(minus_(times_(cos_(a),cos_(b)),times_(sin_(a),sin_(b)))); // = cos(a)cos(b)-sin(a)sin(b)
     }
-    else if (argument->getType() == TIMES and argument->getNArgs() == 2 and argument->getArgument(0) == int_(2)) // cos(2a)
+    else if (argument->getType() == smType::Times and argument->getNArgs() == 2 and argument->getArgument(0) == int_(2)) // cos(2a)
     {
         Expr a = argument->getArgument(1);
         foo.push_back(minus_(pow_(cos_(a),int_(2)),pow_(sin_(a),int_(2)))); // = cos(a)^2-sin(a)^2
     }
-    if (argument->getType() == TIMES and argument->getNArgs() == 2 and *argument->getArgument(1) == pi_) // cos(a*pi)
+    if (argument->getType() == smType::Times and argument->getNArgs() == 2 and *argument->getArgument(1) == pi_) // cos(a*pi)
     {
         Expr a = argument->getArgument(0);
         if (a->isInteger())
@@ -521,18 +521,18 @@ vector<Expr > Cos::getAlternateForms() const
 vector<Expr > Sin::getAlternateForms() const
 {
     vector<Expr > foo(0);
-    if (argument->getType() == PLUS and argument->getNArgs() == 2) // sin(a+b)
+    if (argument->getType() == smType::Plus and argument->getNArgs() == 2) // sin(a+b)
     {
         Expr a = argument->getArgument(0);
         Expr b = argument->getArgument(1);
         foo.push_back(plus_(times_(cos_(a),sin_(b)),times_(sin_(a),cos_(b)))); // = cos(a)sin(b)+sin(a)cos(b)
     }
-    else if (argument->getType() == TIMES and argument->getNArgs() == 2 and argument->getArgument(0) == int_(2)) // sin(2a)
+    else if (argument->getType() == smType::Times and argument->getNArgs() == 2 and argument->getArgument(0) == int_(2)) // sin(2a)
     {
         Expr a = argument->getArgument(1);
         foo.push_back(times_(times_(int_(2),cos_(a)),sin_(a))); // = 2cos(a)sin(a)
     }
-    else if (argument->getType() == TIMES and argument->getNArgs() == 2 and *argument->getArgument(1) == pi_) // sin(a*pi)
+    else if (argument->getType() == smType::Times and argument->getNArgs() == 2 and *argument->getArgument(1) == pi_) // sin(a*pi)
     {
         Expr a = argument->getArgument(0);
         if (a->isInteger())
@@ -557,13 +557,13 @@ vector<Expr > Tan::getAlternateForms() const
     vector<Expr > foo(2);
     foo[0] = fraction_(sin_(argument),cos_(argument));
     foo[1] = Copy(this);
-    if (argument->getType() == PLUS and argument->getNArgs() == 2) // tan(a+b)
+    if (argument->getType() == smType::Plus and argument->getNArgs() == 2) // tan(a+b)
     {
         Expr arg1 = argument->getArgument(0);
         Expr arg2 = argument->getArgument(1);
         foo.push_back(times_(plus_(tan_(arg1),tan_(arg2)),pow_(minus_(ONE,times_(tan_(arg1),tan_(arg2))),int_(-1)))); // = (tan(a)+tan(b))/(1-tan(a)*tan(b))
     }
-    else if (argument->getType() == TIMES and argument->getNArgs() == 2 and *argument->getArgument(0) == int_(2)) // tan(2a)
+    else if (argument->getType() == smType::Times and argument->getNArgs() == 2 and *argument->getArgument(0) == int_(2)) // tan(2a)
     {
         Expr arg = argument->getArgument(1);
         foo.push_back(times_(times_(int_(2),tan_(arg)),pow_(minus_(ONE,pow_(tan_(arg),int_(2))),int_(-1)))); // = 2tan(a)/(1-tan(a)^2)
@@ -572,7 +572,7 @@ vector<Expr > Tan::getAlternateForms() const
     {
         foo.push_back(times_(int_(-1),tan_(times_(int_(-1),argument))));
     }
-    else if (argument->getType() == TIMES and argument->getNArgs() == 2 and *argument->getArgument(1) == pi_) // tan(a*pi)
+    else if (argument->getType() == smType::Times and argument->getNArgs() == 2 and *argument->getArgument(1) == pi_) // tan(a*pi)
     {
         Expr a = argument->getArgument(0);
         if (a->isInteger())
@@ -589,13 +589,13 @@ vector<Expr > Tan::getAlternateForms() const
 vector<Expr > Cosh::getAlternateForms() const
 {
     vector<Expr > foo(0);
-    if (argument->getType() == PLUS and argument->getNArgs() == 2) // cosh(a+b)
+    if (argument->getType() == smType::Plus and argument->getNArgs() == 2) // cosh(a+b)
     {
         Expr a = argument->getArgument(0);
         Expr b = argument->getArgument(1);
         foo.push_back(plus_(times_(cosh_(a),cosh_(b)),times_(sinh_(a),sinh_(b)))); // = cosh(a)cosh(b)+sinh(a)sinh(b)
     }
-    else if (argument->getType() == TIMES and argument->getNArgs() == 2 and argument->getArgument(0) == int_(2)) // cosh(2a)
+    else if (argument->getType() == smType::Times and argument->getNArgs() == 2 and argument->getArgument(0) == int_(2)) // cosh(2a)
     {
         Expr a = argument->getArgument(1);
         foo.push_back(plus_(pow_(cosh_(a),int_(2)),pow_(sinh_(a),int_(2)))); // = cosh(a)^2+sinh(a)^2
@@ -609,13 +609,13 @@ vector<Expr > Cosh::getAlternateForms() const
 vector<Expr > Sinh::getAlternateForms() const
 {
     vector<Expr > foo(0);
-    if (argument->getType() == PLUS and argument->getNArgs() == 2) // sinh(a+b)
+    if (argument->getType() == smType::Plus and argument->getNArgs() == 2) // sinh(a+b)
     {
         Expr a = argument->getArgument(0);
         Expr b = argument->getArgument(1);
         foo.push_back(plus_(times_(cosh_(a),sinh_(b)),times_(sinh_(a),cosh_(b)))); // = cosh(a)sinh(b)+sinh(a)cosh(b)
     }
-    else if (argument->getType() == TIMES and argument->getNArgs() == 2 and argument->getArgument(0) == int_(2)) // sinh(2a)
+    else if (argument->getType() == smType::Times and argument->getNArgs() == 2 and argument->getArgument(0) == int_(2)) // sinh(2a)
     {
         Expr a = argument->getArgument(1);
         foo.push_back(times_(times_(int_(2),cosh_(a)),sinh_(a))); // = 2cosh(a)sinh(a)
@@ -631,13 +631,13 @@ vector<Expr > Tanh::getAlternateForms() const
     vector<Expr > foo(2);
     foo[0] = fraction_(sinh_(argument),cosh_(argument));
     foo[1] = Copy(this);
-    if (argument->getType() == PLUS and argument->getNArgs() == 2) // tanh(a+b)
+    if (argument->getType() == smType::Plus and argument->getNArgs() == 2) // tanh(a+b)
     {
         Expr arg1 = argument->getArgument(0);
         Expr arg2 = argument->getArgument(1);
         foo.push_back(times_(plus_(tanh_(arg1),tanh_(arg2)),pow_(plus_(ONE,times_(tanh_(arg1),tanh_(arg2))),int_(-1)))); // = (tanh(a)+tanh(b))/(1+tanh(a)*tanh(b))
     }
-    else if (argument->getType() == TIMES and argument->getNArgs() == 2 and *argument->getArgument(0) == int_(2)) // tanh(2a)
+    else if (argument->getType() == smType::Times and argument->getNArgs() == 2 and *argument->getArgument(0) == int_(2)) // tanh(2a)
     {
         Expr arg = argument->getArgument(1);
         foo.push_back(times_(times_(int_(2),tanh_(arg)),pow_(plus_(ONE,pow_(tanh_(arg),int_(2))),int_(-1)))); // = 2tanh(a)/(1+tanh(a)^2)

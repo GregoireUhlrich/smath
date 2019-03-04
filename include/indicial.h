@@ -1,5 +1,5 @@
-#ifndef INDICIAL_H_INCLUDED
-#define INDICIAL_H_INCLUDED
+#ifndef Indicial_H_INCLUDED
+#define Indicial_H_INCLUDED
 
 #include "abstract.h"
 #include "variable.h"
@@ -127,67 +127,54 @@ inline std::vector<Index> IndexStructure::getIndex() const{
 }
 /////
 
-template<int t_n>
 class Permutation{
 
     private:
 
-    const int n=t_n;
-    std::array<int,t_n> permutation;
+    int order;
+    int sign;
+    int symmetry;
+    size_t size;
+    std::vector<int> permutation;
 
     public:
 
     Permutation();
-
-    explicit Permutation(const std::array<int,t_n>& t_permutation);
-
+    explicit Permutation(int n);
+    explicit Permutation(const std::vector<int>& t_permutation);
+    Permutation(int n, const std::initializer_list<int>& list);
+    Permutation(int n, const std::initializer_list<std::initializer_list<int> >& list);
     Permutation(const Permutation& permutation);
 
     ~Permutation(){}
 
-    int getSize() const;
-    
-    std::array<int,t_n> getPermutation() const;
+    size_t getSize() const;
+    int getElement(int i) const;
+    int getOrder();
+    int getSign();
+    int getSymmetry() const;
+    std::vector<int> getPermutation() const;
+
+    void setSymmetry(int t_symmetry);
 
     Permutation& operator=(const Permutation& t_permutation);
+    Permutation operator*(const Permutation& t_permutation) const;
+    bool operator==(const Permutation& t_permutation) const;
+    bool operator!=(const Permutation& t_permuation) const;
+    int& operator[](int i);
+    friend std::ostream& operator<<(std::ostream& fout, const Permutation& permutation);
+};
 
-    Permutation operator*(const Permutation& t_permutation);
+void reducePermutation(std::vector<Permutation>& permutation);
+std::vector<Permutation> getSpan(const std::vector<Permutation>& init);
+void getSpan(std::vector<Permutation >& spanned, 
+                                     const Permutation& element);
+
+class Symmetry{
 
     private:
 
-    void checkPermutation(const Permutation& t_permutation);
-};
-
-/////
-// Inline functions
-
-template<int n>
-inline Permutation<n>::Permutation(){
-    for (int i=0; i<n; ++i)
-        permutation[i] = i;
-}
-
-template<int n>
-inline Permutation<n>::Permutation(const Permutation& t_permutation) {
-    checkPermutation(t_permutation);
-    for (int i=0; i<n; ++i)
-        permutation[i] = t_permutation.permutation[i];
-}
-
-template<int n>
-inline int Permutation<n>::getSize() const {
-    return n;
-}
-
-template<int n>
-inline void Permutation<n>::checkPermutation(const Permutation& t_permutation) {
-    if (n != t_permutation.getSize())
-        callError(Invalid_dimension,
-        "Permutation<n>::checkPermutation(const Permutation& t_permutation)",
-        t_permutation.getSize());
-}
-
-class Symmetry{
+    std::vector<Permutation > permutation;
 
     public:
 
@@ -197,7 +184,11 @@ class Symmetry{
 
     ~Symmetry(){}
 
-    Symmetry& operator=(const Symmetry& t_symmetry) = default;
+    void addSymmetry(const Permutation& newPermutation, int sym=1);
+
+    Symmetry operator*(const Symmetry& symmetry) const;
+
+    friend std::ostream& operator<<(std::ostream& fout, const Symmetry& symmetry);
 };
 
 class AbstractIndicial: public AbstractScalar{
@@ -209,9 +200,7 @@ class AbstractIndicial: public AbstractScalar{
 
     std::set<std::pair<int,int> > contraction;
     bool fullySymmetric;
-    std::set<std::pair<int,int> > symmetry;
     bool fullyAntiSymmetric;
-    std::set<std::pair<int,int> > antiSymmetry;
 
     public:
 
@@ -227,7 +216,7 @@ class AbstractIndicial: public AbstractScalar{
      
     ~AbstractIndicial(){};
 
-    PrimaryType getPrimaryType() const override { return INDICIAL;}
+    smType::PrimaryType getPrimaryType() const override { return smType::Indicial;}
 
     int getNIndices() const override;
 
@@ -254,6 +243,8 @@ class ITensor: public AbstractIndicial{
 
     private:
 
+    Symmetry symmetry;
+
     public:
 
     ITensor();
@@ -268,14 +259,14 @@ class ITensor: public AbstractIndicial{
 
     ~ITensor(){};
 
-    Type getType() const override { return ITENSOR;}
+    smType::Type getType() const override { return smType::ITensor;}
 
     bool getFullySymmetric() const;
     bool getFullyAntiSymmetric() const;
     void setFullySymmetric() override;
     void setFullyAntiSymmetric() override;
-    void addSymmetry(int i1, int i2);
-    void addAntiSymmetry(int i1, int i2);
+    void addSymmetry(int i1, int i2) override;
+    void addAntiSymmetry(int i1, int i2) override;
     int permut(int i1, int i2) override;
     Expr applyPermutation(const std::vector<int>& permutations) const;
     std::vector<Expr> getPermutations() const override;
@@ -316,7 +307,7 @@ class ITerm: public AbstractIndicial{
 
     Expr evaluate() override;
 
-    Type getType() const override { return ITERM;}
+    smType::Type getType() const override { return smType::ITerm;}
 
     int getNArgs(int axis=0) const override;
 
@@ -345,7 +336,7 @@ class ITimes: public Times{
 
     ~ITimes(){};
 
-    PrimaryType getPrimaryType() const override { return INDICIAL;}
+    smType::PrimaryType getPrimaryType() const override { return smType::Indicial;}
 };
 
 

@@ -159,21 +159,40 @@ cout<<variable->evaluateScalar()<<" "<<developed->evaluateScalar()<<endl;
     Index i("i"), j("j"), k("k");
     Symbol eps_ijk = itensor_("eps", {i,j,k});
     Expr foo = eps_ijk.getAbstract();
-    foo->addSymmetry(0,1);
-    foo->addAntiSymmetry(1,2);
+    foo->setFullySymmetric();
     vector<Expr> vecExpr = foo->getPermutations();
     for (size_t i=0; i<vecExpr.size(); i++)
     {
         cout<<"Permutation "<<i+1<<": ";
         vecExpr[i]->print();
     }
-    foo->setFullySymmetric();
-    vecExpr = foo->getPermutations();
-    for (size_t i=0; i<vecExpr.size(); i++)
-    {
-        cout<<"Permutation "<<i+1<<": ";
-        vecExpr[i]->print();
-    }
+
+    Permutation antiSym1(4,{0,1});
+    Permutation antiSym2(4,{2,3});
+    Permutation sym(4,{{0,2},{1,3}});
+
+    cout<<antiSym1<<endl;
+    cout<<antiSym2<<endl;
+    cout<<sym<<endl;
+    cout<<(antiSym1*antiSym2*sym)<<endl;
+    cout<<antiSym1.getOrder()<<" "<<sym.getOrder()<<endl;
+    cout<<Permutation(vector<int>{1,2,3,0}).getOrder()<<endl;
+    cout<<Permutation(4,{{0,2,3},{1}})<<endl;
+
+    vector<Permutation> init(3), span;
+    init[0] = antiSym1;
+    init[1] = antiSym2;
+    init[2] = sym;
+    span = getSpan(init);
+    cout<<span.size()<<" permutations: \n";
+    for (int i=0; i<span.size(); ++i)
+        cout<<span[i]<<": "<<span[i].getSign()<<endl;
+
+    Symmetry S;
+    S.addSymmetry(sym,1);
+    S.addSymmetry(antiSym1,-1);
+    S.addSymmetry(antiSym2,-1);
+    cout<<S<<endl;
 
     return 0;
     /*Symbol i("i"), j("j");

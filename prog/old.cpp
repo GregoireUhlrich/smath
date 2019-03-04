@@ -68,43 +68,43 @@ int main(){
     // Basic test of scalar variables
     cout<<"Basic test of scalar variables...\n";
     shared_ptr<Abstract> testNumber = int_(3);
-    if (testNumber->getName() != "" or testNumber->getType() != INTEGER or testNumber->evaluateScalar() != 3)
+    if (testNumber->getName() != "" or testNumber->getType() != smType::Integer or testNumber->evaluateScalar() != 3)
     {
         cout<<"Bad initialization of number.\n";
         everythingOK = false;
     }
     testNumber = int_(0);
-    if (testNumber->getName() != "" or testNumber->getType() != INTEGER or testNumber->evaluateScalar() != 0)
+    if (testNumber->getName() != "" or testNumber->getType() != smType::Integer or testNumber->evaluateScalar() != 0)
     {
         cout<<"Bad initialization of number.\n";
         everythingOK = false;
     }
     testNumber = make_shared<Variable>("x",4);
-    if (testNumber->getName() != "x" or testNumber->getType() != VARIABLE or testNumber->evaluateScalar() != 4)
+    if (testNumber->getName() != "x" or testNumber->getType() != smType::Variable or testNumber->evaluateScalar() != 4)
     {
         cout<<"Bad initialization of variable.\n";
         everythingOK = false;
     }
     testNumber = make_shared<Variable>("x");
-    if (testNumber->getName() != "x" or testNumber->getType() != VARIABLE or testNumber->evaluateScalar() != 0)
+    if (testNumber->getName() != "x" or testNumber->getType() != smType::Variable or testNumber->evaluateScalar() != 0)
     {
         cout<<"Bad initialization of variable.\n";
         everythingOK = false;
     }
     testNumber = make_shared<CFraction>();
-    if (testNumber->getName() != "" or testNumber->getType() != CFRACTION or testNumber->evaluateScalar() != 0)
+    if (testNumber->getName() != "" or testNumber->getType() != smType::CFraction or testNumber->evaluateScalar() != 0)
     {
         cout<<"Bad initialization of CFraction.\n";
         everythingOK = false;
     }
     testNumber = make_shared<CFraction>(4);
-    if (testNumber->getName() != "" or testNumber->getType() != CFRACTION or testNumber->evaluateScalar() != 4)
+    if (testNumber->getName() != "" or testNumber->getType() != smType::CFraction or testNumber->evaluateScalar() != 4)
     {
         cout<<"Bad initialization of CFraction.\n";
         everythingOK = false;
     }
     testNumber = make_shared<CFraction>(4,3);
-    if (testNumber->getName() != "" or testNumber->getType() != CFRACTION or testNumber->evaluateScalar() != 4./3)
+    if (testNumber->getName() != "" or testNumber->getType() != smType::CFraction or testNumber->evaluateScalar() != 4./3)
     {
         cout<<"Bad initialization of CFraction.\n";
         everythingOK = false;

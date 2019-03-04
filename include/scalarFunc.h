@@ -39,7 +39,7 @@ class AbstractFunc: public AbstractScalar{
     /*! Gives the **primary type** of an AbstractFunc.
      * \return \b 20
      */
-    PrimaryType getPrimaryType() const override { return SCALAR_FUNCTION;}
+    smType::PrimaryType getPrimaryType() const override { return smType::ScalarFunction;}
 
     /*! \brief Tells if the AbstractFunc is commutable.
      * \details The commutability of a function depends on the one of its \b argument.
@@ -124,7 +124,7 @@ class AbstractDuoFunc: public AbstractScalar{
     /*! \brief Gives the **primary type** of an AbstractDuoFunc.
      * \return 10
      */
-    virtual PrimaryType getPrimaryType() const override { return MULTI_SCALAR_FUNCTION   ;}
+    virtual smType::PrimaryType getPrimaryType() const override { return smType::MultiFunction   ;}
 
     /*! \brief Tells if the AbstractDuoFunc is commutable.
      * \details The commutability of a multi-function depends on the one of its \b arguments
@@ -197,7 +197,7 @@ class AbstractMultiFunc: public AbstractScalar{
     /*! \brief Gives the **primary type** of an AbstractMultiFunc.
      * \return 10
      */
-    virtual PrimaryType getPrimaryType() const override { return MULTI_SCALAR_FUNCTION   ;}
+    virtual smType::PrimaryType getPrimaryType() const override { return smType::MultiFunction   ;}
 
     /*! \brief Tells if the AbstractMultiFunc is commutable.
      * \details The commutability of a multi-function depends on the one of its \b arguments

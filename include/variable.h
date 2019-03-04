@@ -1,8 +1,8 @@
 /*! \file variable.h
  * \brief Scalar objects not functions of others.
  */
-#ifndef VARIABLE_H_INCLUDED
-#define VARIABLE_H_INCLUDED
+#ifndef Variable_H_INCLUDED
+#define Variable_H_INCLUDED
 #include "abstract.h"
 #include "support.h"
 #include <iostream>
@@ -33,7 +33,7 @@ class AbstractNumerical: public AbstractBuildingBlock{
     explicit AbstractNumerical(const std::string& t_name);
     virtual ~AbstractNumerical(){}
 
-    PrimaryType getPrimaryType() const override { return NUMERICAL;}
+    smType::PrimaryType getPrimaryType() const override { return smType::Numerical;}
 };
 
 class AbstractLiteral: public AbstractBuildingBlock{
@@ -43,7 +43,7 @@ class AbstractLiteral: public AbstractBuildingBlock{
     explicit AbstractLiteral(const std::string& t_name);
     virtual ~AbstractLiteral(){};
 
-    PrimaryType getPrimaryType() const override { return LITERAL;}
+    smType::PrimaryType getPrimaryType() const override { return smType::Literal;}
 };
 
 /////
@@ -86,7 +86,7 @@ class Integer: public AbstractNumerical{
     /*! \brief Returns the \b type corresponding to an object Integer.
      * \return 0
      */
-    Type getType() const override;
+    smType::Type getType() const override;
 
     bool isInteger() const override { return true;}
 
@@ -168,7 +168,7 @@ class Double: public AbstractNumerical{
     /*! \brief Returns the \b type corresponding to an object Double.
      * \return 0
      */
-    Type getType() const override;
+    smType::Type getType() const override;
 
     bool isInteger() const override { return (value==round(value));}
 
@@ -262,7 +262,7 @@ class CFraction: public AbstractNumerical{
     /*! \brief Gives the \b type of a CFraction.
      * \return 2
      */
-    Type getType() const override;
+    smType::Type getType() const override;
 
     /*! \brief Returns the numerator.
      * \return \b num
@@ -375,12 +375,12 @@ class Constant: public AbstractLiteral{
      * of others and that is real-valued.
      * \return \b 1
      */
-    PrimaryType getPrimaryType() const override;
+    smType::PrimaryType getPrimaryType() const override;
 
     /*! \brief Gives the \b type of a Constant.
      * \return \b 1
      */
-    Type getType() const override;
+    smType::Type getType() const override;
 
     bool getValued() const override;
 
@@ -471,12 +471,12 @@ class Variable: public AbstractLiteral{
      * of others and that is real-valued.
      * \return \b 1
      */
-    PrimaryType getPrimaryType() const override;
+    smType::PrimaryType getPrimaryType() const override;
 
     /*! \brief Gives the \b type of a Variable.
      * \return \b 1
      */
-    Type getType() const override;
+    smType::Type getType() const override;
 
     bool getValued() const override;
 
@@ -568,12 +568,12 @@ class CFactorial: public AbstractLiteral{
      * \details The **primary type** is the same as the one of Variable.
      * \return \b 1
      */
-    PrimaryType getPrimaryType() const override { return LITERAL;};
+    smType::PrimaryType getPrimaryType() const override { return smType::Literal;};
 
     /*! \brief Gives the \b type of a CFraction.
      * \return \b 3
      */
-    Type getType() const override { return CFACTORIAL;};
+    smType::Type getType() const override { return smType::CFactorial;};
 
     /*! \brief Sets the \b value from which we want the \b factorial.
      * \param t_value
@@ -635,12 +635,12 @@ class Imaginary: public AbstractLiteral{
     /*! Gives the **primary type** of the Imaginary.
      * \return \b 1
      */
-    PrimaryType getPrimaryType() const override { return LITERAL;}
+    smType::PrimaryType getPrimaryType() const override { return smType::Literal;}
 
     /*! \brief Gives the \b type of the Imaginary.
      * \return \b 4
      */
-    Type getType() const override { return IMAGINARY;}
+    smType::Type getType() const override { return smType::Imaginary;}
 
     Expr getRealPart() override;
 

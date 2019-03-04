@@ -1,5 +1,5 @@
-#ifndef VECTOR_H_INCLUDED
-#define VECTOR_H_INCLUDED
+#ifndef Vector_H_INCLUDED
+#define Vector_H_INCLUDED
 
 #include "abstract.h"
 #include "variable.h"
@@ -29,7 +29,7 @@ class AbstractVectorial: public Abstract{
 
     int getDim() const override { return dim;}
 
-    PrimaryType getPrimaryType() const override { return VECTORIAL;}
+    smType::PrimaryType getPrimaryType() const override { return smType::Vectorial;}
 
     int getNArgs(int axis=0) const override;
 
@@ -98,7 +98,7 @@ class Vector: public AbstractVectorial{
 
     ~Vector(){};
 
-    Type getType() const override { return VECTOR;}
+    smType::Type getType() const override { return smType::Vector;}
 
     using AbstractVectorial::getSubVectorial;
     Expr getSubVectorial(int iExcept) const override;
@@ -130,7 +130,7 @@ class Matrix: public AbstractVectorial{
 
     ~Matrix(){};
 
-    Type getType() const override { return MATRIX;}
+    smType::Type getType() const override { return smType::Matrix;}
 
     Expr determinant() const override;
 
@@ -175,7 +175,7 @@ class HighDTensor: public AbstractVectorial{
 
     ~HighDTensor(){};
 
-    Type getType() const override { return HIGHDTENSOR;}
+    smType::Type getType() const override { return smType::HighDTensor;}
 
     bool operator>(const Expr& t_abstract) const override;
 

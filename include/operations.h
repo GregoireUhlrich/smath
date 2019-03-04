@@ -38,7 +38,7 @@ class Plus: public AbstractMultiFunc{
     /*! \brief Gives the **type** of a Plus object.
      * \return 10
      */
-    Type getType() const override { return PLUS;}
+    smType::Type getType() const override { return smType::Plus;}
 
     Expr getRealPart() override;
 
@@ -138,7 +138,7 @@ class Polynomial: public AbstractMultiFunc{
     /*! \brief Gives the **type** of a Polynomial object.
      * \return 14
      */
-    Type getType() const override { return POLYNOMIAL;}
+    smType::Type getType() const override { return smType::Polynomial;}
 
     int getOrder() const override;
 
@@ -214,7 +214,7 @@ class Times: public AbstractMultiFunc{
     /*! \brief Gives the **type** of a Times object.
      * \return 11
      */
-    Type getType() const override { return TIMES;}
+    smType::Type getType() const override { return smType::Times;}
 
     Expr getRealPart() override;
 
@@ -334,7 +334,7 @@ class Fraction: public AbstractDuoFunc{
     /*! \brief Gives the **type** of a Fraction object.
      * \return 12
      */
-    Type getType() const override { return FRACTION;}
+    smType::Type getType() const override { return smType::Fraction;}
 
     /*! \brief Returns the number of possible factors in the expression.
      * \return \b The sum of the number of factors of the 2 arguments.
@@ -424,7 +424,7 @@ class Pow: public AbstractDuoFunc{
     /*! \brief Gives the **type** of a Pow object.
      * \return 13
      */
-    Type getType() const override { return POW;}
+    smType::Type getType() const override { return smType::Pow;}
 
     /*! \brief Returns the number of possible factors in the expression.
      * \return \b A function of the exponent if it is a Number.
@@ -548,7 +548,7 @@ class Derivative: public AbstractDuoFunc{
     /*! \brief Gives the **type** of a Derivative object.
      * \return 29
      */
-    Type getType() const override { return DERIVATIVE;}
+    smType::Type getType() const override { return smType::Derivative;}
 
     int getOrder() const override;
 

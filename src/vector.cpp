@@ -97,7 +97,7 @@ Expr AbstractVectorial::getArgument(int iArg) const
     else if (iArg == -1)
         return Copy(this);
     print();
-    callError(Out_of_bounds, "AbstractVectorial::getArgument(int iArg) const",iArg);
+    callError(smError::OutOfBounds, "AbstractVectorial::getArgument(int iArg) const",iArg);
     return ZERO;
 }
 
@@ -112,7 +112,7 @@ Expr AbstractVectorial::getArgument(const vector<int>& indices) const
     const int size = indices.size();
     if (size > dim or size == 0)
     {
-        callWarning(Invalid_dimension,"AbstractVectorial::getArgument",size);
+        callWarning(smError::InvalidDimension,"AbstractVectorial::getArgument",size);
         return ZERO;
     }
     else if (size == 1)
@@ -202,7 +202,7 @@ void AbstractVectorial::setArgument(const Expr& t_abstract, const vector<int>& i
     const int size = indices.size();
     if (size == 0 or size > dim)
     {
-        callWarning(Invalid_dimension, "AbstractVectorial::setArgument(const Expr& t_abstract, const vector<int>& indices)", size);
+        callWarning(smError::InvalidDimension, "AbstractVectorial::setArgument(const Expr& t_abstract, const vector<int>& indices)", size);
         return;
     }
     if (size == 1)
@@ -552,7 +552,7 @@ Expr AbstractVectorial::operator[](int iArg)
 {
     if (iArg < 0 or iArg >= nArgs) {
         print();
-        callError(Out_of_bounds, "AbstractVectorial::operator[](int iArg)", iArg);
+        callError(smError::OutOfBounds, "AbstractVectorial::operator[](int iArg)", iArg);
     }
     return argument[iArg];
 }
@@ -574,12 +574,12 @@ Vector::Vector(int t_nElements, const Expr& t_abstract, const Expr& index): Vect
 {
     if (t_abstract->getDim() > 0) {
         print();
-        callError(Element_sequence, "Vector::Vector(int t_nElements, const Expr& t_abstract, const Expr& index): Vector()");
+        callError(smError::ElementSequence, "Vector::Vector(int t_nElements, const Expr& t_abstract, const Expr& index): Vector()");
     }
     else {
         nArgs = t_nElements;
         argument = vector<Expr >(nArgs, t_abstract);
-        if (index->getType() == VARIABLE)
+        if (index->getType() == smType::Variable)
             for (iter it=argument.begin(); it!=argument.end(); ++it)
                 *it = Replace(*it,index,int_(distance(argument.begin(),it)));
         shape = vector<int>(1,nArgs);
@@ -597,7 +597,7 @@ Vector::Vector(const vector<Expr >& t_argument): Vector()
     }
     if (!dimOk) {
         print();
-        callError(Element_sequence, "Vector::Vector(const vector<Expr >& t_argument): Vector()");
+        callError(smError::ElementSequence, "Vector::Vector(const vector<Expr >& t_argument): Vector()");
     }
     else {
         argument = t_argument;
@@ -663,7 +663,7 @@ Matrix::Matrix(int t_x_nArgs, int t_y_nArgs, const Expr& t_abstract, const Expr&
 {
     if (t_abstract->getDim() != 0) {
         print();
-        callError(Element_sequence,"Matrix::Matrix(int t_x_nArgs, int t_y_nArgs, const Expr& t_abstract, const Expr& index_x, const Expr& index_y): Matrix()");
+        callError(smError::ElementSequence,"Matrix::Matrix(int t_x_nArgs, int t_y_nArgs, const Expr& t_abstract, const Expr& index_x, const Expr& index_y): Matrix()");
     }
     else {
         nArgs = t_x_nArgs;
@@ -691,7 +691,7 @@ Matrix::Matrix(const vector<Expr >& t_argument): Matrix()
     if (!dimOk)
     {
         print();
-        callError(Element_sequence,"Matrix::Matrix(const vector<Expr >& t_argument): Matrix()");
+        callError(smError::ElementSequence,"Matrix::Matrix(const vector<Expr >& t_argument): Matrix()");
     }
     else {
         argument = t_argument;
@@ -786,7 +786,7 @@ Expr Matrix::transposedCoMatrix() const
 Expr Matrix::inverseMatrix() const
 {
     Expr det = determinant();
-    if (det->getPrimaryType() == NUMERICAL and det->evaluateScalar() == 0)
+    if (det->getPrimaryType() == smType::Numerical and det->evaluateScalar() == 0)
     {
         cout<<"Warning: inverting matrix that has dete = 0.\n";
         return ZERO;

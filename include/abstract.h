@@ -5,8 +5,8 @@
  */
 
 #pragma GCC diagnostic ignored "-Wunused-parameter"
-#ifndef ABSTRACT_H_INCLUDED
-#define ABSTRACT_H_INCLUDED
+#ifndef AbsTRACT_H_INCLUDED
+#define AbsTRACT_H_INCLUDED
 #include <string>
 #include <sstream>
 #include <vector>
@@ -25,62 +25,99 @@ typedef std::shared_ptr<const Abstract> constExpr;
 typedef std::vector<Expr>::iterator iter;
 typedef std::vector<Expr>::const_iterator const_iter;
 
-/*! \enum Enum of the different primaryTypes of Abstract.*/
-enum PrimaryType {
 
-    NUMERICAL, /*!< = 0. Concerns Number and CFraction. */
-    LITERAL, /*!< = 1. Concerns Variable, CFactorial and Imaginary. */
-    MULTI_SCALAR_FUNCTION=10, /*!< = 10. Concerns all scalar multi-variate functions (Plus, Times, Pow, etc). */
-    SCALAR_FUNCTION=20, /*!< = 20. Concerns all scalar uni-variate functions (Exp, Log, Cos, etc). */
-    VECTORIAL=50,
-    INDICIAL=60, /*!<  = 60. Concerns all indicial expressions (and indices). */
-};
+namespace smType{
 
-/*! \enum Enum of the different types of Abstract (i.e. list of all possible specializations).*/
-enum Type {
 
-    INTEGER, /*!<  = 0. Abstract specialized in Integer */
-    CFRACTION, /*!<  = 1. Abstract specialized in CFraction */
-    DOUBLE, /*!<  = 2. Abstract specialized in Double */
-    CFACTORIAL, /*!<  = 3. Abstract specialized in CFactorial */
-    IMAGINARY, /*!<  = 4. Abstract specialized in Imaginary */
-    CONSTANT, /*!<  = 5. Abstract specialized in Constant */
-    VARIABLE, /*!<  = 6. Abstract specialized in Variable */
-    PLUS=10, /*!<  = 10. Abstract specialized in Plus */
-    POLYNOMIAL, /*!<  = 11. Abstract specialized in Polynomial */
-    TIMES, /*!<  = 12. Abstract specialized in Times */
-    FRACTION, /*!<  = 13. Abstract specialized in Fraction */
-    POW, /*!<  = 14. Abstract specialized in Pow */
-    EXP=20, /*!<  = 20. Abstract specialized in Exp */
-    LOG, /*!<  = 21. Abstract specialized in Log */
-    ABS, /*!<  = 22. Abstract specialized in Abs */
-    COS, /*!<  = 23. Abstract specialized in Cos */
-    SIN, /*!<  = 24. Abstract specialized in Sin */
-    TAN, /*!<  = 25. Abstract specialized in Tan */
-    COSH, /*!<  = 26. Abstract specialized in Cosh */
-    SINH, /*!<  = 27. Abstract specialized in Sinh */
-    TANH, /*!<  = 28. Abstract specialized in Tanh */
-    DERIVATIVE, /*!<  = 29. Abstract specialized in Derivative */
-    ANGLE, /*!<  = 30. Abstract specialized in Angle */
-    FACTORIAL, /*!<  = 31. Abstract specialized in Factorial */
-    ACOS, /*!<  = 32. Abstract specialized in ACos */
-    ASIN, /*!<  = 33. Abstract specialized in ASin */
-    ATAN, /*!<  = 34. Abstract specialized in ATan */
-    ACOSH, /*!<  = 35. Abstract specialized in ACosh */
-    ASINH, /*!<  = 36. Abstract specialized in ASinh */
-    ATANH, /*!<  = 37. Abstract specialized in ATanh */
+    /*! \enum Enum of the different primaryTypes of Abstract.*/
+    enum PrimaryType {
 
-    VECTOR=50, /*!<  = 50. Abstract specialized in Vector */
-    MATRIX, /*!<  = 51. Abstract specialized in Matrix */
-    HIGHDTENSOR, /*!<  = 52. Abstract specialized in HighDTensor */
+        Numerical, /*!< = 0. Concerns Number and CFraction. */
+        Literal, /*!< = 1. Concerns Variable, CFactorial and Imaginary. */
+        MultiFunction=10, /*!< = 10. Concerns all scalar multi-variate functions (Plus, Times, Pow, etc). */
+        ScalarFunction=20, /*!< = 20. Concerns all scalar uni-variate functions (Exp, Log, Cos, etc). */
+        Vectorial=50,
+        Indicial=60, /*!<  = 60. Concerns all indicial expressions (and indices). */
+    };
 
-    ITENSOR=60, /*!<  = 60. Abstract specialized in ITensor */
-    ITERM, /*!<  = 61. Abstract specialized in ITerm */
-};
+    /*! \enum Enum of the different types of Abstract (i.e. list of all possible specializations).*/
+    enum Type {
 
-std::ostream& operator<<(std::ostream& fout, Type type);
-std::ostream& operator<<(std::ostream& fout, PrimaryType primaryType);
-Expr Empty(Type type); // source in symbol.cpp
+        Integer, /*!<  = 0. Abstract specialized in Integer */
+        CFraction, /*!<  = 1. Abstract specialized in CFraction */
+        Double, /*!<  = 2. Abstract specialized in Double */
+        CFactorial, /*!<  = 3. Abstract specialized in CFactorial */
+        Imaginary, /*!<  = 4. Abstract specialized in Imaginary */
+        Constant, /*!<  = 5. Abstract specialized in Constant */
+        Variable, /*!<  = 6. Abstract specialized in Variable */
+        Plus=10, /*!<  = 10. Abstract specialized in Plus */
+        Polynomial, /*!<  = 11. Abstract specialized in Polynomial */
+        Times, /*!<  = 12. Abstract specialized in Times */
+        Fraction, /*!<  = 13. Abstract specialized in Fraction */
+        Pow, /*!<  = 14. Abstract specialized in Pow */
+        Exp=20, /*!<  = 20. Abstract specialized in Exp */
+        Log, /*!<  = 21. Abstract specialized in Log */
+        Abs, /*!<  = 22. Abstract specialized in Abs */
+        Cos, /*!<  = 23. Abstract specialized in Cos */
+        Sin, /*!<  = 24. Abstract specialized in Sin */
+        Tan, /*!<  = 25. Abstract specialized in Tan */
+        Cosh, /*!<  = 26. Abstract specialized in Cosh */
+        Sinh, /*!<  = 27. Abstract specialized in Sinh */
+        Tanh, /*!<  = 28. Abstract specialized in Tanh */
+        Derivative, /*!<  = 29. Abstract specialized in Derivative */
+        Angle, /*!<  = 30. Abstract specialized in Angle */
+        Factorial, /*!<  = 31. Abstract specialized in Factorial */
+        ACos, /*!<  = 32. Abstract specialized in ACos */
+        ASin, /*!<  = 33. Abstract specialized in ASin */
+        ATan, /*!<  = 34. Abstract specialized in ATan */
+        ACosh, /*!<  = 35. Abstract specialized in ACosh */
+        ASinh, /*!<  = 36. Abstract specialized in ASinh */
+        ATanh, /*!<  = 37. Abstract specialized in ATanh */
+
+        Vector=50, /*!<  = 50. Abstract specialized in Vector */
+        Matrix, /*!<  = 51. Abstract specialized in Matrix */
+        HighDTensor, /*!<  = 52. Abstract specialized in HighDTensor */
+
+        ITensor=60, /*!<  = 60. Abstract specialized in ITensor */
+        ITerm, /*!<  = 61. Abstract specialized in ITerm */
+    };
+
+}; // End of namespace smType
+
+namespace smProperty{
+
+    enum OwnBProperty{
+        BuildingBlock=0,
+        Integer,
+        Valued,
+        Commutable,
+    };
+
+    enum DependBProperty{
+        Proportionnal=0,
+        Depends,
+    };
+
+    enum OwnIProperty{
+        Value=0,
+        Dim,
+        Numerator,
+        Denominator,
+        NFactor,
+        Order,
+        NIndices,
+    };
+
+    enum DependIProperty{
+        Polynomial=0,
+        Parity,
+    };
+
+}; // End of namespace smProperty
+
+std::ostream& operator<<(std::ostream& fout, smType::Type type);
+std::ostream& operator<<(std::ostream& fout, smType::PrimaryType primaryType);
+Expr Empty(smType::Type type); // source in symbol.cpp
 
 class Index;
 
@@ -119,6 +156,12 @@ class Abstract{
      */
     std::string getName() const; 
 
+    virtual bool getProperty(smProperty::OwnBProperty prop);
+    virtual bool getProperty(smProperty::DependBProperty prop, const Expr& expression);
+
+    virtual int  getProperty(smProperty::OwnIProperty prop);
+    virtual int  getProperty(smProperty::DependIProperty prop, const Expr& expression);
+
     /*! \brief Allows to know if the object commutes with all the others.
      * \return \a commutable
      */
@@ -133,7 +176,7 @@ class Abstract{
      * treatments or simplifications.
      * \return type (a non memorized integer corresponding to the type of abstract)
      */
-    virtual PrimaryType getPrimaryType() const = 0; 
+    virtual smType::PrimaryType getPrimaryType() const = 0; 
 
     /*! \brief Gives the \b type of Abstract.
      * \details In the program this function is very often called. It allows different functions
@@ -141,7 +184,7 @@ class Abstract{
      * in order to do special treatments or simplifications.
      * \return type (a non memorized integer corresponding to the type of abstract)
      */
-    virtual Type getType() const = 0;
+    virtual smType::Type getType() const = 0;
 
     /*! \brief Gives the \b dimension of the object.
      * \details Allows to know if we are manipulating a pure scalar (i.e. that can have a real

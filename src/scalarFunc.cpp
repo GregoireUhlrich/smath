@@ -69,7 +69,7 @@ Expr AbstractFunc::evaluate()
 {
     Expr evalArg = argument->evaluate();
     Expr result = Empty(getType());
-    if (evalArg->getPrimaryType() == NUMERICAL) {
+    if (evalArg->getPrimaryType() == smType::Numerical) {
         result->setArgument(evalArg);
         return auto_number_(result->evaluateScalar());
     }
@@ -94,7 +94,7 @@ Expr AbstractDuoFunc::getArgument(int iArg) const {
     if (iArg != 1 and iArg != 0)
     {
         print();
-        callError(Out_of_bounds, "AbstractDuoFunc::getArgument(int iArg) const", iArg);
+        callError(smError::OutOfBounds, "AbstractDuoFunc::getArgument(int iArg) const", iArg);
     }
     return argument[iArg];
 }
@@ -103,7 +103,7 @@ void AbstractDuoFunc::setArgument(const Expr& t_argument, int iArg) {
     if (iArg != 1 and iArg != 0)
     {
         print();
-        callError(Out_of_bounds, "AbstractDuoFunc::getArgument(int iArg) const", iArg);
+        callError(smError::OutOfBounds, "AbstractDuoFunc::getArgument(int iArg) const", iArg);
     }
     argument[iArg] = t_argument;
 }
@@ -169,7 +169,7 @@ Expr AbstractMultiFunc::getArgument(int iArg) const {
     if (iArg < 0 or iArg >= nArgs)
     {
         print();
-        callError(Out_of_bounds, "Expr& AbstractMultiFunc::getArgument(int iArg) const", iArg);
+        callError(smError::OutOfBounds, "Expr& AbstractMultiFunc::getArgument(int iArg) const", iArg);
     }
     return argument[iArg];
 }
@@ -178,7 +178,7 @@ void AbstractMultiFunc::setArgument(const Expr& t_argument, int iArg) {
     if (iArg < 0 or iArg >= nArgs)
     {
         print();
-        callError(Out_of_bounds, "Expr& AbstractMultiFunc::getArgument(int iArg) const", iArg);
+        callError(smError::OutOfBounds, "Expr& AbstractMultiFunc::getArgument(int iArg) const", iArg);
     }
     argument[iArg] = t_argument;
 }

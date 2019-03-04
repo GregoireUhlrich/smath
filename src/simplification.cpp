@@ -8,87 +8,87 @@ using namespace std;
 bool Double::operator<(const Expr& t_abstract) const
 {
     int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return value < t_abstract->evaluateScalar();
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return false;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return true;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return true;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return isInteger();
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return true;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return true;
         break;
 
-        case PLUS:
+        case smType::Plus:
         return true;
         break;
 
-        case TIMES:
+        case smType::Times:
         return true;
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         return true;
         break;
 
-        case POW:
+        case smType::Pow:
         return true;
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return true;
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         return true;
         break;
 
-        case ANGLE:
+        case smType::Angle:
         return true;
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         return true;
         break;
 
-        case VECTOR:
+        case smType::Vector:
         return true;
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         return true;
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         return true;
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         return true;
         break;
 
-        case ITERM:
+        case smType::ITerm:
         return true;
         break;
 
@@ -102,87 +102,87 @@ bool Double::operator<(const Expr& t_abstract) const
 bool Double::operator>(const Expr& t_abstract) const
 {
     int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return value > t_abstract->evaluateScalar();
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return true;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return false;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return false;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return (not isInteger());
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return false;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         return false;
         break;
 
-        case TIMES:
+        case smType::Times:
         return false;
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         return false;
         break;
 
-        case POW:
+        case smType::Pow:
         return false;
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return false;
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         return false;
         break;
 
-        case ANGLE:
+        case smType::Angle:
         return false;
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         return false;
         break;
 
-        case VECTOR:
+        case smType::Vector:
         return false;
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         return false;
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         return false;
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         return false;
         break;
 
-        case ITERM:
+        case smType::ITerm:
         return false;
         break;
 
@@ -196,87 +196,87 @@ bool Double::operator>(const Expr& t_abstract) const
 bool Integer::operator<(const Expr& t_abstract) const
 {
     int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return true;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return value < t_abstract->evaluateScalar();
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return true;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return true;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return true;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return true;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return true;
         break;
 
-        case PLUS:
+        case smType::Plus:
         return true;
         break;
 
-        case TIMES:
+        case smType::Times:
         return true;
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         return true;
         break;
 
-        case POW:
+        case smType::Pow:
         return true;
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return true;
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         return true;
         break;
 
-        case ANGLE:
+        case smType::Angle:
         return true;
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         return true;
         break;
 
-        case VECTOR:
+        case smType::Vector:
         return true;
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         return true;
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         return true;
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         return true;
         break;
 
-        case ITERM:
+        case smType::ITerm:
         return true;
         break;
 
@@ -290,87 +290,87 @@ bool Integer::operator<(const Expr& t_abstract) const
 bool Integer::operator>(const Expr& t_abstract) const
 {
     int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return false;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return value > t_abstract->evaluateScalar();
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return false;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return false;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return false;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return false;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         return false;
         break;
 
-        case TIMES:
+        case smType::Times:
         return false;
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         return false;
         break;
 
-        case POW:
+        case smType::Pow:
         return false;
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return false;
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         return false;
         break;
 
-        case ANGLE:
+        case smType::Angle:
         return false;
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         return false;
         break;
 
-        case VECTOR:
+        case smType::Vector:
         return false;
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         return false;
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         return false;
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         return false;
         break;
 
-        case ITERM:
+        case smType::ITerm:
         return false;
         break;
 
@@ -384,87 +384,87 @@ bool Integer::operator>(const Expr& t_abstract) const
 bool Variable::operator<(const Expr& t_abstract) const
 {
     int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return false;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return false;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return (compare(name,t_abstract->getName())==-1);
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return false;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return false;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return false;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         return true;
         break;
 
-        case TIMES:
+        case smType::Times:
         return true;
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         return true;
         break;
 
-        case POW:
+        case smType::Pow:
         return true;
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return true;
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         return true;
         break;
 
-        case ANGLE:
+        case smType::Angle:
         return true;
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         return true;
         break;
 
-        case VECTOR:
+        case smType::Vector:
         return true;
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         return true;
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         return true;
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         return true;
         break;
 
-        case ITERM:
+        case smType::ITerm:
         return true;
         break;
 
@@ -478,87 +478,87 @@ bool Variable::operator<(const Expr& t_abstract) const
 bool Variable::operator>(const Expr& t_abstract) const
 {
     int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return true;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return true;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return (compare(name,t_abstract->getName())==1);
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return true;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return true;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return true;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return true;
         break;
 
-        case PLUS:
+        case smType::Plus:
         return false;
         break;
 
-        case TIMES:
+        case smType::Times:
         return false;
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         return false;
         break;
 
-        case POW:
+        case smType::Pow:
         return false;
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return false;
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         return false;
         break;
 
-        case ANGLE:
+        case smType::Angle:
         return false;
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         return false;
         break;
 
-        case VECTOR:
+        case smType::Vector:
         return false;
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         return false;
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         return false;
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         return false;
         break;
 
-        case ITERM:
+        case smType::ITerm:
         return false;
         break;
 
@@ -572,87 +572,87 @@ bool Variable::operator>(const Expr& t_abstract) const
 bool Constant::operator<(const Expr& t_abstract) const
 {
     int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return false;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return false;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return true;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return (compare(name,t_abstract->getName())==-1);
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return false;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return false;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         return true;
         break;
 
-        case TIMES:
+        case smType::Times:
         return true;
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         return true;
         break;
 
-        case POW:
+        case smType::Pow:
         return true;
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return true;
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         return true;
         break;
 
-        case ANGLE:
+        case smType::Angle:
         return true;
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         return true;
         break;
 
-        case VECTOR:
+        case smType::Vector:
         return true;
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         return true;
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         return true;
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         return true;
         break;
 
-        case ITERM:
+        case smType::ITerm:
         return true;
         break;
 
@@ -666,87 +666,87 @@ bool Constant::operator<(const Expr& t_abstract) const
 bool Constant::operator>(const Expr& t_abstract) const
 {
     int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return true;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return true;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return false;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return (compare(name,t_abstract->getName())==1);
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return true;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return true;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return true;
         break;
 
-        case PLUS:
+        case smType::Plus:
         return false;
         break;
 
-        case TIMES:
+        case smType::Times:
         return false;
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         return false;
         break;
 
-        case POW:
+        case smType::Pow:
         return false;
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return false;
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         return false;
         break;
 
-        case ANGLE:
+        case smType::Angle:
         return false;
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         return false;
         break;
 
-        case VECTOR:
+        case smType::Vector:
         return false;
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         return false;
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         return false;
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         return false;
         break;
 
-        case ITERM:
+        case smType::ITerm:
         return false;
         break;
 
@@ -760,87 +760,87 @@ bool Constant::operator>(const Expr& t_abstract) const
 bool CFraction::operator<(const Expr& t_abstract) const
 {
     int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return (not t_abstract->isInteger());
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return false;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return true;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return true;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         if (SIMPLIFICATION_METHOD == 1) return evaluateScalar() < t_abstract->evaluateScalar();
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return true;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return true;
         break;
 
-        case PLUS:
+        case smType::Plus:
         return true;
         break;
 
-        case TIMES:
+        case smType::Times:
         return true;
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         return true;
         break;
 
-        case POW:
+        case smType::Pow:
         return true;
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return true;
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         return true;
         break;
 
-        case ANGLE:
+        case smType::Angle:
         return true;
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         return true;
         break;
 
-        case VECTOR:
+        case smType::Vector:
         return true;
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         return true;
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         return true;
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         return true;
         break;
 
-        case ITERM:
+        case smType::ITerm:
         return true;
         break;
 
@@ -854,87 +854,87 @@ bool CFraction::operator<(const Expr& t_abstract) const
 bool CFraction::operator>(const Expr& t_abstract) const
 {
     int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return t_abstract->isInteger();
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return true;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return false;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return false;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         if (SIMPLIFICATION_METHOD == 1) return evaluateScalar() > t_abstract->evaluateScalar();
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return false;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         return false;
         break;
 
-        case TIMES:
+        case smType::Times:
         return false;
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         return false;
         break;
 
-        case POW:
+        case smType::Pow:
         return false;
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return false;
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         return false;
         break;
 
-        case ANGLE:
+        case smType::Angle:
         return false;
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         return false;
         break;
 
-        case VECTOR:
+        case smType::Vector:
         return false;
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         return false;
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         return false;
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         return false;
         break;
 
-        case ITERM:
+        case smType::ITerm:
         return false;
         break;
 
@@ -948,87 +948,87 @@ bool CFraction::operator>(const Expr& t_abstract) const
 bool CFactorial::operator<(const Expr& t_abstract) const
 {
     int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return false;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return false;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return true;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return true;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return false;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return value < t_abstract->getValue();
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return true;
         break;
 
-        case PLUS:
+        case smType::Plus:
         return true;
         break;
 
-        case TIMES:
+        case smType::Times:
         return true;
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         return true;
         break;
 
-        case POW:
+        case smType::Pow:
         return true;
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return true;
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         return true;
         break;
 
-        case ANGLE:
+        case smType::Angle:
         return true;
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         return true;
         break;
 
-        case VECTOR:
+        case smType::Vector:
         return true;
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         return true;
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         return true;
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         return true;
         break;
 
-        case ITERM:
+        case smType::ITerm:
         return true;
         break;
 
@@ -1042,87 +1042,87 @@ bool CFactorial::operator<(const Expr& t_abstract) const
 bool CFactorial::operator>(const Expr& t_abstract) const
 {
     int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return true;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return true;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return false;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return false;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return true;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return value > t_abstract->getValue();
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         return false;
         break;
 
-        case TIMES:
+        case smType::Times:
         return false;
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         return false;
         break;
 
-        case POW:
+        case smType::Pow:
         return false;
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return false;
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         return false;
         break;
 
-        case ANGLE:
+        case smType::Angle:
         return false;
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         return false;
         break;
 
-        case VECTOR:
+        case smType::Vector:
         return false;
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         return false;
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         return false;
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         return false;
         break;
 
-        case ITERM:
+        case smType::ITerm:
         return false;
         break;
 
@@ -1136,87 +1136,87 @@ bool CFactorial::operator>(const Expr& t_abstract) const
 bool Imaginary::operator<(const Expr& t_abstract) const
 {
     int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return false;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return false;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return true;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return true;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return false;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return false;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         return true;
         break;
 
-        case TIMES:
+        case smType::Times:
         return true;
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         return true;
         break;
 
-        case POW:
+        case smType::Pow:
         return true;
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return true;
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         return true;
         break;
 
-        case ANGLE:
+        case smType::Angle:
         return true;
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         return true;
         break;
 
-        case VECTOR:
+        case smType::Vector:
         return true;
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         return true;
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         return true;
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         return true;
         break;
 
-        case ITERM:
+        case smType::ITerm:
         return true;
         break;
 
@@ -1230,87 +1230,87 @@ bool Imaginary::operator<(const Expr& t_abstract) const
 bool Imaginary::operator>(const Expr& t_abstract) const
 {
     int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return true;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return true;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return false;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return false;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return true;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return true;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         return false;
         break;
 
-        case TIMES:
+        case smType::Times:
         return false;
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         return false;
         break;
 
-        case POW:
+        case smType::Pow:
         return false;
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return false;
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         return false;
         break;
 
-        case ANGLE:
+        case smType::Angle:
         return false;
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         return false;
         break;
 
-        case VECTOR:
+        case smType::Vector:
         return false;
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         return false;
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         return false;
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         return false;
         break;
 
-        case ITERM:
+        case smType::ITerm:
         return false;
         break;
 
@@ -1326,39 +1326,39 @@ bool Plus::operator<(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return false;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return false;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return false;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return false;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return false;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return false;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             t_nArgs = t_abstract->getNArgs();
             nMax = min(nArgs, t_nArgs);
@@ -1373,71 +1373,71 @@ bool Plus::operator<(const Expr& t_abstract) const
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Times>(ONE, Copy(this)) < t_abstract);
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Pow>(Copy(this), ONE) < t_abstract);
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator<(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
             return this->operator<(make_shared<Plus>(ZERO,t_abstract));
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
             return this->operator<(make_shared<Plus>(ZERO,t_abstract));
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
             return this->operator<(make_shared<Plus>(ZERO,t_abstract));
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
@@ -1455,39 +1455,39 @@ bool Plus::operator>(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return true;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return true;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return true;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return true;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return true;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return true;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return true;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             nMax = min(nArgs, t_abstract->getNArgs());
             t_nArgs = t_abstract->getNArgs();
@@ -1502,71 +1502,71 @@ bool Plus::operator>(const Expr& t_abstract) const
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Times>(ONE, Copy(this)) > t_abstract);
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Pow>(Copy(this), ONE) > t_abstract);
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator>(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
             return this->operator>(make_shared<Plus>(ZERO,t_abstract));
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
             return this->operator>(make_shared<Plus>(ZERO,t_abstract));
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
             return this->operator>(make_shared<Plus>(ZERO,t_abstract));
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
@@ -1584,45 +1584,45 @@ bool Times::operator<(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return false;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return false;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return false;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return false;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return false;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return false;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator<(make_shared<Times>(ONE,t_abstract)));
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             nMax = min(nArgs, t_abstract->getNArgs());
             t_nArgs = t_abstract->getNArgs();
@@ -1637,65 +1637,65 @@ bool Times::operator<(const Expr& t_abstract) const
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator<(make_shared<Times>(ONE,t_abstract)));
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator<(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator<(make_shared<Times>(ONE,t_abstract)));
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator<(make_shared<Times>(ONE,t_abstract)));
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator<(make_shared<Times>(ONE,t_abstract)));
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
@@ -1713,45 +1713,45 @@ bool Times::operator>(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return true;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return true;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return true;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return true;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return true;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return true;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return true;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator<(make_shared<Times>(ONE,t_abstract)));
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             nMax = min(nArgs, t_abstract->getNArgs());
             t_nArgs = t_abstract->getNArgs();
@@ -1766,65 +1766,65 @@ bool Times::operator>(const Expr& t_abstract) const
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator>(make_shared<Times>(ONE,t_abstract)));
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator>(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator>(make_shared<Times>(ONE,t_abstract)));
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator>(make_shared<Times>(ONE,t_abstract)));
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator>(make_shared<Times>(ONE,t_abstract)));
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
@@ -1842,109 +1842,109 @@ bool Fraction::operator<(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return false;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return false;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return false;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return false;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return false;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return false;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator<(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
@@ -1962,109 +1962,109 @@ bool Fraction::operator>(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return true;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return true;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return true;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return true;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return true;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return true;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return true;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator>(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
@@ -2082,57 +2082,57 @@ bool Pow::operator<(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return false;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return false;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return false;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return false;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return false;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return false;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator<(make_shared<Pow>(t_abstract, ONE)));
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Times>(ONE,Copy(this)) < t_abstract);
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator<(make_shared<Pow>(t_abstract, ONE)));
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             foo = t_abstract->getArgument(0);
             if (*argument[0] != foo)
@@ -2141,53 +2141,53 @@ bool Pow::operator<(const Expr& t_abstract) const
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator<(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator<(make_shared<Pow>(t_abstract, ONE)));
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator<(make_shared<Pow>(t_abstract, ONE)));
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator<(make_shared<Pow>(t_abstract,ONE)));
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
@@ -2205,57 +2205,57 @@ bool Pow::operator>(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return true;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return true;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return true;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return true;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return true;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return true;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return true;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator>(make_shared<Pow>(t_abstract, ONE)));
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Times>(ONE,Copy(this)) > t_abstract);
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator>(make_shared<Pow>(t_abstract, ONE)));
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             foo = t_abstract->getArgument(0);
             if (*argument[0] != foo)
@@ -2264,53 +2264,53 @@ bool Pow::operator>(const Expr& t_abstract) const
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator>(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator>(make_shared<Pow>(t_abstract, ONE)));
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator>(make_shared<Pow>(t_abstract, ONE)));
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
             return (this->operator>(make_shared<Pow>(t_abstract,ONE)));
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
@@ -2338,67 +2338,67 @@ bool Derivative::operator<(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return false;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return false;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return false;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return false;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return false;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return false;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Plus>(ZERO,Copy(this)) < t_abstract);
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Times>(ONE, Copy(this)) < t_abstract);
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Pow>(Copy(this),ONE) < t_abstract);
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator<(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
             if (*argument[1] != t_abstract->getArgument(1))
                 return (*argument[1] < t_abstract->getArgument(1));
@@ -2406,43 +2406,43 @@ bool Derivative::operator<(const Expr& t_abstract) const
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
-            return DERIVATIVE < ANGLE;
+            return smType::Derivative < smType::Angle;
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
-            return DERIVATIVE < t_abstract->getType();
+            return smType::Derivative < t_abstract->getType();
         }
         break;
 
-        case VECTOR:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
-        case MATRIX:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITERM:
+        case smType::ITensor:
+        if (SIMPLIFICATION_METHOD == 1) {
+            return true;
+        }
+        break;
+
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
@@ -2460,67 +2460,67 @@ bool Derivative::operator>(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return true;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return true;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return true;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return true;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return true;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return true;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return true;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Plus>(ZERO,Copy(this)) > t_abstract);
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Times>(ONE, Copy(this)) > t_abstract);
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Pow>(Copy(this),ONE) > t_abstract);
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator>(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
             if (*argument[1] != t_abstract->getArgument(1))
                 return (*argument[1] > t_abstract->getArgument(1));
@@ -2528,43 +2528,43 @@ bool Derivative::operator>(const Expr& t_abstract) const
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
-            return DERIVATIVE > ANGLE;
+            return smType::Derivative > smType::Angle;
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
-            return DERIVATIVE > t_abstract->getType();
+            return smType::Derivative > t_abstract->getType();
         }
         break;
 
-        case VECTOR:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
-        case MATRIX:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITERM:
+        case smType::ITensor:
+        if (SIMPLIFICATION_METHOD == 1) {
+            return false;
+        }
+        break;
+
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
@@ -2582,73 +2582,73 @@ bool Angle::operator<(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return false;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return false;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return false;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return false;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return false;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return false;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Plus>(ZERO,Copy(this)) < t_abstract);
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Times>(ONE,Copy(this)) < t_abstract);
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Pow>(Copy(this), ONE) < t_abstract);
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator<(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
-            return ANGLE < DERIVATIVE;
+            return smType::Angle < smType::Derivative;
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
             if (*argument[0] != t_abstract->getArgument(0))
                 return *argument[0] < t_abstract->getArgument(0);
@@ -2656,37 +2656,37 @@ bool Angle::operator<(const Expr& t_abstract) const
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
-            return ANGLE < t_abstract->getType();
+            return smType::Angle < t_abstract->getType();
         }
         break;
 
-        case VECTOR:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
-        case MATRIX:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITERM:
+        case smType::ITensor:
+        if (SIMPLIFICATION_METHOD == 1) {
+            return true;
+        }
+        break;
+
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
@@ -2704,73 +2704,73 @@ bool Angle::operator>(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return true;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return true;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return true;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return true;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return true;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return true;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return true;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Plus>(ZERO,Copy(this)) > t_abstract);
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Times>(ONE,Copy(this)) > t_abstract);
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Pow>(Copy(this), ONE) > t_abstract);
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator>(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
-            return ANGLE > DERIVATIVE;
+            return smType::Angle > smType::Derivative;
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
             if (*argument[0] != t_abstract->getArgument(0))
                 return *argument[0] > t_abstract->getArgument(0);
@@ -2778,37 +2778,37 @@ bool Angle::operator>(const Expr& t_abstract) const
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
-            return ANGLE > t_abstract->getType();
+            return smType::Angle > t_abstract->getType();
         }
         break;
 
-        case VECTOR:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
-        case MATRIX:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITERM:
+        case smType::ITensor:
+        if (SIMPLIFICATION_METHOD == 1) {
+            return false;
+        }
+        break;
+
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
@@ -2826,79 +2826,79 @@ bool AbstractFunc::operator<(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return false;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return false;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return false;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return false;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return false;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return false;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Plus>(ZERO,Copy(this)) < t_abstract);
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Times>(ONE,Copy(this)) < t_abstract);
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
            return (*make_shared<Pow>(Copy(this), ONE) < t_abstract);
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator<(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
-            return getType() < DERIVATIVE;
+            return getType() < smType::Derivative;
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
-            return getType() < ANGLE;
+            return getType() < smType::Angle;
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
             if (getType() == t_abstract->getType())
                 return *argument < t_abstract->getArgument();
@@ -2906,31 +2906,31 @@ bool AbstractFunc::operator<(const Expr& t_abstract) const
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
@@ -2948,79 +2948,79 @@ bool AbstractFunc::operator>(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return true;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return true;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return true;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return true;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return true;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return true;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return true;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Plus>(ZERO,Copy(this)) > t_abstract);
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return (*make_shared<Times>(ONE,Copy(this)) > t_abstract);
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
            return (*make_shared<Pow>(Copy(this), ONE) > t_abstract);
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator>(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
-            return getType() > DERIVATIVE;
+            return getType() > smType::Derivative;
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
-            return getType() > ANGLE;
+            return getType() > smType::Angle;
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
             if (getType() == t_abstract->getType())
                 return *argument > t_abstract->getArgument();
@@ -3028,31 +3028,31 @@ bool AbstractFunc::operator>(const Expr& t_abstract) const
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
@@ -3070,109 +3070,109 @@ bool Vector::operator<(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return false;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return false;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return false;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return false;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return false;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return false;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator<(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
@@ -3190,109 +3190,109 @@ bool Vector::operator>(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return true;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return true;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return true;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return true;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return true;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return true;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return true;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator>(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
@@ -3310,109 +3310,109 @@ bool Matrix::operator<(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return false;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return false;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return false;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return false;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return false;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return false;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator<(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
@@ -3430,109 +3430,109 @@ bool Matrix::operator>(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return true;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return true;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return true;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return true;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return true;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return true;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return true;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator>(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
@@ -3550,109 +3550,109 @@ bool HighDTensor::operator<(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return false;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return false;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return false;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return false;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return false;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return false;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator<(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
@@ -3670,109 +3670,109 @@ bool HighDTensor::operator>(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return true;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return true;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return true;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return true;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return true;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return true;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return true;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator>(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
@@ -3790,109 +3790,109 @@ bool ITensor::operator<(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return false;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return false;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return false;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return false;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return false;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return false;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator<(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return getIndexStructure().size() < t_abstract->getIndexStructure().size();
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
@@ -3910,109 +3910,109 @@ bool ITensor::operator>(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return true;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return true;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return true;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return true;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return true;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return true;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return true;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator>(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return getIndexStructure().size() > t_abstract->getIndexStructure().size();
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
@@ -4030,109 +4030,109 @@ bool ITerm::operator<(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return false;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return false;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return false;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return false;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return false;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return false;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return false;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator<(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             nMax = getIndexStructure().size();
             t_nArgs = t_abstract->getIndexStructure().size();
@@ -4159,109 +4159,109 @@ bool ITerm::operator>(const Expr& t_abstract) const
     int type = t_abstract->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = smType::ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return true;
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return true;
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return true;
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         return true;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return true;
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return true;
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return true;
         break;
 
-        case PLUS:
+        case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case TIMES:
+        case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case POW:
+        case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         return this->operator>(t_abstract->getRegularExpression());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ANGLE:
+        case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case SCALAR_FUNCTION:
+        case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case VECTOR:
+        case smType::Vector:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
         break;
 
-        case ITERM:
+        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             nMax = getIndexStructure().size();
             t_nArgs = t_abstract->getIndexStructure().size();
@@ -4309,66 +4309,66 @@ END TypeS
 
 /* SWITCH STATEMENT
     int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == SCALAR_FUNCTION) // Danger if type == SCALAR_FUNCTION, here it is EXP so no problem
-        type = SCALAR_FUNCTION;
+    if (t_abstract->getPrimaryType() == ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+        type = ScalarFunction;
     switch(type)
     {
-        case DOUBLE:
+        case Double:
         break;
 
-        case INTEGER:
+        case Integer:
         break;
 
-        case VARIABLE:
+        case Variable:
         break;
 
-        case CONSTANT:
+        case Constant:
         break;
 
-        case CFRACTION:
+        case CFraction:
         break;
 
-        case CFACTORIAL:
+        case CFactorial:
         break;
 
-        case IMAGINARY:
+        case Imaginary:
         break;
 
-        case PLUS:
+        case Plus:
         break;
 
-        case TIMES:
+        case Times:
         break;
 
-        case FRACTION:
+        case Fraction:
         break;
 
-        case POW:
+        case Pow:
         break;
 
-        case POLYNOMIAL:
+        case Polynomial:
         return this->operator>(t_abstract->getRegularExpression());
         break;
 
-        case ANGLE:
+        case Angle:
         break;
 
-        case SCALAR_FUNCTION:
+        case ScalarFunction:
         break;
 
-        case VECTOR:
+        case Vector:
         break;
 
-        case MATRIX:
+        case Matrix:
         break;
 
-        case HIGHDTENSOR:
+        case HighDTensor:
         break;
 
-        case ITENSOR:
+        case ITensor:
         break;
 
-        case ITERM:
+        case ITerm:
         break;
 
         default:

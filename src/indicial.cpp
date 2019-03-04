@@ -31,7 +31,7 @@ IndexStructure::IndexStructure(const vector<Index>& t_index):
                 if (it->getFree() xor jt->getFree()) {
                     ostringstream sout;
                     sout<<it->getName()<<"<->"<<jt->getName();
-                    callError(Contraction_mismatch,
+                    callError(smError::ContractionMismatch,
 "AbstractIndicial::AbstractIndicial(string t_name, vector<Index> t_t_index)", 
 sout.str());
                 }
@@ -58,7 +58,7 @@ IndexStructure IndexStructure::getSinglePermutation(int i1, int i2) const
 {
     if (i1 < 0 or i2 < 0 or
         i1 >= nIndices or i2 >= nIndices) {
-        callError(Out_of_bounds,
+        callError(smError::OutOfBounds,
 "IndexStructure::getSinglePermutation(int i1, int i2) const",
 ((i1<0 or i1>=nIndices) ? i1 : i2));
     }
@@ -71,7 +71,7 @@ IndexStructure IndexStructure::getSinglePermutation(int i1, int i2) const
 IndexStructure IndexStructure::getPermutation(const vector<int>& permutation) const
 {
     if ((int)permutation.size() != nIndices) {
-        callWarning(Invalid_dimension,
+        callWarning(smError::InvalidDimension,
 "IndexStructure::getPermutation(const vector<int>& permutation) const",
 permutation.size());
     }
@@ -82,23 +82,246 @@ permutation.size());
     return IndexStructure(newIndex);
 }
 
-template<int n>
-Permutation<n>& Permutation<n>::operator=(const Permutation& t_permutation)
+Permutation::Permutation(): order(0),sign(0),symmetry(0),size(1),
+                            permutation(vector<int>(1,0)){}
+
+Permutation::Permutation(int n): order(0), sign(0),
+                                symmetry(0), size(n), permutation(std::vector<int>(n)){
+    for (int i=0; i!=n; ++i)
+        permutation[i] = i;
+}
+
+Permutation::Permutation(const std::vector<int>& t_permutation): order(0), sign(0)
+                                                , symmetry(0), size(t_permutation.size()){
+    permutation = std::vector<int>(size);
+    for (size_t i=0; i<size; ++i)
+        permutation[i] = t_permutation[i];
+}
+
+Permutation::Permutation(int n,
+        const std::initializer_list<int>& list): Permutation(n,{list}){}
+
+Permutation::Permutation(int n, 
+        const std::initializer_list<std::initializer_list<int> >& list): order(0), sign(0) ,
+                                                                      symmetry(0), size(n){
+    std::vector<int> indicesLeft(size);
+    for (size_t i=0; i!=size; ++i) indicesLeft[i] = i;
+    permutation = indicesLeft;
+    for (auto cycle=list.begin(); cycle!=list.end(); ++cycle) {
+        if (cycle->size() > 0) {
+            for (auto element=cycle->begin()+1; element!=cycle->end(); ++element) {
+                if (indicesLeft[*element] == -1 or 
+                    indicesLeft[*element] < 0 or
+                    indicesLeft[*element] >= n)
+                    callError(smError::OutOfBounds,
+    "Permutation::Permutation(const init_list<init_list<int> >& list)",*element);
+                indicesLeft[*element] = -1;
+                permutation[*(element-1)] = *element;
+            }
+            if (cycle->size() > 1) 
+                permutation[*(cycle->end()-1)] = *cycle->begin();
+        }
+    }
+}
+
+Permutation::Permutation(const Permutation& t_permutation):
+    order(t_permutation.order), sign(t_permutation.sign) ,
+    symmetry(t_permutation.symmetry),
+    size(t_permutation.getSize()), permutation(t_permutation.permutation){}
+
+size_t Permutation::getSize() const {
+    return size;
+}
+
+int Permutation::getElement(int i) const {
+    if (i < 0 or i >= (int)size)
+        callError(smError::OutOfBounds,
+                "Permutation::getElement(int i) const", i);
+    return permutation[i];
+}
+
+int Permutation::getOrder()
 {
-    checkPermutation(t_permutation);
-    for (int i=0; i<n; ++i)
-        permutation[i] = t_permutation.permutation[i];
+    if (order > 0) return order;
+    Permutation identity(size);
+    order = 1;
+    Permutation perm = (*this)*identity;
+    while(perm != identity) {
+        ++order;
+        perm = (*this)*perm;
+    }
+    return order;
+}
+
+int Permutation::getSign()
+{
+    if (sign != 0) return sign;
+    sign = 1;
+    Permutation foo(permutation);
+    for (size_t i=0; i!=size; ++i) {
+        if (foo[i] != (int)i) {
+            for (size_t j=0; j!=size; ++j) {
+                if (foo[j] == (int)i) {
+                    std::swap(foo[i],foo[j]);
+                    sign *= -1;
+                    break;
+                }
+            }
+        }
+    }
+
+    return sign;
+}
+
+int Permutation::getSymmetry() const {
+    return symmetry;
+}
+
+void Permutation::setSymmetry(int t_symmetry) {
+    if (t_symmetry != 1 and
+        t_symmetry != 0 and 
+        t_symmetry != -1)
+        return;
+    symmetry = t_symmetry;
+}
+
+bool Permutation::operator==(const Permutation& t_permutation) const {
+    if (size != t_permutation.getSize()) return false;
+    for (size_t i=0; i<size; ++i)
+        if (permutation[i] != t_permutation.getElement(i))
+            return false;
+    return true;
+}
+
+bool Permutation::operator!=(const Permutation& t_permutation) const {
+    return (not (*this==t_permutation));
+}
+
+Permutation& Permutation::operator=(const Permutation& t_permutation)
+{
+    order = t_permutation.order;
+    sign = t_permutation.sign;
+    symmetry = t_permutation.symmetry;
+    size = t_permutation.size;
+    permutation = t_permutation.permutation;
 
     return *this;
 }
 
-template<const int n>
-Permutation<n> Permutation<n>::operator*(const Permutation& t_permutation)
+Permutation Permutation::operator*(const Permutation& t_permutation) const
 {
-    checkPermutation(t_permutation);
-    array<int,n> newPerm;
+    std::vector<int> newPerm(size);
+    for (size_t i=0; i!=size; ++i)
+        newPerm[i] = permutation[t_permutation.getElement(i)];
 
+    Permutation rep = Permutation(newPerm);
+    rep.setSymmetry(symmetry*t_permutation.getSymmetry());
 
+    return rep;
+}
+
+int& Permutation::operator[](int i) {
+    if (i < 0 or i >= (int)size)
+        callError(smError::OutOfBounds,
+                "Permutation::operator[](int i) const", i);
+    return permutation[i];
+}
+
+std::ostream& operator<<(std::ostream& fout, const Permutation& permutation)
+{
+    fout<<"Permutation of "<<permutation.size<<" elements: ";
+    for (size_t i=0; i!=permutation.size; ++i)
+        fout<<permutation.getElement(i)<<" ";
+    
+    return fout;
+}
+/////
+
+void reducePermutation(std::vector<Permutation >& permutation)
+{
+    for (size_t i=0; i<permutation.size()-1; ++i) {
+        for (size_t j=i+1; j!=permutation.size(); ++j) {
+            if (permutation[i] == permutation[j]) {
+                permutation.erase(permutation.begin()+j);
+                --j;
+            }
+        }
+    }
+}
+
+std::vector<Permutation > getSpan(const std::vector<Permutation >& init)
+{
+    std::vector<Permutation > rep = init;
+    reducePermutation(rep);
+    std::vector<Permutation > newPermutation = rep;
+    while (not newPermutation.empty()) {
+        const size_t size = rep.size();
+        for (size_t i=0; i!=newPermutation.size(); ++i) {
+            for (size_t j=0; j!=size; ++j) {
+                rep.push_back(newPermutation[i]*rep[j]);
+                rep.push_back(rep[j]*newPermutation[i]);
+            }
+        }
+        reducePermutation(rep);
+        newPermutation = std::vector<Permutation >(rep.begin()+size, rep.end());
+    }
+
+    return rep;
+}
+
+void getSpan(std::vector<Permutation >& spanned, 
+                                     const Permutation& element)
+{
+    spanned.push_back(element);
+    std::vector<Permutation > newPermutation(1,element);
+    while (not newPermutation.empty()) {
+        const size_t size = spanned.size();
+        for (size_t i=0; i!=newPermutation.size(); ++i) {
+            for (size_t j=0; j!=size; ++j) {
+                spanned.push_back(newPermutation[i]*spanned[j]);
+                spanned.push_back(spanned[j]*newPermutation[i]);
+            }
+        }
+        reducePermutation(spanned);
+        newPermutation = std::vector<Permutation >(spanned.begin()+size, spanned.end());
+    }
+}
+
+Symmetry::Symmetry(): permutation(std::vector<Permutation >(0)) {}
+
+Symmetry::Symmetry(const Symmetry& symmetry): permutation(symmetry.permutation) {}
+
+void Symmetry::addSymmetry(const Permutation& newPermutation, int sym)
+{
+    if (sym > 0) sym =  1;
+    else         sym = -1;
+    if (newPermutation.getSymmetry() != 0) 
+        sym = newPermutation.getSymmetry();
+    auto pos = find(permutation.begin(), permutation.end(), newPermutation);
+    if (pos != permutation.end()) {
+        if (sym == (*pos).getSymmetry())
+            return;
+        callError(smError::SymmetryMismatch,
+    "Symmetry::addSymmetry(const Permutation& newPermutation, int sym)");
+    }
+    Permutation foo = newPermutation;
+    foo.setSymmetry(sym);
+    getSpan(permutation, foo);
+}
+
+std::ostream& operator<<(std::ostream& fout, const Symmetry& symmetry)
+{
+    fout<<symmetry.permutation.size()<<" symmetries:\n";
+    for (const auto& perm : symmetry.permutation) {
+        if (perm.getSymmetry() == 1)
+            fout<<"  -> Symmetry:     ";
+        else 
+            fout<<"  -> AntiSymmetry: ";
+        fout<<perm<<std::endl;
+    }
+
+    return fout;
+}
 
 bool operator<(std::pair<int,int> a, std::pair<int,int> b)
 {
@@ -144,7 +367,7 @@ AbstractIndicial::AbstractIndicial(const string& t_name,
                 if (index[i].getFree() xor index[j].getFree()) {
                     ostringstream sout;
                     sout<<i<<"<->"<<j;
-                    callError(Contraction_mismatch,
+                    callError(smError::ContractionMismatch,
 "AbstractIndicial::AbstractIndicial(string t_name, vector<Index> t_index)", 
 sout.str());
                 }
@@ -168,7 +391,7 @@ int AbstractIndicial::getNIndices() const {
 Index AbstractIndicial::getIndex(int i) const
 {
     if (i >= 0 and i < nIndices) return index[i];
-    callError(Out_of_bounds,"AbstractIndicial::getIndex(int i) const",i);
+    callError(smError::OutOfBounds,"AbstractIndicial::getIndex(int i) const",i);
     return Index();
 }
 
@@ -222,18 +445,18 @@ void AbstractIndicial::contractIndices(int axis1, int axis2)
             contraction.emplace(pair<int,int>(axis1,axis2));
         }
         else
-            callError(Contract_dummy,"AbstractIndicial::contractIndices(int axis1, int axis2)",
+            callError(smError::ContractDummy,"AbstractIndicial::contractIndices(int axis1, int axis2)",
                                      index[axis1].getName()+"<->"+index[axis2].getName());
     }
     else 
-        callError(Out_of_bounds,"AbstractIndicial::contractIndices(int axis1, int axis2)",
+        callError(smError::OutOfBounds,"AbstractIndicial::contractIndices(int axis1, int axis2)",
                 ((axis1<0 or axis1>=nIndices) ? axis1 : axis2));
 }
 
 void AbstractIndicial::setIndexStructure(const std::vector<Index>& t_index)
 {
     if (nIndices != (int)index.size())
-        callWarning(Invalid_dimension,
+        callWarning(smError::InvalidDimension,
                 "AbstractIndicial::setIndexStructure(const std::vector<Index>& t_index)",
                 index.size());
     else
@@ -261,14 +484,10 @@ bool ITensor::getFullyAntiSymmetric() const {
 void ITensor::setFullySymmetric() {
     fullySymmetric = true;
     fullyAntiSymmetric = false;
-    symmetry.clear();
-    antiSymmetry.clear();
 }
 void ITensor::setFullyAntiSymmetric() {
     fullySymmetric = false;
     fullyAntiSymmetric = true;
-    symmetry.clear();
-    antiSymmetry.clear();
 }
 void ITensor::addSymmetry(int i1, int i2)
 {
@@ -276,13 +495,9 @@ void ITensor::addSymmetry(int i1, int i2)
     if (fullyAntiSymmetric) fullyAntiSymmetric = false;
     if (i1 < 0 or i2 < 0 or 
         i1 >= nIndices or i2 >= nIndices)
-        callError(Out_of_bounds,"ITensor::permut(int i1, int i2)",
+        callError(smError::OutOfBounds,"ITensor::permut(int i1, int i2)",
                 (i1<0 or i1>=nIndices) ? i1 : i2);
     pair<int,int> couple(i1,i2);
-    auto pos = antiSymmetry.find(couple);
-    if (pos != antiSymmetry.end())
-        antiSymmetry.erase(pos);
-    symmetry.emplace(couple);
 }
 void ITensor::addAntiSymmetry(int i1, int i2)
 {
@@ -290,14 +505,11 @@ void ITensor::addAntiSymmetry(int i1, int i2)
     if (fullySymmetric) fullySymmetric = false;
     if (i1 < 0 or i2 < 0 or 
         i1 >= nIndices or i2 >= nIndices)
-        callError(Out_of_bounds,"ITensor::permut(int i1, int i2)",
+        callError(smError::OutOfBounds,"ITensor::permut(int i1, int i2)",
                 (i1<0 or i1>=nIndices) ? i1 : i2);
     pair<int,int> couple(i1,i2);
-    auto pos = symmetry.find(couple);
-    if (pos != symmetry.end())
-        antiSymmetry.erase(pos);
-    antiSymmetry.emplace(couple);
 }
+
 int ITensor::permut(int i1, int i2) 
 {
 // Returns 1 if permutation symmetric
@@ -305,20 +517,9 @@ int ITensor::permut(int i1, int i2)
 // Returns 0 (and does not permut) else
     if (i1 < 0 or i2 < 0 or 
         i1 >= nIndices or i2 >= nIndices)
-        callError(Out_of_bounds,"ITensor::permut(int i1, int i2)",
+        callError(smError::OutOfBounds,"ITensor::permut(int i1, int i2)",
                 (i1<0 or i1>=nIndices) ? i1 : i2);
     swap(index[i1],index[i2]);
-    return 0;
-    if (i2 < i1) swap(i1,i2);
-    const pair<int,int> toPermut(i1,i2);
-    if (symmetry.find(toPermut) != symmetry.end()) {
-        swap(index[i1],index[i2]);
-        return 1;
-    }
-    else if (antiSymmetry.find(toPermut) != antiSymmetry.end()) {
-        swap(index[i1],index[i2]);
-        return -1;
-    }
     return 0;
 }
 
@@ -345,7 +546,7 @@ vector<vector<int> > permutations(const vector<int>& init)
 Expr ITensor::applyPermutation(const vector<int>& permutations) const
 {
     if (nIndices != (int)permutations.size())
-        callWarning(Invalid_dimension,
+        callWarning(smError::InvalidDimension,
                 "ITensor::applyPermutation(const vector<int>& permutations) const",
                 permutations.size());
     else {
@@ -371,16 +572,6 @@ vector<Expr> ITensor::getPermutations() const
         for (size_t i=0; i!=perm.size(); ++i)
             res.push_back(applyPermutation(perm[i]));
         return res;
-    }
-    for (auto sym=symmetry.begin(); sym!=symmetry.end(); ++sym) {
-        res.insert(res.end(), res.begin(), res.end());
-        for (size_t i=res.size()/2; i!=res.size(); ++i) 
-            res[i]->permut((*sym).first,(*sym).second);
-    }
-    for (auto asym=antiSymmetry.begin(); asym!=antiSymmetry.end(); ++asym) {
-        res.insert(res.end(), res.begin(), res.end());
-        for (size_t i=res.size()/2; i!=res.size(); ++i) 
-            res[i]->permut((*asym).first,(*asym).second);
     }
 
     return res;
@@ -436,7 +627,7 @@ Expr ITensor::evaluate()
 bool ITensor::operator==(const Expr& t_abstract) const
 {
     if (t_abstract->getName() == WHATEVER->getName()) return true;
-    if (t_abstract->getType() != ITENSOR) return false;
+    if (t_abstract->getType() != smType::ITensor) return false;
     if (name != t_abstract->getName() or nIndices != t_abstract->getNIndices()) return false;
     for (int i=0; i<nIndices; i++)
         if (index[i] != t_abstract->getIndex(i))
@@ -543,7 +734,7 @@ bool ITerm::mergeTerms()
     {
         argument[i]->print();
         cout<<endl;
-        if (argument[i]->getType() == ITERM)
+        if (argument[i]->getType() == smType::ITerm)
         {
             int nArgs_bis = argument[i]->getNArgs();
             int i_bis = i;
@@ -566,7 +757,7 @@ bool ITerm::mergeTerms()
 bool ITerm::operator==(const Expr& t_abstract) const
 {
     if (t_abstract->getName() == WHATEVER->getName()) return true;
-    if (t_abstract->getType() != ITERM) return false;
+    if (t_abstract->getType() != smType::ITerm) return false;
     if (t_abstract->getNArgs() != nArgs) return false;
     vector<int> indicesLeft(nArgs);
     for (int i=0; i<nArgs;i++) indicesLeft[i] = i;

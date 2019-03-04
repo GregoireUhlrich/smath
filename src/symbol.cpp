@@ -63,12 +63,12 @@ int Symbol::getDim() const
     return abstract->getDim();
 }
 
-Type Symbol::getType() const
+smType::Type Symbol::getType() const
 {
     return abstract->getType();
 }
 
-PrimaryType Symbol::getPrimaryType() const
+smType::PrimaryType Symbol::getPrimaryType() const
 {
     return abstract->getPrimaryType();
 }
@@ -143,19 +143,19 @@ void Symbol::setAbstract(const Expr& t_abstract)
 void Symbol::print() const
 {
     if (abstract) abstract->print();
-    else cout<<"INVALID ABSTRACT! \n";
+    else cout<<"INVALID AbsTRACT! \n";
 }
 
 void Symbol::printExplicit() const
 {
     if (abstract) abstract->printExplicit();
-    else cout<<"INVALID ABSTRACT! \n";
+    else cout<<"INVALID AbsTRACT! \n";
 }
 
 string Symbol::printLaTeX() const
 {
     if (abstract) return abstract->printLaTeX();
-    cout<<"INVALID ABSTRACT! \n";
+    cout<<"INVALID AbsTRACT! \n";
     return "";
 }
 
@@ -214,7 +214,7 @@ Symbol Symbol::replace(const Symbol& old_symbol, const Symbol& new_symbol) const
 
 Symbol Symbol::polynomialDivision(const Symbol& t_symbol) const
 {
-    if (abstract->getType() == POLYNOMIAL)
+    if (abstract->getType() == smType::Polynomial)
         return Symbol(abstract->division_own(t_symbol.getAbstract()));
     return *this;
 }
@@ -585,7 +585,7 @@ Symbol Symbol::polynomialFactorization() const
 
 Symbol scalarDot(const Symbol& t_symbol1, const Symbol& t_symbol2)
 {
-    if (t_symbol1.getType() != VECTOR or t_symbol2.getType() != VECTOR)
+    if (t_symbol1.getType() != smType::Vector or t_symbol2.getType() != smType::Vector)
     {
         cout<<"Warning: taking scalarDot for non-vectors.\n";
         return 0;
@@ -595,10 +595,10 @@ Symbol scalarDot(const Symbol& t_symbol1, const Symbol& t_symbol2)
 
 Symbol dot(const Symbol& t_symbol1, const Symbol& t_symbol2)
 {
-    PrimaryType type1 = t_symbol1.getPrimaryType();
+    smType::PrimaryType type1 = t_symbol1.getPrimaryType();
     if (t_symbol1.getDim() == 0 or t_symbol2.getDim() == 0)
         return t_symbol1*t_symbol2;
-    if (type1 == VECTORIAL)
+    if (type1 == smType::Vectorial)
         return Symbol(t_symbol1.getAbstract()->dot(t_symbol2.getAbstract()));
     else 
         return Symbol(t_symbol2.getAbstract()->dot(t_symbol1.getAbstract()));
@@ -794,139 +794,139 @@ Expr Copy(const Abstract* t_abstract)
     bool commutable = t_abstract->getCommutable();
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         newAbstract = double_(t_abstract->evaluateScalar());
         break;
 
-        case INTEGER:
+        case smType::Integer:
         newAbstract = int_(t_abstract->evaluateScalar());
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         newAbstract = var_(t_abstract->getName(), t_abstract->getValue());
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         newAbstract = _cfraction_(t_abstract->getNum(), t_abstract->getDenom());
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         newAbstract = make_shared<CFactorial>(t_abstract->getValue());
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         newAbstract = make_shared<Imaginary>();
         break;
 
-        case PLUS:
+        case smType::Plus:
         newAbstract = make_shared<Plus>(t_abstract->getVectorArgument(), true);
         break;
     
-        case TIMES:
+        case smType::Times:
         newAbstract = make_shared<Times>(t_abstract->getVectorArgument(), true);
         break;
     
-        case FRACTION:
+        case smType::Fraction:
         newAbstract = make_shared<Fraction>(t_abstract->getArgument(0), t_abstract->getArgument(1));
         break;
     
-        case POW:
+        case smType::Pow:
         newAbstract = make_shared<Pow>(t_abstract->getArgument(0), t_abstract->getArgument(1));
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         newAbstract = polynomial_(t_abstract->getVectorArgument(), t_abstract->getVariable());
         break;
     
-        case EXP:
+        case smType::Exp:
         newAbstract = make_shared<Exp>(t_abstract->getArgument());
         break;
     
-        case LOG:
+        case smType::Log:
         newAbstract = make_shared<Log>(t_abstract->getArgument());
         break;
     
-        case COS:
+        case smType::Cos:
         newAbstract = make_shared<Cos>(t_abstract->getArgument());
         break;
     
-        case SIN:
+        case smType::Sin:
         newAbstract = make_shared<Sin>(t_abstract->getArgument());
         break;
 
-        case TAN:
+        case smType::Tan:
         newAbstract = make_shared<Tan>(t_abstract->getArgument());
         break;
 
-        case ACOS:
+        case smType::ACos:
         newAbstract = make_shared<ACos>(t_abstract->getArgument());
         break;
     
-        case ASIN:
+        case smType::ASin:
         newAbstract = make_shared<ASin>(t_abstract->getArgument());
         break;
 
-        case ATAN:
+        case smType::ATan:
         newAbstract = make_shared<ATan>(t_abstract->getArgument());
         break;
 
-        case ANGLE:
+        case smType::Angle:
         newAbstract = make_shared<Angle>(t_abstract->getArgument(0),t_abstract->getArgument(1));
         break;
 
-        case ABS:
+        case smType::Abs:
         newAbstract = make_shared<Abs>(t_abstract->getArgument());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         newAbstract = make_shared<Derivative>(t_abstract->getArgument(0), t_abstract->getArgument(1), t_abstract->getOrder());
         break;
     
-        case COSH:
+        case smType::Cosh:
         newAbstract = make_shared<Cosh>(t_abstract->getArgument());
         break;
     
-        case SINH:
+        case smType::Sinh:
         newAbstract = make_shared<Sinh>(t_abstract->getArgument());
         break;
 
-        case TANH:
+        case smType::Tanh:
         newAbstract = make_shared<Tanh>(t_abstract->getArgument());
         break;
     
-        case ACOSH:
+        case smType::ACosh:
         newAbstract = make_shared<ACosh>(t_abstract->getArgument());
         break;
     
-        case ASINH:
+        case smType::ASinh:
         newAbstract = make_shared<ASinh>(t_abstract->getArgument());
         break;
 
-        case ATANH:
+        case smType::ATanh:
         newAbstract = make_shared<ATanh>(t_abstract->getArgument());
         break;
 
-        case FACTORIAL:
+        case smType::Factorial:
         newAbstract = make_shared<Factorial>(t_abstract->getArgument());
         break;
 
-        case VECTOR:
+        case smType::Vector:
         newAbstract = make_shared<Vector>(t_abstract->getVectorArgument());
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         newAbstract = make_shared<Matrix>(t_abstract->getVectorArgument());
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         newAbstract = make_shared<HighDTensor>(t_abstract->getVectorArgument());
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         newAbstract = make_shared<ITensor>(t_abstract->getName(), t_abstract->getIndexStructure());
         break;
         
-        case ITERM:
+        case smType::ITerm:
         newAbstract = make_shared<ITerm>(t_abstract->getVectorArgument());
         break;
     
@@ -952,156 +952,156 @@ Expr DeepCopy(const Abstract* t_abstract)
     vector<Expr > foo(0), foo2(0);
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         return double_(t_abstract->evaluateScalar());
         break;
 
-        case INTEGER:
+        case smType::Integer:
         return int_(t_abstract->evaluateScalar());
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         return var_(t_abstract->getName(), t_abstract->getValue());
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return _cfraction_(t_abstract->getNum(), t_abstract->getDenom());
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         return make_shared<CFactorial>(t_abstract->getValue());
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         return make_shared<Imaginary>();
         break;
 
-        case PLUS:
+        case smType::Plus:
         foo = t_abstract->getVectorArgument();
         for (size_t i=0; i<foo.size(); i++)
             foo2.push_back(DeepCopy(foo[i]));
         return make_shared<Plus>(foo2, true);
         break;
 
-        case TIMES:
+        case smType::Times:
         foo = t_abstract->getVectorArgument();
         for (size_t i=0; i<foo.size(); i++)
             foo2.push_back(DeepCopy(foo[i]));
         return make_shared<Times>(foo2,true);
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         return make_shared<Fraction>(DeepCopy(t_abstract->getArgument(0)), DeepCopy(t_abstract->getArgument(1)));
         break;
 
-        case POW:
+        case smType::Pow:
         return make_shared<Pow>(DeepCopy(t_abstract->getArgument(0)), DeepCopy(t_abstract->getArgument(1)));
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         for (int i=0; i<t_abstract->getNArgs(); i++)
             foo.push_back(DeepCopy(t_abstract->getArgument(i)));
         return polynomial_(foo, DeepCopy(t_abstract->getVariable()));
         break;
 
-        case EXP:
+        case smType::Exp:
         return make_shared<Exp>(DeepCopy(t_abstract->getArgument()));
         break;
 
-        case LOG:
+        case smType::Log:
         return make_shared<Log>(DeepCopy(t_abstract->getArgument()));
         break;
 
-        case COS:
+        case smType::Cos:
         return make_shared<Cos>(DeepCopy(t_abstract->getArgument()));
         break;
 
-        case SIN:
+        case smType::Sin:
         return make_shared<Sin>(DeepCopy(t_abstract->getArgument()));
         break;
 
-        case TAN:
+        case smType::Tan:
         return make_shared<Tan>(DeepCopy(t_abstract->getArgument()));
         break;
 
-        case ACOS:
+        case smType::ACos:
         return make_shared<ACos>(DeepCopy(t_abstract->getArgument()));
         break;
 
-        case ASIN:
+        case smType::ASin:
         return make_shared<ASin>(DeepCopy(t_abstract->getArgument()));
         break;
 
-        case ATAN:
+        case smType::ATan:
         return make_shared<ATan>(DeepCopy(t_abstract->getArgument()));
         break;
 
-        case ANGLE:
+        case smType::Angle:
         return make_shared<Angle>(DeepCopy(t_abstract->getArgument(0)),DeepCopy(t_abstract->getArgument(1)));
         break;
 
-        case ABS:
+        case smType::Abs:
         return make_shared<Abs>(DeepCopy(t_abstract->getArgument()));
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         return make_shared<Derivative>(DeepCopy(t_abstract->getArgument(0)), DeepCopy(t_abstract->getArgument(1)), t_abstract->getOrder());
         break;
     
-        case COSH:
+        case smType::Cosh:
         return make_shared<Cosh>(DeepCopy(t_abstract->getArgument()));
         break;
     
-        case SINH:
+        case smType::Sinh:
         return make_shared<Sinh>(DeepCopy(t_abstract->getArgument()));
         break;
 
-        case TANH:
+        case smType::Tanh:
         return make_shared<Tanh>(DeepCopy(t_abstract->getArgument()));
         break;
     
-        case ACOSH:
+        case smType::ACosh:
         return make_shared<ACosh>(DeepCopy(t_abstract->getArgument()));
         break;
     
-        case ASINH:
+        case smType::ASinh:
         return make_shared<ASinh>(DeepCopy(t_abstract->getArgument()));
         break;
 
-        case ATANH:
+        case smType::ATanh:
         return make_shared<ATanh>(DeepCopy(t_abstract->getArgument()));
         break;
 
-        case FACTORIAL:
+        case smType::Factorial:
         return make_shared<Factorial>(DeepCopy(t_abstract->getArgument()));
         break;
 
-        case VECTOR:
+        case smType::Vector:
         foo = t_abstract->getVectorArgument();
         for (size_t i=0; i<foo.size(); i++)
             foo2.push_back(DeepCopy(foo[i]));
         return make_shared<Vector>(foo2);
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         foo = t_abstract->getVectorArgument();
         for (size_t i=0; i<foo.size(); i++)
             foo2.push_back(DeepCopy(foo[i]));
         return make_shared<Matrix>(foo2);
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         foo = t_abstract->getVectorArgument();
         for (size_t i=0; i<foo.size(); i++)
             foo2.push_back(DeepCopy(foo[i]));
         return make_shared<HighDTensor>(foo2);
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         return make_shared<ITensor>(t_abstract->getName(), t_abstract->getIndexStructure());
         break;
         
-        case ITERM:
+        case smType::ITerm:
         foo = t_abstract->getVectorArgument();
         for (Expr i_abstract: foo)
             i_abstract = DeepCopy(i_abstract);
@@ -1129,151 +1129,151 @@ Expr Refresh(const Abstract* t_abstract)
     vector<Expr > newArgument(0);
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         newAbstract = double_(t_abstract->evaluateScalar());
         break;
 
-        case INTEGER:
+        case smType::Integer:
         newAbstract = int_(t_abstract->evaluateScalar());
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         newAbstract = var_(t_abstract->getName(), t_abstract->getValue());
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         newAbstract = make_shared<Constant>(t_abstract->getName(), t_abstract->getValue());
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         newAbstract = _cfraction_(t_abstract->getNum(), t_abstract->getDenom());
         if (newAbstract->getNum() == 0 and newAbstract->getDenom() != 0) newAbstract = ZERO;
         else if (newAbstract->getDenom() == 1) newAbstract = int_(newAbstract->getNum());
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         newAbstract = cfactorial_(t_abstract->getValue());
         newAbstract->setName(t_abstract->getName());
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         newAbstract = make_shared<Imaginary>();
         break;
 
-        case PLUS:
+        case smType::Plus:
         newAbstract = plus_(t_abstract->getVectorArgument());
         break;
 
-        case TIMES:
+        case smType::Times:
         newAbstract = times_(t_abstract->getVectorArgument());
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         newAbstract = fraction_(t_abstract->getArgument(0), t_abstract->getArgument(1));
         break;
 
-        case POW:
+        case smType::Pow:
         newAbstract = pow_(t_abstract->getArgument(0),t_abstract->getArgument(1));
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         foo = t_abstract->getVectorArgument();
         foo2 = t_abstract->getVariable();
         newAbstract = polynomial_(foo, foo2);
         break;
 
-        case EXP:
+        case smType::Exp:
         newAbstract = exp_(t_abstract->getArgument());
         break;
 
-        case LOG:
+        case smType::Log:
         newAbstract = log_(t_abstract->getArgument());
         break;
 
-        case COS:
+        case smType::Cos:
         newAbstract = cos_(t_abstract->getArgument());
         break;
 
-        case SIN:
+        case smType::Sin:
         newAbstract = sin_(t_abstract->getArgument());
         break;
 
-        case TAN:
+        case smType::Tan:
         newAbstract = tan_(t_abstract->getArgument());
         break;
 
-        case ACOS:
+        case smType::ACos:
         newAbstract = acos_(t_abstract->getArgument());
         break;
 
-        case ASIN:
+        case smType::ASin:
         newAbstract = asin_(t_abstract->getArgument());
         break;
 
-        case ATAN:
+        case smType::ATan:
         newAbstract = atan_(t_abstract->getArgument());
         break;
 
-        case ANGLE:
+        case smType::Angle:
         newAbstract = make_shared<Angle>(t_abstract->getArgument(0),t_abstract->getArgument(1));
         break;
 
-        case ABS:
+        case smType::Abs:
         newAbstract = abs_(t_abstract->getArgument());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         newAbstract = make_shared<Derivative>(t_abstract->getArgument(0), t_abstract->getArgument(1), t_abstract->getOrder());
         break;
     
-        case COSH:
+        case smType::Cosh:
         newAbstract = make_shared<Cosh>(t_abstract->getArgument());
         break;
     
-        case SINH:
+        case smType::Sinh:
         newAbstract = make_shared<Sinh>(t_abstract->getArgument());
         break;
 
-        case TANH:
+        case smType::Tanh:
         newAbstract = make_shared<Tanh>(t_abstract->getArgument());
         break;
     
-        case ACOSH:
+        case smType::ACosh:
         newAbstract = make_shared<ACosh>(t_abstract->getArgument());
         break;
     
-        case ASINH:
+        case smType::ASinh:
         newAbstract = make_shared<ASinh>(t_abstract->getArgument());
         break;
 
-        case ATANH:
+        case smType::ATanh:
         newAbstract = make_shared<ATanh>(t_abstract->getArgument());
         break;
 
-        case FACTORIAL:
+        case smType::Factorial:
         newAbstract = make_shared<Factorial>(t_abstract->getArgument());
         break;
 
-        case VECTOR:
+        case smType::Vector:
         foo = t_abstract->getVectorArgument();
         newAbstract = vector_(foo);
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         foo = t_abstract->getVectorArgument();
         newAbstract = matrix_(foo);
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         foo = t_abstract->getVectorArgument();
         newAbstract = highDTensor_(foo);
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         newAbstract = make_shared<ITensor>(t_abstract->getName(), t_abstract->getIndexStructure());
         break;
         
-        case ITERM:
+        case smType::ITerm:
         newAbstract = make_shared<ITerm>(t_abstract->getVectorArgument());
         break;
 
@@ -1296,136 +1296,136 @@ Expr Refresh(const Expr& t_abstract)
     vector<Expr > newArgument(0);
     switch(type)
     {
-        case DOUBLE:
-        case INTEGER:
-        case VARIABLE:
-        case CONSTANT:
-        case CFACTORIAL:
-        case IMAGINARY:
+        case smType::Double:
+        case smType::Integer:
+        case smType::Variable:
+        case smType::Constant:
+        case smType::CFactorial:
+        case smType::Imaginary:
         newAbstract = t_abstract;
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         newAbstract = _cfraction_(t_abstract->getNum(), t_abstract->getDenom());
         if (newAbstract->getNum() == 0 and newAbstract->getDenom() != 0) newAbstract = ZERO;
         else if (newAbstract->getDenom() == 1) newAbstract = int_(newAbstract->getNum());
         break;
 
-        case PLUS:
+        case smType::Plus:
         newAbstract = plus_(t_abstract->getVectorArgument());
         break;
 
-        case TIMES:
+        case smType::Times:
         newAbstract = times_(t_abstract->getVectorArgument());
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         newAbstract = fraction_(t_abstract->getArgument(0), t_abstract->getArgument(1));
         break;
 
-        case POW:
+        case smType::Pow:
         newAbstract = pow_(t_abstract->getArgument(0),t_abstract->getArgument(1));
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         foo = t_abstract->getVectorArgument();
         foo2 = t_abstract->getVariable();
         newAbstract = polynomial_(foo, foo2);
         break;
 
-        case EXP:
+        case smType::Exp:
         newAbstract = exp_(t_abstract->getArgument());
         break;
 
-        case LOG:
+        case smType::Log:
         newAbstract = log_(t_abstract->getArgument());
         break;
 
-        case COS:
+        case smType::Cos:
         newAbstract = cos_(t_abstract->getArgument());
         break;
 
-        case SIN:
+        case smType::Sin:
         newAbstract = sin_(t_abstract->getArgument());
         break;
 
-        case TAN:
+        case smType::Tan:
         newAbstract = tan_(t_abstract->getArgument());
         break;
 
-        case ACOS:
+        case smType::ACos:
         newAbstract = acos_(t_abstract->getArgument());
         break;
 
-        case ASIN:
+        case smType::ASin:
         newAbstract = asin_(t_abstract->getArgument());
         break;
 
-        case ATAN:
+        case smType::ATan:
         newAbstract = atan_(t_abstract->getArgument());
         break;
 
-        case ANGLE:
+        case smType::Angle:
         newAbstract = make_shared<Angle>(t_abstract->getArgument(0),t_abstract->getArgument(1));
         break;
 
-        case ABS:
+        case smType::Abs:
         newAbstract = abs_(t_abstract->getArgument());
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         newAbstract = make_shared<Derivative>(t_abstract->getArgument(0), t_abstract->getArgument(1), t_abstract->getOrder());
         break;
     
-        case COSH:
+        case smType::Cosh:
         newAbstract = make_shared<Cosh>(t_abstract->getArgument());
         break;
     
-        case SINH:
+        case smType::Sinh:
         newAbstract = make_shared<Sinh>(t_abstract->getArgument());
         break;
 
-        case TANH:
+        case smType::Tanh:
         newAbstract = make_shared<Tanh>(t_abstract->getArgument());
         break;
     
-        case ACOSH:
+        case smType::ACosh:
         newAbstract = make_shared<ACosh>(t_abstract->getArgument());
         break;
     
-        case ASINH:
+        case smType::ASinh:
         newAbstract = make_shared<ASinh>(t_abstract->getArgument());
         break;
 
-        case ATANH:
+        case smType::ATanh:
         newAbstract = make_shared<ATanh>(t_abstract->getArgument());
         break;
 
-        case FACTORIAL:
+        case smType::Factorial:
         newAbstract = make_shared<Factorial>(t_abstract->getArgument());
         break;
 
-        case VECTOR:
+        case smType::Vector:
         foo = t_abstract->getVectorArgument();
         newAbstract = vector_(foo);
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         foo = t_abstract->getVectorArgument();
         newAbstract = matrix_(foo);
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         foo = t_abstract->getVectorArgument();
         newAbstract = highDTensor_(foo);
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         newAbstract = make_shared<ITensor>(t_abstract->getName(), t_abstract->getIndexStructure());
         break;
         
-        case ITERM:
-        cout<<"Warning: Type ITERM not correctly implemented in Refresh.\n";
+        case smType::ITerm:
+        cout<<"Warning: Type ITerm not correctly implemented in Refresh.\n";
         newAbstract = make_shared<ITerm>(t_abstract->getVectorArgument());
         break;
 
@@ -1449,38 +1449,38 @@ Expr DeepRefresh(const Expr& t_abstract)
     vector<Expr > newArgument(0);
     switch(type)
     {
-        case DOUBLE:
+        case smType::Double:
         newAbstract = double_(t_abstract->evaluateScalar());
         break;
 
-        case INTEGER:
+        case smType::Integer:
         newAbstract = int_(t_abstract->evaluateScalar());
         break;
 
-        case VARIABLE:
+        case smType::Variable:
         newAbstract = var_(t_abstract->getName(), t_abstract->getValue());
         break;
 
-        case CONSTANT:
+        case smType::Constant:
         newAbstract = make_shared<Constant>(t_abstract->getName(), t_abstract->getValue());
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         newAbstract = _cfraction_(t_abstract->getNum(), t_abstract->getDenom());
         if (newAbstract->getNum() == 0 and newAbstract->getDenom() != 0) newAbstract = ZERO;
         else if (newAbstract->getDenom() == 1) newAbstract = int_(newAbstract->getNum());
         break;
 
-        case CFACTORIAL:
+        case smType::CFactorial:
         newAbstract = cfactorial_(t_abstract->getValue());
         newAbstract->setName(t_abstract->getName());
         break;
 
-        case IMAGINARY:
+        case smType::Imaginary:
         newAbstract = make_shared<Imaginary>();
         break;
 
-        case PLUS:
+        case smType::Plus:
         nArgs = t_abstract->getNArgs();
         newArgument = vector<Expr >(nArgs);
         for (int i=0; i<nArgs; i++)
@@ -1488,7 +1488,7 @@ Expr DeepRefresh(const Expr& t_abstract)
         newAbstract = plus_(newArgument);
         break;
 
-        case TIMES:
+        case smType::Times:
         nArgs = t_abstract->getNArgs();
         newArgument = vector<Expr >(nArgs);
         for (int i=0; i<nArgs; i++)
@@ -1496,15 +1496,15 @@ Expr DeepRefresh(const Expr& t_abstract)
         newAbstract = times_(newArgument);
         break;
 
-        case FRACTION:
+        case smType::Fraction:
         newAbstract = fraction_(DeepRefresh(t_abstract->getArgument(0)),DeepRefresh(t_abstract->getArgument(1)));
         break;
 
-        case POW:
+        case smType::Pow:
         newAbstract = pow_(DeepRefresh(t_abstract->getArgument(0)),DeepRefresh(t_abstract->getArgument(1)));
         break;
 
-        case POLYNOMIAL:
+        case smType::Polynomial:
         foo = t_abstract->getVectorArgument();
         for (size_t i=0; i<foo.size(); i++)
             foo[i] = DeepRefresh(foo[i]);
@@ -1512,79 +1512,79 @@ Expr DeepRefresh(const Expr& t_abstract)
         newAbstract = polynomial_(foo, foo2);
         break;
 
-        case EXP:
+        case smType::Exp:
         newAbstract = exp_(DeepRefresh(t_abstract->getArgument()));
         break;
 
-        case LOG:
+        case smType::Log:
         newAbstract = log_(DeepRefresh(t_abstract->getArgument()));
         break;
 
-        case COS:
+        case smType::Cos:
         newAbstract = cos_(DeepRefresh(t_abstract->getArgument()));
         break;
 
-        case SIN:
+        case smType::Sin:
         newAbstract = sin_(DeepRefresh(t_abstract->getArgument()));
         break;
 
-        case TAN:
+        case smType::Tan:
         newAbstract = tan_(DeepRefresh(t_abstract->getArgument()));
         break;
 
-        case ACOS:
+        case smType::ACos:
         newAbstract = acos_(DeepRefresh(t_abstract->getArgument()));
         break;
 
-        case ASIN:
+        case smType::ASin:
         newAbstract = asin_(DeepRefresh(t_abstract->getArgument()));
         break;
 
-        case ATAN:
+        case smType::ATan:
         newAbstract = atan_(DeepRefresh(t_abstract->getArgument()));
         break;
 
-        case ANGLE:
+        case smType::Angle:
         newAbstract = make_shared<Angle>(DeepRefresh(t_abstract->getArgument(0)),DeepRefresh(t_abstract->getArgument(1)));
         break;
 
-        case ABS:
+        case smType::Abs:
         newAbstract = abs_(DeepRefresh(DeepRefresh(t_abstract->getArgument())));
         break;
 
-        case DERIVATIVE:
+        case smType::Derivative:
         newAbstract = make_shared<Derivative>(DeepRefresh(t_abstract->getArgument(0)), DeepRefresh(t_abstract->getArgument(1)), t_abstract->getOrder());
         break;
     
-        case COSH:
+        case smType::Cosh:
         newAbstract = make_shared<Cosh>(DeepRefresh(t_abstract->getArgument()));
         break;
     
-        case SINH:
+        case smType::Sinh:
         newAbstract = make_shared<Sinh>(DeepRefresh(t_abstract->getArgument()));
         break;
 
-        case TANH:
+        case smType::Tanh:
         newAbstract = make_shared<Tanh>(DeepRefresh(t_abstract->getArgument()));
         break;
     
-        case ACOSH:
+        case smType::ACosh:
         newAbstract = make_shared<ACosh>(DeepRefresh(t_abstract->getArgument()));
         break;
     
-        case ASINH:
+        case smType::ASinh:
         newAbstract = make_shared<ASinh>(DeepRefresh(t_abstract->getArgument()));
         break;
 
-        case ATANH:
+        case smType::ATanh:
         newAbstract = make_shared<ATanh>(DeepRefresh(t_abstract->getArgument()));
         break;
 
-        case FACTORIAL:
+        case smType::Factorial:
         newAbstract = make_shared<Factorial>(DeepRefresh(t_abstract->getArgument()));
         break;
 
-        case VECTOR:
+        case smType::Vector:
         nArgs = t_abstract->getNArgs();
         newAbstract = ZERO;
         foo = t_abstract->getVectorArgument();
@@ -1593,7 +1593,7 @@ Expr DeepRefresh(const Expr& t_abstract)
         newAbstract = vector_(foo);
         break;
 
-        case MATRIX:
+        case smType::Matrix:
         nArgs = t_abstract->getNArgs();
         newAbstract = ZERO;
         foo = t_abstract->getVectorArgument();
@@ -1602,7 +1602,7 @@ Expr DeepRefresh(const Expr& t_abstract)
         newAbstract = matrix_(foo);
         break;
 
-        case HIGHDTENSOR:
+        case smType::HighDTensor:
         nArgs = t_abstract->getNArgs();
         newAbstract = ZERO;
         foo = t_abstract->getVectorArgument();
@@ -1611,12 +1611,12 @@ Expr DeepRefresh(const Expr& t_abstract)
         newAbstract = highDTensor_(foo);
         break;
 
-        case ITENSOR:
+        case smType::ITensor:
         newAbstract = make_shared<ITensor>(t_abstract->getName(), t_abstract->getIndexStructure());
         break;
         
-        case ITERM:
-        cout<<"Warning: Type ITERM not correctly implemented in Refresh.\n";
+        case smType::ITerm:
+        cout<<"Warning: Type ITerm not correctly implemented in Refresh.\n";
         nArgs = t_abstract->getNArgs();
         newAbstract = ZERO;
         foo = t_abstract->getVectorArgument();
@@ -1656,7 +1656,7 @@ Expr Replace(const Expr& t_abstract, const Expr& old_abstract, const Expr& new_a
     if (type < 100)
     {
         Expr foo = Copy(t_abstract);
-        if (t_abstract->getType() == POLYNOMIAL and *old_abstract == t_abstract->getVariable())
+        if (t_abstract->getType() == smType::Polynomial and *old_abstract == t_abstract->getVariable())
             foo = foo->getRegularExpression();
         for (int i=0; i<foo->getNArgs(); i++)
             foo->setArgument(Replace(t_abstract->getArgument(i), old_abstract, new_abstract),i);
@@ -1668,46 +1668,46 @@ Expr Replace(const Expr& t_abstract, const Expr& old_abstract, const Expr& new_a
     return t_abstract;
 }
 
-Expr Empty(Type type)
+Expr Empty(smType::Type type)
 {
     switch(type)
     {
-        case INTEGER:     return make_shared<Integer>();     break;
-        case CFRACTION:   return make_shared<CFraction>();   break;
-        case DOUBLE:      return make_shared<Double>();      break;
-        case CFACTORIAL:  return make_shared<CFactorial>();  break;
-        case IMAGINARY:   return make_shared<Imaginary>();   break;
-        case CONSTANT:    return make_shared<Constant>();    break;
-        case VARIABLE:    return make_shared<Variable>();    break;
-        case PLUS:        return make_shared<Plus>();        break;
-        case POLYNOMIAL:  return make_shared<Polynomial>();  break;
-        case TIMES:       return make_shared<Times>();       break;
-        case FRACTION:    return make_shared<Fraction>();    break;
-        case POW:         return make_shared<Pow>();         break;
-        case EXP:         return make_shared<Exp>();         break;
-        case LOG:         return make_shared<Log>();         break;
-        case ABS:         return make_shared<Abs>();         break;
-        case COS:         return make_shared<Cos>();         break;
-        case SIN:         return make_shared<Sin>();         break;
-        case TAN:         return make_shared<Tan>();         break;
-        case COSH:        return make_shared<Cosh>();        break;
-        case SINH:        return make_shared<Sinh>();        break;
-        case TANH:        return make_shared<Tanh>();        break;
-        case DERIVATIVE:  return make_shared<Derivative>();  break;
-        case ANGLE:       return make_shared<Angle>();       break;
-        case FACTORIAL:   return make_shared<Factorial>();   break;
-        case ACOS:        return make_shared<ACos>();        break;
-        case ASIN:        return make_shared<ASin>();        break;
-        case ATAN:        return make_shared<ATan>();        break;
-        case ACOSH:       return make_shared<ACosh>();       break;
-        case ASINH:       return make_shared<ASinh>();       break;
-        case ATANH:       return make_shared<ATanh>();       break;
-        case VECTOR:      return make_shared<Vector>();      break;
-        case MATRIX:      return make_shared<Matrix>();      break;
-        case HIGHDTENSOR: return make_shared<HighDTensor>(); break;
-        case ITENSOR:     return make_shared<ITensor>();     break;
-        case ITERM:       return make_shared<ITerm>();       break;
+        case smType::Integer:     return make_shared<Integer>();     break;
+        case smType::CFraction:   return make_shared<CFraction>();   break;
+        case smType::Double:      return make_shared<Double>();      break;
+        case smType::CFactorial:  return make_shared<CFactorial>();  break;
+        case smType::Imaginary:   return make_shared<Imaginary>();   break;
+        case smType::Constant:    return make_shared<Constant>();    break;
+        case smType::Variable:    return make_shared<Variable>();    break;
+        case smType::Plus:        return make_shared<Plus>();        break;
+        case smType::Polynomial:  return make_shared<Polynomial>();  break;
+        case smType::Times:       return make_shared<Times>();       break;
+        case smType::Fraction:    return make_shared<Fraction>();    break;
+        case smType::Pow:         return make_shared<Pow>();         break;
+        case smType::Exp:         return make_shared<Exp>();         break;
+        case smType::Log:         return make_shared<Log>();         break;
+        case smType::Abs:         return make_shared<Abs>();         break;
+        case smType::Cos:         return make_shared<Cos>();         break;
+        case smType::Sin:         return make_shared<Sin>();         break;
+        case smType::Tan:         return make_shared<Tan>();         break;
+        case smType::Cosh:        return make_shared<Cosh>();        break;
+        case smType::Sinh:        return make_shared<Sinh>();        break;
+        case smType::Tanh:        return make_shared<Tanh>();        break;
+        case smType::Derivative:  return make_shared<Derivative>();  break;
+        case smType::Angle:       return make_shared<Angle>();       break;
+        case smType::Factorial:   return make_shared<Factorial>();   break;
+        case smType::ACos:        return make_shared<ACos>();        break;
+        case smType::ASin:        return make_shared<ASin>();        break;
+        case smType::ATan:        return make_shared<ATan>();        break;
+        case smType::ACosh:       return make_shared<ACosh>();       break;
+        case smType::ASinh:       return make_shared<ASinh>();       break;
+        case smType::ATanh:       return make_shared<ATanh>();       break;
+        case smType::Vector:      return make_shared<Vector>();      break;
+        case smType::Matrix:      return make_shared<Matrix>();      break;
+        case smType::HighDTensor: return make_shared<HighDTensor>(); break;
+        case smType::ITensor:     return make_shared<ITensor>();     break;
+        case smType::ITerm:       return make_shared<ITerm>();       break;
 
-        default: callWarning<Type>(Unknown_type, "Empty(Type)", type); return ZERO;
+        default: callWarning<smType::Type>(smError::UnknownType, "Empty(Type)", type); return ZERO;
     }
 }

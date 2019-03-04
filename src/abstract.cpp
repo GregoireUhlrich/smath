@@ -6,10 +6,78 @@
 #pragma GCC diagnostic ignored "-Wreturn-type"
 using namespace std;
 
+bool Abstract::getProperty(smProperty::OwnBProperty prop)
+{
+    switch(prop) {
+        case smProperty::Commutable:
+            return commutable;
+            break;
+        case smProperty::Valued:
+            print();
+            callError(smError::AbstractFuncCalled, "Abstract::getProperty(smProperty::Valued) const");
+            break;
+        default:
+            return false;
+    };
+}
+
+bool Abstract::getProperty(smProperty::DependBProperty prop, const Expr& expression)
+{
+    switch(prop) {
+        default: return (*this==expression);
+    };
+}
+
+int Abstract::getProperty(smProperty::OwnIProperty prop)
+{
+    switch(prop) {
+
+        case smProperty::Dim:     return 0; break;
+        case smProperty::NFactor: return 1; break;
+
+        case smProperty::Value:
+        case smProperty::Numerator:
+        case smProperty::Denominator:
+            print();
+            callError(smError::AbstractFuncCalled,
+                    "Abstract::getProperty(smProperty::Value)");
+            break;
+
+        case smProperty::Order:
+            print();
+            callError(smError::AbstractFuncCalled,
+                    "Abstract::getProperty(smProperty::Order)");
+            break;
+
+        case smProperty::NIndices:
+            print();
+            callError(smError::AbstractFuncCalled,
+                    "Abstract::getProperty(smProperty::NIndices)");
+            break;
+
+        default:
+            callError(smError::UnknownProperty,
+                    "Abstract::getProperty(smProperty::OwnIProperty)",prop);
+    };
+}
+
+int Abstract::getProperty(smProperty::DependIProperty prop, const Expr& expression)
+{
+    switch(prop){
+        case smProperty::Polynomial:
+        case smProperty::Parity:
+            return (*this==expression);
+        default:
+            callError(smError::UnknownProperty,
+                    "Abstract::getProperty(smProperty::OwnIProperty, const Expr&)",
+                    prop);
+    };
+}
+
 bool Abstract::getValued() const
 {
     print();
-    callError(Abstract_func_called, "Abstract::getValued() const");
+    callError(smError::AbstractFuncCalled, "Abstract::getValued() const");
     return false;
 }
 
@@ -32,14 +100,14 @@ int Abstract::getNArgs(int axis) const
 int Abstract::getNIndices() const
 {
     print();
-    callError(Abstract_func_called, "Abstract::getNIndices() const");
+    callError(smError::AbstractFuncCalled, "Abstract::getNIndices() const");
     return 0;
 }
 
 Index Abstract::getIndex(int i) const
 {
     print();
-    callError(Abstract_func_called, "Abstract::getIndex(int i) const");
+    callError(smError::AbstractFuncCalled, "Abstract::getIndex(int i) const");
     return Index();
 }
 
@@ -51,74 +119,74 @@ vector<Index> Abstract::getIndexStructure() const
 void Abstract::setIndexStructure(const vector<Index>& index)
 {
     print();
-    callError(Abstract_func_called, "Abstract::setIndexStructure(const vector<Index>& t_index) const");
+    callError(smError::AbstractFuncCalled, "Abstract::setIndexStructure(const vector<Index>& t_index) const");
 }
 
 bool Abstract::checkIndexStructure(const vector<Index>& t_index) const
 {
     print();
-    callError(Abstract_func_called, "Abstract::checkIndexStructure(const vector<Index>& t_index) const");
+    callError(smError::AbstractFuncCalled, "Abstract::checkIndexStructure(const vector<Index>& t_index) const");
     return (t_index.size()==0);
 }
 
 bool Abstract::checkIndexStructure(const initializer_list<Index>& index) const
 {
     print();
-    callError(Abstract_func_called, "Abstract::checkIndexStructure(initializer_list<Index> index) const");
+    callError(smError::AbstractFuncCalled, "Abstract::checkIndexStructure(initializer_list<Index> index) const");
     return (index.size()==0);
 }
 
 void Abstract::setFullySymmetric()
 {
     print();
-    callError(Abstract_func_called, "Abstract::setFullySymmetric() const");
+    callError(smError::AbstractFuncCalled, "Abstract::setFullySymmetric() const");
 }
 void Abstract::setFullyAntiSymmetric()
 {
     print();
-    callError(Abstract_func_called, "Abstract::setFullyAntiSymmetric() const");
+    callError(smError::AbstractFuncCalled, "Abstract::setFullyAntiSymmetric() const");
 }
 void Abstract::addSymmetry(int i1, int i2)
 {
     print();
-    callError(Abstract_func_called, "Abstract::addSymmetry() const");
+    callError(smError::AbstractFuncCalled, "Abstract::addSymmetry() const");
 }
 void Abstract::addAntiSymmetry(int i1, int i2)
 {
     print();
-    callError(Abstract_func_called, "Abstract::addAntiSymmetry() const");
+    callError(smError::AbstractFuncCalled, "Abstract::addAntiSymmetry() const");
 }
 int Abstract::getNContractedPairs() const
 {
     print();
-    callError(Abstract_func_called, "Abstract::getNContractedPairs() const");
+    callError(smError::AbstractFuncCalled, "Abstract::getNContractedPairs() const");
     return 0;
 }
 
 int Abstract::permut(int i1, int i2)
 {
     print();
-    callError(Abstract_func_called, "Abstract::permut(int i1, int i2)");
+    callError(smError::AbstractFuncCalled, "Abstract::permut(int i1, int i2)");
     return 0;
 }
 vector<Expr> Abstract::getPermutations() const
 {
     print();
-    callError(Abstract_func_called, "Abstract::getPermutations() const");
+    callError(smError::AbstractFuncCalled, "Abstract::getPermutations() const");
     return vector<Expr>(0);
 }
 
 set<pair<int,int> > Abstract::getContractedPair() const
 {
     print();
-    callError(Abstract_func_called, "Abstract::getPair() const");
+    callError(smError::AbstractFuncCalled, "Abstract::getPair() const");
     return set<pair<int,int> >();
 }
 
 void Abstract::contractIndices(int axis1, int axis2)
 {
     print();
-    callError(Abstract_func_called, "Abstract::contractIndices(int axis1, int axis2)");
+    callError(smError::AbstractFuncCalled, "Abstract::contractIndices(int axis1, int axis2)");
 }
 
 vector<int> Abstract::getShape() const
@@ -129,27 +197,27 @@ vector<int> Abstract::getShape() const
 const vector<Expr >& Abstract::getVectorArgument() const
 {
     print();
-    callError(Abstract_func_called, "Abstract::getVectorArgument() const");
+    callError(smError::AbstractFuncCalled, "Abstract::getVectorArgument() const");
 }
 
 Expr Abstract::getArgument(int iArg) const
 {
     print();
-    callError(Abstract_func_called, "Abstract::getArgument(int iArg) const");
+    callError(smError::AbstractFuncCalled, "Abstract::getArgument(int iArg) const");
     return nullptr;
 }
 
 Expr Abstract::getArgument(const initializer_list<int>& indices) const
 {
     print();
-    callError(Abstract_func_called, "Abstract::getArgument(int iArg, int jArg) const");
+    callError(smError::AbstractFuncCalled, "Abstract::getArgument(int iArg, int jArg) const");
     return nullptr;
 }
 
 Expr Abstract::getArgument(const vector<int>& indices) const
 {
     print();
-    callError(Abstract_func_called, "Abstract::getArgument(const vector<int>& indices) const");
+    callError(smError::AbstractFuncCalled, "Abstract::getArgument(const vector<int>& indices) const");
     return nullptr;
 }
 
@@ -205,7 +273,7 @@ Expr Abstract::getComplexConjugate()
 void Abstract::insert(const Expr& t_abstract, bool side)
 {
     print();
-    callError(Abstract_func_called, "Abstract::insert(const Expr& t_abstract)");
+    callError(smError::AbstractFuncCalled, "Abstract::insert(const Expr& t_abstract)");
 }
 
 bool Abstract::askTerm(const Expr& t_abstract, bool exact) const
@@ -238,22 +306,22 @@ Expr Abstract::suppressTerm(const Expr& t_abstract) const
 void Abstract::setArgument(const Expr& t_abstract, int iArg)
 {
     print();
-    callError(Abstract_func_called, "Abstract::setArgument(const Expr& t_abstract, int iArg)");
+    callError(smError::AbstractFuncCalled, "Abstract::setArgument(const Expr& t_abstract, int iArg)");
 }
 void Abstract::setArgument(const Expr& t_abstract, const initializer_list<int>& indices)
 {
     print();
-    callError(Abstract_func_called, "Abstract::setArgument(const Expr& t_abstract, const initializer_list<int>& indices)");
+    callError(smError::AbstractFuncCalled, "Abstract::setArgument(const Expr& t_abstract, const initializer_list<int>& indices)");
 }
 void Abstract::setArgument(const Expr& t_abstract, const vector<int>& indices)
 {
     print();
-    callError(Abstract_func_called, "Abstract::setArgument(const Expr& t_abstract, const vector<int>& indices)");
+    callError(smError::AbstractFuncCalled, "Abstract::setArgument(const Expr& t_abstract, const vector<int>& indices)");
 }
 void Abstract::setVectorArgument(const vector<Expr>& t_argument)
 {
     print();
-    callError(Abstract_func_called, "Abstract::setVectorArgument(const vector<Expr>& t_argument)");
+    callError(smError::AbstractFuncCalled, "Abstract::setVectorArgument(const vector<Expr>& t_argument)");
 }
 
 void Abstract::printExplicit(int mode) const
@@ -273,35 +341,35 @@ void Abstract::printExplicit(int mode) const
 double Abstract::evaluateScalar() const
 {
     print();
-    callError(Eval_not_valued,"Abstract::evaluateScalar() const");
+    callError(smError::EvalNotValued,"Abstract::evaluateScalar() const");
     return 0;
 }
 
 Expr Abstract::addition_own(const Expr& t_abstract) const
 {
     print();
-    callError(Abstract_func_called, "Abstract::addition_own(const Expr& t_abstract) const");
+    callError(smError::AbstractFuncCalled, "Abstract::addition_own(const Expr& t_abstract) const");
     return ZERO;
 }
 
 Expr Abstract::multiplication_own(const Expr& t_abstract) const
 {
     print();
-    callError(Abstract_func_called, "Abstract::multiplication_own(const Expr& t_abstract) const");
+    callError(smError::AbstractFuncCalled, "Abstract::multiplication_own(const Expr& t_abstract) const");
     return ZERO;
 }
 
 Expr Abstract::division_own(const Expr& t_abstract) const
 {
     print();
-    callError(Abstract_func_called, "Abstract::division_own(const Expr& t_abstract) const");
+    callError(smError::AbstractFuncCalled, "Abstract::division_own(const Expr& t_abstract) const");
     return ZERO;
 }
 
 Expr Abstract::exponentiation_own(const Expr& t_abstract) const
 {
     print();
-    callError(Abstract_func_called, "Abstract::exponentiation_own(const Expr& t_abstract) const");
+    callError(smError::AbstractFuncCalled, "Abstract::exponentiation_own(const Expr& t_abstract) const");
     return ZERO;
 }
 
@@ -364,10 +432,11 @@ bool Abstract::operator==(int t_value) const
 
 bool Abstract::operator==(double t_value) const
 {
-    if (getPrimaryType() == NUMERICAL)
+    if (getPrimaryType() == smType::Numerical)
         return evaluateScalar() == t_value;
-    if (getPrimaryType() == LITERAL and (getType() == VARIABLE
-                                     or getType() == CONSTANT))
+    if (getPrimaryType() == smType::Literal and
+            (getType() == smType::Variable or
+             getType() == smType::Constant))
         return evaluateScalar() == t_value;
     return false;
 }
@@ -380,8 +449,8 @@ bool Abstract::operator==(double t_value) const
 Expr Abstract::operator[](int iArg)
 {
     print();
-    callError(Abstract_func_called,"Abstract::operator[]");
-    exit(Abstract_func_called); // Not usefull line, only there t
+    callError(smError::AbstractFuncCalled,"Abstract::operator[]");
+    exit(smError::AbstractFuncCalled); // Not usefull line, only there t
 }
 /*
 bool Abstract::operator>(const Expr& t_abstract) const
@@ -434,105 +503,105 @@ bool Abstract::matchShape(const Expr& t_abstract, bool exact) const
 Expr Abstract::tensor_dot(const Expr& t_abstract) const
 {
     print();
-    callError(Abstract_func_called, "Abstract::tensor_dot(const Expr& t_abstract) const");
+    callError(smError::AbstractFuncCalled, "Abstract::tensor_dot(const Expr& t_abstract) const");
     return nullptr;
 }
 
 Expr Abstract::dot(const Expr& t_abstract) const
 {
     print();
-    callError(Abstract_func_called, "Abstract::dot(const Expr& t_abstract) const");
+    callError(smError::AbstractFuncCalled, "Abstract::dot(const Expr& t_abstract) const");
     return nullptr;
 }
 
 Expr Abstract::getSum() const
 {
     print();
-    callError(Abstract_func_called, "Abstract::getSum() const");
+    callError(smError::AbstractFuncCalled, "Abstract::getSum() const");
     return nullptr;
 }
 
 Expr Abstract::getProduct() const
 {
     print();
-    callError(Abstract_func_called, "Abstract::getProduct() const");
+    callError(smError::AbstractFuncCalled, "Abstract::getProduct() const");
     return nullptr;
 }
 
 Expr Abstract::getVectorialModulus() const
 {
     print();
-    callError(Abstract_func_called, "Abstract::getVectorialModulus() const");
+    callError(smError::AbstractFuncCalled, "Abstract::getVectorialModulus() const");
     return nullptr;
 }
 
 Expr Abstract::getSubVectorial(int iExcept) const
 {
     print();
-    callError(Abstract_func_called, "Abstract::getSubVectorial(int iExcept) const");
+    callError(smError::AbstractFuncCalled, "Abstract::getSubVectorial(int iExcept) const");
     return nullptr;
 }
 
 Expr Abstract::getSubVectorial(int iExcept, int jExcept) const
 {
     print();
-    callError(Abstract_func_called, "Abstract::getSubVectorial(int iExcept, int jExcept) const");
+    callError(smError::AbstractFuncCalled, "Abstract::getSubVectorial(int iExcept, int jExcept) const");
     return nullptr;
 }
 
 Expr Abstract::getSubVectorial(const vector<int>& exceptions) const
 {
     print();
-    callError(Abstract_func_called, "Abstract::getSubVectorial(const vector<int>& exceptions) const");
+    callError(smError::AbstractFuncCalled, "Abstract::getSubVectorial(const vector<int>& exceptions) const");
     return nullptr;
 }
 
 Expr Abstract::determinant() const
 {
     print();
-    callError(Abstract_func_called, "Abstract::determinant() const");
+    callError(smError::AbstractFuncCalled, "Abstract::determinant() const");
     return nullptr;
 }
 
 Expr Abstract::trace() const
 {
     print();
-    callError(Abstract_func_called, "Abstract::trace() const");
+    callError(smError::AbstractFuncCalled, "Abstract::trace() const");
     return nullptr;
 }
 
 Expr Abstract::trace(int axis1, int axis2) const
 {
     print();
-    callError(Abstract_func_called, "Abstract::trace(int axis1, int axis2) const");
+    callError(smError::AbstractFuncCalled, "Abstract::trace(int axis1, int axis2) const");
     return nullptr;
 }
 
 Expr Abstract::transpose() const
 {
     print();
-    callError(Abstract_func_called, "Abstract::transpose() const");
+    callError(smError::AbstractFuncCalled, "Abstract::transpose() const");
     return nullptr;
 }
 
 Expr Abstract::symmetrise() const
 {
     print();
-    callError(Abstract_func_called, "Abstract::symmetrise() const");
+    callError(smError::AbstractFuncCalled, "Abstract::symmetrise() const");
     return nullptr;
 }
 
 Expr Abstract::antisymmetrise() const
 {
     print();
-    callError(Abstract_func_called, "Abstract::antisymmetrise() const");
+    callError(smError::AbstractFuncCalled, "Abstract::antisymmetrise() const");
     return nullptr;
 }
 
 Expr Abstract::inverseMatrix() const
 {
     print();
-    callError(Abstract_func_called, "Abstract::inverseMatrix() const");
+    callError(smError::AbstractFuncCalled, "Abstract::inverseMatrix() const");
     return nullptr;
 }
 
@@ -570,59 +639,59 @@ bool operator&=(const Expr& a, const Expr& b) {
     return (*a&=b);
 }
 
-ostream& operator<<(ostream& fout, Type type)
+ostream& operator<<(ostream& fout, smType::Type type)
 {
     switch(type) {
-        case INTEGER:     fout<<"Integer";     break;
-        case CFRACTION:   fout<<"CFraction";   break;
-        case DOUBLE:      fout<<"Double";      break;
-        case CFACTORIAL:  fout<<"CFactorial";  break;
-        case IMAGINARY:   fout<<"Imaginary";   break;
-        case CONSTANT:    fout<<"Constant";    break;
-        case VARIABLE:    fout<<"Variable";    break;
-        case PLUS:        fout<<"Plus";        break;
-        case POLYNOMIAL:  fout<<"Polynomial";  break;
-        case TIMES:       fout<<"Times";       break;
-        case FRACTION:    fout<<"Fraction";    break;
-        case POW:         fout<<"Pow";         break;
-        case EXP:         fout<<"Exp";         break;
-        case LOG:         fout<<"Log";         break;
-        case ABS:         fout<<"Abs";         break;
-        case COS:         fout<<"Cos";         break;
-        case SIN:         fout<<"Sin";         break;
-        case TAN:         fout<<"Tan";         break;
-        case COSH:        fout<<"Cosh";        break;
-        case SINH:        fout<<"Sinh";        break;
-        case TANH:        fout<<"Tanh";        break;
-        case DERIVATIVE:  fout<<"Derivative";  break;
-        case ANGLE:       fout<<"Angle";       break;
-        case FACTORIAL:   fout<<"Factorial";   break;
-        case ACOS:        fout<<"Acos";        break;
-        case ASIN:        fout<<"Asin";        break;
-        case ATAN:        fout<<"Atan";        break;
-        case ACOSH:       fout<<"Acosh";       break;
-        case ASINH:       fout<<"Asinh";       break;
-        case ATANH:       fout<<"Atanh";       break;
-        case VECTOR:      fout<<"Vector";      break;
-        case MATRIX:      fout<<"Matrix";      break;
-        case HIGHDTENSOR: fout<<"HighDTensor"; break;
-        case ITENSOR:     fout<<"ITensor";     break;
-        case ITERM:       fout<<"ITerm";       break;
+        case smType::Integer:     fout<<"Integer";     break;
+        case smType::CFraction:   fout<<"CFraction";   break;
+        case smType::Double:      fout<<"Double";      break;
+        case smType::CFactorial:  fout<<"CFactorial";  break;
+        case smType::Imaginary:   fout<<"Imaginary";   break;
+        case smType::Constant:    fout<<"Constant";    break;
+        case smType::Variable:    fout<<"Variable";    break;
+        case smType::Plus:        fout<<"Plus";        break;
+        case smType::Polynomial:  fout<<"Polynomial";  break;
+        case smType::Times:       fout<<"Times";       break;
+        case smType::Fraction:    fout<<"Fraction";    break;
+        case smType::Pow:         fout<<"Pow";         break;
+        case smType::Exp:         fout<<"Exp";         break;
+        case smType::Log:         fout<<"Log";         break;
+        case smType::Abs:         fout<<"Abs";         break;
+        case smType::Cos:         fout<<"Cos";         break;
+        case smType::Sin:         fout<<"Sin";         break;
+        case smType::Tan:         fout<<"Tan";         break;
+        case smType::Cosh:        fout<<"Cosh";        break;
+        case smType::Sinh:        fout<<"Sinh";        break;
+        case smType::Tanh:        fout<<"Tanh";        break;
+        case smType::Derivative:  fout<<"Derivative";  break;
+        case smType::Angle:       fout<<"Angle";       break;
+        case smType::Factorial:   fout<<"Factorial";   break;
+        case smType::ACos:        fout<<"Acos";        break;
+        case smType::ASin:        fout<<"Asin";        break;
+        case smType::ATan:        fout<<"Atan";        break;
+        case smType::ACosh:       fout<<"Acosh";       break;
+        case smType::ASinh:       fout<<"Asinh";       break;
+        case smType::ATanh:       fout<<"Atanh";       break;
+        case smType::Vector:      fout<<"Vector";      break;
+        case smType::Matrix:      fout<<"Matrix";      break;
+        case smType::HighDTensor: fout<<"HighDTensor"; break;
+        case smType::ITensor:     fout<<"ITensor";     break;
+        case smType::ITerm:       fout<<"ITerm";       break;
 
         default: cout<<"Type "<<type<<" not known in operator<<(Type)."; 
     }
     return fout;
 }
 
-ostream& operator<<(ostream& fout, PrimaryType primaryType)
+ostream& operator<<(ostream& fout, smType::PrimaryType primaryType)
 {
     switch(primaryType) {
-        case NUMERICAL:             cout<<"Purely numerical";      break;
-        case LITERAL:               cout<<"Variable Numerical";    break;
-        case MULTI_SCALAR_FUNCTION: cout<<"Multi Scalar Function"; break;
-        case SCALAR_FUNCTION:       cout<<"Scalar Function";       break;
-        case VECTORIAL:             cout<<"Vectorial";             break;
-        case INDICIAL:              cout<<"Indicial";              break;
+        case smType::Numerical:             cout<<"Purely numerical";      break;
+        case smType::Literal:               cout<<"Variable Numerical";    break;
+        case smType::MultiFunction: cout<<"Multi Scalar Function"; break;
+        case smType::ScalarFunction:       cout<<"Scalar Function";       break;
+        case smType::Vectorial:             cout<<"Vectorial";             break;
+        case smType::Indicial:              cout<<"Indicial";              break;
 
         default: cout<<"Primary Type "<<primaryType<<" not known in operator<<(PrimaryType).";
     }

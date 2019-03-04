@@ -74,9 +74,9 @@ class Symbol{
     /*! \brief Returns the \b type of \b abstract.
      * \return \b abstract.getType()
      */
-    Type getType() const;
+    smType::Type getType() const;
 
-    PrimaryType getPrimaryType() const;
+    smType::PrimaryType getPrimaryType() const;
 
     /*! \brief Tells if the Symbol can commute with all the others.
      * \return \b abstract.commutable

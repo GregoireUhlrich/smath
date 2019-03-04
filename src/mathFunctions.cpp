@@ -26,7 +26,7 @@ string Abs::printLaTeX(int mode) const
 Expr Abs::evaluate()
 {
     double value;
-    if (argument->getPrimaryType() == NUMERICAL) value = argument->evaluateScalar();
+    if (argument->getPrimaryType() == smType::Numerical) value = argument->evaluateScalar();
     else return make_shared<Abs>(argument);
     if (value > 0) return argument->evaluate();
     return times_(int_(-1), argument->evaluate());
@@ -49,9 +49,9 @@ Expr Abs::derive(const Expr& t_abstract) const
 Expr abs_(const Expr& t_abstract)
 {
     int type = t_abstract->getType();
-    if (type == INTEGER or type == DOUBLE)
+    if (type == smType::Integer or type == smType::Double)
         return auto_number_(abs(t_abstract->evaluateScalar()));
-    else if (type == CFRACTION)
+    else if (type == smType::CFraction)
         return _cfraction_(abs(t_abstract->getNum()),abs(t_abstract->getDenom()));
     Expr res = make_shared<Abs>(t_abstract);
     applyFuncParity(res);
@@ -130,7 +130,7 @@ int Exp::getParity(const Expr& t_variable) const
 Expr exp_(const Expr& t_abstract)
 {
     int type = t_abstract->getPrimaryType();
-    if (type == NUMERICAL)
+    if (type == smType::Numerical)
     {
         double value = t_abstract->evaluateScalar();
         int value_int = round(value);
@@ -143,7 +143,7 @@ Expr exp_(const Expr& t_abstract)
         }
     }
     type = t_abstract->getType();
-    if (type == LOG)
+    if (type == smType::Log)
         return t_abstract->getArgument();
     Expr res = make_shared<Exp>(t_abstract);
     applyFuncParity(res);
@@ -219,9 +219,9 @@ int Log::getParity(const Expr& t_variable) const
 
 Expr log_(const Expr& t_abstract)
 {
-    if (t_abstract->getPrimaryType() == NUMERICAL and t_abstract->evaluate() == 1)
+    if (t_abstract->getPrimaryType() == smType::Numerical and t_abstract->evaluate() == 1)
         return ZERO;
-    if (t_abstract->getType() == EXP)
+    if (t_abstract->getType() == smType::Exp)
         return t_abstract->getArgument();
     Expr res = make_shared<Log>(t_abstract);
     applyFuncParity(res);
@@ -614,7 +614,7 @@ int ACos::getParity(const Expr& t_variable) const
 
 Expr acos_(const Expr& t_abstract)
 {
-    if (t_abstract->getPrimaryType() == NUMERICAL and t_abstract->evaluate() == 0)
+    if (t_abstract->getPrimaryType() == smType::Numerical and t_abstract->evaluate() == 0)
         return fraction_(pi_,int_(2));
     return make_shared<ACos>(t_abstract);
 }
@@ -687,7 +687,7 @@ int ASin::getParity(const Expr& t_variable) const
 
 Expr asin_(const Expr& t_abstract)
 {
-    if (t_abstract->getPrimaryType() == NUMERICAL and t_abstract->evaluate() == 0)
+    if (t_abstract->getPrimaryType() == smType::Numerical and t_abstract->evaluate() == 0)
         return ZERO;
     return make_shared<ASin>(t_abstract);
 }
@@ -760,7 +760,7 @@ int Cosh::getParity(const Expr& t_variable) const
 
 Expr cosh_(const Expr& t_abstract)
 {
-    if (t_abstract->getPrimaryType() == NUMERICAL and t_abstract->evaluate() == 0)
+    if (t_abstract->getPrimaryType() == smType::Numerical and t_abstract->evaluate() == 0)
         return int_(1);
     Expr res = make_shared<Cosh>(t_abstract);
     applyFuncParity(res);
@@ -836,7 +836,7 @@ int Sinh::getParity(const Expr& t_variable) const
 
 Expr sinh_(const Expr& t_abstract)
 {
-    if (t_abstract->getPrimaryType() == NUMERICAL and t_abstract->evaluate() == 0)
+    if (t_abstract->getPrimaryType() == smType::Numerical and t_abstract->evaluate() == 0)
         return ZERO;
     Expr res = make_shared<Sinh>(t_abstract);
     applyFuncParity(res);
@@ -919,7 +919,7 @@ int Tanh::getParity(const Expr& t_variable) const
 
 Expr tanh_(const Expr& t_abstract)
 {
-    if (t_abstract->getPrimaryType() == NUMERICAL and t_abstract->evaluate() == 0)
+    if (t_abstract->getPrimaryType() == smType::Numerical and t_abstract->evaluate() == 0)
         return ZERO;
     Expr res = make_shared<Tanh>(t_abstract);
     applyFuncParity(res);
@@ -992,7 +992,7 @@ int ACosh::getParity(const Expr& t_variable) const
 
 Expr acosh_(const Expr& t_abstract)
 {
-    if (t_abstract->getPrimaryType() == NUMERICAL and t_abstract->evaluate() == 0)
+    if (t_abstract->getPrimaryType() == smType::Numerical and t_abstract->evaluate() == 0)
         return int_(1);
     Expr res = make_shared<ACosh>(t_abstract);
     applyFuncParity(res);
@@ -1066,7 +1066,7 @@ int ASinh::getParity(const Expr& t_variable) const
 
 Expr asinh_(const Expr& t_abstract)
 {
-    if (t_abstract->getPrimaryType() == NUMERICAL and t_abstract->evaluate() == 0)
+    if (t_abstract->getPrimaryType() == smType::Numerical and t_abstract->evaluate() == 0)
         return ZERO;
     Expr res = make_shared<ASinh>(t_abstract);
     applyFuncParity(res);
@@ -1140,7 +1140,7 @@ int ATanh::getParity(const Expr& t_variable) const
 
 Expr atanh_(const Expr& t_abstract)
 {
-    if (t_abstract->getPrimaryType() == NUMERICAL and t_abstract->evaluate() == 0)
+    if (t_abstract->getPrimaryType() == smType::Numerical and t_abstract->evaluate() == 0)
         return ZERO;
     Expr res = make_shared<ATanh>(t_abstract);
     applyFuncParity(res);
@@ -1190,7 +1190,7 @@ int ATan::getParity(const Expr& t_variable) const
 
 Expr atan_(const Expr& t_abstract)
 {
-    if (t_abstract->getPrimaryType() == NUMERICAL and t_abstract->evaluate() == 0)
+    if (t_abstract->getPrimaryType() == smType::Numerical and t_abstract->evaluate() == 0)
         return ZERO;
     Expr res = make_shared<ATan>(t_abstract);
     applyFuncParity(res);
@@ -1229,7 +1229,7 @@ double Angle::evaluateScalar() const
     if (a > 0) return atan(b/a);
     if (a < 0) return M_PI - atan(b/abs(a));
 
-    callWarning(Infinity, "Angle::evaluateScalar() const");
+    callWarning(smError::Infinity, "Angle::evaluateScalar() const");
     return 0; // Infinite result
 }
 
@@ -1244,7 +1244,7 @@ Expr Angle::evaluateAngle() const
     }
     if (a > 0) return atan_(fraction_(argument[0],argument[1]));
     if (a < 0) return plus_(pi_,times_(int_(-1),atan_(fraction_(argument[0],abs_(argument[1])))));
-    callWarning(Infinity, "Angle::evaluateAngle() const");
+    callWarning(smError::Infinity, "Angle::evaluateAngle() const");
     return INF; // Infinite result
 }
 
@@ -1260,7 +1260,7 @@ Expr Angle::evaluate()
     if (a > 0) return atan_(fraction_(argument[0]->evaluate(),argument[1]->evaluate()))->evaluate();
     if (a < 0) return plus_(pi_,times_(int_(-1),atan_(fraction_(argument[0]->evaluate(),abs_(argument[1]->evaluate())))))->evaluate();
 
-    callWarning(Infinity, "Angle::evaluateAngle() const");
+    callWarning(smError::Infinity, "Angle::evaluateAngle() const");
     return INF; // Infinite result
 }
 
@@ -1271,7 +1271,7 @@ Expr Angle::derive(const Expr& t_abstract) const {
 bool Angle::operator==(const Expr& t_abstract) const
 {
     if (t_abstract->getName() == WHATEVER->getName()) return true;
-    if (t_abstract->getType() != ANGLE) return false;
+    if (t_abstract->getType() != smType::Angle) return false;
     return (*fraction_(argument[0],argument[1])==fraction_(t_abstract->getArgument(0),t_abstract->getArgument(1)));
 }
 
@@ -1310,7 +1310,7 @@ double Factorial::evaluateScalar() const
 {
     double value = argument->evaluateScalar();
     if (value != round(value)) {
-        callWarning(Factorial_float,"");
+        callWarning(smError::FactorialFloat,"");
        value = round(value);
     }
     return factorial(value);
@@ -1333,7 +1333,7 @@ Expr factorial_(const Expr& t_abstract)
 
 void applyFuncParity(Expr& func) 
 {
-    if (func->getPrimaryType() != SCALAR_FUNCTION) return;
+    if (func->getPrimaryType() != smType::ScalarFunction) return;
     const Expr arg = func->getArgument();
     const int parity = func->getParity(arg);
     if (parity != 0 and arg->getNumericalFactor()->evaluateScalar() < 0) {

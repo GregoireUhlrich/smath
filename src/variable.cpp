@@ -28,7 +28,7 @@ Expr AbstractBuildingBlock::getPolynomialTerm(const Expr& t_abstract, int order)
     else if (order == 0) return shared_from_this();
     return ZERO;
 }
-Type Double::getType() const { return DOUBLE;}
+smType::Type Double::getType() const { return smType::Double;}
 
 void Double::setValue(double t_value)
 {
@@ -66,24 +66,24 @@ void Double::operator=(double t_value) {
 bool Double::operator==(const Expr& t_abstract) const
 {
     if (t_abstract->getName() == WHATEVER->getName()) return true;
-    if (t_abstract->getPrimaryType() != NUMERICAL) return 0;
+    if (t_abstract->getPrimaryType() != smType::Numerical) return 0;
     return (value==t_abstract->evaluateScalar());
 }
 
 Expr Double::multiplication_own(const Expr& t_abstract) const
 {
-    if (t_abstract == nullptr or t_abstract->getPrimaryType() != NUMERICAL) return ZERO;
+    if (t_abstract == nullptr or t_abstract->getPrimaryType() != smType::Numerical) return ZERO;
     switch(t_abstract->getType())
     {
-        case INTEGER:
+        case smType::Integer:
         return auto_number_(value*t_abstract->evaluateScalar());
         break;
 
-        case DOUBLE:
+        case smType::Double:
         return auto_number_(value*t_abstract->evaluateScalar());
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         if (value == round(value))
             return _cfraction_(value*t_abstract->getNum(), t_abstract->getDenom());
         return double_(value*t_abstract->evaluateScalar());
@@ -97,18 +97,18 @@ Expr Double::multiplication_own(const Expr& t_abstract) const
 
 Expr Double::addition_own(const Expr& t_abstract) const
 {
-    if (t_abstract == nullptr or t_abstract->getPrimaryType() != NUMERICAL) return ZERO;
+    if (t_abstract == nullptr or t_abstract->getPrimaryType() != smType::Numerical) return ZERO;
     switch(t_abstract->getType())
     {
-        case INTEGER:
+        case smType::Integer:
         return auto_number_(value+t_abstract->evaluateScalar());
         break;
 
-        case DOUBLE:
+        case smType::Double:
         return auto_number_(value+t_abstract->evaluateScalar());
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         if (value == round(value))
             return _cfraction_(value*t_abstract->getDenom()+t_abstract->getNum(), t_abstract->getDenom());
         return double_(value+t_abstract->evaluateScalar());
@@ -125,7 +125,7 @@ Expr Double::derive(const Expr& t_abstract) const
     return ZERO;
 }
 
-Type Integer::getType() const { return INTEGER;}
+smType::Type Integer::getType() const { return smType::Integer;}
 
 void Integer::setValue(double t_value)
 {
@@ -160,24 +160,24 @@ void Integer::operator=(int t_value) {
 bool Integer::operator==(const Expr& t_abstract) const
 {
     if (t_abstract->getName() == WHATEVER->getName()) return true;
-    if (t_abstract->getPrimaryType() != NUMERICAL) return 0;
+    if (t_abstract->getPrimaryType() != smType::Numerical) return 0;
     return (value==t_abstract->evaluateScalar());
 }
 
 Expr Integer::multiplication_own(const Expr& t_abstract) const
 {
-    if (t_abstract == nullptr or t_abstract->getPrimaryType() != NUMERICAL) return ZERO;
+    if (t_abstract == nullptr or t_abstract->getPrimaryType() != smType::Numerical) return ZERO;
     switch(t_abstract->getType())
     {
-        case INTEGER:
+        case smType::Integer:
         return auto_number_(value*t_abstract->evaluateScalar());
         break;
 
-        case DOUBLE:
+        case smType::Double:
         return auto_number_(value*t_abstract->evaluateScalar());
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return _cfraction_(value*t_abstract->getNum(), t_abstract->getDenom());
         break;
 
@@ -189,19 +189,19 @@ Expr Integer::multiplication_own(const Expr& t_abstract) const
 
 Expr Integer::addition_own(const Expr& t_abstract) const
 {
-    if (t_abstract == nullptr or t_abstract->getPrimaryType() != NUMERICAL) return ZERO;
+    if (t_abstract == nullptr or t_abstract->getPrimaryType() != smType::Numerical) return ZERO;
     const int type = t_abstract->getType();
     switch(type)
     {
-        case INTEGER:
+        case smType::Integer:
         return auto_number_(value+t_abstract->evaluateScalar());
         break;
 
-        case DOUBLE:
+        case smType::Double:
         return auto_number_(value+t_abstract->evaluateScalar());
         break;
 
-        case CFRACTION:
+        case smType::CFraction:
         return _cfraction_(value*t_abstract->getDenom()+t_abstract->getNum(), t_abstract->getDenom());
         break;
 
@@ -216,8 +216,8 @@ Expr Integer::derive(const Expr& t_abstract) const
     return ZERO;
 }
 
-PrimaryType Variable::getPrimaryType() const { return LITERAL;}
-Type Variable::getType() const { return VARIABLE;}
+smType::PrimaryType Variable::getPrimaryType() const { return smType::Literal;}
+smType::Type Variable::getType() const { return smType::Variable;}
 bool Variable::getValued() const { return valued;}
 
 void Variable::setValue(double t_value)
@@ -245,7 +245,7 @@ string Variable::printLaTeX(int mode) const
 double Variable::evaluateScalar() const
 {
    if (not valued)
-       callWarning(Not_valued, "Variable::evaluateScalar() const");
+       callWarning(smError::NotValued, "Variable::evaluateScalar() const");
    return value;
 }
 
@@ -273,18 +273,18 @@ void Variable::operator=(double t_value) {
 bool Variable::operator==(const Expr& t_abstract) const
 {
     if (t_abstract->getName() == WHATEVER->getName() or name==WHATEVER->getName()) return true;
-    if (t_abstract->getType() != VARIABLE) return 0;
+    if (t_abstract->getType() != smType::Variable) return 0;
     return name==t_abstract->getName();
 }
 
 Expr Variable::derive(const Expr& t_abstract) const
 {
-    return int_((t_abstract->getType() == VARIABLE) and (t_abstract->getName() == name));
+    return int_((t_abstract->getType() == smType::Variable) and (t_abstract->getName() == name));
 }
 
 
-PrimaryType Constant::getPrimaryType() const { return LITERAL;}
-Type Constant::getType() const { return CONSTANT;}
+smType::PrimaryType Constant::getPrimaryType() const { return smType::Literal;}
+smType::Type Constant::getType() const { return smType::Constant;}
 bool Constant::getValued() const { return valued;}
 
 void Constant::setValue(double t_value)
@@ -339,14 +339,14 @@ void Constant::operator=(double t_value) {
 bool Constant::operator==(const Expr& t_abstract) const
 {
     if (t_abstract->getName() == WHATEVER->getName()) return true;
-    if (t_abstract->getType() != CONSTANT) return 0;
+    if (t_abstract->getType() != smType::Constant) return 0;
     return name==t_abstract->getName();
 }
 
 Expr Constant::derive(const Expr& t_abstract) const
 {
     if (t_abstract == nullptr) return ZERO;
-    return int_((t_abstract->getType() == CONSTANT) and (t_abstract->getName() == name));
+    return int_((t_abstract->getType() == smType::Constant) and (t_abstract->getName() == name));
 }
 
 void CFactorial::setValue(double t_value)
@@ -354,7 +354,7 @@ void CFactorial::setValue(double t_value)
     if (round(value) == value)
         value = t_value;
     else 
-        callWarning(Factorial_float,"CFactorial::setValue(double t_value)");
+        callWarning(smError::FactorialFloat,"CFactorial::setValue(double t_value)");
 }
 
 void CFactorial::print(int mode) const
@@ -388,7 +388,7 @@ void CFactorial::operator=(int t_value) {
 bool CFactorial::operator==(const Expr& t_abstract) const
 {
     if (t_abstract->getName() == WHATEVER->getName()) return true;
-    if (t_abstract->getType() != CFACTORIAL) return 0;
+    if (t_abstract->getType() != smType::CFactorial) return 0;
     return value==t_abstract->getValue();
 }
 
@@ -427,7 +427,7 @@ CFraction::CFraction(int t_num, int t_denom): AbstractNumerical()
     denom = t_denom;
 }
 
-Type CFraction::getType() const { return CFRACTION;}
+smType::Type CFraction::getType() const { return smType::CFraction;}
 int CFraction::getNum() const { return num;}
 int CFraction::getDenom() const { return denom;}
 
@@ -454,11 +454,11 @@ Expr CFraction::evaluate() { return auto_number_(num*1./denom);}
 
 Expr CFraction::multiplication_own(const Expr& t_abstract) const
 {
-    if (t_abstract == nullptr or t_abstract->getPrimaryType() != NUMERICAL) return ZERO;
+    if (t_abstract == nullptr or t_abstract->getPrimaryType() != smType::Numerical) return ZERO;
     double value = t_abstract->evaluateScalar();
-    if (t_abstract->getType() == INTEGER or (t_abstract->getType() == DOUBLE and value == round(value))) // Number
+    if (t_abstract->getType() == smType::Integer or (t_abstract->getType() == smType::Double and value == round(value))) // Number
         return _cfraction_(num*value, denom);
-    else if (t_abstract->getType() == DOUBLE) return double_(evaluateScalar()*value);
+    else if (t_abstract->getType() == smType::Double) return double_(evaluateScalar()*value);
     // Fraction
     int t_num = t_abstract->getNum();
     int t_denom = t_abstract->getDenom();
@@ -467,11 +467,11 @@ Expr CFraction::multiplication_own(const Expr& t_abstract) const
 
 Expr CFraction::addition_own(const Expr& t_abstract) const
 {
-    if (t_abstract == nullptr or t_abstract->getPrimaryType() != NUMERICAL) return ZERO;
+    if (t_abstract == nullptr or t_abstract->getPrimaryType() != smType::Numerical) return ZERO;
     double value = t_abstract->evaluateScalar();
-    if (t_abstract->getType() == INTEGER or (t_abstract->getType() == DOUBLE and value == round(value))) // Number
+    if (t_abstract->getType() == smType::Integer or (t_abstract->getType() == smType::Double and value == round(value))) // Number
         return _cfraction_(num+denom*value, denom);
-    else if (t_abstract->getType() == DOUBLE) return double_(evaluateScalar()+value);
+    else if (t_abstract->getType() == smType::Double) return double_(evaluateScalar()+value);
     // Fraction
     int t_num = t_abstract->getNum();
     int t_denom = t_abstract->getDenom();
@@ -495,7 +495,7 @@ void CFraction::operator=(double t_value) {
 bool CFraction::operator==(const Expr& t_abstract) const
 {
     if (t_abstract->getName() == WHATEVER->getName()) return true;
-    if (t_abstract->getPrimaryType() == NUMERICAL) return (t_abstract->evaluateScalar()==(num*1./denom));
+    if (t_abstract->getPrimaryType() == smType::Numerical) return (t_abstract->evaluateScalar()==(num*1./denom));
     return 0;
 }
 
@@ -558,7 +558,7 @@ Expr Imaginary::derive(const Expr& t_abstract) const
 bool Imaginary::operator==(const Expr& t_abstract) const
 {
     if (t_abstract->getName() == WHATEVER->getName()) return true;
-    return (t_abstract->getType() == IMAGINARY);
+    return (t_abstract->getType() == smType::Imaginary);
 }
 
 Expr double_(double value)
