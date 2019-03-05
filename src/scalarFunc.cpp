@@ -15,7 +15,8 @@ Expr AbstractFunc::getArgument(int iArg) const {
     return argument;
 }
 
-Expr AbstractFunc::getComplexConjugate() {
+Expr AbstractFunc::getComplexConjugate()
+{
     Expr foo = Empty(getType());
     foo->setArgument(argument->getComplexConjugate());
 
@@ -69,6 +70,7 @@ Expr AbstractFunc::evaluate()
 {
     Expr evalArg = argument->evaluate();
     Expr result = Empty(getType());
+
     if (evalArg->getPrimaryType() == smType::Numerical) {
         result->setArgument(evalArg);
         return auto_number_(result->evaluateScalar());
@@ -79,32 +81,40 @@ Expr AbstractFunc::evaluate()
     }
 }
 
-bool AbstractFunc::operator==(const Expr& t_abstract) const {
-    if (t_abstract->getName() == WHATEVER->getName()) return true;
+bool AbstractFunc::operator==(const Expr& t_abstract) const 
+{
+    if (t_abstract->getName() == WHATEVER->getName()) 
+        return true;
+
     return (t_abstract->getType() == this->getType() and 
             *argument == t_abstract->getArgument());
 } 
 
-bool AbstractDuoFunc::getCommutable() const {
+bool AbstractDuoFunc::getCommutable() const 
+{
     return (commutable and argument[0]->getCommutable() and 
             argument[1]->getCommutable());
 }
 
-Expr AbstractDuoFunc::getArgument(int iArg) const {
-    if (iArg != 1 and iArg != 0)
-    {
+Expr AbstractDuoFunc::getArgument(int iArg) const 
+{
+    if (iArg != 1 and iArg != 0) {
         print();
-        callError(smError::OutOfBounds, "AbstractDuoFunc::getArgument(int iArg) const", iArg);
+        callError(smError::OutOfBounds,
+                "AbstractDuoFunc::getArgument(int iArg) const", iArg);
     }
+
     return argument[iArg];
 }
 
-void AbstractDuoFunc::setArgument(const Expr& t_argument, int iArg) {
-    if (iArg != 1 and iArg != 0)
-    {
+void AbstractDuoFunc::setArgument(const Expr& t_argument, int iArg) 
+{
+    if (iArg != 1 and iArg != 0) {
         print();
-        callError(smError::OutOfBounds, "AbstractDuoFunc::getArgument(int iArg) const", iArg);
+        callError(smError::OutOfBounds,
+                "AbstractDuoFunc::getArgument(int iArg) const", iArg);
     }
+
     argument[iArg] = t_argument;
 }
 
@@ -116,6 +126,7 @@ Expr AbstractDuoFunc::factor(bool full)
        result->setArgument(argument[1]->factor(true), 1);
        return Refresh(result);
     }
+
     return Copy(this);
 }
 
@@ -127,6 +138,7 @@ Expr AbstractDuoFunc::factor(const Expr& t_abstract, bool full)
        result->setArgument(argument[1]->factor(t_abstract,true),1);
        return Refresh(result);
     }
+
     return Copy(this);
 }
 
@@ -138,6 +150,7 @@ Expr AbstractDuoFunc::develop(bool full)
         result->setArgument(argument[1]->develop(true), 1);
         return Refresh(result);
     }
+
     return Copy(this);
 }
 
@@ -154,10 +167,13 @@ int AbstractDuoFunc::isPolynomial(const Expr& t_abstract) const {
 
 bool AbstractMultiFunc::getCommutable() const
 {
-    if (not commutable) return false;
+    if (not commutable) 
+        return false;
+
     for (const auto& arg: argument)
         if (not arg->getCommutable())
             return false;
+
     return true;
 }
 
@@ -165,25 +181,30 @@ const vector<Expr >& AbstractMultiFunc::getVectorArgument() const {
     return argument;
 }
 
-Expr AbstractMultiFunc::getArgument(int iArg) const {
-    if (iArg < 0 or iArg >= nArgs)
-    {
+Expr AbstractMultiFunc::getArgument(int iArg) const 
+{
+    if (iArg < 0 or iArg >= nArgs) {
         print();
-        callError(smError::OutOfBounds, "Expr& AbstractMultiFunc::getArgument(int iArg) const", iArg);
+        callError(smError::OutOfBounds,
+                "Expr& AbstractMultiFunc::getArgument(int iArg) const", iArg);
     }
+
     return argument[iArg];
 }
 
-void AbstractMultiFunc::setArgument(const Expr& t_argument, int iArg) {
-    if (iArg < 0 or iArg >= nArgs)
-    {
+void AbstractMultiFunc::setArgument(const Expr& t_argument, int iArg) 
+{
+    if (iArg < 0 or iArg >= nArgs) {
         print();
-        callError(smError::OutOfBounds, "Expr& AbstractMultiFunc::getArgument(int iArg) const", iArg);
+        callError(smError::OutOfBounds,
+                "Expr& AbstractMultiFunc::getArgument(int iArg) const", iArg);
     }
+
     argument[iArg] = t_argument;
 }
 
-void AbstractMultiFunc::setVectorArgument(const vector<Expr >& t_argument) {
+void AbstractMultiFunc::setVectorArgument(const vector<Expr >& t_argument) 
+{
     argument = t_argument;
     nArgs = argument.size();
 }
@@ -196,6 +217,7 @@ Expr AbstractMultiFunc::factor(bool full)
            result->setArgument(argument[i]->factor(true),i);
        return Refresh(result);
     }
+
     return Copy(this);
 }
 
@@ -207,6 +229,7 @@ Expr AbstractMultiFunc::factor(const Expr& t_abstract, bool full)
            result->setArgument(argument[i]->factor(t_abstract,true),i);
        return Refresh(result);
     }
+
     return Copy(this);
 }
 
@@ -224,10 +247,13 @@ Expr AbstractMultiFunc::develop(bool full)
 
 bool AbstractMultiFunc::dependsOn(const Expr& t_abstract) const
 {
-    if (name != "" and name == t_abstract->getName()) return true;
+    if (name != "" and name == t_abstract->getName()) 
+        return true;
+
     for (const auto& arg : argument)
         if (arg->dependsOn(t_abstract)) 
             return true;
+
     return false;
 }
 

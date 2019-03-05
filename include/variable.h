@@ -7,6 +7,14 @@
 #include "support.h"
 #include <iostream>
 
+/*************************************************/
+// Abstract classes                              //
+/*************************************************/
+
+/*! \class AbstractBuildingBlock
+ * \brief Abstract class from which derive all building blocks of expressions,
+ * i.e. objects not function of further expressions: the leafs of the recursive tree. 
+ */
 class AbstractBuildingBlock: public AbstractScalar,
                              public std::enable_shared_from_this<Abstract>{
     public:
@@ -26,6 +34,10 @@ class AbstractBuildingBlock: public AbstractScalar,
     Expr getPolynomialTerm(const Expr& t_abstract, int order) override;
 };
 
+/*! \class AbstractNumerical
+ * \brief Abstract class from which derive numerical types, i.e. 
+ * Double, Integer, CFraction.
+ */
 class AbstractNumerical: public AbstractBuildingBlock{
     public:
 
@@ -36,6 +48,10 @@ class AbstractNumerical: public AbstractBuildingBlock{
     smType::PrimaryType getPrimaryType() const override { return smType::Numerical;}
 };
 
+/*! \class AbstractLiteral
+ * \brief Abstract class from which derive literal building blocks: 
+ * Constant, Variable, Imaginary and CFactorial.
+ */
 class AbstractLiteral: public AbstractBuildingBlock{
     public:
 
@@ -46,17 +62,27 @@ class AbstractLiteral: public AbstractBuildingBlock{
     smType::PrimaryType getPrimaryType() const override { return smType::Literal;}
 };
 
-/////
-// Inline functions (non-virtual and very short)
+/*************************************************/
+// Inline functions (non virtual and short)      //
+/*************************************************/
 inline AbstractBuildingBlock::AbstractBuildingBlock(): AbstractScalar(){}
-inline AbstractBuildingBlock::AbstractBuildingBlock(const std::string& t_name): AbstractScalar(t_name){}
+inline AbstractBuildingBlock::AbstractBuildingBlock(const std::string& t_name)
+    :AbstractScalar(t_name){}
 
 inline AbstractNumerical::AbstractNumerical(): AbstractBuildingBlock(){}
-inline AbstractNumerical::AbstractNumerical(const std::string& t_name): AbstractBuildingBlock(t_name){}
+inline AbstractNumerical::AbstractNumerical(const std::string& t_name)
+    :AbstractBuildingBlock(t_name){}
 
 inline AbstractLiteral::AbstractLiteral(): AbstractBuildingBlock(){}
-inline AbstractLiteral::AbstractLiteral(const std::string& t_name): AbstractBuildingBlock(t_name){}
-/////
+inline AbstractLiteral::AbstractLiteral(const std::string& t_name)
+    :AbstractBuildingBlock(t_name){}
+
+
+
+
+/*************************************************/
+// Numerical classes                             //
+/*************************************************/
 
 /*! \class Integer
  * \brief Handle numbers in expression
@@ -104,16 +130,16 @@ class Integer: public AbstractNumerical{
     Expr evaluate() override;
 
     /*! \brief Multiplicates two pure Numbers.
-     * \details If \a t_abstract is not a Number, returns 0. Else returns a Number which value 
-     * is equal to the product of \b value and t_abstract.value.
+     * \details If \a t_abstract is not a Number, returns 0. Else returns a 
+     * Number which value is equal to the product of \b value and t_abstract.value.
      * \param t_abstract Other Number for the multiplication.
      * \return **value*t_abstract.evaluateScalar()**.
      */
     Expr multiplication_own(const Expr& t_abstract) const override;
 
     /*! \brief Adds two pure Numbers.
-     * \details If \a t_abstract is not a Number, returns 0. Else returns a Number which value 
-     * is equal to the sum of \b value and t_abstract.value.
+     * \details If \a t_abstract is not a Number, returns 0. Else returns a 
+     * Number which value is equal to the sum of \b value and t_abstract.value.
      * \param t_abstract Other Number for the sum.
      * \return **value+t_abstract.evaluateScalar()**.
      */
@@ -186,16 +212,16 @@ class Double: public AbstractNumerical{
     Expr evaluate() override;
 
     /*! \brief Multiplicates two numbers.
-     * \details If \a t_abstract is not a Number, returns 0. Else returns a Number which value 
-     * is equal to the product of \b value and t_abstract.value.
+     * \details If \a t_abstract is not a Number, returns 0. Else returns a 
+     * Number which value is equal to the product of \b value and t_abstract.value.
      * \param t_abstract Other Number for the multiplication.
      * \return **value*t_abstract.evaluateScalar()**.
      */
     Expr multiplication_own(const Expr& t_abstract) const override;
 
     /*! \brief Adds two pure Numbers.
-     * \details If \a t_abstract is not a Number, returns 0. Else returns a Number which value 
-     * is equal to the sum of \b value and t_abstract.value.
+     * \details If \a t_abstract is not a Number, returns 0. Else returns a 
+     * Number which value is equal to the sum of \b value and t_abstract.value.
      * \param t_abstract Other Number for the sum.
      * \return **value+t_abstract.evaluateScalar()**.
      */
@@ -326,8 +352,9 @@ class CFraction: public AbstractNumerical{
     bool operator<(const Expr& t_abstract) const override;
 };
 
-/////
-// Inline functions
+/*************************************************/
+// Inline functions (non virtual and short)      //
+/*************************************************/
 inline Integer::Integer(): AbstractNumerical(), value(0){}
 inline Integer::Integer(int t_value): AbstractNumerical(), value(t_value){}
 
@@ -337,7 +364,13 @@ inline Double::Double(double t_value): AbstractNumerical(), value(t_value){}
 //The CFraction constructor with t_num and t_denom is in the .cpp file (more complex).
 inline CFraction::CFraction(): AbstractNumerical(), num(0), denom(1){}
 inline CFraction::CFraction(int t_num): AbstractNumerical(), num(t_num), denom(1){}
-/////
+
+
+
+
+/*************************************************/
+// Literal classes                               //
+/*************************************************/
 
 /*! \class Constant
  * \brief Handle an object with a \b name and a \b value.
@@ -371,8 +404,8 @@ class Constant: public AbstractLiteral{
     ~Constant(){};
 
     /*! \brief Gives the \b primary \b type of a Constant. 
-     * \details The primaryType of Constant is 1, it concerns a scalar object not function
-     * of others and that is real-valued.
+     * \details The primaryType of Constant is 1, it concerns a scalar object 
+     * not function of others and that is real-valued.
      * \return \b 1
      */
     smType::PrimaryType getPrimaryType() const override;
@@ -392,7 +425,8 @@ class Constant: public AbstractLiteral{
     void setValue(double t_value) override;
 
     /*! \brief Displays the Constant on standard output.
-     * \details If mode==0 prints the Constant alone with its \b value, else prints the Constant considering it in a larger expression.
+     * \details If mode==0 prints the Constant alone with its \b value, else 
+     * prints the Constant considering it in a larger expression.
      * \param mode Type of printing.
      */
     void print(int mode=0) const override;
@@ -411,10 +445,6 @@ class Constant: public AbstractLiteral{
     Expr derive(const Expr& t_abstract) const override;
 
     int getParity(const Expr& t_variable) const override;
-    /*! \brief Sets value to t_value
-     * \param t_value
-     */
-    void operator=(int t_value);
 
     /*! \brief Sets value to t_value
      * \param t_value
@@ -445,8 +475,6 @@ class Variable: public AbstractLiteral{
 
     public:
 
-    //std::shared_ptr<const Abstract> develop() const { return std::make_shared<Integer>(3);}
-
     /*! \brief Default constructor.
      * \details Initializes the Variable with no \b name and value=0.
      */
@@ -467,8 +495,8 @@ class Variable: public AbstractLiteral{
     ~Variable(){};
 
     /*! \brief Gives the \b primary \b type of a Variable. 
-     * \details The primaryType of Variable is 1, it concerns a scalar object not function
-     * of others and that is real-valued.
+     * \details The primaryType of Variable is 1, it concerns a scalar object 
+     * not function of others and that is real-valued.
      * \return \b 1
      */
     smType::PrimaryType getPrimaryType() const override;
@@ -480,6 +508,8 @@ class Variable: public AbstractLiteral{
 
     bool getValued() const override;
 
+    double getValue() const override;
+
     /*! \brief Sets the \b value.
      * \details Allows to associate a number to each Variable 
      * before evaluating an expression.
@@ -488,7 +518,8 @@ class Variable: public AbstractLiteral{
     void setValue(double t_value) override;
 
     /*! \brief Displays the Variable on standard output.
-     * \details If mode==0 prints the Variable alone with its \b value, else prints the Variable considering it in a larger expression.
+     * \details If mode==0 prints the Variable alone with its \b value, else 
+     * prints the Variable considering it in a larger expression.
      * \param mode Type of printing.
      */
     void print(int mode=0) const override;
@@ -507,10 +538,6 @@ class Variable: public AbstractLiteral{
     Expr derive(const Expr& t_abstract) const override;
 
     int getParity(const Expr& t_variable) const override;
-    /*! \brief Sets value to t_value
-     * \param t_value
-     */
-    void operator=(int t_value);
 
     /*! \brief Sets value to t_value
      * \param t_value
@@ -558,11 +585,12 @@ class CFactorial: public AbstractLiteral{
     ~CFactorial(){};
 
     /*! \brief Returns the \b value in the factorial.
-     * \details Caution with this function: it returns \b value and (except for the special value 1) 
-     * it is **different from the return \b value of evaluateScalar()**.
+     * \details Caution with this function: it returns \b value and (except 
+     * for the special value 1) it is **different from the return \b value of 
+     * evaluateScalar()**.
      * \return \b value
      */
-    int getValue() const override { return value;}
+    double getValue() const override { return value;}
 
     /*! \brief Gives the **primary type** of a CFraction.
      * \details The **primary type** is the same as the one of Variable.
@@ -615,8 +643,8 @@ class CFactorial: public AbstractLiteral{
 
 /*! \class Imaginary
  * \brief Numerical representation of \b i.
- * \details This class should not be used by the user. An instance **i_** is statically
- * defined below and is used in all the program.
+ * \details This class should not be used by the user. An instance **i_** is 
+ * statically defined below and is used in all the program.
  */
 class Imaginary: public AbstractLiteral{
 
@@ -682,22 +710,31 @@ class Imaginary: public AbstractLiteral{
     bool operator<(const Expr& t_abstract) const override;
 };
 
-/////
-// Inline functions
+/*************************************************/
+// Inline functions (non virtual and short)      //
+/*************************************************/
 inline Variable::Variable(): AbstractLiteral(), valued(false), value(0){}
-inline Variable::Variable(const std::string& t_name): AbstractLiteral(t_name), valued(false), value(0){}
-inline Variable::Variable(const std::string& t_name, double t_value): AbstractLiteral(t_name), valued(true), value(t_value){}
+inline Variable::Variable(const std::string& t_name)
+    :AbstractLiteral(t_name), valued(false), value(0){}
+
+inline Variable::Variable(const std::string& t_name, double t_value)
+    :AbstractLiteral(t_name), valued(true), value(t_value){}
 
 inline Constant::Constant(): AbstractLiteral(), valued(false), value(0){}
-inline Constant::Constant(const std::string& t_name): AbstractLiteral(t_name), valued(false), value(0){}
-inline Constant::Constant(const std::string& t_name, double t_value): AbstractLiteral(t_name), valued(true), value(t_value){}
+inline Constant::Constant(const std::string& t_name)
+    :AbstractLiteral(t_name), valued(false), value(0){}
+inline Constant::Constant(const std::string& t_name, double t_value)
+    :AbstractLiteral(t_name), valued(true), value(t_value){}
 
 inline CFactorial::CFactorial(): AbstractLiteral(), value(0){}
 inline CFactorial::CFactorial(int t_value): AbstractLiteral(), value(t_value){}
 
 inline Imaginary::Imaginary(): AbstractLiteral(){}
-/////
 
+/*************************************************/
+// Global (useful) variables                     //
+// (Numerical or Literal)                        //
+/*************************************************/
 
 /*! 
  * \var i_
@@ -710,25 +747,33 @@ static const Expr i_ = std::make_shared<Imaginary>();
  * \brief Represents the number \b pi to include in expressions
  */
 static const Expr ZERO = std::make_shared<Integer>(0);
-
 static const Expr ONE = std::make_shared<Integer>(1);
 
 static const Expr pi_ = std::make_shared<Variable>("\\pi ",M_PI);
-
 static const Expr e_ = std::make_shared<Variable>("e",M_E);
 
 /*!
  * \var INF
  * \brief Represents \b infinity in the program.
- * \details When an infinity appears in the abstract evaluation the program should return \b INF. 
- * \b INF is treated like a Variable. It is simply here to inform the user that 
- * **something bad happened** in the expression.
- * \bug Will not work for many cases, in particular log(0)!=\b INF. Not yet implemented.
+ * \details When an infinity appears in the abstract evaluation the program 
+ * should return \b INF. \b INF is treated like a Variable. It is simply here 
+ * to inform the user that *something bad happened** in the expression.
+ * \bug Will not work for many cases, in particular log(0)!=\b INF. 
+ * Not yet implemented.
  */
 static Expr INF = std::make_shared<Variable>("inf");
 
+/*!
+ * \var WHATEVER
+ * Variable that returns true when compared to another expression.
+ * (WHATEVER == X) = (X == WHATEVER) = true
+ */
 static Expr WHATEVER = std::make_shared<Variable>("###");
 
+/*************************************************/
+// User-functions for the creation of            //
+// Building blocks (numerical or literal)        //
+/*************************************************/
 /*! \fn Expr cfactorial_(int value)
  * \param value \b Initializer of the CFactorial.
  * \return CFactorial(value) if value > 2

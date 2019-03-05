@@ -38,7 +38,9 @@ class Plus: public AbstractMultiFunc{
     /*! \brief Gives the **type** of a Plus object.
      * \return 10
      */
-    smType::Type getType() const override { return smType::Plus;}
+    smType::Type getType() const override {
+        return smType::Plus;
+    }
 
     Expr getRealPart() override;
 
@@ -58,15 +60,16 @@ class Plus: public AbstractMultiFunc{
 
     /*! \brief Return the \b sum of all the arguments.
      * \return The sum of the scalar evaluation of all the arguments.
-     * \note For this function to be justified, all the arguments must be \b scalar and \b real.
+     * \note For this function to be justified, all the arguments must be \b 
+     * scalar and \b real.
      */
     double evaluateScalar() const override;
 
     Expr evaluate() override;
 
     /*! \brief Merge identical terms.
-     * \details When identical terms (identical to a numerical factor) appear this function 
-     * merge them in the same term. Example: x+y+2*x -> 3*x+y.
+     * \details When identical terms (identical to a numerical factor) appear 
+     * this function merge them in the same term. Example: x+y+2*x -> 3*x+y.
      * \return \b True if terms have been merged.
      * \return \b False else.
      */
@@ -113,17 +116,19 @@ class Polynomial: public AbstractMultiFunc{
 
     public:
 
-    /*! \brief Default constructor. Initializes \b argument to an empty std::vector, \b order to 0.
-     */
+    /*! \brief Default constructor. Initializes \b argument to an empty 
+     * std::vector, \b order to 0.*/
     Polynomial();
 
-    /*! \brief Initializes the polynomial from another Abstract. Detect the proper terms in it.
+    /*! \brief Initializes the polynomial from another Abstract. Detect the 
+     *  proper terms in it.
      *  \param t_abstract Abstract that we want to transform in a polynomial
      * \param t_variable Variable of the polynomial.
      */
     Polynomial(const Expr& t_abstract, const Expr& t_variable);
     
-    /*! \brief Initializes the polynomial from a vector of terms, and a defined \b variable.
+    /*! \brief Initializes the polynomial from a vector of terms, and a defined
+     *  \b variable.
      *  \param terms for the creation of the polynomial.
      *  \param t_variable Variable of the polynomial.
      */
@@ -138,7 +143,9 @@ class Polynomial: public AbstractMultiFunc{
     /*! \brief Gives the **type** of a Polynomial object.
      * \return 14
      */
-    smType::Type getType() const override { return smType::Polynomial;}
+    smType::Type getType() const override {
+        return smType::Polynomial;
+    }
 
     int getOrder() const override;
 
@@ -150,7 +157,8 @@ class Polynomial: public AbstractMultiFunc{
 
     /*! \brief Return the \b polynomial of all the arguments.
      * \return The polynomial of the scalar evaluation of all the arguments.
-     * \note For this function to be justified, all the arguments must be \b scalar and \b real.
+     * \note For this function to be justified, all the arguments must be \b 
+     * scalar and \b real.
      */
     double evaluateScalar() const override;
 
@@ -196,14 +204,16 @@ class Times: public AbstractMultiFunc{
 
     /*! \brief Initializes \b argument to \a operands (copy each element)
      * \param operands Operands of the product, copied in the object.
-     * \param explicitTimes Must be true if no modification of the vector \b argument is needed.
+     * \param explicitTimes Must be true if no modification of the vector \b 
+     * argument is needed.
      */
     Times(const std::vector<Expr >& t_argument, bool explicitTimes=0);
 
     /*! \brief Creates the product of \& leftOperand and \a rightOperand.
      * \param leftOperand  Left operand.
      * \param rightOperand Right operand.
-     * \param explicitTimes Must be true if no modification of the vector \b argument is needed.
+     * \param explicitTimes Must be true if no modification of the vector \b 
+     * argument is needed.
      */
     Times(const Expr& leftOperand, const Expr& rightOperand, bool explicitTimes=0);
 
@@ -214,7 +224,9 @@ class Times: public AbstractMultiFunc{
     /*! \brief Gives the **type** of a Times object.
      * \return 11
      */
-    smType::Type getType() const override { return smType::Times;}
+    smType::Type getType() const override {
+        return smType::Times;
+    }
 
     Expr getRealPart() override;
 
@@ -267,15 +279,16 @@ class Times: public AbstractMultiFunc{
 
     /*! \brief Return the \b product of all the arguments.
      * \return The product of the scalar evaluation of all the arguments.
-     * \note For this function to be justified, all the arguments must be \b scalar and \b real.
+     * \note For this function to be justified, all the arguments must be \b 
+     * scalar and \b real.
      */
     double evaluateScalar() const override;
 
     Expr evaluate() override;
 
     /*! \brief Merge identical terms.
-     * \details When identical terms (identical to a numerical factor) appear this function 
-     * merge them in the same term. Example: x*y*x^2 -> x^3+y.
+     * \details When identical terms (identical to a numerical factor) appear 
+     * this function merge them in the same term. Example: x*y*x^2 -> x^3+y.
      * \return \b True if terms have been merged.
      * \return \b False else.
      */
@@ -334,7 +347,9 @@ class Fraction: public AbstractDuoFunc{
     /*! \brief Gives the **type** of a Fraction object.
      * \return 12
      */
-    smType::Type getType() const override { return smType::Fraction;}
+    smType::Type getType() const override {
+        return smType::Fraction;
+    }
 
     /*! \brief Returns the number of possible factors in the expression.
      * \return \b The sum of the number of factors of the 2 arguments.
@@ -367,7 +382,8 @@ class Fraction: public AbstractDuoFunc{
 
     /*! \brief Return the \b division of the two arguments.
      * \return The division of the scalar evaluation of the two arguments.
-     * \note For this function to be justified, all the arguments must be \b scalar and \b real.
+     * \note For this function to be justified, all the arguments must be \b 
+     * scalar and \b real.
      */
     double evaluateScalar() const override;
 
@@ -424,7 +440,9 @@ class Pow: public AbstractDuoFunc{
     /*! \brief Gives the **type** of a Pow object.
      * \return 13
      */
-    smType::Type getType() const override { return smType::Pow;}
+    smType::Type getType() const override {
+        return smType::Pow;
+    }
 
     /*! \brief Returns the number of possible factors in the expression.
      * \return \b A function of the exponent if it is a Number.
@@ -458,7 +476,8 @@ class Pow: public AbstractDuoFunc{
 
     /*! \brief Return the \b exponentiation of the two arguments.
      * \return The exponentiation of the scalar evaluation of the two arguments.
-     * \note For this function to be justified, all the arguments must be \b scalar and \b real.
+     * \note For this function to be justified, all the arguments must be \b 
+     * scalar and \b real.
      */
     double evaluateScalar() const override;
 
@@ -523,19 +542,22 @@ class Derivative: public AbstractDuoFunc{
      */
     Derivative();
 
-    /*! \brief Creates the derivative operator wrt variable at order \b order. It is applied when it appears in a multiplication.
+    /*! \brief Creates the derivative operator wrt variable at order \b order. 
+     * It is applied when it appears in a multiplication.
      * \param variable Variable wrt which we derive.
      * \param order Order of the derivation.
      */
     Derivative(const Expr& variable, int order);
 
-    /*! \brief Creates the derivative of \& leftOperand wrt \a rightOperand, to \b order 1.
+    /*! \brief Creates the derivative of \& leftOperand wrt \a rightOperand, 
+     * to \b order 1.
      * \param leftOperand  Left operand.
      * \param rightOperand Right operand.
      */
     Derivative(const Expr& leftOperand, const Expr& rightOperand);
 
-    /*! \brief Creates the derivative of \& leftOperand wrt \a rightOperand, to \b order \a t_order.
+    /*! \brief Creates the derivative of \& leftOperand wrt \a rightOperand, 
+     * to \b order \a t_order.
      * \param leftOperand  Left operand.
      * \param rightOperand Right operand.
      */
@@ -548,7 +570,9 @@ class Derivative: public AbstractDuoFunc{
     /*! \brief Gives the **type** of a Derivative object.
      * \return 29
      */
-    smType::Type getType() const override { return smType::Derivative;}
+    smType::Type getType() const override {
+        return smType::Derivative;
+    }
 
     int getOrder() const override;
 
@@ -558,7 +582,8 @@ class Derivative: public AbstractDuoFunc{
 
     /*! \brief Return the \b derivative of the first argument wrt the second.
      * \return The derivative of the scalar evaluation of the two arguments.
-     * \note For this function to be justified, all the arguments must be \b scalar and \b real.
+     * \note For this function to be justified, all the arguments must be \b 
+     * scalar and \b real.
      */
     double evaluateScalar() const override;
 
@@ -579,9 +604,9 @@ class Derivative: public AbstractDuoFunc{
     bool operator<(const Expr& t_abstract) const override;
 };
 
-/////
-// Inline functions
-
+/*************************************************/
+// Inline functions (non virtual and short)      //
+/*************************************************/
 inline Plus::Plus(): AbstractMultiFunc(){}
 inline Times::Times(): AbstractMultiFunc(){}
 inline Polynomial::Polynomial(): AbstractMultiFunc(), variable(ZERO){}
@@ -599,13 +624,17 @@ inline Derivative::Derivative(const Expr& leftOperand,
     argument[0] = leftOperand;
     argument[1] = rightOperand;
 }
-/////
 
+/*************************************************/
+// User-functions to create objects defined      //
+// in this file                                  //
+/*************************************************/
 
 /*! \fn Expr plus_(const Expr& leftOperand, const Expr& rightOperand)
   * \brief Returns the \b sum of the two operands, applying basic simplifications. 
-  * \details This function possibly returns an object different from a Plus object if the
-  * simplification requires so. For example 0+x -> x that is a Variable.
+  * \details This function possibly returns an object different from a Plus 
+  * object if the simplification requires so. For example 0+x -> x that is 
+  * a Variable.
   * \param leftOperand  Left operand.
   * \param rightOperand Right operand.
   * \return The sum of \b leftOperand and \b rightOperand.
@@ -614,50 +643,58 @@ Expr plus_(const Expr& leftOperand, const Expr& rightOperand);
 
 /*! \fn Expr plus_(const std::vector<Expr >& operands)
   * \brief Returns the \b sum of the operands, applying basic simplifications. 
-  * \details This function possibly returns an object different from a Plus object if the
-  * simplification requires so. For example 0+x+2x -> 3x that is a Times object.
+  * \details This function possibly returns an object different from a Plus 
+  * object if the simplification requires so. For example 0+x+2x -> 3x 
+  *  that is a Times object.
   * \param operands vector containing the operands.
   * \return The sum of the operands.
   */
 Expr plus_(const std::vector<Expr >& operands);
 
 /*! \fn Expr minus_(const Expr& leftOperand, const Expr& rightOperand)
-  * \brief Returns the \b sum of the two operands (with a minus sign), applying basic simplifications. 
-  * \details This function possibly returns an object different from a Plus object if the
-  * simplification requires so. For example 0+x -> x that is a Variable. The Minus object 
-  * does not exists, this function applies leftOperand + (-1*rightOperand).
+  * \brief Returns the \b sum of the two operands (with a minus sign), 
+  *  applying basic simplifications. 
+  * \details This function possibly returns an object different from a Plus 
+  * object if the simplification requires so. For example 0+x -> x that is 
+  * a Variable. The Minus object does not exists, this function 
+  *  applies leftOperand + (-1*rightOperand).
   * \param leftOperand  Left operand.
   * \param rightOperand Right operand.
   * \return The sum of \b leftOperand and \b rightOperand.
   */
 Expr minus_(const Expr& leftOperand, const Expr& rightOperand);
 
-/*! \fn Expr times_(const Expr& leftOperand, const Expr& rightOperand, bool explicitTimes=0)
+/*! \fn Expr times_(const Expr& leftOperand,
+                    const Expr& rightOperand,
+                    bool explicitTimes=0)
   * \brief Returns the \b product of the two operands, applying basic simplifications. 
-  * \details This function possibly returns an object different from a Times object if the
-  * simplification requires so. For example 1*x -> x that is a Variable.
+  * \details This function possibly returns an object different from a Times 
+  * object if the simplification requires so. For example 1*x -> x that is a Variable.
   * \param leftOperand  Left operand.
   * \param rightOperand Right operand.
-  * \param explicitTimes If \b true Times::mergeTerms() is not called and no simplification 
-  * is done concerning the reordering/merging of terms.
+  * \param explicitTimes If \b true Times::mergeTerms() is not called and 
+  * no simplification is done concerning the reordering/merging of terms.
   * \return The product of \b leftOperand and \b rightOperand.
   */
 Expr times_(const Expr& leftOperand, const Expr& rightOperand, bool explicitTimes=0);
 
 /*! \fn Expr times_(const std::vector<Expr >& operands)
   * \brief Returns the \b product of the operands, applying basic simplifications. 
-  * \details This function possibly returns an object different from a Times object if the
-  * simplification requires so. For example 1*x*x^2 -> x^3 that is a Pow.
+  * \details This function possibly returns an object different from a Times 
+  * object if the simplification requires so. For example 1*x*x^2 -> x^3 
+  *  that is a Pow.
   * \param operands vector containing the operands.
-  * \param explicitTimes If \b true Times::mergeTerms() is not called and no simplification 
+  * \param explicitTimes If \b true Times::mergeTerms() is not 
+  * called and no simplification 
   * \return The product of \b leftOperand and \b rightOperand.
   */
 Expr times_(const std::vector<Expr >& operands, bool explicitTimes=false);
 
 /*! \fn Expr fraction_(const Expr& leftOperand, const Expr& rightOperand)
   * \brief Returns the \b fraction of the two operands, applying basic simplifications. 
-  * \details This function possibly returns an object different from a Fraction object if the
-  * simplification requires so. For example 1/(x^(-1)) -> x that is a Variable.
+  * \details This function possibly returns an object different from a 
+  * Fraction object if the simplification requires so. For example 1/(x^(-1)) -> x 
+  * that is a Variable.
   * \param leftOperand  Left operand.
   * \param rightOperand Right operand.
   * \return The fraction of \b leftOperand and \b rightOperand.
@@ -665,9 +702,10 @@ Expr times_(const std::vector<Expr >& operands, bool explicitTimes=false);
 Expr fraction_(const Expr& leftOperand, const Expr& rightOperand);
 
 /*! \fn Expr pow_(const Expr& leftOperand, const Expr& rightOperand)
-  * \brief Returns the \b exponentiation of the two operands, applying basic simplifications. 
-  * \details This function possibly returns an object different from a Pow object if the
-  * simplification requires so. For example x^1 -> x that is a Variable.
+  * \brief Returns the \b exponentiation of the two operands, applying basic 
+  * simplifications. 
+  * \details This function possibly returns an object different from a Pow 
+  * object if the simplification requires so. For example x^1 -> x that is a Variable.
   * \param leftOperand  Left operand.
   * \param rightOperand Right operand.
   * \return The exponentiation of \b leftOperand and \b rightOperand.
@@ -676,10 +714,13 @@ Expr pow_(const Expr& leftOperand, const Expr& rightOperand);
 
 Expr sqrt_(const Expr& operand);
 
-/*! \fn Expr derivative_(const Expr& leftOperand, const Expr& rightOperand, int order)
-  * \brief Returns the \b derivative of \b leftOperand wrt \a rightOperand, applying basic simplifications. 
-  * \details This function possibly returns an object different from a Derivative object if the
-  * simplification requires so.
+/*! \fn Expr derivative_(const Expr& leftOperand,
+                         const Expr& rightOperand,
+                         int order)
+  * \brief Returns the \b derivative of \b leftOperand wrt \a rightOperand, 
+  * applying basic simplifications.  \details This function possibly 
+  * returns an object different from a Derivative object if 
+  * the simplification requires so.
   * \param leftOperand  Left operand.
   * \param rightOperand Right operand.
   * \param order Order of derivation.

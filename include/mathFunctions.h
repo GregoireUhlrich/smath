@@ -31,7 +31,11 @@ class Abs: public AbstractFunc{
     /*! \brief Gives the **type** of the abs funtion function.
      * \return \b 27
      */
-    smType::Type getType() const override { return smType::Abs;}
+  
+ 
+    smType::Type getType() const override {
+        return smType::Abs;
+    }
 
     void print(int mode=0) const override;
 
@@ -90,7 +94,9 @@ class Exp: public AbstractFunc{
     /*! \brief Gives the **type** of the exponential function.
      * \return \b 20
      */
-    smType::Type getType() const override { return smType::Exp;}
+    smType::Type getType() const override {
+        return smType::Exp;
+    }
 
     Expr getRealPart() override;
 
@@ -151,7 +157,9 @@ class Log: public AbstractFunc{
     /*! \brief Gives the **type** of the logarithm function.
      * \return \b 21
      */
-    smType::Type getType() const override { return smType::Log;}
+    smType::Type getType() const override {
+        return smType::Log;
+    }
 
     Expr getRealPart() override;
 
@@ -212,7 +220,9 @@ class Cos: public AbstractFunc{
     /*! \brief Gives the **type** of the cos function.
      * \return \b 22
      */
-    smType::Type getType() const override { return smType::Cos;}
+    smType::Type getType() const override {
+        return smType::Cos;
+    }
 
     Expr getRealPart() override;
 
@@ -275,7 +285,9 @@ class Sin: public AbstractFunc{
     /*! \brief Gives the **type** of the sin function.
      * \return \b 23
      */
-    smType::Type getType() const override { return smType::Sin;}
+    smType::Type getType() const override {
+        return smType::Sin;
+    }
 
     Expr getRealPart() override;
 
@@ -338,7 +350,9 @@ class Tan: public AbstractFunc{
     /*! \brief Gives the **type** of the tan function.
      * \return \b 24
      */
-    smType::Type getType() const override { return smType::Tan;}
+    smType::Type getType() const override {
+        return smType::Tan;
+    }
 
     Expr getRealPart() override;
 
@@ -401,7 +415,9 @@ class ACos: public AbstractFunc{
     /*! \brief Gives the **type** of the acos function.
      * \return \b 33
      */
-    smType::Type getType() const override { return smType::ACos;}
+    smType::Type getType() const override {
+        return smType::ACos;
+    }
 
     Expr getRealPart() override;
 
@@ -462,7 +478,9 @@ class ASin: public AbstractFunc{
     /*! \brief Gives the **type** of the asin function.
      * \return \b 34
      */
-    smType::Type getType() const override { return smType::ASin;}
+    smType::Type getType() const override {
+        return smType::ASin;
+    }
 
     Expr getRealPart() override;
 
@@ -524,7 +542,9 @@ class ATan: public AbstractFunc{
     /*! \brief Gives the **type** of the atan function.
      * \return \b 25
      */
-    smType::Type getType() const override { return smType::ATan;}
+    smType::Type getType() const override {
+        return smType::ATan;
+    }
 
     void print(int mode=0) const override;
 
@@ -584,15 +604,19 @@ class Angle: public AbstractDuoFunc{
     /*! \brief Gives the **type** of an Angle object.
      * \return 12
      */
-    smType::Type getType() const override { return smType::Angle;}
+    smType::Type getType() const override {
+        return smType::Angle;
+    }
 
     void print(int mode=0) const override;
 
     std::string printLaTeX(int mode=0) const override;
 
     /*! \brief Return the \b angle of the two arguments.
-     * \return The \b angle defined by the point that has the two arguments as coordinates in the plane.
-     * \note For this function to be justified, all the arguments must be \b scalar and \b real.
+     * \return The \b angle defined by the point that has the two arguments 
+     * as coordinates in the plane.
+     * \note For this function to be justified, all the arguments must be \b 
+     * scalar and \b real.
      */
     double evaluateScalar() const override;
 
@@ -636,7 +660,9 @@ class Cosh: public AbstractFunc{
     /*! \brief Gives the **type** of the cosh function.
      * \return \b 30
      */
-    smType::Type getType() const override { return smType::Cosh;}
+    smType::Type getType() const override {
+        return smType::Cosh;
+    }
 
     Expr getRealPart() override;
 
@@ -699,7 +725,9 @@ class Sinh: public AbstractFunc{
     /*! \brief Gives the **type** of the sinh function.
      * \return \b 31
      */
-    smType::Type getType() const override{ return smType::Sinh;}
+    smType::Type getType() const override{
+        return smType::Sinh;
+    }
 
     Expr getRealPart() override;
 
@@ -762,7 +790,9 @@ class Tanh: public AbstractFunc{
     /*! \brief Gives the **type** of the tanh function.
      * \return \b 33
      */
-    smType::Type getType() const override { return smType::Tanh;}
+    smType::Type getType() const override {
+        return smType::Tanh;
+    }
 
     Expr getRealPart() override;
 
@@ -825,7 +855,9 @@ class ACosh: public AbstractFunc{
     /*! \brief Gives the **type** of the acosh function.
      * \return \b 35
      */
-    smType::Type getType() const override { return smType::ACosh;}
+    smType::Type getType() const override {
+        return smType::ACosh;
+    }
 
     Expr getRealPart() override;
 
@@ -886,7 +918,9 @@ class ASinh: public AbstractFunc{
     /*! \brief Gives the **type** of the asinh function.
      * \return \b 36
      */
-    smType::Type getType() const override { return smType::ASinh;}
+    smType::Type getType() const override {
+        return smType::ASinh;
+    }
 
     Expr getRealPart() override;
 
@@ -947,7 +981,9 @@ class ATanh: public AbstractFunc{
     /*! \brief Gives the **type** of the atanh function.
      * \return \b 37
      */
-    smType::Type getType() const override { return smType::ATanh;}
+    smType::Type getType() const override {
+        return smType::ATanh;
+    }
 
     Expr getRealPart() override;
 
@@ -1009,7 +1045,9 @@ class Factorial: public AbstractFunc{
     /*! \brief Gives the **type** of the factorial function.
      * \return \b 28
      */
-    smType::Type getType() const override { return smType::Factorial;}
+    smType::Type getType() const override {
+        return smType::Factorial;
+    }
 
     void print(int mode=0) const override;
 
@@ -1027,7 +1065,8 @@ class Factorial: public AbstractFunc{
      */
     double evaluateScalar() const override;
 
-    /*! \brief \b Derives the factorial function, returns always \b 0: a factorial cannot be derived.
+    /*! \brief \b Derives the factorial function, returns always \b 0: a 
+     * factorial cannot be derived.
      * \return \b 0
      */
     Expr derive(const Expr& t_abstract) const override;
@@ -1055,7 +1094,9 @@ inline Log::Log(const Expr& t_argument): AbstractFunc(){
 }
 
 inline Angle::Angle(): AbstractDuoFunc(){}
-inline Angle::Angle(const Expr& leftOperand, const Expr& rightOperand): AbstractDuoFunc(){
+inline Angle::Angle(const Expr& leftOperand, const Expr& rightOperand)
+    :AbstractDuoFunc()
+{
     argument[0] = leftOperand;
     argument[1] = rightOperand;
 }

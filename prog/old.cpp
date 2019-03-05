@@ -361,6 +361,7 @@ int main(){
     xS = factorial_(yS);
     xS.evaluate().print();
     cout<<"5040\n";
+    yS.clear();
     yS = 5.2;
     xS = factorial_(yS);
     xS.evaluate().print();
@@ -427,7 +428,6 @@ int main(){
     yS.print();
 
     xS.clear();
-    cout<<"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG\n";
     Symbol pol1("P1"), pol2("P2");
     pol2 = polynomial_(xS+pow_(F,Symbol(1)/2),xS);
     pol2.print();
@@ -458,6 +458,8 @@ int main(){
     cout<<"x^2 + 2x + 1 = ";pol1.polynomialFactorization().print();
     pol1 = polynomial_(6*xS*xS-13*xS-5,xS);
     cout<<"6x^2 - 13x - 5 = ";pol1.polynomialFactorization().print();
+    //pol1.polynomialFactorization().printExplicit();
+    Refresh(pol1.polynomialFactorization()).print();
     pol1 = polynomial_(xS*xS-xS-1,xS);
     cout<<"x^2 - x - 1 = ";pol1.polynomialFactorization().print();
 
