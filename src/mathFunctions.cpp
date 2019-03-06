@@ -2,6 +2,12 @@
 
 using namespace std;
 
+///////////////////////////////////////////////////
+/*************************************************/
+// Class Abs                                     //
+/*************************************************/
+///////////////////////////////////////////////////
+
 void Abs::print(int mode) const
 {
     if (mode == 0 and name != "") 
@@ -47,7 +53,7 @@ double Abs::evaluateScalar() const
     return abs(argument->evaluateScalar());
 }
 
-Expr Abs::derive(const Expr& t_abstract) const
+Expr Abs::derive(const Expr& expr) const
 {
     double value = argument->evaluateScalar();
     if (value > 0) 
@@ -58,16 +64,16 @@ Expr Abs::derive(const Expr& t_abstract) const
     return ZERO;
 }
 
-Expr abs_(const Expr& t_abstract)
+Expr abs_(const Expr& expr)
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     if (type == smType::Integer or type == smType::Double)
-        return auto_number_(abs(t_abstract->evaluateScalar()));
+        return auto_number_(abs(expr->evaluateScalar()));
     else if (type == smType::CFraction)
-        return _cfraction_(abs(t_abstract->getNum()),
-                           abs(t_abstract->getDenom()));
+        return _cfraction_(abs(expr->getNum()),
+                           abs(expr->getDenom()));
 
-    Expr res = make_shared<Abs>(t_abstract);
+    Expr res = make_shared<Abs>(expr);
     applyFuncParity(res);
 
     return res;
@@ -82,6 +88,12 @@ int Abs::getParity(const Expr& t_variable) const
         return 0;
     return 1;
 }
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Class Exp                                     //
+/*************************************************/
+///////////////////////////////////////////////////
 
 Expr Exp::getRealPart()
 {
@@ -138,9 +150,9 @@ double Exp::evaluateScalar() const
     return exp(argument->evaluateScalar());
 }
 
-Expr Exp::derive(const Expr& t_abstract) const
+Expr Exp::derive(const Expr& expr) const
 {
-    return times_(argument->derive(t_abstract), exp_(argument));
+    return times_(argument->derive(expr), exp_(argument));
 }
 
 int Exp::getParity(const Expr& t_variable) const
@@ -153,11 +165,11 @@ int Exp::getParity(const Expr& t_variable) const
     return 0;
 }
 
-Expr exp_(const Expr& t_abstract)
+Expr exp_(const Expr& expr)
 {
-    int type = t_abstract->getPrimaryType();
+    int type = expr->getPrimaryType();
     if (type == smType::Numerical) {
-        double value = t_abstract->evaluateScalar();
+        double value = expr->evaluateScalar();
         int value_int = round(value);
         if (value == value_int) {
             if (value_int == 0)
@@ -166,15 +178,21 @@ Expr exp_(const Expr& t_abstract)
                 return e_;
         }
     }
-    type = t_abstract->getType();
+    type = expr->getType();
     if (type == smType::Log)
-        return t_abstract->getArgument();
+        return expr->getArgument();
 
-    Expr res = make_shared<Exp>(t_abstract);
+    Expr res = make_shared<Exp>(expr);
     applyFuncParity(res);
 
     return res;
 }
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Class Log                                     //
+/*************************************************/
+///////////////////////////////////////////////////
 
 Expr Log::getRealPart() {
     return log_(argument->getComplexModulus());
@@ -234,9 +252,9 @@ double Log::evaluateScalar() const
     return log(argument->evaluateScalar());
 }
 
-Expr Log::derive(const Expr& t_abstract) const
+Expr Log::derive(const Expr& expr) const
 {
-    return times_(argument->derive(t_abstract), pow_(argument,int_(-1)));
+    return times_(argument->derive(expr), pow_(argument,int_(-1)));
 }
 
 int Log::getParity(const Expr& t_variable) const
@@ -249,18 +267,24 @@ int Log::getParity(const Expr& t_variable) const
     return 0;
 }
 
-Expr log_(const Expr& t_abstract)
+Expr log_(const Expr& expr)
 {
-    if (t_abstract == ONE)
+    if (expr == ONE)
         return ZERO;
-    if (t_abstract->getType() == smType::Exp)
-        return t_abstract->getArgument();
+    if (expr->getType() == smType::Exp)
+        return expr->getArgument();
 
-    Expr res = make_shared<Log>(t_abstract);
+    Expr res = make_shared<Log>(expr);
     applyFuncParity(res);
 
     return res;
 }
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Class Cos                                     //
+/*************************************************/
+///////////////////////////////////////////////////
 
 Expr Cos::getRealPart()
 {
@@ -325,9 +349,9 @@ double Cos::evaluateScalar() const
     return cos(argument->evaluateScalar());
 }
 
-Expr Cos::derive(const Expr& t_abstract) const
+Expr Cos::derive(const Expr& expr) const
 {
-    return times_(argument->derive(t_abstract),
+    return times_(argument->derive(expr),
                   times_(int_(-1),sin_(argument)));
 }
 
@@ -341,41 +365,47 @@ int Cos::getParity(const Expr& t_variable) const
     return 1;
 }
 
-Expr cos_(const Expr& t_abstract)
+Expr cos_(const Expr& expr)
 {
-    //int type = t_abstract->getPrimaryType();
-    if (*t_abstract == ZERO)
+    //int type = expr->getPrimaryType();
+    if (*expr == ZERO)
         return int_(1);
-    if (*t_abstract == fraction_(pi_,int_(2)))
+    if (*expr == fraction_(pi_,int_(2)))
         return ZERO;
-    if (*t_abstract == fraction_(times_(int_(-3),pi_),int_(2)))
+    if (*expr == fraction_(times_(int_(-3),pi_),int_(2)))
         return ZERO;
-    if (*t_abstract == pi_)
+    if (*expr == pi_)
         return int_(-1);
-    if (*t_abstract == times_(int_(-1),pi_))
+    if (*expr == times_(int_(-1),pi_))
         return int_(-1);
-    if (*t_abstract == times_(int_(3),fraction_(pi_,int_(2))))
+    if (*expr == times_(int_(3),fraction_(pi_,int_(2))))
         return ZERO;
-    if (*t_abstract == fraction_(times_(int_(-1),pi_),int_(2)))
+    if (*expr == fraction_(times_(int_(-1),pi_),int_(2)))
         return ZERO;
-    if (*t_abstract == fraction_(pi_,int_(3)))
+    if (*expr == fraction_(pi_,int_(3)))
         return _cfraction_(1,2);
-    if (*t_abstract == times_(_cfraction_(2,3),pi_))
+    if (*expr == times_(_cfraction_(2,3),pi_))
         return _cfraction_(-1,2);
-    if (*t_abstract == fraction_(pi_,int_(6)))
+    if (*expr == fraction_(pi_,int_(6)))
         return fraction_(sqrt_(int_(3)),int_(2));
-    if (*t_abstract == times_(int_(5),fraction_(pi_,int_(6))))
+    if (*expr == times_(int_(5),fraction_(pi_,int_(6))))
         return fraction_(times_(int_(-1),sqrt_(int_(3))),int_(2));
-    if (*t_abstract == fraction_(pi_,int_(4)))
+    if (*expr == fraction_(pi_,int_(4)))
         return fraction_(sqrt_(int_(2)),int_(2));
-    if (*t_abstract == times_(int_(3),fraction_(pi_,int_(4))))
+    if (*expr == times_(int_(3),fraction_(pi_,int_(4))))
         return times_(int_(-1),fraction_(sqrt_(int_(2)),int_(2)));
     
-    Expr res = make_shared<Cos>(t_abstract);
+    Expr res = make_shared<Cos>(expr);
     applyFuncParity(res);
 
     return res;
 }
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Class Sin                                     //
+/*************************************************/
+///////////////////////////////////////////////////
 
 Expr Sin::getRealPart()
 {
@@ -440,9 +470,9 @@ double Sin::evaluateScalar() const
     return sin(argument->evaluateScalar());
 }
 
-Expr Sin::derive(const Expr& t_abstract) const
+Expr Sin::derive(const Expr& expr) const
 {
-    return times_(argument->derive(t_abstract), cos_(argument));
+    return times_(argument->derive(expr), cos_(argument));
 }
 
 int Sin::getParity(const Expr& t_variable) const
@@ -455,42 +485,48 @@ int Sin::getParity(const Expr& t_variable) const
     return -1;
 }
 
-Expr sin_(const Expr& t_abstract)
+Expr sin_(const Expr& expr)
 {
-    if (*t_abstract == ZERO)
+    if (*expr == ZERO)
         return ZERO;
-    if (t_abstract->dependsOn(pi_))
+    if (expr->dependsOn(pi_))
     {
-        if (*t_abstract == fraction_(pi_,int_(2)))
+        if (*expr == fraction_(pi_,int_(2)))
             return int_(1);
-        if (*t_abstract == fraction_(times_(int_(-3),pi_),int_(2)))
+        if (*expr == fraction_(times_(int_(-3),pi_),int_(2)))
             return int_(1);
-        if (*t_abstract == pi_)
+        if (*expr == pi_)
             return ZERO;
-        if (*t_abstract == times_(int_(-1),pi_))
+        if (*expr == times_(int_(-1),pi_))
             return ZERO;
-        if (*t_abstract == times_(int_(3),fraction_(pi_,int_(2))))
+        if (*expr == times_(int_(3),fraction_(pi_,int_(2))))
             return int_(-1);
-        if (*t_abstract == fraction_(times_(int_(-1),pi_),int_(2)))
+        if (*expr == fraction_(times_(int_(-1),pi_),int_(2)))
             return int_(-1);
-        if (*t_abstract == fraction_(pi_,int_(3)))
+        if (*expr == fraction_(pi_,int_(3)))
             return fraction_(sqrt_(int_(3)),int_(2));
-        if (*t_abstract == times_(_cfraction_(2,3),pi_))
+        if (*expr == times_(_cfraction_(2,3),pi_))
             return fraction_(sqrt_(int_(3)),int_(2));
-        if (*t_abstract == fraction_(pi_,int_(6)))
+        if (*expr == fraction_(pi_,int_(6)))
             return _cfraction_(1,2);
-        if (*t_abstract == times_(int_(5),fraction_(pi_,int_(6))))
+        if (*expr == times_(int_(5),fraction_(pi_,int_(6))))
             return _cfraction_(1,2);
-        if (*t_abstract == fraction_(pi_,int_(4)))
+        if (*expr == fraction_(pi_,int_(4)))
             return fraction_(sqrt_(int_(2)),int_(2));
-        if (*t_abstract == times_(int_(3),fraction_(pi_,int_(4))))
+        if (*expr == times_(int_(3),fraction_(pi_,int_(4))))
             return fraction_(sqrt_(int_(2)),int_(2));
     }
-    Expr res = make_shared<Sin>(t_abstract);
+    Expr res = make_shared<Sin>(expr);
     applyFuncParity(res);
 
     return res;
 }
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Class Tan                                     //
+/*************************************************/
+///////////////////////////////////////////////////
 
 Expr Tan::getRealPart()
 {
@@ -577,9 +613,9 @@ double Tan::evaluateScalar() const
     return tan(argument->evaluateScalar());
 }
 
-Expr Tan::derive(const Expr& t_abstract) const
+Expr Tan::derive(const Expr& expr) const
 {
-    return times_(argument->derive(t_abstract), 
+    return times_(argument->derive(expr), 
                   plus_(int_(1),pow_(tan_(argument),int_(2))));
 }
 
@@ -593,42 +629,48 @@ int Tan::getParity(const Expr& t_variable) const
     return -1;
 }
 
-Expr tan_(const Expr& t_abstract)
+Expr tan_(const Expr& expr)
 {
-    if (*t_abstract == ZERO)
+    if (*expr == ZERO)
         return ZERO;
-    if (t_abstract->dependsOn(pi_))
+    if (expr->dependsOn(pi_))
     {
-        if (*t_abstract == fraction_(pi_,int_(2)))
+        if (*expr == fraction_(pi_,int_(2)))
             return INF;
-        if (*t_abstract == fraction_(times_(int_(-3),pi_),int_(2)))
+        if (*expr == fraction_(times_(int_(-3),pi_),int_(2)))
             return INF;
-        if (*t_abstract == pi_)
+        if (*expr == pi_)
             return ZERO;
-        if (*t_abstract == times_(int_(-1),pi_))
+        if (*expr == times_(int_(-1),pi_))
             return ZERO;
-        if (*t_abstract == times_(int_(3),fraction_(pi_,int_(2))))
+        if (*expr == times_(int_(3),fraction_(pi_,int_(2))))
             return INF;
-        if (*t_abstract == fraction_(times_(int_(-1),pi_),int_(2)))
+        if (*expr == fraction_(times_(int_(-1),pi_),int_(2)))
             return INF;
-        if (*t_abstract == fraction_(pi_,int_(3)))
+        if (*expr == fraction_(pi_,int_(3)))
             return sqrt_(int_(3));
-        if (*t_abstract == times_(_cfraction_(2,3),pi_))
+        if (*expr == times_(_cfraction_(2,3),pi_))
             return times_(int_(-1),sqrt_(int_(3)));
-        if (*t_abstract == fraction_(pi_,int_(6)))
+        if (*expr == fraction_(pi_,int_(6)))
             return fraction_(int_(1),sqrt_(int_(3)));
-        if (*t_abstract == times_(int_(5),fraction_(pi_,int_(6))))
+        if (*expr == times_(int_(5),fraction_(pi_,int_(6))))
             return fraction_(int_(-1),sqrt_(int_(3)));
-        if (*t_abstract == fraction_(pi_,int_(4)))
+        if (*expr == fraction_(pi_,int_(4)))
             return int_(1);
-        if (*t_abstract == times_(int_(3),fraction_(pi_,int_(4))))
+        if (*expr == times_(int_(3),fraction_(pi_,int_(4))))
             return int_(1);
     }
-    Expr res = make_shared<Tan>(t_abstract);
+    Expr res = make_shared<Tan>(expr);
     applyFuncParity(res);
 
     return res;
 }
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Class ACos                                    //
+/*************************************************/
+///////////////////////////////////////////////////
 
 Expr ACos::getRealPart()
 {
@@ -694,9 +736,9 @@ double ACos::evaluateScalar() const
     return acos(argument->evaluateScalar());
 }
 
-Expr ACos::derive(const Expr& t_abstract) const
+Expr ACos::derive(const Expr& expr) const
 {
-    return times_(argument->derive(t_abstract), 
+    return times_(argument->derive(expr), 
                   fraction_(int_(-1),
                             pow_(plus_(int_(1),
                                        times_(int_(-1),
@@ -713,12 +755,18 @@ int ACos::getParity(const Expr& t_variable) const
     return 0;
 }
 
-Expr acos_(const Expr& t_abstract)
+Expr acos_(const Expr& expr)
 {
-    if (t_abstract == ZERO)
+    if (expr == ZERO)
         return fraction_(pi_,int_(2));
-    return make_shared<ACos>(t_abstract);
+    return make_shared<ACos>(expr);
 }
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Class ASin                                    //
+/*************************************************/
+///////////////////////////////////////////////////
 
 Expr ASin::getRealPart()
 {
@@ -783,9 +831,9 @@ double ASin::evaluateScalar() const
     return asin(argument->evaluateScalar());
 }
 
-Expr ASin::derive(const Expr& t_abstract) const
+Expr ASin::derive(const Expr& expr) const
 {
-    return times_(argument->derive(t_abstract), 
+    return times_(argument->derive(expr), 
                   fraction_(int_(1),
                             pow_(plus_(int_(1),
                                        times_(int_(-1),
@@ -804,12 +852,86 @@ int ASin::getParity(const Expr& t_variable) const
     return -1;
 }
 
-Expr asin_(const Expr& t_abstract)
+Expr asin_(const Expr& expr)
 {
-    if (*t_abstract == ZERO)
+    if (*expr == ZERO)
         return ZERO;
-    return make_shared<ASin>(t_abstract);
+    return make_shared<ASin>(expr);
 }
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Class ATan                                    //
+/*************************************************/
+///////////////////////////////////////////////////
+
+void ATan::print(int mode) const
+{
+    if (mode == 0 and name != "") 
+        cout<<name<<" = ";
+
+    cout<<"atan(";
+    argument->print(1);
+    cout<<")";
+    if (mode == 0) 
+        cout<<endl;
+}
+
+string ATan::printLaTeX(int mode) const
+{
+    ostringstream sout;
+    if (mode == 0 and name != "") 
+        sout<<name<<" = ";
+
+    sout<<"\\atan\\left(";
+    sout<<argument->printLaTeX(1);
+    sout<<"\\right)";
+    if (mode == 0) 
+        sout<<endl;
+
+    return sout.str();
+}
+
+double ATan::evaluateScalar() const
+{
+    if (argument->getDim() > 0) 
+        return 0;
+    return atan(argument->evaluateScalar());
+}
+
+Expr ATan::derive(const Expr& expr) const
+{
+    return fraction_(argument->derive(expr),
+                     fraction_(int_(1),
+                               plus_(int_(1),
+                                     pow_(argument, int_(2)))));
+}
+
+int ATan::getParity(const Expr& t_variable) const
+{
+    int parity = argument->getParity(t_variable);
+    if (parity == 1) 
+        return 1;
+    if (parity == 0) 
+        return 0;
+    return -1;
+}
+
+Expr atan_(const Expr& expr)
+{
+    if (*expr == ZERO)
+        return ZERO;
+    Expr res = make_shared<ATan>(expr);
+    applyFuncParity(res);
+
+    return res;
+}
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Class Cosh                                    //
+/*************************************************/
+///////////////////////////////////////////////////
 
 Expr Cosh::getRealPart()
 {
@@ -874,9 +996,9 @@ double Cosh::evaluateScalar() const
     return cosh(argument->evaluateScalar());
 }
 
-Expr Cosh::derive(const Expr& t_abstract) const
+Expr Cosh::derive(const Expr& expr) const
 {
-    return times_(argument->derive(t_abstract), sinh_(argument));
+    return times_(argument->derive(expr), sinh_(argument));
 }
 
 int Cosh::getParity(const Expr& t_variable) const
@@ -889,15 +1011,21 @@ int Cosh::getParity(const Expr& t_variable) const
     return 1;
 }
 
-Expr cosh_(const Expr& t_abstract)
+Expr cosh_(const Expr& expr)
 {
-    if (*t_abstract == ZERO)
+    if (*expr == ZERO)
         return int_(1);
-    Expr res = make_shared<Cosh>(t_abstract);
+    Expr res = make_shared<Cosh>(expr);
     applyFuncParity(res);
 
     return res;
 }
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Class Sinh                                    //
+/*************************************************/
+///////////////////////////////////////////////////
 
 Expr Sinh::getRealPart()
 {
@@ -962,9 +1090,9 @@ double Sinh::evaluateScalar() const
     return sinh(argument->evaluateScalar());
 }
 
-Expr Sinh::derive(const Expr& t_abstract) const
+Expr Sinh::derive(const Expr& expr) const
 {
-    return times_(argument->derive(t_abstract), cosh_(argument));
+    return times_(argument->derive(expr), cosh_(argument));
 }
 
 int Sinh::getParity(const Expr& t_variable) const
@@ -977,15 +1105,21 @@ int Sinh::getParity(const Expr& t_variable) const
     return -1;
 }
 
-Expr sinh_(const Expr& t_abstract)
+Expr sinh_(const Expr& expr)
 {
-    if (t_abstract == ZERO)
+    if (expr == ZERO)
         return ZERO;
-    Expr res = make_shared<Sinh>(t_abstract);
+    Expr res = make_shared<Sinh>(expr);
     applyFuncParity(res);
 
     return res;
 }
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Class Tanh                                    //
+/*************************************************/
+///////////////////////////////////////////////////
 
 Expr Tanh::getRealPart()
 {
@@ -1072,9 +1206,9 @@ double Tanh::evaluateScalar() const
     return tanh(argument->evaluateScalar());
 }
 
-Expr Tanh::derive(const Expr& t_abstract) const
+Expr Tanh::derive(const Expr& expr) const
 {
-    return times_(argument->derive(t_abstract), 
+    return times_(argument->derive(expr), 
                   plus_(int_(1),
                         times_(int_(-1),pow_(tanh_(argument),
                                              int_(2)))));
@@ -1090,15 +1224,21 @@ int Tanh::getParity(const Expr& t_variable) const
     return -1;
 }
 
-Expr tanh_(const Expr& t_abstract)
+Expr tanh_(const Expr& expr)
 {
-    if (*t_abstract == ZERO)
+    if (*expr == ZERO)
         return ZERO;
-    Expr res = make_shared<Tanh>(t_abstract);
+    Expr res = make_shared<Tanh>(expr);
     applyFuncParity(res);
 
     return res;
 }
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Class ACosh                                   //
+/*************************************************/
+///////////////////////////////////////////////////
 
 Expr ACosh::getRealPart()
 {
@@ -1158,9 +1298,9 @@ double ACosh::evaluateScalar() const
     return acosh(argument->evaluateScalar());
 }
 
-Expr ACosh::derive(const Expr& t_abstract) const
+Expr ACosh::derive(const Expr& expr) const
 {
-    return times_(argument->derive(t_abstract), 
+    return times_(argument->derive(expr), 
                   fraction_(int_(1),
                             pow_(plus_(pow_(argument,int_(2)),
                                        int_(-1)),
@@ -1174,15 +1314,21 @@ int ACosh::getParity(const Expr& t_variable) const
     return 0;
 }
 
-Expr acosh_(const Expr& t_abstract)
+Expr acosh_(const Expr& expr)
 {
-    if (*t_abstract == ZERO)
+    if (*expr == ZERO)
         return int_(1);
-    Expr res = make_shared<ACosh>(t_abstract);
+    Expr res = make_shared<ACosh>(expr);
     applyFuncParity(res);
 
     return res;
 }
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Class ASinh                                   //
+/*************************************************/
+///////////////////////////////////////////////////
 
 Expr ASinh::getRealPart()
 {
@@ -1243,9 +1389,9 @@ double ASinh::evaluateScalar() const
     return asinh(argument->evaluateScalar());
 }
 
-Expr ASinh::derive(const Expr& t_abstract) const
+Expr ASinh::derive(const Expr& expr) const
 {
-    return times_(argument->derive(t_abstract),
+    return times_(argument->derive(expr),
                   fraction_(int_(1),
                             pow_(plus_(pow_(argument,int_(2)),
                                        int_(1)),
@@ -1262,15 +1408,21 @@ int ASinh::getParity(const Expr& t_variable) const
     return -1;
 }
 
-Expr asinh_(const Expr& t_abstract)
+Expr asinh_(const Expr& expr)
 {
-    if (*t_abstract == ZERO)
+    if (*expr == ZERO)
         return ZERO;
-    Expr res = make_shared<ASinh>(t_abstract);
+    Expr res = make_shared<ASinh>(expr);
     applyFuncParity(res);
 
     return res;
 }
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Class ATanh                                   //
+/*************************************************/
+///////////////////////////////////////////////////
 
 Expr ATanh::getRealPart()
 {
@@ -1330,9 +1482,9 @@ double ATanh::evaluateScalar() const
     return atanh(argument->evaluateScalar());
 }
 
-Expr ATanh::derive(const Expr& t_abstract) const
+Expr ATanh::derive(const Expr& expr) const
 {
-    return times_(argument->derive(t_abstract),
+    return times_(argument->derive(expr),
                   fraction_(int_(1),
                             plus_(int_(1),
                                   times_(int_(-1),
@@ -1349,77 +1501,21 @@ int ATanh::getParity(const Expr& t_variable) const
     return -1;
 }
 
-Expr atanh_(const Expr& t_abstract)
+Expr atanh_(const Expr& expr)
 {
-    if (*t_abstract == ZERO)
+    if (*expr == ZERO)
         return ZERO;
-    Expr res = make_shared<ATanh>(t_abstract);
+    Expr res = make_shared<ATanh>(expr);
     applyFuncParity(res);
 
     return res;
 }
 
-void ATan::print(int mode) const
-{
-    if (mode == 0 and name != "") 
-        cout<<name<<" = ";
-
-    cout<<"atan(";
-    argument->print(1);
-    cout<<")";
-    if (mode == 0) 
-        cout<<endl;
-}
-
-string ATan::printLaTeX(int mode) const
-{
-    ostringstream sout;
-    if (mode == 0 and name != "") 
-        sout<<name<<" = ";
-
-    sout<<"\\atan\\left(";
-    sout<<argument->printLaTeX(1);
-    sout<<"\\right)";
-    if (mode == 0) 
-        sout<<endl;
-
-    return sout.str();
-}
-
-double ATan::evaluateScalar() const
-{
-    if (argument->getDim() > 0) 
-        return 0;
-    return atan(argument->evaluateScalar());
-}
-
-Expr ATan::derive(const Expr& t_abstract) const
-{
-    return fraction_(argument->derive(t_abstract),
-                     fraction_(int_(1),
-                               plus_(int_(1),
-                                     pow_(argument, int_(2)))));
-}
-
-int ATan::getParity(const Expr& t_variable) const
-{
-    int parity = argument->getParity(t_variable);
-    if (parity == 1) 
-        return 1;
-    if (parity == 0) 
-        return 0;
-    return -1;
-}
-
-Expr atan_(const Expr& t_abstract)
-{
-    if (*t_abstract == ZERO)
-        return ZERO;
-    Expr res = make_shared<ATan>(t_abstract);
-    applyFuncParity(res);
-
-    return res;
-}
+///////////////////////////////////////////////////
+/*************************************************/
+// Class Angle                                   //
+/*************************************************/
+///////////////////////////////////////////////////
 
 void Angle::print(int mode) const
 {
@@ -1502,19 +1598,19 @@ Expr Angle::evaluate()
     return INF; // Infinite result
 }
 
-Expr Angle::derive(const Expr& t_abstract) const {
-    return evaluateAngle()->derive(t_abstract);
+Expr Angle::derive(const Expr& expr) const {
+    return evaluateAngle()->derive(expr);
 }
 
-bool Angle::operator==(const Expr& t_abstract) const
+bool Angle::operator==(const Expr& expr) const
 {
-    if (t_abstract->getName() == WHATEVER->getName()) 
+    if (expr->getName() == WHATEVER->getName()) 
         return true;
-    if (t_abstract->getType() != smType::Angle) 
+    if (expr->getType() != smType::Angle) 
         return false;
     return (*fraction_(argument[0],
-                       argument[1])==fraction_(t_abstract->getArgument(0),
-                                               t_abstract->getArgument(1)));
+                       argument[1])==fraction_(expr->getArgument(0),
+                                               expr->getArgument(1)));
 }
 
 int Angle::getParity(const Expr& t_variable) const
@@ -1526,6 +1622,12 @@ int Angle::getParity(const Expr& t_variable) const
 
     return 0;
 }
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Class Factorial                               //
+/*************************************************/
+///////////////////////////////////////////////////
 
 void Factorial::print(int mode) const
 {
@@ -1564,7 +1666,7 @@ double Factorial::evaluateScalar() const
     return factorial(value);
 }
 
-Expr Factorial::derive(const Expr& t_abstract) const {
+Expr Factorial::derive(const Expr& expr) const {
     return ZERO;
 }
 
@@ -1572,8 +1674,8 @@ int Factorial::getParity(const Expr& t_variable) const {
     return 0;
 }
 
-Expr factorial_(const Expr& t_abstract) {
-    return make_shared<Factorial>(t_abstract);
+Expr factorial_(const Expr& expr) {
+    return make_shared<Factorial>(expr);
 }
 
 void applyFuncParity(Expr& func) 

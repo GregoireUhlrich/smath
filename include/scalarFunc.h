@@ -75,13 +75,13 @@ class AbstractFunc: public AbstractScalar{
 
     virtual Expr factor(bool full=false) override;
 
-    virtual Expr factor(const Expr& t_abstract, bool full=false) override;
+    virtual Expr factor(const Expr& expr, bool full=false) override;
 
     Expr develop(bool full=false) override;
 
-    bool dependsOn(const Expr& t_abstract) const override;
+    bool dependsOn(const Expr& expr) const override;
 
-    int isPolynomial(const Expr& t_abstract) const override;
+    int isPolynomial(const Expr& expr) const override;
 
     virtual void print(int mode=0) const override = 0;
 
@@ -92,11 +92,11 @@ class AbstractFunc: public AbstractScalar{
      */
     Expr evaluate() override;
 
-    bool operator==(const Expr& t_abstract) const override;
+    bool operator==(const Expr& expr) const override;
 
-    bool operator>(const Expr& t_abstract) const override;
+    bool operator>(const Expr& expr) const override;
 
-    bool operator<(const Expr& t_abstract) const override;
+    bool operator<(const Expr& expr) const override;
 };
 
 
@@ -163,13 +163,13 @@ class AbstractDuoFunc: public AbstractScalar{
 
     virtual Expr factor(bool full=false) override;
 
-    virtual Expr factor(const Expr& t_abstract, bool full=false) override;
+    virtual Expr factor(const Expr& expr, bool full=false) override;
 
     virtual Expr develop(bool full=false) override;
 
-    bool dependsOn(const Expr& t_abstract) const override;
+    bool dependsOn(const Expr& expr) const override;
 
-    int isPolynomial(const Expr& t_abstract) const override;
+    int isPolynomial(const Expr& expr) const override;
 
     virtual void print(int mode=0) const override = 0;
 
@@ -250,13 +250,13 @@ class AbstractMultiFunc: public AbstractScalar{
 
     virtual Expr factor(bool full=false) override;
 
-    virtual Expr factor(const Expr& t_abstract, bool full=false) override;
+    virtual Expr factor(const Expr& expr, bool full=false) override;
 
     virtual Expr develop(bool full=false) override;
 
-    bool dependsOn(const Expr& t_abstract) const override;
+    bool dependsOn(const Expr& expr) const override;
 
-    int isPolynomial(const Expr& t_abstract) const override;
+    int isPolynomial(const Expr& expr) const override;
 
     virtual void print(int mode=0) const override = 0;
 

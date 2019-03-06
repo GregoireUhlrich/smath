@@ -1,7 +1,7 @@
 /*! \file abstract.h
  * \author Grégoire Uhlrich
  * \version 1.0
- * \brief Base classes for all expressions in the program.
+ * \brief Base classes for all exprs in the program.
  */
 
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -48,7 +48,7 @@ namespace smType{
         ScalarFunction=20, /*!< = 20. Concerns all scalar uni-variate functions
                              (Exp, Log, Cos, etc). */
         Vectorial=50,
-        Indicial=60, /*!<  = 60. Concerns all indicial expressions (and indices). */
+        Indicial=60, /*!<  = 60. Concerns all indicial exprs (and indices). */
     };
 
     /*! \enum Enum of the different types of Abstract
@@ -129,9 +129,13 @@ namespace smProperty{
 
 std::ostream& operator<<(std::ostream& fout, smType::Type type);
 std::ostream& operator<<(std::ostream& fout, smType::PrimaryType primaryType);
+
+// Creates a generic Expression of a given type
 Expr Empty(smType::Type type); // source in symbol.cpp
 
+// Forward declaration of Index class (indicial.h)
 class Index;
+
 
 /*! \class Abstract
  * \brief \b Root class of the inheritance tree of abstracts.
@@ -177,7 +181,7 @@ class Abstract{
 
     /*! \brief Displays the abstract in standard output.
      * \param mode Tells if the Abstract is printed alone (default) or in 
-     * another expression.
+     * another expr.
      */
     virtual void print(int mode=0) const = 0;
 
@@ -185,7 +189,7 @@ class Abstract{
 
     /*! \brief Creates a LaTeX output for the Abstract.
      * \param mode Tells if the Abstract is printed alone (default) or in 
-     * another expression.
+     * another expr.
      * \return The string corresponding to the LaTeX output.
      */
     virtual std::string printLaTeX(int mode=0) const;
@@ -209,7 +213,7 @@ class Abstract{
 
     /*! \brief Gives the \b primary \b type of Abstract.
      * \details In the program this function is very often called. It allows 
-     * different functions to know what type of expression they are 
+     * different functions to know what type of expr they are 
      * manipulating (single number, scalar function with one argument, with 
      * multiple argumments, a Vector, etc) in order to do special treatments 
      * or simplifications.
@@ -219,7 +223,7 @@ class Abstract{
 
     /*! \brief Gives the \b type of Abstract.
      * \details In the program this function is very often called. It allows 
-     * different functions to know what type of expression they are 
+     * different functions to know what type of expr they are 
      * manipulating (cos, product, number, etc) in order to do special 
      * treatments or simplifications.
      * \return type (a non memorized integer corresponding to the type of abstract)
@@ -237,6 +241,14 @@ class Abstract{
      */
     virtual int getDim() const = 0;
 
+    /*! \brief Tells if the expression is a Building Block or not.
+     * \details Building blocks are derived classes that cannot contain further
+     * expressions, i.e. expressions that are the leafs of the recursive
+     * tree reprensent mathematical expressions: numerical or pure literal 
+     * objects (variable, constant etc).
+     * \return \b True if \a *this is a Building Block.
+     * \return \b False else.
+     */
     virtual bool isBuildingBlock() const;
 
                                                        
@@ -246,32 +258,118 @@ class Abstract{
     // Access functions for specializations          //
     /*************************************************/
 
-    // Numerical- and Literal-type expressions
+    ///////////////////////////////////////////////////
+    // Numerical- and Literal types
+    ///////////////////////////////////////////////////
+
+    /*! \brief Tells if the expression is an integer. Either an Integer object 
+     * directly, or a Double that has an integer value.
+     * \return \b True if \a *this is an Integer or a Double with integer value.
+     * \return \b False else.
+     */
     virtual bool isInteger() const;
+    /*! \brief Tells if the expression is valued, i.e. is a function of numbers
+     * and valued literals (a Variable or Constant is not valued by default).
+     * \return \b True if the expression is valued.
+     * \return \b False else.
+     */
     virtual bool getValued() const;
+    /*! \brief Returns the value of the expression, if it has one \b explicitely.
+     * In particular, it will work only on Numbers and valued Literals, not on
+     * functions.
+     * \return The value of the expression.
+     */
     virtual double getValue() const;
 
+    ///////////////////////////////////////////////////
     // Class CFraction
+    ///////////////////////////////////////////////////
+
+    /*! \return The numerator for a CFraction.
+     */
     virtual int getNum() const; 
+    /*! \return The denominator for a CFraction.
+     */
     virtual int getDenom() const; 
 
-    // Multi-argument abstracts
-    virtual int getNArgs(int axis=0) const; 
+    ///////////////////////////////////////////////////
+    // (Multiple) argument(s) functions
+    ///////////////////////////////////////////////////
+
+    /*! \brief Returns the number of arguments of the expression. If the 
+     * expression is a building block  (AbstractBuildingBlock), this function
+     * returns 0.
+     * \return The number of arguments of the expression.
+     */
+    virtual int getNArgs(int axis=0) const;
+
+    /*! \warning This function must not be called for building blocks, one must
+     * check first that the expression has arguments.
+     * \return The i^{th} argument of the expression.
+     */
     virtual Expr getArgument(int iArg=0) const; 
+
+    /*! \brief Allows to get specific arguments of expressions in multiple
+     * dimensions, by giving the indices in each dimension.
+     * \warning This function must not be called for building blocks, one must
+     * check first that the expression has arguments.
+     * \return The argument {i,j,...} of the expression.
+     */
     virtual Expr getArgument(const std::initializer_list<int>& indices) const;
+
+    /*! \brief Allows to get specific arguments of expressions in multiple
+     * dimensions, by giving the indices in each dimension.
+     * \warning This function must not be called for building blocks, one must
+     * check first that the expression has arguments.
+     * \return The argument {i,j,...} of the expression.
+     */
     virtual Expr getArgument(const std::vector<int>& indices) const;
+
+    /*! \brief Allows to get the entire std::vector of arguments of the expression.
+     * \warning This function must not be called for building blocks, one must
+     * check first that the expression has arguments.
+     * \return The std::vector of argument.
+     */
     virtual const std::vector<Expr >& getVectorArgument() const;
 
-    // Derivative, Polynomial, Integral
+    ///////////////////////////////////////////////////
+    // Derivative, Integral, Polynomial
+    ///////////////////////////////////////////////////
+
+    /*! \brief Accessor to the variable that defines certain types of expressions.
+     * \return \b variable.
+     */
     virtual Expr getVariable() const;
+
+    /*! \brief Accessor to the order (integer) that defines certain types of
+     * expressions.
+     * \return \b order.
+     */
     virtual int getOrder() const;
 
+    ///////////////////////////////////////////////////
     // Vectorial-type expressions
+    ///////////////////////////////////////////////////
+
+    /*! \brief Accessor to the shape of the tensor in the form of a std::vector
+     * of integers.
+     * \return \b shape.
+     */
     virtual std::vector<int> getShape() const;
 
+    ///////////////////////////////////////////////////
     // Indicial-type expressions
+    ///////////////////////////////////////////////////
+
+    /*! \return The number of indices of an Indicial expression.
+     */    
     virtual int getNIndices() const;
+    /*! \param i Spot of the index to get.
+     * \return the i^{th} index of an Indicial expression.
+     */
     virtual Index getIndex(int i=0) const;
+    /*! \return The index structure of the expression
+     */
     virtual std::vector<Index> getIndexStructure() const;
     virtual int getNContractedPairs() const;
     virtual std::vector<Expr> getPermutations() const;
@@ -301,21 +399,66 @@ class Abstract{
     // Modifiers for specializations                 //
     /*************************************************/
 
-    // Numerical- and Literal-Type
+    ///////////////////////////////////////////////////
+    // Numerical- and Literal- types
+    ///////////////////////////////////////////////////
+    
+    /*! \brief Sets the value if there is one (for Numerical and Literal valued).
+     */
     virtual void setValue(double t_value);
 
-    // Multi-argument abstracts
-    virtual void setArgument(const Expr& t_abstract, int iArg=0);
-    virtual void setArgument(const Expr& t_abstract,
+    ///////////////////////////////////////////////////
+    // (Multi) argument(s) functions
+    ///////////////////////////////////////////////////
+
+    /*! \brief Sets the argument at position \b iArg (default=0).
+     * \param expr Expression that replaces the argument.
+     * \param iArg the position of the argument to change.
+     */
+    virtual void setArgument(const Expr& expr, int iArg=0);
+
+    /*! \brief Sets the argument at position \b {i,j,...} for multi-dimensions 
+     * expressions.
+     * \param expr Expression that replaces the argument.
+     * \param indices An intializer_list containing the series of indices 
+     * corresponding to the argument to replace.
+     */
+    virtual void setArgument(const Expr& expr,
                              const std::initializer_list<int>& indices);
-    virtual void setArgument(const Expr& t_abstract,
+
+    /*! \brief Sets the argument at position \b {i,j,...} for multi-dimensions 
+     * expressions.
+     * \param expr Expression that replaces the argument.
+     * \param indices An std::vector containing the series of indices 
+     * corresponding to the argument to replace.
+     */
+    virtual void setArgument(const Expr& expr,
                              const std::vector<int>& indices);
+
+    /*! \brief Replace the entire std::vector of argument.
+     * \param t_argument std::vector of expressions to copy.
+     */
     virtual void setVectorArgument(const std::vector<Expr >& t_argument);
 
-    // Plus- and Times-type.
-    virtual void insert(const Expr& t_abstract, bool side=0);
+    ///////////////////////////////////////////////////
+    // Plus and Times
+    ///////////////////////////////////////////////////
 
-    // Indicial-type
+    /*! \brief Inserts an expression in a sum or a product.
+     * \details Allows to insert an element in a sum or product without 
+     * comparing all existing terms. This saves time when inserting element by     
+     * element. The \b side parameter allows to insert to the left (side = 0)
+     * or to the right (side = 1) in products (useful when considering non
+     * commutating expressions.
+     * \param expr Expression to insert.
+     * \param side Side of insertion for Times expressions.
+     */
+     virtual void insert(const Expr& expr, bool side=0);
+
+    ///////////////////////////////////////////////////
+    // Indicial types
+    ///////////////////////////////////////////////////
+
     virtual void setIndexStructure(const std::vector<Index>& t_index);
     virtual void setFullySymmetric();
     virtual void setFullyAntiSymmetric();
@@ -332,13 +475,13 @@ class Abstract{
     /*************************************************/
 
     // Usefull for factorization and
-    // making canonical expressions
+    // making canonical exprs
     virtual Expr getNumericalFactor() const;
     virtual int getNFactor() const;
     virtual std::vector<Expr > getFactors() const;
     virtual Expr getTerm();
 
-    // Vectorial-expression: matching shapes before calculation
+    // Vectorial-expr: matching shapes before calculation
     virtual bool checkIndexStructure(const std::vector<Index>& t_index) const;
     virtual bool checkIndexStructure(const std::initializer_list<Index>& index) const;
 
@@ -346,26 +489,26 @@ class Abstract{
                                                        
 
     /*************************************************/
-    // Getting properties depending on an expression //
+    // Getting properties depending on an expr //
     /*************************************************/
 
     virtual int getParity(const Expr& t_variable) const;
 
-    virtual bool askTerm(const Expr& t_abstract, bool exact=false) const;
+    virtual bool askTerm(const Expr& expr, bool exact=false) const;
 
-    virtual bool dependsOn(const Expr& t_abstract) const;
+    virtual bool dependsOn(const Expr& expr) const;
 
-    virtual int isPolynomial(const Expr& t_abstract) const;
+    virtual int isPolynomial(const Expr& expr) const;
 
-    virtual bool isProportionalTo(const Expr& t_abstract) const;
+    virtual bool isProportionalTo(const Expr& expr) const;
 
-    virtual bool matchShape(const Expr& t_abstract, bool exact=false) const;
+    virtual bool matchShape(const Expr& expr, bool exact=false) const;
 
 
 
 
     /*************************************************/
-    // Members that return new expressions           //
+    // Members that return new exprs                 //
     // results of specific calculations              //
     // COMMON TO ALL ABSTRACTS PART                  //
     /*************************************************/
@@ -389,14 +532,14 @@ class Abstract{
     virtual Expr evaluate() = 0;
 
     /*! \brief Calculates the derivative of the Abstract wrt another.
-     * \details It is possible to derive wrt any complicated expression. 
+     * \details It is possible to derive wrt any complicated expr. 
      * In this case however, the calculation is \b not \b always \b 
      * mathematically \b correct. The program just searches for equal 
      * Abstract or Abstract with the same name. In particular dx/d(exp(x))=0.
-     * \param t_abstract Expression wrt which we derive.
+     * \param expr Expression wrt which we derive.
      * \return The derivative.
      */
-    virtual Expr derive(const Expr& t_abstract) const; 
+    virtual Expr derive(const Expr& expr) const; 
 
     /*! \brief \b Factors the Abstract.
      * \details This function tries to factor the Abstract wrt any \b factor. 
@@ -413,12 +556,12 @@ class Abstract{
      */
     virtual Expr factor(const Expr& factor, bool full=false);
 
-    /*! \brief Remove a factor from an expression, that must have been
+    /*! \brief Remove a factor from an expr, that must have been
      * determined before.
      * \param factor Expression to remove
-     * \return The expression in which \b factor has been removed
+     * \return The expr in which \b factor has been removed
      */
-    virtual Expr suppressTerm(const Expr& t_abstract) const;
+    virtual Expr suppressTerm(const Expr& expr) const;
 
     /*! \brief \b Develops the Abstract.
      * \details This function concerns only products (and exponents) that will be
@@ -461,28 +604,81 @@ class Abstract{
 
 
     /*************************************************/
-    // Members that return new expressions           //
+    // Members that return new exprs                 //
     // results of specific calculations              //
     // SPECIFIC TO SOME ABSTRACTS PART               //
     /*************************************************/
 
-    // Specialized for Numerical-, Vectorial-type.
-    virtual Expr addition_own(const Expr& t_abstract) const;
-    virtual Expr multiplication_own(const Expr& t_abstract) const;
-    virtual Expr division_own(const Expr& t_abstract) const;
-    virtual Expr exponentiation_own(const Expr& t_abstract) const;
+    ///////////////////////////////////////////////////
+    // Numerical- Polynomial- and Vectorial-types
+    ///////////////////////////////////////////////////
+    
+    /*! \brief Contains implementation of special addition for Numerical- and
+     * Vectorial-types. 
+     * \param expr Right operrand of the addition.
+     * \return The sum of the two operands.
+     */
+    virtual Expr addition_own(const Expr& expr) const;
 
-    // Getting regular expression from a Polynomial-type
+    /*! \brief Contains implementation of special multiplication for Numerical- and
+     * Vectorial-types. 
+     * \param expr Right operrand of the product.
+     * \return The product of the two operands.
+     */
+    virtual Expr multiplication_own(const Expr& expr) const;
+
+    /*! \brief Contains implementation of special division for Numerical- and
+     * Polynomial-types. For polynomial, the euclidean division of two polynomials
+     * is implemented.
+     * \param expr Right operrand of the division.
+     * \return The division of the two operands.
+     */
+    virtual Expr division_own(const Expr& expr) const;
+
+    /*! \brief Contains implementation of special exponentiation for Numerical- and
+     * Vectorial-types. 
+     * \param expr exponent.
+     * \return The exponentiation of the two operands.
+     */
+    virtual Expr exponentiation_own(const Expr& expr) const;
+
+    ///////////////////////////////////////////////////
+    // Polynomial type
+    ///////////////////////////////////////////////////
+
+    /*! \brief Returns a regular expression from the polynomial, that is a sum
+     * where the different powers of the variable appear explicitely.
+     * \return a Plus expression equal to the polynomial.
+     */
     virtual Expr getRegularExpression() const;
 
-    // Vectorial-type functions
-    virtual Expr tensor_dot(const Expr& t_abstract) const;
-    virtual Expr dot(const Expr& t_abstract) const;
+    ///////////////////////////////////////////////////
+    // Vectorial type
+    ///////////////////////////////////////////////////
+
+    virtual Expr tensor_dot(const Expr& expr) const;
+    virtual Expr dot(const Expr& expr) const;
     virtual Expr getSum() const;
     virtual Expr getProduct() const; 
     virtual Expr getVectorialModulus() const;
+    /*! \brief Allows to pick a part of a Vectorial expression, excluding
+     * the iExcept^{th} element.
+     * \param iExcept Element to ignore.
+     * \return The part of *this excluding iExcept.
+     */
     virtual Expr getSubVectorial(int iExcept) const;
+    /*! \brief Allows to pick a part of a Vectorial expression, excluding
+     * the [iExcept^{th},jExcept^{th}] element (useful for matrices).
+     * \param iExcept Element of the first axis to ignore.
+     * \param jExcept Element of the second axis to ignore.
+     * \return The part of *this excluding iExcept.
+     */
     virtual Expr getSubVectorial(int iExcept, int jExcept) const;
+    /*! \brief Allows to pick a part of a Vectorial expression, excluding
+     * the iExcept^{th} element.
+     * \param iExcept Element to ignore.
+     * \return The part of *this excluding iExcept.
+     */
     virtual Expr getSubVectorial(const std::vector<int>& exceptions) const;
     virtual Expr determinant() const;
     virtual Expr trace() const;
@@ -499,44 +695,93 @@ class Abstract{
     // Operators                                     //
     /*************************************************/
 
+    /*! \brief Equivalent to the setValue() function.
+     * \param t_value The new value of the expression.
+     */
     virtual void operator=(double t_value);
 
-    // Comparison operators
+    /*! \return \b True if the expression is valued and is equal to t_value.
+     * \return \b False else.
+     */
     virtual bool operator==(int t_value) const; 
+    /*! \return \b True if the expression is valued and is equal to t_value.
+     * \return \b False else.
+     */
     virtual bool operator==(double t_value) const; 
+    /*! \return \b False if the expression is valued and is equal to t_value.
+     * \return \b True else.
+     */
     virtual bool operator!=(int t_value) const; 
+    /*! \return \b False if the expression is valued and is equal to t_value.
+     * \return \b True else.
+     */
     virtual bool operator!=(double t_value) const; 
 
     /*! \brief \b Compares the Abstract with another.
      * \details Here if two Abstracts have the same name, the function will 
      * return \b true even if they are \b not \b mathematically \b equal. 
      * So beware not to name different things the same way.
-     * \param t_abstract Abstract to compare.
+     * \param expr Abstract to compare.
      * \return \b True if the two Abstracts are the same (or have the same name).
      * \return \b False else.
      */
-    virtual bool operator==(const Expr& t_abstract) const = 0; 
+    virtual bool operator==(const Expr& expr) const = 0; 
+
     /*! \brief \b Compares the Abstract with another.
-     * \param t_abstract Abstract to compare.
+     * \param expr Abstract to compare.
      * \return False if the two Abstracts are the same (or have the same name).
      * \return True else.
      */
-    virtual bool operator!=(const Expr& t_abstract) const; 
+    virtual bool operator!=(const Expr& expr) const; 
 
-    // Access operator for multi-argument expressions
+    // Access operator for multi-argument exprs
     virtual Expr operator[](int iArg);
 
     // Comparison operators in terms of simplicity (for simplifications)
     // For example x < x² and (y*x + 1) > (1 + x*y)
 
-    // operator corresponding to '=='
-    virtual bool operator|=(const Expr& t_abstract) const;
-    // operator corresponding to '!='
-    virtual bool operator&=(const Expr& t_abstract) const;
-    virtual bool operator>(const Expr& t_abstract) const = 0;
-    virtual bool operator<(const Expr& t_abstract) const = 0;
-    bool operator>=(const Expr& t_abstract) const;
-    bool operator<=(const Expr& t_abstract) const;
+
+    /*! \brief Compares the simplicity of the expression to another.
+     * \param expr \b Expression to compare.
+     * \return \b True if the two expression have the same simplicity.
+     * \return \b False else.
+     */
+    virtual bool operator|=(const Expr& expr) const;
+
+    /*! \brief Compares the simplicity of the expression to another.
+     * \param expr \b Expression to compare.
+     * \return \b False if the two expression have the same simplicity.
+     * \return \b True else.
+     */
+    virtual bool operator&=(const Expr& expr) const;
+
+    /*! \brief Compares the simplicity of the expression to another.
+     * \param expr \b Expression to compare.
+     * \return \b True if \b expr is simpler.
+     * \return \b False else.
+     */
+    virtual bool operator>(const Expr& expr) const = 0;
+
+    /*! \brief Compares the simplicity of the expression to another.
+     * \param expr \b Expression to compare.
+     * \return \b False if \b expr is simpler or equivalent.
+     * \return \b True else.
+     */
+    virtual bool operator<(const Expr& expr) const = 0;
+
+    /*! \brief Compares the simplicity of the expression to another.
+     * \param expr \b Expression to compare.
+     * \return \b True if \b expr is simpler or equivalent.
+     * \return \b False else.
+     */
+    bool operator>=(const Expr& expr) const;
+
+    /*! \brief Compares the simplicity of the expression to another.
+     * \param expr \b Expression to compare.
+     * \return \b False if \b expr is simpler.
+     * \return \b True else.
+     */
+    bool operator<=(const Expr& expr) const;
 };
 
 
@@ -552,20 +797,22 @@ class AbstractScalar: public Abstract{
     explicit AbstractScalar(const std::string& t_name);
     ~AbstractScalar(){}
 
-    int getDim() const override { return 0;}
+    int getDim() const override {
+        return 0;
+    }
 };
 
+///////////////////////////////////////////////////
 /*************************************************/
 // Inline functions (non virtual and short)      //
 /*************************************************/
+///////////////////////////////////////////////////
+
 inline Abstract::Abstract(): name(""), commutable(true){}
 inline Abstract::Abstract(const std::string& t_name): name(t_name),
                                                       commutable(true){}
 inline std::string Abstract::getName() const{
     return name;
-}
-inline int Abstract::getDim() const{
-    return 0;
 }
 inline bool Abstract::getCommutable() const {
     return commutable;
@@ -581,12 +828,15 @@ inline AbstractScalar::AbstractScalar(const std::string& t_name)
     :Abstract(t_name){}
 
 
+///////////////////////////////////////////////////
 /*************************************************/
 // Redefinition of operator for Expr alias       //
 // std::shared_ptr<Abstract>. Allows then to use //
 // operator with both syntaxes:                  //
 // (*a op b) AND (a op b) with a and b Expr.     //
 /*************************************************/
+///////////////////////////////////////////////////
+
 bool operator==(const Expr& a, const Expr& b);
 bool operator==(const Expr& a, int b);
 bool operator==(const Expr& a, double b);
@@ -600,59 +850,62 @@ bool operator<(const Expr& a, const Expr& b);
 bool operator|=(const Expr& a, const Expr& b);
 bool operator&=(const Expr& a, const Expr& b);
 
+///////////////////////////////////////////////////
 /*************************************************/
 // Usefull function of Copy/Refresh of Expr      //
 /*************************************************/
-Expr Copy(const Abstract* t_abstract);
+///////////////////////////////////////////////////
 
-/*! \fn Expr Copy(const Expr& t_abstract) Expr Copy(const Expr& t_abstract)
+Expr Copy(const Abstract* expr);
+
+/*! \fn Expr Copy(const Expr& expr) Expr Copy(const Expr& expr)
  * \brief \b Copy an Abstract to depth 1.
  * \details \b Copy the depth 0 structure. For example the copy of cos(x+exp(y)) 
  * creates another cos function but take a reference to x+exp(y). Note that copy
  *  a \b Variable will create another with the same name. It could create 
  * misunderstanding in the following operations.
- * \param t_abstract Abstract to copy.
+ * \param expr Abstract to copy.
  * \return The copy.
  */
-Expr Copy(const Expr& t_abstract);
+Expr Copy(const Expr& expr);
 
-Expr DeepCopy(const Abstract* t_abstract);
+Expr DeepCopy(const Abstract* expr);
 
-/*! \fn Expr DeepCopy(const Expr& t_abstract) Expr DeepCopy(const Expr& t_abstract)
+/*! \fn Expr DeepCopy(const Expr& expr) Expr DeepCopy(const Expr& expr)
  * \brief \b Copy an Abstract to the \b maximum depth.
  * \details \b Copy \b recursively the entire Abstract.
- * \param t_abstract The Abstract to copy.
+ * \param expr The Abstract to copy.
  * \return The deepCopy.
  */
-Expr DeepCopy(const Expr& t_abstract);
+Expr DeepCopy(const Expr& expr);
 
-Expr Refresh(const Abstract* t_abstract);
+Expr Refresh(const Abstract* expr);
 
-/*! \fn Expr Refresh(const Expr& t_abstract) Expr Refresh(const Expr& t_abstract)
+/*! \fn Expr Refresh(const Expr& expr) Expr Refresh(const Expr& expr)
  * \brief \b Refresh an Abstract and apply basic simplifications.
  * \details Apply all simplifications that take place normally at the creation
  * of an Abstract. For example, a sum with only one term gives just the term in
  * question. The refresh is automatically resursive.
- * \param t_abstract The Abstract to refresh.
+ * \param expr The Abstract to refresh.
  * \return The refreshed Abstract.
  */
-Expr Refresh(const Expr& t_abstract);
+Expr Refresh(const Expr& expr);
 
-Expr DeepRefresh(const Expr& t_abstract);
+Expr DeepRefresh(const Expr& expr);
 
-/*! \fn Expr Replace(const Expr& t_abstract,
+/*! \fn Expr Replace(const Expr& expr,
                      const Expr& old_abstract,
                      const Expr& new_abstract)
- * \brief \b Replace an Abstract by another in an expression.
+ * \brief \b Replace an Abstract by another in an expr.
  * \details This function allows to replace \a old_abstract by \a new_abstract 
- * in \a t_abstract. For example Replace(cos(x+x^2),x,y-1) = cos(y-1+(y-1)^2). 
+ * in \a expr. For example Replace(cos(x+x^2),x,y-1) = cos(y-1+(y-1)^2). 
  * It leaves the original Abstract \b invariant and returns another Abstract.
- * \param t_abstract Abstract in which the replacement takes place.
+ * \param expr Abstract in which the replacement takes place.
  * \param old_abstract Abstract to search and replace.
  * \param new_abstract Abstract by which we replace.
  * \return A \b new Abstract with the replacement done.
  */
-Expr Replace(const Expr& t_abstract,
+Expr Replace(const Expr& expr,
              const Expr& old_abstract,
              const Expr& new_abstract);
 

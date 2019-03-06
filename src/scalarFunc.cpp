@@ -2,6 +2,11 @@
 
 using namespace std;
 
+///////////////////////////////////////////////////
+/*************************************************/
+// Class AbstractFunc                            //
+/*************************************************/
+///////////////////////////////////////////////////
 
 bool AbstractFunc::getCommutable() const {
     return (commutable and argument->getCommutable());
@@ -37,11 +42,11 @@ Expr AbstractFunc::factor(bool full)
     return Copy(this);
 }
 
-Expr AbstractFunc::factor(const Expr& t_abstract, bool full)
+Expr AbstractFunc::factor(const Expr& expr, bool full)
 {
     if (full) {
        Expr result = Empty(getType());
-       result->setArgument(argument->factor(t_abstract,true));
+       result->setArgument(argument->factor(expr,true));
        return Refresh(result);
     }
     return Copy(this);
@@ -57,13 +62,13 @@ Expr AbstractFunc::develop(bool full)
     return Copy(this);
 }
 
-bool AbstractFunc::dependsOn(const Expr& t_abstract) const {
-    return ((name != "" and name == t_abstract->getName()) or
-            argument->dependsOn(t_abstract));
+bool AbstractFunc::dependsOn(const Expr& expr) const {
+    return ((name != "" and name == expr->getName()) or
+            argument->dependsOn(expr));
 }
 
-int AbstractFunc::isPolynomial(const Expr& t_abstract) const {
-    return (*this==t_abstract);
+int AbstractFunc::isPolynomial(const Expr& expr) const {
+    return (*this==expr);
 }
 
 Expr AbstractFunc::evaluate()
@@ -81,14 +86,20 @@ Expr AbstractFunc::evaluate()
     }
 }
 
-bool AbstractFunc::operator==(const Expr& t_abstract) const 
+bool AbstractFunc::operator==(const Expr& expr) const 
 {
-    if (t_abstract->getName() == WHATEVER->getName()) 
+    if (expr->getName() == WHATEVER->getName()) 
         return true;
 
-    return (t_abstract->getType() == this->getType() and 
-            *argument == t_abstract->getArgument());
+    return (expr->getType() == this->getType() and 
+            *argument == expr->getArgument());
 } 
+
+///////////////////////////////////////////////////
+/*************************************************/
+// AbstractDuoFunc                               //
+/*************************************************/
+///////////////////////////////////////////////////
 
 bool AbstractDuoFunc::getCommutable() const 
 {
@@ -130,12 +141,12 @@ Expr AbstractDuoFunc::factor(bool full)
     return Copy(this);
 }
 
-Expr AbstractDuoFunc::factor(const Expr& t_abstract, bool full)
+Expr AbstractDuoFunc::factor(const Expr& expr, bool full)
 {
     if (full) {
        Expr result = Empty(getType());
-       result->setArgument(argument[0]->factor(t_abstract,true),0);
-       result->setArgument(argument[1]->factor(t_abstract,true),1);
+       result->setArgument(argument[0]->factor(expr,true),0);
+       result->setArgument(argument[1]->factor(expr,true),1);
        return Refresh(result);
     }
 
@@ -154,16 +165,22 @@ Expr AbstractDuoFunc::develop(bool full)
     return Copy(this);
 }
 
-bool AbstractDuoFunc::dependsOn(const Expr& t_abstract) const
+bool AbstractDuoFunc::dependsOn(const Expr& expr) const
 {
-    return ((name != "" and name == t_abstract->getName()) or
-            argument[0]->dependsOn(t_abstract) or
-            argument[1]->dependsOn(t_abstract));
+    return ((name != "" and name == expr->getName()) or
+            argument[0]->dependsOn(expr) or
+            argument[1]->dependsOn(expr));
 }
 
-int AbstractDuoFunc::isPolynomial(const Expr& t_abstract) const {
-    return (this->operator==(t_abstract));
+int AbstractDuoFunc::isPolynomial(const Expr& expr) const {
+    return (this->operator==(expr));
 }
+
+///////////////////////////////////////////////////
+/*************************************************/
+// AbstractMultiFunc                             //
+/*************************************************/
+///////////////////////////////////////////////////
 
 bool AbstractMultiFunc::getCommutable() const
 {
@@ -221,12 +238,12 @@ Expr AbstractMultiFunc::factor(bool full)
     return Copy(this);
 }
 
-Expr AbstractMultiFunc::factor(const Expr& t_abstract, bool full)
+Expr AbstractMultiFunc::factor(const Expr& expr, bool full)
 {
     if (full) {
        Expr result = Copy(this);
        for (int i=0; i<nArgs; i++)
-           result->setArgument(argument[i]->factor(t_abstract,true),i);
+           result->setArgument(argument[i]->factor(expr,true),i);
        return Refresh(result);
     }
 
@@ -245,18 +262,18 @@ Expr AbstractMultiFunc::develop(bool full)
     return Copy(this);
 }
 
-bool AbstractMultiFunc::dependsOn(const Expr& t_abstract) const
+bool AbstractMultiFunc::dependsOn(const Expr& expr) const
 {
-    if (name != "" and name == t_abstract->getName()) 
+    if (name != "" and name == expr->getName()) 
         return true;
 
     for (const auto& arg : argument)
-        if (arg->dependsOn(t_abstract)) 
+        if (arg->dependsOn(expr)) 
             return true;
 
     return false;
 }
 
-int AbstractMultiFunc::isPolynomial(const Expr& t_abstract) const {
-    return (this->operator==(t_abstract));
+int AbstractMultiFunc::isPolynomial(const Expr& expr) const {
+    return (this->operator==(expr));
 }

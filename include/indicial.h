@@ -143,7 +143,8 @@ class Permutation{
     explicit Permutation(int n);
     explicit Permutation(const std::vector<int>& t_permutation);
     Permutation(int n, const std::initializer_list<int>& list);
-    Permutation(int n, const std::initializer_list<std::initializer_list<int> >& list);
+    Permutation(int n,
+                const std::initializer_list<std::initializer_list<int> >& list);
     Permutation(const Permutation& permutation);
 
     ~Permutation(){}
@@ -162,7 +163,8 @@ class Permutation{
     bool operator==(const Permutation& t_permutation) const;
     bool operator!=(const Permutation& t_permuation) const;
     int& operator[](int i);
-    friend std::ostream& operator<<(std::ostream& fout, const Permutation& permutation);
+    friend std::ostream& operator<<(std::ostream& fout,
+                                    const Permutation& permutation);
 };
 
 void reducePermutation(std::vector<Permutation>& permutation);
@@ -259,7 +261,9 @@ class ITensor: public AbstractIndicial{
 
     ~ITensor(){};
 
-    smType::Type getType() const override { return smType::ITensor;}
+    smType::Type getType() const override {
+        return smType::ITensor;
+    }
 
     bool getFullySymmetric() const;
     bool getFullyAntiSymmetric() const;
@@ -277,11 +281,11 @@ class ITensor: public AbstractIndicial{
 
     Expr evaluate() override;
 
-    bool operator==(const Expr& t_abstract) const override;
+    bool operator==(const Expr& expr) const override;
 
-    bool operator>(const Expr& t_abstract) const override;
+    bool operator>(const Expr& expr) const override;
 
-    bool operator<(const Expr& t_abstract) const override;
+    bool operator<(const Expr& expr) const override;
 };
 
 class ITerm: public AbstractIndicial{
@@ -307,7 +311,9 @@ class ITerm: public AbstractIndicial{
 
     Expr evaluate() override;
 
-    smType::Type getType() const override { return smType::ITerm;}
+    smType::Type getType() const override {
+        return smType::ITerm;
+    }
 
     int getNArgs(int axis=0) const override;
 
@@ -317,11 +323,11 @@ class ITerm: public AbstractIndicial{
 
     bool mergeTerms();
 
-    bool operator==(const Expr& t_abstract) const override;
+    bool operator==(const Expr& expr) const override;
 
-    bool operator>(const Expr& t_abstract) const override;
+    bool operator>(const Expr& expr) const override;
 
-    bool operator<(const Expr& t_abstract) const override;
+    bool operator<(const Expr& expr) const override;
 };
 
 class ITimes: public Times{
@@ -336,12 +342,15 @@ class ITimes: public Times{
 
     ~ITimes(){};
 
-    smType::PrimaryType getPrimaryType() const override { return smType::Indicial;}
+    smType::PrimaryType getPrimaryType() const override {
+       return smType::Indicial;
+    }
 };
 
 
 Expr _itensor_(const std::string& name, Index index);
 
-Expr _itensor_(const std::string& name, const std::initializer_list<Index>& indices);
+Expr _itensor_(const std::string& name,
+               const std::initializer_list<Index>& indices);
 
 #endif

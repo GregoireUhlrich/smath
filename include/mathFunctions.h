@@ -54,21 +54,21 @@ class Abs: public AbstractFunc{
     /*! \brief \b Derives the abs function.
      * \return sign(argument)
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 };
 
-/*! \fn Expr abs_(const Expr& t_abstract)
- * \brief \b Creates an object of type Abs acting on \b t_abstract.
+/*! \fn Expr abs_(const Expr& expr)
+ * \brief \b Creates an object of type Abs acting on \b expr.
  * \details As all the outside-class functions, this one take into account the fact
  * that the final object could not be an abs funtion. Then the return value is not
  * an Abs object but something else, so we must implement a function that will create
  * the good object. For example abs(1) returns 1 (a Number) and not abs(1) (an Abs).
- * \param t_abstract Argment of the \b abs funtion function.
- * \return Abs applied on t_abstract
+ * \param expr Argment of the \b abs funtion function.
+ * \return Abs applied on expr
  */
-Expr abs_(const Expr& t_abstract);
+Expr abs_(const Expr& expr);
 
 
 /*! \class Exp
@@ -118,21 +118,21 @@ class Exp: public AbstractFunc{
     /*! \brief \b Derives the exponential function.
      * \return (derivative of the \b argument)*\b exp(\b argument)
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 };
 
-/*! \fn Expr exp_(const Expr& t_abstract)
- * \brief \b Creates an object of type Exp acting on \b t_abstract.
+/*! \fn Expr exp_(const Expr& expr)
+ * \brief \b Creates an object of type Exp acting on \b expr.
  * \details As all the outside-class functions, this one take into account the fact
  * that the final object could not be an exponential. Then the return value is not
  * an Exp object but something else, so we must implement a function that will create
  * the good object. For example exp(0) returns 1 (a Number) and not exp(0) (an Exp).
- * \param t_abstract Argment of the \b exponential function.
- * \return Exp applied on t_abstract
+ * \param expr Argment of the \b exponential function.
+ * \return Exp applied on expr
  */
-Expr exp_(const Expr& t_abstract);
+Expr exp_(const Expr& expr);
 
 /*! \class Log
  * \brief Final specialization of AbstractFunc, the logarithm function
@@ -181,21 +181,21 @@ class Log: public AbstractFunc{
     /*! \brief \b Derives the logarithm function.
      * \return (derivative of the \b argument)*1/\b argument 
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 };
 
-/*! \fn Expr log_(const Expr& t_abstract)
- * \brief \b Creates an object of type Log acting on \b t_abstract.
+/*! \fn Expr log_(const Expr& expr)
+ * \brief \b Creates an object of type Log acting on \b expr.
  * \details As all the outside-class functions, this one take into account the fact
  * that the final object could not be an logarithm. Then the return value is not
  * an Log object but something else, so we must implement a function that will create
  * the good object. For example log(1) returns 0 (a Number) and not log(1) (a Log).
- * \param t_abstract Argment of the \b logarithm function.
- * \return Log applied on t_abstract
+ * \param expr Argment of the \b logarithm function.
+ * \return Log applied on expr
  */
-Expr log_(const Expr& t_abstract);
+Expr log_(const Expr& expr);
 
 /*! \class Cos
  * \brief Final specialization of AbstractFunc, the cos function
@@ -244,23 +244,23 @@ class Cos: public AbstractFunc{
     /*! \brief \b Derives the cos function.
      * \return (derivative of the \b argument)*-\b sin(\b argument)
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 
     std::vector<Expr > getAlternateForms() const override;
 };
 
-/*! \fn Expr cos_(const Expr& t_abstract)
- * \brief \b Creates an object of type Cos acting on \b t_abstract.
+/*! \fn Expr cos_(const Expr& expr)
+ * \brief \b Creates an object of type Cos acting on \b expr.
  * \details As all the outside-class functions, this one take into account the fact
  * that the final object could not be an cosonential. Then the return value is not
  * an Cos object but something else, so we must implement a function that will create
  * the good object. For example cos(0) returns 1 (a Number) and not cos(0) (a Cos).
- * \param t_abstract Argment of the \b cos function.
- * \return Cos applied on t_abstract
+ * \param expr Argment of the \b cos function.
+ * \return Cos applied on expr
  */
-Expr cos_(const Expr& t_abstract);
+Expr cos_(const Expr& expr);
 
 /*! \class Sin
  * \brief Final specialization of AbstractFunc, the sin function
@@ -309,23 +309,23 @@ class Sin: public AbstractFunc{
     /*! \brief \b Derives the sin function.
      * \return (derivative of the \b argument)*\b cos(\b argument)
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 
     std::vector<Expr > getAlternateForms() const override;
 };
 
-/*! \fn Expr sin_(const Expr& t_abstract)
- * \brief \b Creates an object of type Sin acting on \b t_abstract.
+/*! \fn Expr sin_(const Expr& expr)
+ * \brief \b Creates an object of type Sin acting on \b expr.
  * \details As all the outside-class functions, this one take into account the fact
  * that the final object could not be an sin. Then the return value is not
  * an Sin object but something else, so we must implement a function that will create
  * the good object. For example sin(0) returns 0 (a Number) and not sin(0) (an Sin).
- * \param t_abstract Argment of the \b sin function.
- * \return Sin applied on t_abstract
+ * \param expr Argment of the \b sin function.
+ * \return Sin applied on expr
  */
-Expr sin_(const Expr& t_abstract);
+Expr sin_(const Expr& expr);
 
 /*! \class Tan
  * \brief Final specialization of AbstractFunc, the tan function
@@ -374,23 +374,23 @@ class Tan: public AbstractFunc{
     /*! \brief \b Derives the tan function.
      * \return derivative(argument)*(1+tan^2(argument))
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 
     std::vector<Expr > getAlternateForms() const override;
 };
 
-/*! \fn Expr tan_(const Expr& t_abstract)
- * \brief \b Creates an object of type Tan acting on \b t_abstract.
+/*! \fn Expr tan_(const Expr& expr)
+ * \brief \b Creates an object of type Tan acting on \b expr.
  * \details As all the outside-class functions, this one take into account the fact
  * that the final object could not be an tan. Then the return value is not
  * an Tan object but something else, so we must implement a function that will create
  * the good object. For example tan(0) returns 0 (a Number) and not tan(0) (a Tan).
- * \param t_abstract Argment of the \b tan function.
- * \return Tan applied on t_abstract
+ * \param expr Argment of the \b tan function.
+ * \return Tan applied on expr
  */
-Expr tan_(const Expr& t_abstract);
+Expr tan_(const Expr& expr);
 
 /*! \class ACos
  * \brief Final specialization of AbstractFunc, the acos function
@@ -439,21 +439,21 @@ class ACos: public AbstractFunc{
     /*! \brief \b Derives the acos function.
      * \return (derivative of the \b argument)*-\b asin(\b argument)
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 };
 
-/*! \fn Expr acos_(const Expr& t_abstract)
- * \brief \b Creates an object of type ACos acting on \b t_abstract.
+/*! \fn Expr acos_(const Expr& expr)
+ * \brief \b Creates an object of type ACos acting on \b expr.
  * \details As all the outside-class functions, this one take into account the fact
  * that the final object could not be an acosonential. Then the return value is not
  * an ACos object but something else, so we must implement a function that will create
  * the good object. For example acos(0) returns pi/2 (a Number) and not acos(0) (a ACos).
- * \param t_abstract Argment of the \b acos function.
- * \return ACos applied on t_abstract
+ * \param expr Argment of the \b acos function.
+ * \return ACos applied on expr
  */
-Expr acos_(const Expr& t_abstract);
+Expr acos_(const Expr& expr);
 
 /*! \class ASin
  * \brief Final specialization of AbstractFunc, the asin function
@@ -502,21 +502,21 @@ class ASin: public AbstractFunc{
     /*! \brief \b Derives the asin function.
      * \return (derivative of the \b argument)*\b acos(\b argument)
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 };
 
-/*! \fn Expr asin_(const Expr& t_abstract)
- * \brief \b Creates an object of type ASin acting on \b t_abstract.
+/*! \fn Expr asin_(const Expr& expr)
+ * \brief \b Creates an object of type ASin acting on \b expr.
  * \details As all the outside-class functions, this one take into account the fact
  * that the final object could not be an asin. Then the return value is not
  * an ASin object but something else, so we must implement a function that will create
  * the good object. For example asin(0) returns 0 (a Number) and not asin(0) (an ASin).
- * \param t_abstract Argment of the \b asin function.
- * \return ASin applied on t_abstract
+ * \param expr Argment of the \b asin function.
+ * \return ASin applied on expr
  */
-Expr asin_(const Expr& t_abstract);
+Expr asin_(const Expr& expr);
 
 
 /*! \class ATan
@@ -558,21 +558,21 @@ class ATan: public AbstractFunc{
     /*! \brief \b Derives the atan function.
      * \return derivative(argument)/(1+argument^2)
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 };
 
-/*! \fn Expr atan_(const Expr& t_abstract)
- * \brief \b Creates an object of type ATan acting on \b t_abstract.
+/*! \fn Expr atan_(const Expr& expr)
+ * \brief \b Creates an object of type ATan acting on \b expr.
  * \details As all the outside-class functions, this one take into account the fact
  * that the final object could not be an atan. Then the return value is not
  * an ATan object but something else, so we must implement a function that will create
  * the good object. For example atan(0) returns 0 (a Number) and not atan(0) (a ATan).
- * \param t_abstract Argment of the \b atan function.
- * \return ATan applied on t_abstract
+ * \param expr Argment of the \b atan function.
+ * \return ATan applied on expr
  */
-Expr atan_(const Expr& t_abstract);
+Expr atan_(const Expr& expr);
 
 /*! \class Angle
  * \brief Handles a angle of 2 arguments
@@ -623,16 +623,16 @@ class Angle: public AbstractDuoFunc{
     Expr evaluate() override;
 
     /*! \brief Derives the angle.
-     * \param t_abstract Argument of the derivation.
+     * \param expr Argument of the derivation.
      * \return The derivative following the formula ...
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
-    bool operator==(const Expr& t_abstract) const override;
+    bool operator==(const Expr& expr) const override;
 
-    bool operator<(const Expr& t_abstract) const override;
+    bool operator<(const Expr& expr) const override;
     
-    bool operator>(const Expr& t_abstract) const override;
+    bool operator>(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 };
@@ -684,23 +684,23 @@ class Cosh: public AbstractFunc{
     /*! \brief \b Derives the cosh function.
      * \return (derivative of the \b argument)*\b sinh(\b argument)
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 
     std::vector<Expr > getAlternateForms() const override;
 };
 
-/*! \fn Expr cosh_(const Expr& t_abstract)
- * \brief \b Creates an object of type Cosh acting on \b t_abstract.
+/*! \fn Expr cosh_(const Expr& expr)
+ * \brief \b Creates an object of type Cosh acting on \b expr.
  * \details As all the outside-class functions, this one take into account the fact
  * that the final object could not be an coshonential. Then the return value is not
  * an Cosh object but something else, so we must implement a function that will create
  * the good object. For example cosh(0) returns 1 (a Number) and not cosh(0) (a Cosh).
- * \param t_abstract Argment of the \b cosh function.
- * \return Cosh applied on t_abstract
+ * \param expr Argment of the \b cosh function.
+ * \return Cosh applied on expr
  */
-Expr cosh_(const Expr& t_abstract);
+Expr cosh_(const Expr& expr);
 
 /*! \class Sinh
  * \brief Final specialization of AbstractFunc, the sinh function
@@ -749,23 +749,23 @@ class Sinh: public AbstractFunc{
     /*! \brief \b Derives the sinh function.
      * \return (derivative of the \b argument)*\b cosh(\b argument)
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 
     std::vector<Expr > getAlternateForms() const override;
 };
 
-/*! \fn Expr sinh_(const Expr& t_abstract)
- * \brief \b Creates an object of type Sinh acting on \b t_abstract.
+/*! \fn Expr sinh_(const Expr& expr)
+ * \brief \b Creates an object of type Sinh acting on \b expr.
  * \details As all the outside-class functions, this one take into account the fact
  * that the final object could not be an sinh. Then the return value is not
  * an Sinh object but something else, so we must implement a function that will create
  * the good object. For example sinh(0) returns 0 (a Number) and not sinh(0) (an Sinh).
- * \param t_abstract Argment of the \b sinh function.
- * \return Sinh applied on t_abstract
+ * \param expr Argment of the \b sinh function.
+ * \return Sinh applied on expr
  */
-Expr sinh_(const Expr& t_abstract);
+Expr sinh_(const Expr& expr);
 
 /*! \class Tanh
  * \brief Final specialization of AbstractFunc, the tanh function
@@ -814,23 +814,23 @@ class Tanh: public AbstractFunc{
     /*! \brief \b Derives the tanh function.
      * \return derivative(argument)*(1-tanh^2(argument))
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 
     std::vector<Expr > getAlternateForms() const override;
 };
 
-/*! \fn Expr tanh_(const Expr& t_abstract)
- * \brief \b Creates an object of type Tanh acting on \b t_abstract.
+/*! \fn Expr tanh_(const Expr& expr)
+ * \brief \b Creates an object of type Tanh acting on \b expr.
  * \details As all the outside-class functions, this one take into account the fact
  * that the final object could not be an tanh. Then the return value is not
  * an Tanh object but something else, so we must implement a function that will create
  * the good object. For example tanh(0) returns 0 (a Number) and not tanh(0) (a Tanh).
- * \param t_abstract Argment of the \b tanh function.
- * \return Tanh applied on t_abstract
+ * \param expr Argment of the \b tanh function.
+ * \return Tanh applied on expr
  */
-Expr tanh_(const Expr& t_abstract);
+Expr tanh_(const Expr& expr);
 
 /*! \class ACosh
  * \brief Final specialization of AbstractFunc, the acosh function
@@ -879,21 +879,21 @@ class ACosh: public AbstractFunc{
     /*! \brief \b Derives the acosh function.
      * \return (derivative of the \b argument)*\b asinh(\b argument)
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 };
 
-/*! \fn Expr acosh_(const Expr& t_abstract)
- * \brief \b Creates an object of type ACosh acting on \b t_abstract.
+/*! \fn Expr acosh_(const Expr& expr)
+ * \brief \b Creates an object of type ACosh acting on \b expr.
  * \details As all the outside-class functions, this one take into account the fact
  * that the final object could not be an acoshonential. Then the return value is not
  * an ACosh object but something else, so we must implement a function that will create
  * the good object. For example acosh(0) returns 1 (a Number) and not acosh(0) (a ACosh).
- * \param t_abstract Argment of the \b acosh function.
- * \return ACosh applied on t_abstract
+ * \param expr Argment of the \b acosh function.
+ * \return ACosh applied on expr
  */
-Expr acosh_(const Expr& t_abstract);
+Expr acosh_(const Expr& expr);
 
 /*! \class ASinh
  * \brief Final specialization of AbstractFunc, the asinh function
@@ -942,21 +942,21 @@ class ASinh: public AbstractFunc{
     /*! \brief \b Derives the asinh function.
      * \return (derivative of the \b argument)*\b acosh(\b argument)
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 };
 
-/*! \fn Expr asinh_(const Expr& t_abstract)
- * \brief \b Creates an object of type ASinh acting on \b t_abstract.
+/*! \fn Expr asinh_(const Expr& expr)
+ * \brief \b Creates an object of type ASinh acting on \b expr.
  * \details As all the outside-class functions, this one take into account the fact
  * that the final object could not be an asinh. Then the return value is not
  * an ASinh object but something else, so we must implement a function that will create
  * the good object. For example asinh(0) returns 0 (a Number) and not asinh(0) (an ASinh).
- * \param t_abstract Argment of the \b asinh function.
- * \return ASinh applied on t_abstract
+ * \param expr Argment of the \b asinh function.
+ * \return ASinh applied on expr
  */
-Expr asinh_(const Expr& t_abstract);
+Expr asinh_(const Expr& expr);
 
 /*! \class ATanh
  * \brief Final specialization of AbstractFunc, the atanh function
@@ -1005,21 +1005,21 @@ class ATanh: public AbstractFunc{
     /*! \brief \b Derives the atanh function.
      * \return derivative(argument)*(1-atanh^2(argument))
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 };
 
-/*! \fn Expr atanh_(const Expr& t_abstract)
- * \brief \b Creates an object of type ATanh acting on \b t_abstract.
+/*! \fn Expr atanh_(const Expr& expr)
+ * \brief \b Creates an object of type ATanh acting on \b expr.
  * \details As all the outside-class functions, this one take into account the fact
  * that the final object could not be an atanh. Then the return value is not
  * an ATanh object but something else, so we must implement a function that will create
  * the good object. For example atanh(0) returns 0 (a Number) and not atanh(0) (a ATanh).
- * \param t_abstract Argment of the \b atanh function.
- * \return ATanh applied on t_abstract
+ * \param expr Argment of the \b atanh function.
+ * \return ATanh applied on expr
  */
-Expr atanh_(const Expr& t_abstract);
+Expr atanh_(const Expr& expr);
 
 
 /*! \class Factorial
@@ -1069,7 +1069,7 @@ class Factorial: public AbstractFunc{
      * factorial cannot be derived.
      * \return \b 0
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 };

@@ -5,9 +5,11 @@
 #include "simplification.h"
 using namespace std;
 
-//////////////////////////////////////
-//// Class Plus              /////////
-//////////////////////////////////////
+///////////////////////////////////////////////////
+/*************************************************/
+// Class Plus                                    //
+/*************************************************/
+///////////////////////////////////////////////////
 
 Plus::Plus(const vector<Expr >& operands, bool explicitPlus)
     :AbstractMultiFunc() 
@@ -21,6 +23,9 @@ Plus::Plus(const vector<Expr >& operands, bool explicitPlus)
 Plus::Plus(const Expr& leftOperand, const Expr& rightOperand)
     :AbstractMultiFunc()
 {
+    // We check if one ooperand is already a Plus expression,
+    // in which case we insert the other operand in it if the 
+    // other operand is not a Plus
     if (leftOperand->getType() == smType::Plus and
         rightOperand->getType() != smType::Plus) 
     {
@@ -46,6 +51,7 @@ Plus::Plus(const Expr& leftOperand, const Expr& rightOperand)
 
 Expr Plus::getRealPart()
 {
+    // Real part sum of real parts of arguments
     Expr realPart = ZERO;
     for (int i=0; i<nArgs; i++)
         realPart = plus_(realPart, argument[i]->getRealPart());
@@ -55,6 +61,7 @@ Expr Plus::getRealPart()
 
 Expr Plus::getImaginaryPart() const
 {
+    // Imaginary part sum of imaginary parts of arguments
     Expr imaginaryPart = ZERO;
     for (int i=0; i<nArgs; i++)
         imaginaryPart = plus_(imaginaryPart,
@@ -83,26 +90,28 @@ Expr Plus::getComplexArgument()
 
 vector<Index> Plus::getIndexStructure() const
 {
+    // If the expression has a non trivial index structure, we suppose 
+    // (the program should maintain that property) that all arguments have the 
+    // same structure, in particular the first
     if (nArgs > 0 and argument[0]->getPrimaryType() == smType::Indicial)
         return argument[0]->getIndexStructure();
 
     return vector<Index>(0);
 }
 
-void Plus::insert(const Expr& t_abstract, bool side)
+void Plus::insert(const Expr& expr, bool side)
 {
     if (nArgs == 0) {
         nArgs++;
-        argument.insert(argument.begin(), t_abstract);
+        argument.insert(argument.begin(), expr);
         return;
     }
-    // If numerical, easy
-    if (t_abstract->getPrimaryType() == smType::Numerical) {
-
+    if (expr->getPrimaryType() == smType::Numerical) {
+        // If the inserted expression is numerical, it's easy
         if (argument[0]->getPrimaryType() == smType::Numerical)
-            argument[0] = argument[0]->addition_own(t_abstract);
+            argument[0] = argument[0]->addition_own(expr);
         else {
-            argument.insert(argument.begin(), t_abstract);
+            argument.insert(argument.begin(), expr);
             ++nArgs;
         }
 
@@ -114,8 +123,8 @@ void Plus::insert(const Expr& t_abstract, bool side)
     }
 
     // If not numerical, we search for a similar term
-    Expr term = t_abstract->getTerm();
-    Expr numericalFact = t_abstract->getNumericalFactor();
+    Expr term = expr->getTerm();
+    Expr numericalFact = expr->getNumericalFactor();
     Expr term2;
     for (iter arg=argument.begin(); arg!=argument.end(); ++arg) {
         term2 = (*arg)->getTerm();
@@ -123,34 +132,26 @@ void Plus::insert(const Expr& t_abstract, bool side)
             *arg = times_((*arg)->getNumericalFactor()->addition_own(numericalFact),
                           term);
             if (**arg == ZERO) {
+                // x-x = 0
                 arg = argument.erase(arg);
                 --nArgs;
             }
             return;
         }
     }
-    /*for (int i=0; i<nArgs; i++)
-    {
-        term2 = argument[i]->getTerm();
-        // If we found the right term, it's done
-        if (*term == term2)
-        {
-            argument[i] = make_shared<Plus>(t_abstract->getNumericalFactor()->addition_own(argument[i]->getNumericalFactor()), term);
-            return;
-        }
-    }*/
 
     // No term corresponds, we order correctly the new term in the sum
+    // with respect to its simplicity
     for (const_iter arg=argument.begin(); arg!=argument.end(); ++arg) {
-        if (t_abstract < *arg) {
-            argument.insert(arg, t_abstract);
+        if (expr < *arg) {
+            argument.insert(arg, expr);
             ++nArgs;
             return;
         }
     }
 
-    // no term is more complicated than t_abstract, we put it at the end
-    argument.push_back(t_abstract);
+    // no term is more complicated than expr, we put it at the end
+    argument.push_back(expr);
     ++nArgs;
 }
 
@@ -196,6 +197,7 @@ double Plus::evaluateScalar() const
     double sum=0;
     for (int i=0; i<nArgs; i++) {
         if (argument[i]->getDim() > 0) 
+            // if the sum contains a non-scalar term, the function returns 0.
             return 0;
         sum += argument[i]->evaluateScalar();
     }
@@ -203,11 +205,15 @@ double Plus::evaluateScalar() const
 }
 
 Expr Plus::evaluate()
+    // Evaluates the expression replacing valued Variables and constants by
+    // their values
 {
     bool number = true;
     double numericalRes = 0;
     Expr result = ZERO;
     Expr foo;
+    // In the loop we keep track separately of numbers and expression that do not
+    // evaluate to numbers to save time.
     for (int i=0; i<nArgs; i++) {
         foo = argument[i]->evaluate();
         if (foo->getPrimaryType() == smType::Numerical)
@@ -223,9 +229,14 @@ Expr Plus::evaluate()
     return plus_(double_(numericalRes),result);
 }
 bool Plus::mergeTerms()
+    // Merges similar terms: numbers and identical terms to a numerical factor
+    // (2*x ~ x etc). Ex: 2 + 2*x + 1/2 + 1/2*x -> 5/2 + 5/2*x.
 {
     bool simplified = false;
     shared_ptr<Abstract> arg;
+
+    // Here we check if there are Plus terms in the arguments, we flatten the 
+    // whole thing to have only non-plus arguments.
     for (int i=0; i<nArgs; i++) {
         if (argument[i]->getType() == smType::Plus) { // Plus(Plus(.. 
             int t_nArgs = argument[i]->getNArgs();
@@ -241,9 +252,10 @@ bool Plus::mergeTerms()
         }
     }
 
+    // Here is the merge of numbers in the expression (for example 3+x+2 = 5+x)
     nArgs = argument.size();
     bool numericalFactor = (argument[0]->getPrimaryType() == smType::Numerical);
-    for (int i=1; i<nArgs; i++) {
+    for (int i=numericalFactor; i<nArgs; i++) {
         if (argument[i]->getPrimaryType() == smType::Numerical) {
             if (!numericalFactor) {
                 shared_ptr<Abstract> foo = argument[i];
@@ -260,11 +272,15 @@ bool Plus::mergeTerms()
             }
         }
     }
-    if (numericalFactor and argument[0]->evaluateScalar()==0 and nArgs > 1) {
+
+    // If the numerical factor is zero we delete it: 0+x = x
+    if (numericalFactor and *argument[0] == ZERO and nArgs > 1) {
         numericalFactor = false;
         argument.erase(argument.begin());
         nArgs--;
     }
+
+    // Check for identical terms in the sum, x + 2*x = 3*x
     shared_ptr<Abstract> term;
     shared_ptr<Abstract> term2;
     shared_ptr<Abstract> factor;
@@ -295,98 +311,41 @@ bool Plus::mergeTerms()
     orderTerms();
     return simplified;
 }
-/*bool Plus::mergeTerms()
-{
-    bool simplified = false;
-    Expr arg;
-    for (const_iter arg=argument.begin();
-                    arg!=argument.end(); ++arg){
-        if ((*arg)->getType() == Plus) { // Plus(Plus(... = Plus(...
-            simplified = true;
-            for (const_iter arg2=argument.begin();
-                            arg2!=argument.end(); ++arg2) 
-                if (arg != arg2)
-                    (*arg)->insert(*arg2);
-        }
-    }
-    if (simplified) return true;
-
-    nArgs = argument.size();
-    bool numericalFactor = (argument[0]->getPrimaryType() == Numerical);
-    for (const_iter arg=argument.begin();
-                    arg!=argument.end(); ++arg) {
-        if ((*arg)->getPrimaryType() == Numerical) {
-            if (!numericalFactor) {
-                Expr foo = *arg;
-                --arg = argument.erase(arg);
-                argument.insert(argument.begin(), foo);
-            }
-            else {
-                argument[0] = argument[0]->addition_own(*arg);
-                --arg = argument.erase(arg);
-                nArgs--;
-            }
-        }
-    }
-    if (numericalFactor and argument[0]->evaluateScalar()==0 and nArgs > 1)
-    {
-        numericalFactor = false;
-        argument.erase(argument.begin());
-        nArgs--;
-    }
-    for (iter arg=argument.begin()+numericalFactor;
-              arg!=argument.end()-1; ++arg) {
-        Expr term = (*arg)->getTerm();
-        Expr factor = (*arg)->getNumericalFactor();
-        bool matched = false;
-        for (const_iter arg2=arg+1; 
-                        arg2!=argument.end(); ++arg2) {
-            Expr term2 = (*arg2)->getTerm();
-            if (*term == term2) {
-                factor = factor->addition_own((*arg2)->getNumericalFactor());
-                matched = true;
-                simplified = true;
-                --arg2 = argument.erase(arg2);
-                nArgs--;
-            }
-        }
-        if (matched) {
-            *arg = times_(factor, term);
-            if (*arg == ZERO) {
-                --arg = argument.erase(arg);
-                nArgs--;
-            }
-        }
-    }
-
-    orderTerms();
-    return simplified;
-}*/
 
 void Plus::orderTerms()
+    // Sorts the different arguments by simplicity, ex x*y+2 -> 2+x*y
 {
+    // The sort function of <algorithm> header uses the operator< between 
+    // Expr, that is defined as the simplicity order. Therefore it sorts 
+    // the arguments by order of simplicity
     sort(argument.begin(), argument.end());
     return;
 }
 
-Expr Plus::derive(const Expr& t_abstract) const
+Expr Plus::derive(const Expr& expr) const
 {
-    if (t_abstract == nullptr) return ZERO;
+    // Derivative is the sum of the derivatives of arguments
     Expr rep = ZERO;
     for (int i=0; i<nArgs; i++)
-        rep = plus_(rep,argument[i]->derive(t_abstract));
+        rep = plus_(rep,argument[i]->derive(expr));
 
     return rep;
 }
 
 Expr Plus::factor(bool full)
+    // We try to factor the sum without knowing a specific factor
 {
     if (nArgs == 0) return ZERO;
     vector<Expr > arg = argument;
+    // If full, we factor first the arguments independently
     if (full) {
         for (int i=0; i<nArgs; i++)
             arg[i] = arg[i]->factor(full);
     }
+
+    // We start to ask each term how many factors are possible for it
+    // We take then the factors from the term that has the smaller number
+    // of possible factors.
     Expr result = plus_(arg);
     int mini = 0;
     int nFactorsMini = arg[0]->getNFactor();
@@ -397,13 +356,10 @@ Expr Plus::factor(bool full)
         }
     }
 
+    // For each factor we found, we keep only those which are possible
+    // for all the arguments of the sum.
     vector<Expr > factors = arg[mini]->getFactors();
     if (factors.size() == 0) factors = vector<Expr >(1,arg[mini]);
-    /*cout<<"FACTORIZING ";print();
-    for (int i=0; i<factors.size(); i++)
-    {
-        cout<<"Factor "<<i+1; factors[i]->print();
-    }*/
     for (int i=0; i<nArgs; i++) {
         if (i != mini) {
             for (size_t j=0; j<factors.size(); j++) {
@@ -418,12 +374,11 @@ Expr Plus::factor(bool full)
     }
     if (factors.size() == 0) 
         return result;
+
+    // Here we clear redundant factors, i.e. different powers of the same object.
+    // For example if x, x^2, x^3 are possible we only keep x^3.
     Expr exponent_i;
     Expr exponent_j;
-    /*for (int i=0; i<factors.size(); i++)
-    {
-        cout<<"Factor "<<i+1; factors[i]->print();
-    }*/
     for (size_t i=0; i<factors.size(); i++) {
         if (factors[i]->getType() == smType::Pow) {
             exponent_i = factors[i]->getArgument(1);
@@ -439,7 +394,8 @@ Expr Plus::factor(bool full)
                         exponent_j = factors[j]->getArgument(1);
                         if (exponent_j->getPrimaryType() != smType::Numerical){
                             factors.erase(factors.begin()+j);
-                            if (i > j) i--;
+                            if (i > j)
+                                i--;
                             break;
                         }
                         if (abs(exponent_i->evaluateScalar()) <
@@ -470,23 +426,22 @@ Expr Plus::factor(bool full)
             }
         }
     }
-    /*for (int i=0; i<factors.size(); i++)
-    {
-        cout<<"Factor "<<i+1; factors[i]->print();
-    }*/
-    Expr t_abstract;
+
+    // Finally, if there is some factors left, we factor them out of the
+    // expression
+    Expr expr;
     Expr newAbstract;
     for (size_t j=0; j<factors.size(); j++) {
-        t_abstract = factors[j];
+        expr = factors[j];
         newAbstract = ZERO;
         for (int i=0; i<nArgs; i++) {
-            if (*arg[i]==t_abstract)
+            if (*arg[i]==expr)
                 arg[i] = int_(1);
             else {
                 int type = arg[i]->getType();
                 if (type == smType::Times or type == smType::Pow) {
-                    if (arg[i]->askTerm(t_abstract))
-                        arg[i] = arg[i]->suppressTerm(t_abstract);
+                    if (arg[i]->askTerm(expr))
+                        arg[i] = arg[i]->suppressTerm(expr);
                     else
                         return Copy(this);
                 }
@@ -499,22 +454,27 @@ Expr Plus::factor(bool full)
     return times_(times_(factors),plus_(arg));
 }
 
-Expr Plus::factor(const Expr& t_abstract, bool full)
+Expr Plus::factor(const Expr& expr, bool full)
+    // This function tries to factor the sum with respect to a particular
+    // expression
 {
+
+    // If (full) we first factor recursively the arguments independently
     vector<Expr > arg = argument;
     if (full)
         for (int i=0; i<nArgs; i++)
-            arg[i] = arg[i]->factor(t_abstract, true);
+            arg[i] = arg[i]->factor(expr, true);
 
+    // Here we test the factor for each argument (if it is a valid factor)
     Expr newAbstract = ZERO;
     vector<int> toFactor(0);
     for (int i=0; i<nArgs; i++) {
-        if (*arg[i] == t_abstract)
+        if (*arg[i] == expr)
             toFactor.push_back(i);
         else {
             int type = arg[i]->getType();
             if (type == smType::Times or type == smType::Pow) {
-                if (arg[i]->askTerm(t_abstract))
+                if (arg[i]->askTerm(expr))
                     toFactor.push_back(i);
                 else
                     newAbstract = plus_(newAbstract, arg[i]);
@@ -523,43 +483,25 @@ Expr Plus::factor(const Expr& t_abstract, bool full)
                 newAbstract = plus_(newAbstract, arg[i]);
         }
     }
+
+    // If the number of arguments that can be factored is greater than 2, 
+    // We factor them
     if (toFactor.size() >= 2) {
         Expr factored = ZERO;
         for (size_t i=0; i<toFactor.size(); i++)
-            factored = plus_(factored, arg[toFactor[i]]->suppressTerm(t_abstract));
-        newAbstract = plus_(newAbstract, times_(t_abstract, factored));
+            factored = plus_(factored, arg[toFactor[i]]->suppressTerm(expr));
+        newAbstract = plus_(newAbstract, times_(expr, factored));
 
         return newAbstract;
     }
     else
         return plus_(arg);
-    /*if (full) AbstractMultiFunc::factor(t_abstract, true);
-    Expr newAbstract = ZERO;
-    for (int i=0; i<nArgs; i++)
-    {
-        if (*argument[i]==t_abstract)
-        {
-            newAbstract = plus_(newAbstract, int_(1));
-        }
-        else
-        {
-            int type = argument[i]->getType();
-            if (type == Times or type == Pow)
-            {
-                if (argument[i]->askTerm(t_abstract))
-                {
-                    newAbstract = plus_(newAbstract, argument[i]->suppressTerm(t_abstract));
-                }
-                else return;
-            }
-            else return;
-        }
-    }
-    *this=Plus(ZERO, times_(t_abstract,newAbstract));*/
 }
 
 int Plus::getParity(const Expr& t_variable) const
 {
+    // The parity of a sum is the parity of its arguments if they
+    // all have the same
     int parity = argument[0]->getParity(t_variable);
     if (parity == 0)
         return 0;
@@ -571,15 +513,17 @@ int Plus::getParity(const Expr& t_variable) const
     return parity;
 }
 
-bool Plus::operator==(const Expr& t_abstract) const
+bool Plus::operator==(const Expr& expr) const
 {
-    if (t_abstract->getName() == WHATEVER->getName()) 
+    if (expr->getName() == WHATEVER->getName()) 
         return true;
     if (nArgs == 1) 
-        return *argument[0]==t_abstract;
-    if (t_abstract->getType() != smType::Plus) 
+        return *argument[0]==expr;
+    if (expr->getType() == smType::Polynomial)
+        return *this==expr->getRegularExpression();
+    if (expr->getType() != smType::Plus) 
         return false;
-    if (nArgs != t_abstract->getNArgs()) 
+    if (nArgs != expr->getNArgs()) 
         return false;
     vector<int> indicesLeft(nArgs);
     for (int i=0; i<nArgs;i++) 
@@ -588,7 +532,7 @@ bool Plus::operator==(const Expr& t_abstract) const
     for (int i=0; i<nArgs; i++) {
         bool matched = 0;
         for (size_t j=0; j<indicesLeft.size(); j++) {
-            if (*argument[i] == t_abstract->getArgument(indicesLeft[j])) {
+            if (*argument[i] == expr->getArgument(indicesLeft[j])) {
                 indicesLeft.erase(indicesLeft.begin()+j);
                 matched = 1;
                 break;
@@ -602,6 +546,8 @@ bool Plus::operator==(const Expr& t_abstract) const
 }
 
 Expr plus_(const Expr& leftOperand, const Expr& rightOperand)
+    // Creates a Plus object a priori but can return other types
+    // in particular cases
 {
     Expr foo = make_shared<Plus>(leftOperand, rightOperand);
     if (leftOperand->getPrimaryType() == smType::Vectorial)
@@ -637,12 +583,15 @@ Expr plus_(const vector<Expr >& operands)
 }
 
 Expr minus_(const Expr& leftOperand, const Expr& rightOperand) {
+    // minus(a,b) = plus(a,_b)
     return plus_(leftOperand,times_(int_(-1),rightOperand));
 }
 
-//////////////////////////////////////
-//// Class Times             /////////
-//////////////////////////////////////
+///////////////////////////////////////////////////
+/*************************************************/
+// Class Times                                   //
+/*************************************************/
+///////////////////////////////////////////////////
 
 Times::Times(const vector<Expr >& operands, bool explicitTimes)
     :AbstractMultiFunc()
@@ -723,36 +672,36 @@ vector<Expr > Times::getFactors() const
     return foo;
 }
 
-bool Times::askTerm(const Expr& t_abstract, bool exact) const
+bool Times::askTerm(const Expr& expr, bool exact) const
 {
     for (int i=0; i<nArgs; i++) {
-        if (*argument[i]==t_abstract) 
+        if (*argument[i]==expr) 
             return true;
         else if (!exact and argument[i]->getType() == smType::Pow and // Pow
-                 argument[i]->askTerm(t_abstract))
+                 argument[i]->askTerm(expr))
             return true;
     }
 
     return false;
 }
 
-Expr Times::suppressTerm(const Expr& t_abstract) const
+Expr Times::suppressTerm(const Expr& expr) const
 {
     shared_ptr<Abstract> newAbstract = int_(1);
     bool matched = false;
     for (int i=0; i<nArgs; i++) {
         if (not matched) {
             if (argument[i]->getType() == smType::Pow) { // Pow 
-                if (argument[i]->askTerm(t_abstract)) {
+                if (argument[i]->askTerm(expr)) {
                     newAbstract = times_(newAbstract,
-                                         argument[i]->suppressTerm(t_abstract));
+                                         argument[i]->suppressTerm(expr));
                     matched = true;
                     continue;
                 }
                 else
                     newAbstract = times_(newAbstract, argument[i]);
             }
-            else if (*argument[i]==t_abstract) {
+            else if (*argument[i]==expr) {
                 matched = true;
                 continue;
             }
@@ -764,28 +713,6 @@ Expr Times::suppressTerm(const Expr& t_abstract) const
     }
 
     return newAbstract;
-/*
-    Expr newAbstract = Empty(getType());
-    bool matched = false;
-    for (const auto& arg: argument) {
-        if (not matched) {
-            if (arg->getType() == Pow) { // Pow 
-                if (arg->askTerm(t_abstract)) {
-                    newAbstract->insert(arg->suppressTerm(t_abstract));
-                    matched = true;
-                    continue;
-                }
-                else newAbstract->insert(arg);
-            }
-            else if (*arg==t_abstract) {
-                matched = true;
-                continue;
-            }
-            else newAbstract->insert(arg);
-        }
-        else newAbstract->insert(arg);
-    }
-    return newAbstract;*/
 }
 
 Expr Times::getRealPart()
@@ -927,19 +854,19 @@ void getExponentStructure(const Expr& argument, Expr& term, Expr& exponent)
 }
 
 // side = 0 insertion to the Left, = 1 to the right.
-void Times::insert(const Expr& t_abstract, bool side)
+void Times::insert(const Expr& expr, bool side)
 {
     if (nArgs == 0) {
         nArgs++;
-        argument.insert(argument.begin(), t_abstract);
+        argument.insert(argument.begin(), expr);
         return;
     }
     // If numerical, easy
-    if (t_abstract->getPrimaryType() == smType::Numerical) {
+    if (expr->getPrimaryType() == smType::Numerical) {
         if (argument[0]->getPrimaryType() == smType::Numerical)
-            argument[0] = argument[0]->multiplication_own(t_abstract);
+            argument[0] = argument[0]->multiplication_own(expr);
         else {
-            argument.insert(argument.begin(), t_abstract);
+            argument.insert(argument.begin(), expr);
             ++nArgs;
         }
         if (*argument[0] == ZERO) {
@@ -954,16 +881,16 @@ void Times::insert(const Expr& t_abstract, bool side)
         return;
     }
 
-    if (side) rightInsert(t_abstract);
-    else      leftInsert (t_abstract);
+    if (side) rightInsert(expr);
+    else      leftInsert (expr);
 }
-void Times::leftInsert(const Expr& t_abstract)
+void Times::leftInsert(const Expr& expr)
 {
     // If not numerical, we search for a similar term
-    bool commut = t_abstract->getCommutable();
+    bool commut = expr->getCommutable();
     int max = nArgs;
     Expr term, exponent;
-    getExponentStructure(t_abstract, term, exponent);
+    getExponentStructure(expr, term, exponent);
     for (int i=0; i<nArgs; i++) {
         Expr term2, exponent2;
         getExponentStructure(argument[i], term2, exponent2);
@@ -995,23 +922,23 @@ void Times::leftInsert(const Expr& t_abstract)
 
     // No term corresponds, we order correctly the new term in the sum
     for (int i=0; i<max; i++) 
-        if (t_abstract < argument[i]) {
+        if (expr < argument[i]) {
             ++nArgs;
-            argument.insert(argument.begin()+i, t_abstract);
+            argument.insert(argument.begin()+i, expr);
             return;
         }
 
-    // no term is more complicated than t_abstract, we put it at the end
-    argument.insert(argument.begin()+max, t_abstract);
+    // no term is more complicated than expr, we put it at the end
+    argument.insert(argument.begin()+max, expr);
     ++nArgs;
 }
-void Times::rightInsert(const Expr& t_abstract)
+void Times::rightInsert(const Expr& expr)
 {
     // If not numerical, we search for a similar term
-    bool commut = t_abstract->getCommutable();
+    bool commut = expr->getCommutable();
     int max = -1;
     Expr term, exponent;
-    getExponentStructure(t_abstract, term, exponent);
+    getExponentStructure(expr, term, exponent);
     for (int i=nArgs-1; i>=0; --i) {
         Expr term2, exponent2;
         getExponentStructure(argument[i], term2, exponent2);
@@ -1043,15 +970,15 @@ void Times::rightInsert(const Expr& t_abstract)
 
     // No term corresponds, we order correctly the new term in the sum
     for (int i=nArgs-1; i>max; --i)  {
-        if (t_abstract > argument[i]) {
+        if (expr > argument[i]) {
             ++nArgs;
-            argument.insert(argument.begin()+i+1, t_abstract);
+            argument.insert(argument.begin()+i+1, expr);
             return;
         }
     }
 
-    // no term is more complicated than t_abstract, we put it at the end
-    argument.insert(argument.begin()+max+1, t_abstract);
+    // no term is more complicated than expr, we put it at the end
+    argument.insert(argument.begin()+max+1, expr);
     ++nArgs;
 }
 
@@ -1232,169 +1159,6 @@ bool Times::mergeTerms()
     orderTerms();
     return simplified;
 }
-/*bool Times::mergeTerms()
-{
-    bool simplified = false;
-    Expr arg;
-    for (iter arg=argument.begin();
-                    arg!=argument.end(); ++arg) {
-        if ((*arg)->getType() == Times) {
-            simplified = true;
-            for (const_iter arg2=argument.begin();
-                                              arg2!=argument.end(); ++arg2) {
-                if (arg != arg2) {
-                    (*arg)->insert(*arg2);
-                }
-            }
-            argument = (*arg)->getVectorArgument();
-            nArgs = argument.size();
-            break;
-        }
-    }
-    if (simplified) return true;
-
-    nArgs = argument.size();
-    cout<<"Size = "<<nArgs<<" distance = "<<argument.size()<<endl;
-    bool numericalFactor = (argument[0]->getPrimaryType() == Numerical);
-    if (numericalFactor < nArgs) {
-        for (iter arg=argument.begin()+numericalFactor;
-                        arg!=argument.end(); ++arg) {
-            cout<<"i = "<<distance(argument.begin(),arg)<<endl;
-            (*arg)->print();
-            if ((*arg)->getPrimaryType() == Numerical) {
-                if (not numericalFactor) {
-                    Expr foo = *arg;
-                    int dist = distance(argument.begin(), arg);
-                    argument.erase(arg);
-                    argument.insert(argument.begin(),foo);
-                    arg = argument.begin()+dist;
-                    numericalFactor = true;
-                }
-                else {
-                    argument[0] = argument[0]->multiplication_own(*arg);
-                    --arg = argument.erase(arg);
-                    nArgs--;
-                }
-            }
-        }
-    }
-    if (numericalFactor and argument[0]->evaluateScalar()==1 and nArgs > 1)
-    {
-        argument.erase(argument.begin());
-        numericalFactor = false;
-        nArgs--;
-    }
-    else if (numericalFactor and argument[0]->evaluateScalar()==0)
-    {
-        argument = vector<Expr>(1, ZERO);
-        nArgs = 1;
-        return false;
-    }
-
-    for (iter arg=argument.begin()+numericalFactor;
-              arg!=argument.end()-1; ++arg) {
-        Expr factor = ONE;
-        Expr term1;
-        if ((*arg)->getType() == Pow) {
-            term1 = (*arg)->getTerm();
-            if (term1->getPrimaryType() == Numerical) {
-                factor = term1;
-                term1 = (*arg)->getArgument();
-            }
-            else 
-                term1 = *arg;
-        }
-        else
-            term1 = *arg;
-        bool matched = false;
-        bool indicial = ((*arg)->getPrimaryType() == Indicial);
-        if ((*arg)->getCommutable()) {
-            if (indicial) {
-                for (const_iter arg2=arg+1;
-                                arg2!=argument.end(); ++arg2) {
-                    if ((*arg2)->getPrimaryType() == Indicial) {
-                        *arg = make_shared<ITerm>(*arg,*arg2);
-                        --arg2 = argument.erase(arg2);
-                        nArgs--;
-                    }
-                }
-            }
-            else {
-                for (const_iter arg2=arg+1;
-                                arg2!=argument.end(); ++arg2) {
-                    Expr factor2 = ONE;
-                    Expr term2;
-                    if ((*arg2)->getType() == Pow) {
-                        term2 = (*arg2)->getArgument(1);
-                        if (term2->getPrimaryType() == Numerical) {
-                            factor2 = term2;
-                            term2 = (*arg2)->getArgument();
-                        }
-                        else
-                            term2 = *arg2;
-                    }
-                    else
-                        term2 = *arg2;
-                    if (*term1 == term2) {
-                        factor = factor->addition_own(factor2);
-                        matched = true;
-                        --arg2 = argument.erase(arg2);
-                        nArgs--;
-                    }
-                }
-            }
-        }
-        else {
-            if (indicial) {
-                for (const_iter arg2=arg+1;
-                                arg2!=argument.end(); ++arg2) {
-                    if (not (*arg2)->getCommutable() and (**arg) != *arg2)
-                        break;
-                    if ((*arg2)->getPrimaryType() == Indicial) {
-                        *arg = make_shared<ITerm>(*arg, *arg2);
-                        --arg2 = argument.erase(arg2);
-                        nArgs--;
-                    }
-                }
-            }
-            else {
-                for (const_iter arg2=arg+1;
-                                arg2!=argument.end(); ++arg2) {
-                    if (not (*arg2)->getCommutable() and (**arg) != *arg2) 
-                        break;
-                    Expr term2;
-                    Expr factor2 = ONE;
-                    if ((*arg2)->getType() == Pow) {
-                        term2 =(*arg2)->getArgument(1);
-                        if (term2->getPrimaryType() == Numerical) {
-                            factor2 = term2;
-                            term2 = (*arg2)->getArgument();
-                        }
-                        else
-                            term2 = *arg2;
-                    }
-                    else 
-                        term2 = *arg2;
-                    if (*term1 == term2)
-                    {
-                        factor = factor->addition_own(factor2);
-                        matched = true;
-                        --arg2 = argument.erase(arg2);
-                        nArgs--;
-                    }
-                }
-            }
-        }
-        if (matched)
-        {
-            *arg = pow_(term1, factor);
-            simplified = true;
-        } 
-    }
-
-    orderTerms();
-    return simplified;
-}*/
 
 void Times::orderTerms() 
 {
@@ -1423,9 +1187,9 @@ void Times::orderTerms()
     }
 }
 
-Expr Times::derive(const Expr& t_abstract) const
+Expr Times::derive(const Expr& expr) const
 {
-    if (t_abstract == nullptr) return ZERO;
+    if (expr == nullptr) return ZERO;
     Expr rep = ZERO;
     Expr intermediateResult = nullptr;
     for (int i=0; i<nArgs; i++) {
@@ -1436,7 +1200,7 @@ Expr Times::derive(const Expr& t_abstract) const
                                            argument[j]);
            else
                intermediateResult = times_(intermediateResult,
-                                           argument[j]->derive(t_abstract));
+                                           argument[j]->derive(expr));
         } 
         rep = plus_(rep,intermediateResult);
     }
@@ -1473,14 +1237,14 @@ Expr Times::develop(bool full)
     return plus_(newAbstracts);
 }
 
-int Times::isPolynomial(const Expr& t_abstract) const
+int Times::isPolynomial(const Expr& expr) const
 {
     bool polynomialTermFound = false;
     bool dependencyFound = false;
     int order = 0;
     for (int i=0; i<nArgs; i++) {
-        if (argument[i]->dependsOn(t_abstract)) {
-            order = argument[i]->isPolynomial(t_abstract);
+        if (argument[i]->dependsOn(expr)) {
+            order = argument[i]->isPolynomial(expr);
             if (order > 0)
                 polynomialTermFound = true;
             else 
@@ -1524,15 +1288,15 @@ int Times::getParity(const Expr& t_variable) const
     return parity;
 }
 
-bool Times::operator==(const Expr& t_abstract) const
+bool Times::operator==(const Expr& expr) const
 {
-    if (t_abstract->getName() == WHATEVER->getName())
+    if (expr->getName() == WHATEVER->getName())
         return true;
     if (nArgs == 1)
-        return *argument[0]==t_abstract;
-    if (t_abstract->getType() != smType::Times)
+        return *argument[0]==expr;
+    if (expr->getType() != smType::Times)
         return false;
-    if (nArgs != t_abstract->getNArgs())
+    if (nArgs != expr->getNArgs())
         return false;
 
     vector<int> indicesLeft(nArgs);
@@ -1543,7 +1307,7 @@ bool Times::operator==(const Expr& t_abstract) const
     for (int i=0; i<nArgs; i++) {
         bool matched = 0;
         for (size_t j=0; j<indicesLeft.size(); j++) {
-            foo = t_abstract->getArgument(indicesLeft[j]);
+            foo = expr->getArgument(indicesLeft[j]);
             if (!argument[i]-> getCommutable() and
                 !foo->getCommutable() and
                 *argument[i]!=foo)
@@ -1619,9 +1383,11 @@ Expr times_(const vector<Expr >& operands, bool explicitTimes)
     return result;
 }
 
-//////////////////////////////////////
-//// Class Fraction          /////////
-//////////////////////////////////////
+///////////////////////////////////////////////////
+/*************************************************/
+// Class Fraction                                //
+/*************************************************/
+///////////////////////////////////////////////////
 
 Fraction::Fraction(const Expr& leftOperand, const Expr& rightOperand)
     :AbstractDuoFunc()
@@ -1647,26 +1413,26 @@ vector<Expr > Fraction::getFactors() const
     return foo;
 }
 
-bool Fraction::askTerm(const Expr& t_abstract, bool exact) const
+bool Fraction::askTerm(const Expr& expr, bool exact) const
 {
-    if (argument[0]->askTerm(t_abstract))
+    if (argument[0]->askTerm(expr))
         return true;
-    if (argument[1]->askTerm(pow_(t_abstract,int_(-1))))
+    if (argument[1]->askTerm(pow_(expr,int_(-1))))
         return true;
 
     return false;
 }
 
-Expr Fraction::suppressTerm(const Expr& t_abstract) const
+Expr Fraction::suppressTerm(const Expr& expr) const
 {
-    if (argument[0]->askTerm(t_abstract))
-        return fraction_(argument[0]->suppressTerm(t_abstract),
+    if (argument[0]->askTerm(expr))
+        return fraction_(argument[0]->suppressTerm(expr),
                          argument[1]);
-    if (argument[1]->askTerm(pow_(t_abstract,int_(-1))))
+    if (argument[1]->askTerm(pow_(expr,int_(-1))))
         return fraction_(argument[0],
-                         argument[1]->suppressTerm(pow_(t_abstract,int_(-1))));
+                         argument[1]->suppressTerm(pow_(expr,int_(-1))));
 
-    cout<<"Warning problem with factors in fraction, expression probably wrong...\n";
+    cout<<"Warning problem with factors in fraction, expr probably wrong...\n";
     return Copy(this);
 }
 
@@ -1749,22 +1515,22 @@ bool Fraction::mergeTerms()
     return simplified;
 }
 
-Expr Fraction::derive(const Expr& t_abstract) const
+Expr Fraction::derive(const Expr& expr) const
 {
-    if (t_abstract == nullptr)
+    if (expr == nullptr)
         return ZERO;
 
-    return fraction_(minus_(times_(argument[0]->derive(t_abstract),
+    return fraction_(minus_(times_(argument[0]->derive(expr),
                                    argument[1]),
                             times_(argument[0],
-                                   argument[1]->derive(t_abstract))),
+                                   argument[1]->derive(expr))),
                      pow_(argument[1],int_(2)));
 }
 
-int Fraction::isPolynomial(const Expr& t_abstract) const
+int Fraction::isPolynomial(const Expr& expr) const
 {
-    if (argument[1]->isPolynomial(t_abstract) == 0)
-        return argument[0]->isPolynomial(t_abstract);
+    if (argument[1]->isPolynomial(expr) == 0)
+        return argument[0]->isPolynomial(expr);
 
     return 0;
 }
@@ -1784,15 +1550,15 @@ int Fraction::getParity(const Expr& t_variable) const
     return parity*argument[1]->getParity(t_variable);
 }
 
-bool Fraction::operator==(const Expr& t_abstract) const
+bool Fraction::operator==(const Expr& expr) const
 {
-    if (t_abstract->getName() == WHATEVER->getName())
+    if (expr->getName() == WHATEVER->getName())
         return true;
-    if (t_abstract->getType() != smType::Fraction)
+    if (expr->getType() != smType::Fraction)
         return false;
 
-    if (*argument[0] != t_abstract->getArgument(0) or
-            *argument[1]!=t_abstract->getArgument(1))
+    if (*argument[0] != expr->getArgument(0) or
+            *argument[1]!=expr->getArgument(1))
         return false;
 
     return true;
@@ -1849,9 +1615,11 @@ Expr fraction_(const Expr& leftOperand, const Expr& rightOperand)
     return times_(leftOperand,pow_(rightOperand,int_(-1)));
 }
 
-//////////////////////////////////////
-//// Class Pow               /////////
-//////////////////////////////////////
+///////////////////////////////////////////////////
+/*************************************************/
+// Class Pow                                     //
+/*************************************************/
+///////////////////////////////////////////////////
 
 Pow::Pow(const Expr& leftOperand, const Expr& rightOperand): AbstractDuoFunc()
 {
@@ -1905,13 +1673,13 @@ vector<Expr > Pow::getFactors() const
     return foo;
 }
 
-bool Pow::askTerm(const Expr& t_abstract, bool exact) const
+bool Pow::askTerm(const Expr& expr, bool exact) const
 {
-    if (exact) return ((*this)==t_abstract);
-    if (t_abstract->getType() == smType::Pow) {
-        Expr a = t_abstract->getArgument(1);
+    if (exact) return ((*this)==expr);
+    if (expr->getType() == smType::Pow) {
+        Expr a = expr->getArgument(1);
         Expr b = argument[1];
-        if (*argument[0] != t_abstract->getArgument(0))
+        if (*argument[0] != expr->getArgument(0))
             return false;
         if (*a == b)
             return true;
@@ -1934,22 +1702,22 @@ bool Pow::askTerm(const Expr& t_abstract, bool exact) const
                     abs(a_val)<abs(b_val) and
                     sgn(a_val)==sgn(b_val));
         }
-        return ((*this)==t_abstract);
+        return ((*this)==expr);
     }
     else
-        return (*argument[0]==t_abstract and
+        return (*argument[0]==expr and
                 (argument[1]->isInteger() or
                  argument[1]->getType() == smType::CFraction) and
                 argument[1]->evaluateScalar() > 0);
 }
 
-Expr Pow::suppressTerm(const Expr& t_abstract) const
+Expr Pow::suppressTerm(const Expr& expr) const
 {
     // Caution here: we do not re-test if the term corresponds (we do not call askTerm
     // we suppose it has been done before calling this function...)
-    if (t_abstract->getType() == smType::Pow)
+    if (expr->getType() == smType::Pow)
     {
-        return pow_(argument[0],minus_(argument[1], t_abstract->getArgument(1)));
+        return pow_(argument[0],minus_(argument[1], expr->getArgument(1)));
     }
     else return pow_(argument[0],minus_(argument[1], int_(1)));
 }
@@ -1998,7 +1766,8 @@ Expr Pow::evaluate()
 {
     Expr foo1 = argument[0]->evaluate();
     Expr foo2 = argument[1]->evaluate();
-    if (foo1->getPrimaryType() == smType::Numerical and foo2->getPrimaryType() == smType::Numerical)
+    if (foo1->getPrimaryType() == smType::Numerical
+            and foo2->getPrimaryType() == smType::Numerical)
         return double_(pow_(foo1,foo2)->evaluateScalar());
     return pow_(foo1,foo2);
 }
@@ -2008,6 +1777,7 @@ bool Pow::mergeTerms()
     bool simplified = false;
     Expr arg;
     if (argument[0]->getType() == smType::Pow) {
+        // (a^b)^c = a^(b*c)
         argument[1] = times_(argument[0]->getArgument(1),argument[1]);
         argument[0] = argument[0]->getArgument();
     }
@@ -2016,6 +1786,7 @@ bool Pow::mergeTerms()
                 (argument[1]->getType() == smType::Double or
                  argument[1]->getType() == smType::Integer))
     {
+        // Numerical1^Numerical2 = Numerical3
         argument[0] = auto_number_(pow(argument[0]->evaluateScalar(),
                                        argument[1]->evaluateScalar()));
         argument[1] = int_(1);
@@ -2025,6 +1796,7 @@ bool Pow::mergeTerms()
             argument[1]->getType() == smType::CFraction and
             argument[1]->evaluateScalar() == 0.5)
     {
+        // Numerical1^Numerical2 = Numerical3
         double value = sqrt(argument[0]->evaluateScalar());
         if (value == round(value)) {
             argument[0] = int_(value);
@@ -2034,8 +1806,9 @@ bool Pow::mergeTerms()
     else if (argument[0]->getType() == smType::Fraction and
             (argument[1]->getNumericalFactor() < 0 or
              (argument[1]->getPrimaryType() == smType::Numerical and
-              argument[1]->evaluateScalar() < 0))) // (a/b)^(-c) = (b/a)^c
+              argument[1]->evaluateScalar() < 0))) 
     {
+        // (a/b)^(-c) = (b/a)^c
         Expr tmp = argument[0]->getArgument(0);
         argument[0]->setArgument(argument[0]->getArgument(1),0);
         argument[0]->setArgument(tmp,1);
@@ -2045,6 +1818,7 @@ bool Pow::mergeTerms()
             argument[1] = times_(argument[1],int_(-1));
     }
     else if (argument[0]->getType() == smType::Times) {
+        // (a*b*...)^c = a^c*b^c*....
         vector<Expr > newArgument(0);
         for (int i=0; i<argument[0]->getNArgs(); i++)
             newArgument.push_back(pow_(argument[0]->getArgument(i),
@@ -2056,19 +1830,18 @@ bool Pow::mergeTerms()
     return simplified;
 }
 
-Expr Pow::derive(const Expr& t_abstract) const
+Expr Pow::derive(const Expr& expr) const
 {
-    if (t_abstract == nullptr)
+    if (expr == nullptr)
         return ZERO;
-    return plus_(times_(times_(argument[1]->derive(t_abstract),
-                                   log_(argument[0])),
-                            pow_(argument[0],
-                                 argument[1])),
-                     times_(times_(argument[0]->derive(t_abstract),
-                                   argument[1]),
-                            pow_(argument[0],
-                                 minus_(argument[1],
-                                        int_(1)))));
+    return plus_(times_(times_(argument[1]->derive(expr),
+                               log_(argument[0])),
+                        pow_(argument[0],
+                             argument[1])),
+                 times_(times_(argument[0]->derive(expr),
+                               argument[1]),
+                        pow_(argument[0],
+                             minus_(argument[1], int_(1)))));
 }
 
 Expr Pow::develop(bool full)
@@ -2122,10 +1895,10 @@ Expr Pow::getComplexArgument()
     return ZERO;
 }
 
-int Pow::isPolynomial(const Expr& t_abstract) const
+int Pow::isPolynomial(const Expr& expr) const
 {
     if (argument[1]->isInteger())
-        if (*argument[0]==t_abstract)
+        if (*argument[0]==expr)
                 return (int)argument[1]->evaluateScalar();
     return 0;
 }
@@ -2142,10 +1915,10 @@ Expr Pow::getPolynomialTerm(const Expr& t_variable, int order)
         return ZERO;
 }
 
-int Pow::getParity(const Expr& t_abstract) const
+int Pow::getParity(const Expr& expr) const
 {
-    int parity = argument[0]->getParity(t_abstract);
-    int parity2 = argument[1]->getParity(t_abstract);
+    int parity = argument[0]->getParity(expr);
+    int parity2 = argument[1]->getParity(expr);
     if (parity == 1 and parity2 == 1)
         return 1;
     if (parity == 0 or parity2 == 0)
@@ -2157,14 +1930,14 @@ int Pow::getParity(const Expr& t_abstract) const
     return -2*((int)value%2)+1;
 }
 
-bool Pow::operator==(const Expr& t_abstract) const
+bool Pow::operator==(const Expr& expr) const
 {
-    if (t_abstract->getName() == WHATEVER->getName())
+    if (expr->getName() == WHATEVER->getName())
         return true;
-    if (t_abstract->getType() != smType::Pow)
+    if (expr->getType() != smType::Pow)
         return false;
-    if (*argument[0] != t_abstract->getArgument(0) or
-            *argument[1] != t_abstract->getArgument(1))
+    if (*argument[0] != expr->getArgument(0) or
+            *argument[1] != expr->getArgument(1))
         return false;
 
     return true;
@@ -2189,10 +1962,14 @@ Expr pow_(const Expr& leftOperand, const Expr& rightOperand)
     Expr foo = make_shared<Pow>(leftOperand, rightOperand);
     Expr arg0 = foo->getArgument(0);
     Expr arg1 = foo->getArgument(1);
-    if (*arg1==ZERO) return ONE;
-    if (*arg0==ZERO) return ZERO;
-    if (*arg0==ONE) return ONE;
-    if (*arg1==ONE) return arg0;
+    if (*arg1==ZERO) // x^0 = 1 (including 0^0 for now)
+        return ONE;
+    if (*arg0==ZERO) // 0^x = 0
+        return ZERO;
+    if (*arg0==ONE) // 1^x = 1
+        return ONE;
+    if (*arg1==ONE) // x^1 = x
+        return arg0;
 
     return foo;
 }
@@ -2202,24 +1979,30 @@ Expr sqrt_(const Expr& operand)
     return pow_(operand, _cfraction_(1,2));
 }
 
-Polynomial::Polynomial(const Expr& t_abstract, const Expr& t_variable)
+///////////////////////////////////////////////////
+/*************************************************/
+// Class Polynomial                              //
+/*************************************************/
+///////////////////////////////////////////////////
+
+Polynomial::Polynomial(const Expr& expr, const Expr& t_variable)
     :AbstractMultiFunc()
 {
     variable = t_variable;
-    Expr t_t_abstract;
-    if (t_abstract->getType() == smType::Polynomial and
-            *t_variable != t_abstract->getVariable())
-        t_t_abstract = t_abstract->getRegularExpression();
+    Expr exprBis;
+    if (expr->getType() == smType::Polynomial and
+            *t_variable != expr->getVariable())
+        exprBis = expr->getRegularExpression();
     else
-        t_t_abstract = t_abstract;
+        exprBis = expr;
 
-    if (t_t_abstract->getType() == smType::Plus) {
+    if (exprBis->getType() == smType::Plus) {
         int max_order = 0;
         argument = vector<Expr >(1);
         argument[0] = ZERO;
         Expr foo;
-        for (int i=0; i<t_t_abstract->getNArgs(); i++) {
-            foo = t_t_abstract->getArgument(i);
+        for (int i=0; i<exprBis->getNArgs(); i++) {
+            foo = exprBis->getArgument(i);
             int argument_order = foo->isPolynomial(t_variable);
             if (argument_order > max_order)
                 for (int i=0; i<argument_order-max_order; i++)
@@ -2230,11 +2013,11 @@ Polynomial::Polynomial(const Expr& t_abstract, const Expr& t_variable)
         }
     }
     else {
-        int max_order = t_t_abstract->isPolynomial(t_variable);
+        int max_order = exprBis->isPolynomial(t_variable);
         argument = vector<Expr >(0);
         for (int i=0; i<max_order+1; i++)
             argument.push_back(ZERO);
-        argument[max_order] = t_t_abstract->getPolynomialTerm(t_variable,
+        argument[max_order] = exprBis->getPolynomialTerm(t_variable,
                                                               max_order);
     }
     nArgs = argument.size();
@@ -2347,12 +2130,12 @@ Expr Polynomial::evaluate()
     return result;
 }
 
-Expr Polynomial::derive(const Expr& t_abstract) const
+Expr Polynomial::derive(const Expr& expr) const
 {
     Expr rep;
     vector<Expr > newTerms = argument;
-    if (*t_abstract == variable) {
-        Expr foo = newTerms[0]->derive(t_abstract);
+    if (*expr == variable) {
+        Expr foo = newTerms[0]->derive(expr);
         newTerms.erase(newTerms.begin());
         if (*foo != ZERO) {
             if (newTerms.size() > 0)
@@ -2366,7 +2149,7 @@ Expr Polynomial::derive(const Expr& t_abstract) const
         return make_shared<Polynomial>(newTerms, variable);
     }
     for (int i=0; i<nArgs; i++)
-        newTerms[i] = newTerms[i]->derive(t_abstract);
+        newTerms[i] = newTerms[i]->derive(expr);
     for (int i=newTerms.size()-1; i>= 0; i--)
         if (*newTerms[i] == ZERO)
             newTerms.erase(newTerms.begin()+i);
@@ -2397,7 +2180,7 @@ int Polynomial::getParity(const Expr& t_variable) const
         return parity;
     }
     parity = argument[0]->getParity(t_variable);
-    if (parity == 0)
+    if (parity == 0 or variable->getParity(t_variable) == 0)
         return 0;
     for (int i=1; i<nArgs; i++) {
         newParity = argument[i]->getParity(t_variable);
@@ -2405,7 +2188,7 @@ int Polynomial::getParity(const Expr& t_variable) const
             return 0;
     }
 
-    return parity;
+    return parity*variable->getParity(t_variable);
 }
 
 Expr Polynomial::getRegularExpression() const
@@ -2417,13 +2200,13 @@ Expr Polynomial::getRegularExpression() const
     return result;
 }
 
-Expr Polynomial::addition_own(const Expr& t_abstract) const
+Expr Polynomial::addition_own(const Expr& expr) const
 {
     Expr foo;
-    if (t_abstract->getType() != smType::Polynomial)
-        foo = make_shared<Polynomial>(t_abstract, variable);
+    if (expr->getType() != smType::Polynomial)
+        foo = make_shared<Polynomial>(expr, variable);
     else 
-        foo = t_abstract;
+        foo = expr;
     vector<Expr > foo_argument = argument;
     int foo_nArgs = nArgs;
     if (*variable == foo->getVariable()) {
@@ -2440,13 +2223,13 @@ Expr Polynomial::addition_own(const Expr& t_abstract) const
     return plus_(getRegularExpression(),foo->getRegularExpression());
 }
 
-Expr Polynomial::multiplication_own(const Expr& t_abstract) const
+Expr Polynomial::multiplication_own(const Expr& expr) const
 {
     Expr foo;
-    if (t_abstract->getType() != smType::Polynomial)
-        foo = make_shared<Polynomial>(t_abstract, variable);
+    if (expr->getType() != smType::Polynomial)
+        foo = make_shared<Polynomial>(expr, variable);
     else 
-        foo = t_abstract;
+        foo = expr;
 
     if (*variable == foo->getVariable()) {
         vector<Expr > foo_argument(nArgs+foo->getNArgs()-1,ZERO);
@@ -2462,9 +2245,12 @@ Expr Polynomial::multiplication_own(const Expr& t_abstract) const
     return times_(getRegularExpression(),foo->getRegularExpression());
 }
 
-Expr Polynomial::division_own(const Expr& t_abstract) const
+Expr Polynomial::division_own(const Expr& expr) const
+// Euclidean division of a polynomial by another. If expr is not
+// a polynomial (or is a polynomial of a different variable, it is first
+// converted in a polynomial of the same variable.
 {
-    Expr foo = Copy(t_abstract);
+    Expr foo = Copy(expr);
     if (foo->getType() != smType::Polynomial or *foo->getVariable() != variable)
         foo = polynomial_(foo,variable);
     if (foo->getNArgs() > nArgs)
@@ -2496,6 +2282,8 @@ Expr Polynomial::division_own(const Expr& t_abstract) const
 Expr Polynomial::factor(bool full)
 {
     if (nArgs == 3) {
+        // Canonical factorization of order 2 polynomial
+        // x = -b/2a +- sqrt(delta)/2a
        Expr delta = plus_(pow_(argument[1],int_(2)),
                           times_(times_(int_(-4),argument[0]),
                                  argument[2]));
@@ -2514,18 +2302,18 @@ Expr Polynomial::factor(bool full)
     return Copy(this);
 }
 
-bool Polynomial::operator==(const Expr& t_abstract) const
+bool Polynomial::operator==(const Expr& expr) const
 {
-    if (t_abstract->getName() == WHATEVER->getName())
+    if (expr->getName() == WHATEVER->getName())
         return true;
     if (nArgs == 1)
-        return *argument[0]==t_abstract;
-    if (t_abstract->getType() == smType::Polynomial) {
-        Expr t_variable = t_abstract->getVariable();
+        return *argument[0]==expr;
+    if (expr->getType() == smType::Polynomial) {
+        Expr t_variable = expr->getVariable();
         if (*variable != t_variable)
             return false;
 
-        vector<Expr > t_argument = t_abstract->getVectorArgument();
+        vector<Expr > t_argument = expr->getVectorArgument();
         if (t_argument.size() != argument.size())
             return false;
         for (size_t i=0; i<t_argument.size(); i++)
@@ -2534,9 +2322,9 @@ bool Polynomial::operator==(const Expr& t_abstract) const
 
         return true;
     }
-    if (t_abstract->getType() != smType::Plus)
+    if (expr->getType() != smType::Plus)
         return false;
-    if (nArgs != t_abstract->getNArgs())
+    if (nArgs != expr->getNArgs())
         return false;
     vector<int> indicesLeft(nArgs);
     for (int i=0; i<nArgs;i++)
@@ -2546,7 +2334,7 @@ bool Polynomial::operator==(const Expr& t_abstract) const
         bool matched = 0;
         for (size_t j=0; j<indicesLeft.size(); j++) {
             if (*times_(argument[i],pow_(variable,int_(i))) ==
-                    t_abstract->getArgument(indicesLeft[j]))
+                    expr->getArgument(indicesLeft[j]))
             {
                 indicesLeft.erase(indicesLeft.begin()+j);
                 matched = 1;
@@ -2560,22 +2348,28 @@ bool Polynomial::operator==(const Expr& t_abstract) const
     return true;
 }
 
-Expr polynomial_(const Expr& t_abstract, const Expr& t_variable)
+Expr polynomial_(const Expr& expr, const Expr& t_variable)
 {
-    if (t_abstract->getPrimaryType() == smType::Vectorial) {
-        Expr foo = tensor_(t_abstract->getShape());
-        for (int i=0; i<t_abstract->getNArgs(); i++)
-            foo->setArgument(polynomial_(t_abstract->getArgument(i),t_variable),i);
+    if (expr->getPrimaryType() == smType::Vectorial) {
+        Expr foo = tensor_(expr->getShape());
+        for (int i=0; i<expr->getNArgs(); i++)
+            foo->setArgument(polynomial_(expr->getArgument(i),t_variable),i);
         return foo;
     }
 
-    return make_shared<Polynomial>(t_abstract, t_variable);
+    return make_shared<Polynomial>(expr, t_variable);
 }
 
 Expr polynomial_(const vector<Expr >& operands, const Expr& t_variable)
 {
     return make_shared<Polynomial>(operands, t_variable);
 }
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Class Derivative                              //
+/*************************************************/
+///////////////////////////////////////////////////
 
 int Derivative::getOrder() const {
     return order;
@@ -2635,9 +2429,9 @@ Expr Derivative::evaluate()
     return df;
 }
 
-Expr Derivative::derive(const Expr& t_abstract) const
+Expr Derivative::derive(const Expr& expr) const
 {
-    return derivative_(argument[0]->derive(t_abstract), argument[1], order);
+    return derivative_(argument[0]->derive(expr), argument[1], order);
 }
 
 int Derivative::getParity(const Expr& t_variable) const
@@ -2652,15 +2446,15 @@ int Derivative::getParity(const Expr& t_variable) const
         return parity*argument[1]->getParity(t_variable);
 }
 
-bool Derivative::operator==(const Expr& t_abstract) const
+bool Derivative::operator==(const Expr& expr) const
 {
-    if (t_abstract->getName() == WHATEVER->getName())
+    if (expr->getName() == WHATEVER->getName())
         return true;
-    if (t_abstract->getType() != smType::Derivative)
+    if (expr->getType() != smType::Derivative)
         return false;
-    if (*argument[0] != t_abstract->getArgument(0) or
-            *argument[1] != t_abstract->getArgument(1) or
-            order != t_abstract->getOrder())
+    if (*argument[0] != expr->getArgument(0) or
+            *argument[1] != expr->getArgument(1) or
+            order != expr->getOrder())
         return false;
 
     return true;

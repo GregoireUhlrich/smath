@@ -52,7 +52,7 @@ class Plus: public AbstractMultiFunc{
 
     std::vector<Index> getIndexStructure() const override;
 
-    void insert(const Expr& t_abstract, bool side=0) override;
+    void insert(const Expr& expr, bool side=0) override;
 
     void print(int mode=0) const override;
 
@@ -78,31 +78,31 @@ class Plus: public AbstractMultiFunc{
     void orderTerms();
 
     /*! \brief Derives the sum.
-     * \param t_abstract Argument of the derivation.
+     * \param expr Argument of the derivation.
      * \return The sum of the derivatives of the arguments
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
-    /*! \brief Factors the expression if common factors are found.
+    /*! \brief Factors the expr if common factors are found.
      * \param full If \b true factors recursively all the arguments.
      */
     Expr factor(bool full=false) override;
 
-    /*! \brief Factors the expression by t_abstract if it is a common factor.
-     * \param t_abstract Factor.
+    /*! \brief Factors the expr by expr if it is a common factor.
+     * \param expr Factor.
      * \param full       If \b true factors recursively all the arguments.
      */
-    Expr factor(const Expr& t_abstract, bool full=false) override;
+    Expr factor(const Expr& expr, bool full=false) override;
 
     int getParity(const Expr& t_variable) const override;
 
-    bool operator==(const Expr& t_abstract) const override;
+    bool operator==(const Expr& expr) const override;
 
     std::vector<Expr > getAlternateForms() const override;
 
-    bool operator>(const Expr& t_abstract) const override;
+    bool operator>(const Expr& expr) const override;
 
-    bool operator<(const Expr& t_abstract) const override;
+    bool operator<(const Expr& expr) const override;
 };
 
 /*! \class Polynomial
@@ -122,10 +122,10 @@ class Polynomial: public AbstractMultiFunc{
 
     /*! \brief Initializes the polynomial from another Abstract. Detect the 
      *  proper terms in it.
-     *  \param t_abstract Abstract that we want to transform in a polynomial
+     *  \param expr Abstract that we want to transform in a polynomial
      * \param t_variable Variable of the polynomial.
      */
-    Polynomial(const Expr& t_abstract, const Expr& t_variable);
+    Polynomial(const Expr& expr, const Expr& t_variable);
     
     /*! \brief Initializes the polynomial from a vector of terms, and a defined
      *  \b variable.
@@ -165,28 +165,28 @@ class Polynomial: public AbstractMultiFunc{
     Expr evaluate() override;
 
     /*! \brief Derives the polynomial.
-     * \param t_abstract Argument of the derivation.
+     * \param expr Argument of the derivation.
      * \return The polynomial of the derivatives of the arguments
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 
     Expr getRegularExpression() const override;
 
-    Expr addition_own(const Expr& t_abstract) const override;
+    Expr addition_own(const Expr& expr) const override;
 
-    Expr multiplication_own(const Expr& t_abstract) const override;
+    Expr multiplication_own(const Expr& expr) const override;
     
-    Expr division_own(const Expr& t_abstract) const override;
+    Expr division_own(const Expr& expr) const override;
 
     Expr factor(bool full=false) override;
 
-    bool operator==(const Expr& t_abstract) const override;
+    bool operator==(const Expr& expr) const override;
 
-    bool operator>(const Expr& t_abstract) const override;
+    bool operator>(const Expr& expr) const override;
 
-    bool operator<(const Expr& t_abstract) const override;
+    bool operator<(const Expr& expr) const override;
 };
 
 void getExponentStructure(const Expr& argument, Expr& term, Expr& exponent);
@@ -244,7 +244,7 @@ class Times: public AbstractMultiFunc{
      */
     Expr getTerm() override;
 
-    /*! \brief Returns the number of possible factors in the expression.
+    /*! \brief Returns the number of possible factors in the expr.
      * \return \b nArgs
      */
     int getNFactor() const override;
@@ -254,24 +254,24 @@ class Times: public AbstractMultiFunc{
      */
     std::vector<Expr > getFactors() const override;
 
-    /*! \brief Tells if the factor \a t_abstract appear in the product.
-     * \param t_abstract Factor to test.
-     * \return \b True if t_abstract can factor the product.
+    /*! \brief Tells if the factor \a expr appear in the product.
+     * \param expr Factor to test.
+     * \return \b True if expr can factor the product.
      * \return \b False else.
      */
-    bool askTerm(const Expr& t_abstract, bool exact=false) const override;
+    bool askTerm(const Expr& expr, bool exact=false) const override;
 
-    /*! \brief Suppresses the term t_abstract in the product.
+    /*! \brief Suppresses the term expr in the product.
      * \warning This function supposes that the function askTerm() has been called 
-     * precedently and does not warn the user if the factor t_abstract is not present.
-     * \param t_abstract Factor to suppress in the product.
-     * \return \b The product amputated of \b t_abstract.
+     * precedently and does not warn the user if the factor expr is not present.
+     * \param expr Factor to suppress in the product.
+     * \return \b The product amputated of \b expr.
      */
-    Expr suppressTerm(const Expr& t_abstract) const override;
+    Expr suppressTerm(const Expr& expr) const override;
 
-    void insert(const Expr& t_abstract, bool side=0) override;
-    void leftInsert(const Expr& t_abstract);
-    void rightInsert(const Expr& t_abstract);
+    void insert(const Expr& expr, bool side=0) override;
+    void leftInsert(const Expr& expr);
+    void rightInsert(const Expr& expr);
 
     void print(int mode=0) const override;
 
@@ -297,10 +297,10 @@ class Times: public AbstractMultiFunc{
     void orderTerms();
 
     /*! \brief Derives the product.
-     * \param t_abstract Argument of the derivation.
+     * \param expr Argument of the derivation.
      * \return The derivative following the formula ...
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     /*! \brief \b Develops the product by expanding the sums inside.
      * \param full If true the development is \b recursive through all the Abstract.
@@ -308,19 +308,19 @@ class Times: public AbstractMultiFunc{
      */
     Expr develop(bool full=false) override;
 
-    int isPolynomial(const Expr& t_abstract) const override;
+    int isPolynomial(const Expr& expr) const override;
 
     Expr getPolynomialTerm(const Expr& t_variable, int order) override;
 
     int getParity(const Expr& t_variable) const override;
     
-    bool operator==(const Expr& t_abstract) const override;
+    bool operator==(const Expr& expr) const override;
 
     std::vector<Expr > getAlternateForms() const override;
 
-    bool operator>(const Expr& t_abstract) const override;
+    bool operator>(const Expr& expr) const override;
 
-    bool operator<(const Expr& t_abstract) const override;
+    bool operator<(const Expr& expr) const override;
 };
 
 /*! \class Fraction
@@ -351,7 +351,7 @@ class Fraction: public AbstractDuoFunc{
         return smType::Fraction;
     }
 
-    /*! \brief Returns the number of possible factors in the expression.
+    /*! \brief Returns the number of possible factors in the expr.
      * \return \b The sum of the number of factors of the 2 arguments.
      */
     int getNFactor() const override;
@@ -361,20 +361,20 @@ class Fraction: public AbstractDuoFunc{
      */
     std::vector<Expr > getFactors() const override;
 
-    /*! \brief Tells if the factor \a t_abstract appear in the fraction.
-     * \param t_abstract Factor to test.
-     * \return \b True if t_abstract can factor the fraction.
+    /*! \brief Tells if the factor \a expr appear in the fraction.
+     * \param expr Factor to test.
+     * \return \b True if expr can factor the fraction.
      * \return \b False else.
      */
-    bool askTerm(const Expr& t_abstract, bool exact=false) const override;
+    bool askTerm(const Expr& expr, bool exact=false) const override;
 
-    /*! \brief Suppresses the term t_abstract in the fraction.
+    /*! \brief Suppresses the term expr in the fraction.
      * \warning This function supposes that the function askTerm() has been called 
-     * precedently and does not warn the user if the factor t_abstract is not present.
-     * \param t_abstract Factor to suppress in the fraction.
-     * \return \b The fraction divided by \b t_abstract.
+     * precedently and does not warn the user if the factor expr is not present.
+     * \param expr Factor to suppress in the fraction.
+     * \return \b The fraction divided by \b expr.
      */
-    Expr suppressTerm(const Expr& t_abstract) const override;
+    Expr suppressTerm(const Expr& expr) const override;
 
     void print(int mode=0) const override;
 
@@ -398,22 +398,22 @@ class Fraction: public AbstractDuoFunc{
     bool mergeTerms();
 
     /*! \brief Derives the fraction.
-     * \param t_abstract Argument of the derivation.
+     * \param expr Argument of the derivation.
      * \return The derivative following the formula ...
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
-    int isPolynomial(const Expr& t_abstract) const override;
+    int isPolynomial(const Expr& expr) const override;
 
     Expr getPolynomialTerm(const Expr& t_variable, int order) override;
 
     int getParity(const Expr& t_variable) const override;
     
-    bool operator==(const Expr& t_abstract) const override;
+    bool operator==(const Expr& expr) const override;
 
-    bool operator>(const Expr& t_abstract) const override;
+    bool operator>(const Expr& expr) const override;
 
-    bool operator<(const Expr& t_abstract) const override;
+    bool operator<(const Expr& expr) const override;
 };
 
 /*! \class Pow
@@ -444,7 +444,7 @@ class Pow: public AbstractDuoFunc{
         return smType::Pow;
     }
 
-    /*! \brief Returns the number of possible factors in the expression.
+    /*! \brief Returns the number of possible factors in the expr.
      * \return \b A function of the exponent if it is a Number.
      * \return \b 1 else.
      */
@@ -455,20 +455,20 @@ class Pow: public AbstractDuoFunc{
      */
     std::vector<Expr > getFactors() const override;
 
-    /*! \brief Tells if the factor \a t_abstract appear in the exponentiation.
-     * \param t_abstract Factor to test.
-     * \return \b True if t_abstract can factor the exponentiation.
+    /*! \brief Tells if the factor \a expr appear in the exponentiation.
+     * \param expr Factor to test.
+     * \return \b True if expr can factor the exponentiation.
      * \return \b False else.
      */
-    bool askTerm(const Expr& t_abstract, bool exact=false) const override;
+    bool askTerm(const Expr& expr, bool exact=false) const override;
 
-    /*! \brief Suppresses the term t_abstract in the exponentiation.
+    /*! \brief Suppresses the term expr in the exponentiation.
      * \warning This function supposes that the function askTerm() has been called 
-     * precedently and does not warn the user if the factor t_abstract is not present.
-     * \param t_abstract Factor to suppress in the exponentiation.
-     * \return \b The exponentiation divided by \b t_abstract.
+     * precedently and does not warn the user if the factor expr is not present.
+     * \param expr Factor to suppress in the exponentiation.
+     * \return \b The exponentiation divided by \b expr.
      */
-    Expr suppressTerm(const Expr& t_abstract) const override;
+    Expr suppressTerm(const Expr& expr) const override;
 
     void print(int mode=0) const override;
 
@@ -492,10 +492,10 @@ class Pow: public AbstractDuoFunc{
     bool mergeTerms();
 
     /*! \brief Derives the exponentiation.
-     * \param t_abstract Argument of the derivation.
+     * \param expr Argument of the derivation.
      * \return The derivative following the formula ...
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     /*! \brief \b Develops the exponentiation by expanding the sums inside.
      * \param full If true the development is \b recursive through all the Abstract.
@@ -511,19 +511,19 @@ class Pow: public AbstractDuoFunc{
 
     Expr getComplexArgument() override;
 
-    int isPolynomial(const Expr& t_abstract) const override;
+    int isPolynomial(const Expr& expr) const override;
 
     Expr getPolynomialTerm(const Expr& t_variable, int order) override;
 
     int getParity(const Expr& t_variable) const override;
     
-    bool operator==(const Expr& t_abstract) const override;
+    bool operator==(const Expr& expr) const override;
 
     std::vector<Expr > getAlternateForms() const override;
 
-    bool operator>(const Expr& t_abstract) const override;
+    bool operator>(const Expr& expr) const override;
 
-    bool operator<(const Expr& t_abstract) const override;
+    bool operator<(const Expr& expr) const override;
 };
 
 
@@ -590,18 +590,18 @@ class Derivative: public AbstractDuoFunc{
     Expr evaluate() override;
 
     /*! \brief Derives the derivative.
-     * \param t_abstract Argument of the derivation.
+     * \param expr Argument of the derivation.
      * \return The derivative following the formula ...
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
     
-    bool operator==(const Expr& t_abstract) const override;
+    bool operator==(const Expr& expr) const override;
 
-    bool operator>(const Expr& t_abstract) const override;
+    bool operator>(const Expr& expr) const override;
 
-    bool operator<(const Expr& t_abstract) const override;
+    bool operator<(const Expr& expr) const override;
 };
 
 /*************************************************/
@@ -730,7 +730,7 @@ Expr derivative_(const Expr& leftOperand, const Expr& rightOperand, int order=1)
 
 Expr derivative_(const Expr& variable, int order=1);
 
-Expr polynomial_(const Expr& t_abstract, const Expr& t_variable);
+Expr polynomial_(const Expr& expr, const Expr& t_variable);
 
 Expr polynomial_(const std::vector<Expr >& operands, const Expr& t_variable);
 

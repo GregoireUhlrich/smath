@@ -6,6 +6,22 @@
 #pragma GCC diagnostic ignored "-Wreturn-type"
 using namespace std;
 
+void Abstract::printExplicit(int mode) const
+{
+    cout<<"type="<<getType()<<" : ";
+    print(1);
+    cout<<" ; ";
+    if (getNArgs() > 0)
+        for (int i=0; i<getNArgs(); i++)
+            getArgument(i)->printExplicit(mode);
+
+    cout<<endl;
+}
+
+string Abstract::printLaTeX(int mode) const {
+    return name;
+}
+
 bool Abstract::getValued() const
 {
     print();
@@ -223,16 +239,16 @@ Expr Abstract::getComplexConjugate()
     return plus_(fooReal, times_(times_(double_(-1),i_),fooImag));
 }
 
-void Abstract::insert(const Expr& t_abstract, bool side)
+void Abstract::insert(const Expr& expr, bool side)
 {
     print();
     callError(smError::AbstractFuncCalled,
-            "Abstract::insert(const Expr& t_abstract)");
+            "Abstract::insert(const Expr& expr)");
 }
 
-bool Abstract::askTerm(const Expr& t_abstract, bool exact) const
+bool Abstract::askTerm(const Expr& expr, bool exact) const
 {
-    return this->operator==(t_abstract);
+    return this->operator==(expr);
 }
 
 Expr Abstract::develop(bool full)
@@ -247,12 +263,12 @@ Expr Abstract::factor(const Expr& variable, bool full)
 {
     return Copy(this);
 }
-Expr Abstract::derive(const Expr& t_abstract) const
+Expr Abstract::derive(const Expr& expr) const
 {
     return ZERO;
 }
 
-Expr Abstract::suppressTerm(const Expr& t_abstract) const
+Expr Abstract::suppressTerm(const Expr& expr) const
 {
     return double_(1);
 }
@@ -263,48 +279,30 @@ void Abstract::setValue(double value)
     callError(smError::AbstractFuncCalled, "Abstract::setValue(double value)");
 }
 
-void Abstract::setArgument(const Expr& t_abstract, int iArg)
+void Abstract::setArgument(const Expr& expr, int iArg)
 {
     print();
     callError(smError::AbstractFuncCalled,
-            "Abstract::setArgument(const Expr& t_abstract, int iArg)");
+            "Abstract::setArgument(const Expr& expr, int iArg)");
 }
-void Abstract::setArgument(const Expr& t_abstract, const initializer_list<int>& indices)
+void Abstract::setArgument(const Expr& expr, const initializer_list<int>& indices)
 {
     print();
     callError(smError::AbstractFuncCalled,
-           (string)"Abstract::setArgument(const Expr& t_abstract,"
+           (string)"Abstract::setArgument(const Expr& expr,"
            +"const initializer_list<int>& indices)");
 }
-void Abstract::setArgument(const Expr& t_abstract, const vector<int>& indices)
+void Abstract::setArgument(const Expr& expr, const vector<int>& indices)
 {
     print();
     callError(smError::AbstractFuncCalled,
-    "Abstract::setArgument(const Expr& t_abstract, const vector<int>& indices)");
+    "Abstract::setArgument(const Expr& expr, const vector<int>& indices)");
 }
 void Abstract::setVectorArgument(const vector<Expr>& t_argument)
 {
     print();
     callError(smError::AbstractFuncCalled,
             "Abstract::setVectorArgument(const vector<Expr>& t_argument)");
-}
-
-string Abstract::printLaTeX(int mode) const {
-    return name;
-}
-
-void Abstract::printExplicit(int mode) const
-{
-    cout<<"type="<<getType()<<" : ";
-    print(1);
-    cout<<" ; ";
-    if (getNArgs() > 0)
-    {
-        for (int i=0; i<getNArgs(); i++)
-            getArgument(i)->printExplicit(mode);
-    }
-
-    cout<<endl;
 }
 
 double Abstract::evaluateScalar() const
@@ -314,46 +312,46 @@ double Abstract::evaluateScalar() const
     return 0;
 }
 
-Expr Abstract::addition_own(const Expr& t_abstract) const
+Expr Abstract::addition_own(const Expr& expr) const
 {
     print();
     callError(smError::AbstractFuncCalled,
-            "Abstract::addition_own(const Expr& t_abstract) const");
+            "Abstract::addition_own(const Expr& expr) const");
     return ZERO;
 }
 
-Expr Abstract::multiplication_own(const Expr& t_abstract) const
+Expr Abstract::multiplication_own(const Expr& expr) const
 {
     print();
     callError(smError::AbstractFuncCalled,
-            "Abstract::multiplication_own(const Expr& t_abstract) const");
+            "Abstract::multiplication_own(const Expr& expr) const");
     return ZERO;
 }
 
-Expr Abstract::division_own(const Expr& t_abstract) const
+Expr Abstract::division_own(const Expr& expr) const
 {
     print();
     callError(smError::AbstractFuncCalled,
-            "Abstract::division_own(const Expr& t_abstract) const");
+            "Abstract::division_own(const Expr& expr) const");
     return ZERO;
 }
 
-Expr Abstract::exponentiation_own(const Expr& t_abstract) const
+Expr Abstract::exponentiation_own(const Expr& expr) const
 {
     print();
     callError(smError::AbstractFuncCalled,
-            "Abstract::exponentiation_own(const Expr& t_abstract) const");
+            "Abstract::exponentiation_own(const Expr& expr) const");
     return ZERO;
 }
 
-bool Abstract::dependsOn(const Expr& t_abstract) const
+bool Abstract::dependsOn(const Expr& expr) const
 {
-    return (name != "" and t_abstract->getName() == name);
+    return (name != "" and expr->getName() == name);
 }
 
-int Abstract::isPolynomial(const Expr& t_abstract) const
+int Abstract::isPolynomial(const Expr& expr) const
 {
-    return dependsOn(t_abstract);
+    return dependsOn(expr);
 }
 
 Expr Abstract::getVariable() const
@@ -368,9 +366,9 @@ Expr Abstract::getPolynomialTerm(const Expr& t_variable, int order)
     return ZERO;
 }
 
-bool Abstract::isProportionalTo(const Expr& t_abstract) const
+bool Abstract::isProportionalTo(const Expr& expr) const
 {
-    return (*this == t_abstract);
+    return (*this == expr);
 }
 
 int Abstract::getParity(const Expr& t_variable) const
@@ -401,9 +399,9 @@ bool Abstract::operator!=(double t_value) const
     return !(this->operator==(t_value));
 }
 
-bool Abstract::operator!=(const Expr& t_abstract) const
+bool Abstract::operator!=(const Expr& expr) const
 {
-    return !(this->operator==(t_abstract));
+    return !(this->operator==(expr));
 }
 
 bool Abstract::operator==(int t_value) const
@@ -422,7 +420,7 @@ bool Abstract::operator==(double t_value) const
     return false;
 }
 
-/*bool Abstract::operator==(const Expr& t_abstract) const
+/*bool Abstract::operator==(const Expr& expr) const
 {
     return 0;
 }*/
@@ -434,13 +432,13 @@ Expr Abstract::operator[](int iArg)
     exit(smError::AbstractFuncCalled); // Not usefull line, only there t
 }
 /*
-bool Abstract::operator>(const Expr& t_abstract) const
+bool Abstract::operator>(const Expr& expr) const
 {
     cout<<"Warning: operator> of Abstract called. Should not be.\n";
     return false;
 }
 
-bool Abstract::operator<(const Expr& t_abstract) const
+bool Abstract::operator<(const Expr& expr) const
 {
     cout<<"Warning: operator< of Abstract called. Should not be.\n";
     return false;
@@ -452,49 +450,49 @@ vector<Expr > Abstract::getAlternateForms() const
     return vector<Expr >(0);
 }
 
-bool Abstract::operator|=(const Expr& t_abstract) const
+bool Abstract::operator|=(const Expr& expr) const
 {
     if (SIMPLIFICATION_METHOD == 1) {
-        return (not this->operator<(t_abstract) and
-                not this->operator>(t_abstract));
+        return (not this->operator<(expr) and
+                not this->operator>(expr));
     }
 }
 
-bool Abstract::operator&=(const Expr& t_abstract) const
+bool Abstract::operator&=(const Expr& expr) const
 {
-    return (not this->operator|=(t_abstract));
+    return (not this->operator|=(expr));
 }
 
-bool Abstract::operator<=(const Expr& t_abstract) const
+bool Abstract::operator<=(const Expr& expr) const
 {
-    return (not this->operator>(t_abstract));
+    return (not this->operator>(expr));
 }
 
-bool Abstract::operator>=(const Expr& t_abstract) const
+bool Abstract::operator>=(const Expr& expr) const
 {
-    return (not this->operator<(t_abstract));
+    return (not this->operator<(expr));
 }
 
-bool Abstract::matchShape(const Expr& t_abstract, bool exact) const
+bool Abstract::matchShape(const Expr& expr, bool exact) const
 {
     // Return true if we compare to another jcalar or if it is not exact
     // This function assumes that the Object called has dimension 0
-    return (not exact or t_abstract->getDim() == 0);
+    return (not exact or expr->getDim() == 0);
 }
 
-Expr Abstract::tensor_dot(const Expr& t_abstract) const
+Expr Abstract::tensor_dot(const Expr& expr) const
 {
     print();
     callError(smError::AbstractFuncCalled,
-            "Abstract::tensor_dot(const Expr& t_abstract) const");
+            "Abstract::tensor_dot(const Expr& expr) const");
     return nullptr;
 }
 
-Expr Abstract::dot(const Expr& t_abstract) const
+Expr Abstract::dot(const Expr& expr) const
 {
     print();
     callError(smError::AbstractFuncCalled,
-            "Abstract::dot(const Expr& t_abstract) const");
+            "Abstract::dot(const Expr& expr) const");
     return nullptr;
 }
 

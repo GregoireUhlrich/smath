@@ -43,10 +43,10 @@ class Symbol{
      */    
     Symbol(double value);
 
-    /*! \brief Initializes \b abstract to \a t_abstract.
-     *  \param t_abstract
+    /*! \brief Initializes \b abstract to \a expr.
+     *  \param expr
      */   
-    Symbol(const Expr& t_abstract);
+    Symbol(const Expr& expr);
 
     /*! \brief Copy constructor, copy \a name and \a abstract of \a t_symbol.
      * \param t_symbol Symbol to copy.
@@ -59,7 +59,7 @@ class Symbol{
 
     /*! \brief Clear all references of \a abstract.
      * \details Replaces \b abstract by a Variable (not changing \b name) equal to zero.
-     * This function should be called by the user when lenghty expressions are not used
+     * This function should be called by the user when lenghty exprs are not used
      * anymore: it will be deleted only once nothing is referencing it.
      */
     void clear();
@@ -120,17 +120,17 @@ class Symbol{
     void setCommutable(bool t_commutable);
 
     /*! \brief Change the Abstract managed.
-     * \param t_abstract New \b abstract for the Symbol.
+     * \param expr New \b abstract for the Symbol.
      */
-    void setAbstract(const Expr& t_abstract);
+    void setAbstract(const Expr& expr);
 
-    void setArgument(const Symbol& t_abstract, int iArg=0);
+    void setArgument(const Symbol& expr, int iArg=0);
 
-    void setArgument(const Symbol& t_abstract, int iArg, int jArg);
+    void setArgument(const Symbol& expr, int iArg, int jArg);
 
-    void setArgument(const Symbol& t_abstract, int iArg, int jArg, int kArg);
+    void setArgument(const Symbol& expr, int iArg, int jArg, int kArg);
 
-    void setArgument(const Symbol& t_abstract, const std::vector<int> indices);
+    void setArgument(const Symbol& expr, const std::vector<int> indices);
 
 
     /*! \brief Prints \b abstract on standard output
@@ -204,7 +204,7 @@ class Symbol{
      */
     Symbol develop() const;
 
-    /*! \brief Replaces \a old_symbol by \a new_symbol in the expression.
+    /*! \brief Replaces \a old_symbol by \a new_symbol in the expr.
      * \param old_symbol Symbol to search and replace.
      * \param new_symbol Symbol that will take the place of \b old_symbol.
      */
@@ -265,8 +265,8 @@ class Symbol{
      * a pure Number. 
      * \param t_value New value for the Symbol.
      * \return A reference to \b *this
-     * \warning If we try to set the value of a not directly-valued expression (cos(x)) 
-     * for example, then the expression is erased and replaced with a Number.
+     * \warning If we try to set the value of a not directly-valued expr (cos(x)) 
+     * for example, then the expr is erased and replaced with a Number.
      */
     Symbol& operator=(double t_value);
 
@@ -277,8 +277,8 @@ class Symbol{
      * a pure Number. 
      * \param t_value New value for the Symbol.
      * \return A reference to \b *this
-     * \warning If we try to set the value of a not directly-valued expression (cos(x)) 
-     * for example, then the expression is erased and replaced with a Number.
+     * \warning If we try to set the value of a not directly-valued expr (cos(x)) 
+     * for example, then the expr is erased and replaced with a Number.
      */
     Symbol& operator=(int t_value);
 

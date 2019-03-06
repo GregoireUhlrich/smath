@@ -12,7 +12,7 @@
 #include <fstream>
 
 /*! \class Interpreter
- * \brief Interprets strings as expressions to manipulate them afterwards.
+ * \brief Interprets strings as exprs to manipulate them afterwards.
  */
 class Interpreter{
 

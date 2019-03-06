@@ -24,15 +24,15 @@ void reduceAlternate(std::vector<Expr >& alternateForms);
 
 void clearRedundancyAlternate(std::vector<Expr > alternateForms);
 
-std::vector<Expr > getRegularExpression(const Expr& t_abstract, int depth=-1);
+std::vector<Expr > getRegularExpression(const Expr& expr, int depth=-1);
 
-std::vector<Expr > internalRecursiveAlternateForms(const Expr& t_abstract, int depth=-1);
+std::vector<Expr > internalRecursiveAlternateForms(const Expr& expr, int depth=-1);
 
-/*! \fn Expr Simplify(const Expr& t_abstract)
- * \brief \b Simplifies t_abstract depending on its type.
- * \param t_abstract Abstract to reduce.
+/*! \fn Expr Simplify(const Expr& expr)
+ * \brief \b Simplifies expr depending on its type.
+ * \param expr Abstract to reduce.
  * \return The simplified Abstract.
  */
-Expr Simplify(const Expr& t_abstract, int depth=-1);
+Expr Simplify(const Expr& expr, int depth=-1);
 
 #endif

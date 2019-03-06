@@ -5,15 +5,15 @@ using namespace std;
 
 
 
-bool Double::operator<(const Expr& t_abstract) const
+bool Double::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    int type = expr->getType();
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
         case smType::Double:
-        return value < t_abstract->evaluateScalar();
+        return value < expr->evaluateScalar();
         break;
 
         case smType::Integer:
@@ -99,15 +99,15 @@ bool Double::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool Double::operator>(const Expr& t_abstract) const
+bool Double::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    int type = expr->getType();
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
         case smType::Double:
-        return value > t_abstract->evaluateScalar();
+        return value > expr->evaluateScalar();
         break;
 
         case smType::Integer:
@@ -193,10 +193,10 @@ bool Double::operator>(const Expr& t_abstract) const
     return false;
 }
 
-bool Integer::operator<(const Expr& t_abstract) const
+bool Integer::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    int type = expr->getType();
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -205,7 +205,7 @@ bool Integer::operator<(const Expr& t_abstract) const
         break;
 
         case smType::Integer:
-        return value < t_abstract->evaluateScalar();
+        return value < expr->evaluateScalar();
         break;
 
         case smType::Variable:
@@ -287,10 +287,10 @@ bool Integer::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool Integer::operator>(const Expr& t_abstract) const
+bool Integer::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    int type = expr->getType();
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -299,7 +299,7 @@ bool Integer::operator>(const Expr& t_abstract) const
         break;
 
         case smType::Integer:
-        return value > t_abstract->evaluateScalar();
+        return value > expr->evaluateScalar();
         break;
 
         case smType::Variable:
@@ -381,10 +381,10 @@ bool Integer::operator>(const Expr& t_abstract) const
     return false;
 }
 
-bool Variable::operator<(const Expr& t_abstract) const
+bool Variable::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    int type = expr->getType();
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -397,7 +397,7 @@ bool Variable::operator<(const Expr& t_abstract) const
         break;
 
         case smType::Variable:
-        return (compare(name,t_abstract->getName())==-1);
+        return (compare(name,expr->getName())==-1);
         break;
 
         case smType::Constant:
@@ -475,10 +475,10 @@ bool Variable::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool Variable::operator>(const Expr& t_abstract) const
+bool Variable::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    int type = expr->getType();
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -491,7 +491,7 @@ bool Variable::operator>(const Expr& t_abstract) const
         break;
 
         case smType::Variable:
-        return (compare(name,t_abstract->getName())==1);
+        return (compare(name,expr->getName())==1);
         break;
 
         case smType::Constant:
@@ -569,10 +569,10 @@ bool Variable::operator>(const Expr& t_abstract) const
     return false;
 }
 
-bool Constant::operator<(const Expr& t_abstract) const
+bool Constant::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    int type = expr->getType();
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -589,7 +589,7 @@ bool Constant::operator<(const Expr& t_abstract) const
         break;
 
         case smType::Constant:
-        return (compare(name,t_abstract->getName())==-1);
+        return (compare(name,expr->getName())==-1);
         break;
 
         case smType::CFraction:
@@ -663,10 +663,10 @@ bool Constant::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool Constant::operator>(const Expr& t_abstract) const
+bool Constant::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    int type = expr->getType();
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -683,7 +683,7 @@ bool Constant::operator>(const Expr& t_abstract) const
         break;
 
         case smType::Constant:
-        return (compare(name,t_abstract->getName())==1);
+        return (compare(name,expr->getName())==1);
         break;
 
         case smType::CFraction:
@@ -757,15 +757,15 @@ bool Constant::operator>(const Expr& t_abstract) const
     return false;
 }
 
-bool CFraction::operator<(const Expr& t_abstract) const
+bool CFraction::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    int type = expr->getType();
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
         case smType::Double:
-        return (not t_abstract->isInteger());
+        return (not expr->isInteger());
         break;
 
         case smType::Integer:
@@ -781,7 +781,7 @@ bool CFraction::operator<(const Expr& t_abstract) const
         break;
 
         case smType::CFraction:
-        if (SIMPLIFICATION_METHOD == 1) return evaluateScalar() < t_abstract->evaluateScalar();
+        if (SIMPLIFICATION_METHOD == 1) return evaluateScalar() < expr->evaluateScalar();
         break;
 
         case smType::CFactorial:
@@ -851,15 +851,15 @@ bool CFraction::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool CFraction::operator>(const Expr& t_abstract) const
+bool CFraction::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    int type = expr->getType();
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
         case smType::Double:
-        return t_abstract->isInteger();
+        return expr->isInteger();
         break;
 
         case smType::Integer:
@@ -875,7 +875,7 @@ bool CFraction::operator>(const Expr& t_abstract) const
         break;
 
         case smType::CFraction:
-        if (SIMPLIFICATION_METHOD == 1) return evaluateScalar() > t_abstract->evaluateScalar();
+        if (SIMPLIFICATION_METHOD == 1) return evaluateScalar() > expr->evaluateScalar();
         break;
 
         case smType::CFactorial:
@@ -945,10 +945,10 @@ bool CFraction::operator>(const Expr& t_abstract) const
     return false;
 }
 
-bool CFactorial::operator<(const Expr& t_abstract) const
+bool CFactorial::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    int type = expr->getType();
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -973,7 +973,7 @@ bool CFactorial::operator<(const Expr& t_abstract) const
         break;
 
         case smType::CFactorial:
-        return value < t_abstract->getValue();
+        return value < expr->getValue();
         break;
 
         case smType::Imaginary:
@@ -1039,10 +1039,10 @@ bool CFactorial::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool CFactorial::operator>(const Expr& t_abstract) const
+bool CFactorial::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    int type = expr->getType();
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -1067,7 +1067,7 @@ bool CFactorial::operator>(const Expr& t_abstract) const
         break;
 
         case smType::CFactorial:
-        return value > t_abstract->getValue();
+        return value > expr->getValue();
         break;
 
         case smType::Imaginary:
@@ -1133,10 +1133,10 @@ bool CFactorial::operator>(const Expr& t_abstract) const
     return false;
 }
 
-bool Imaginary::operator<(const Expr& t_abstract) const
+bool Imaginary::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    int type = expr->getType();
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -1227,10 +1227,10 @@ bool Imaginary::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool Imaginary::operator>(const Expr& t_abstract) const
+bool Imaginary::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    int type = expr->getType();
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -1321,12 +1321,12 @@ bool Imaginary::operator>(const Expr& t_abstract) const
     return false;
 }
 
-bool Plus::operator<(const Expr& t_abstract) const
+bool Plus::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -1360,13 +1360,13 @@ bool Plus::operator<(const Expr& t_abstract) const
 
         case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
-            t_nArgs = t_abstract->getNArgs();
+            t_nArgs = expr->getNArgs();
             nMax = min(nArgs, t_nArgs);
             for (int i=0; i<nMax; i++)
             {
-                if (*argument[nArgs-1-i] < t_abstract->getArgument(t_nArgs-1-i))
+                if (*argument[nArgs-1-i] < expr->getArgument(t_nArgs-1-i))
                     return true;
-                else if (*argument[nArgs-1-i] > t_abstract->getArgument(t_nArgs-1-i))
+                else if (*argument[nArgs-1-i] > expr->getArgument(t_nArgs-1-i))
                     return false;
             }
             return nArgs < t_nArgs;
@@ -1375,7 +1375,7 @@ bool Plus::operator<(const Expr& t_abstract) const
 
         case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Times>(ONE, Copy(this)) < t_abstract);
+            return (*make_shared<Times>(ONE, Copy(this)) < expr);
         }
         break;
 
@@ -1387,29 +1387,29 @@ bool Plus::operator<(const Expr& t_abstract) const
 
         case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Pow>(Copy(this), ONE) < t_abstract);
+            return (*make_shared<Pow>(Copy(this), ONE) < expr);
         }
         break;
 
         case smType::Polynomial:
-        return this->operator<(t_abstract->getRegularExpression());
+        return this->operator<(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
-            return this->operator<(make_shared<Plus>(ZERO,t_abstract));
+            return this->operator<(make_shared<Plus>(ZERO,expr));
         }
         break;
 
         case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
-            return this->operator<(make_shared<Plus>(ZERO,t_abstract));
+            return this->operator<(make_shared<Plus>(ZERO,expr));
         }
         break;
 
         case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
-            return this->operator<(make_shared<Plus>(ZERO,t_abstract));
+            return this->operator<(make_shared<Plus>(ZERO,expr));
         }
         break;
 
@@ -1450,12 +1450,12 @@ bool Plus::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool Plus::operator>(const Expr& t_abstract) const
+bool Plus::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -1489,13 +1489,13 @@ bool Plus::operator>(const Expr& t_abstract) const
 
         case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
-            nMax = min(nArgs, t_abstract->getNArgs());
-            t_nArgs = t_abstract->getNArgs();
+            nMax = min(nArgs, expr->getNArgs());
+            t_nArgs = expr->getNArgs();
             for (int i=0; i<nMax; i++)
             {
-                if (*argument[nArgs-1-i] > t_abstract->getArgument(t_nArgs-1-i))
+                if (*argument[nArgs-1-i] > expr->getArgument(t_nArgs-1-i))
                     return true;
-                else if (*argument[nArgs-1-i] < t_abstract->getArgument(t_nArgs-1-i))
+                else if (*argument[nArgs-1-i] < expr->getArgument(t_nArgs-1-i))
                     return false;
             }
             return nArgs > t_nArgs;
@@ -1504,7 +1504,7 @@ bool Plus::operator>(const Expr& t_abstract) const
 
         case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Times>(ONE, Copy(this)) > t_abstract);
+            return (*make_shared<Times>(ONE, Copy(this)) > expr);
         }
         break;
 
@@ -1516,29 +1516,29 @@ bool Plus::operator>(const Expr& t_abstract) const
 
         case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Pow>(Copy(this), ONE) > t_abstract);
+            return (*make_shared<Pow>(Copy(this), ONE) > expr);
         }
         break;
 
         case smType::Polynomial:
-        return this->operator>(t_abstract->getRegularExpression());
+        return this->operator>(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
-            return this->operator>(make_shared<Plus>(ZERO,t_abstract));
+            return this->operator>(make_shared<Plus>(ZERO,expr));
         }
         break;
 
         case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
-            return this->operator>(make_shared<Plus>(ZERO,t_abstract));
+            return this->operator>(make_shared<Plus>(ZERO,expr));
         }
         break;
 
         case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
-            return this->operator>(make_shared<Plus>(ZERO,t_abstract));
+            return this->operator>(make_shared<Plus>(ZERO,expr));
         }
         break;
 
@@ -1579,12 +1579,12 @@ bool Plus::operator>(const Expr& t_abstract) const
     return false;
 }
 
-bool Times::operator<(const Expr& t_abstract) const
+bool Times::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -1618,19 +1618,19 @@ bool Times::operator<(const Expr& t_abstract) const
 
         case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator<(make_shared<Times>(ONE,t_abstract)));
+            return (this->operator<(make_shared<Times>(ONE,expr)));
         }
         break;
 
         case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
-            nMax = min(nArgs, t_abstract->getNArgs());
-            t_nArgs = t_abstract->getNArgs();
+            nMax = min(nArgs, expr->getNArgs());
+            t_nArgs = expr->getNArgs();
             for (int i=0; i<nMax; i++)
             {
-                if (*argument[nArgs-1-i] < t_abstract->getArgument(t_nArgs-1-i))
+                if (*argument[nArgs-1-i] < expr->getArgument(t_nArgs-1-i))
                     return true;
-                else if (*argument[nArgs-1-i] > t_abstract->getArgument(t_nArgs-1-i))
+                else if (*argument[nArgs-1-i] > expr->getArgument(t_nArgs-1-i))
                     return false;
             }
             return nArgs < t_nArgs;
@@ -1645,29 +1645,29 @@ bool Times::operator<(const Expr& t_abstract) const
 
         case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator<(make_shared<Times>(ONE,t_abstract)));
+            return (this->operator<(make_shared<Times>(ONE,expr)));
         }
         break;
 
         case smType::Polynomial:
-        return this->operator<(t_abstract->getRegularExpression());
+        return this->operator<(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator<(make_shared<Times>(ONE,t_abstract)));
+            return (this->operator<(make_shared<Times>(ONE,expr)));
         }
         break;
 
         case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator<(make_shared<Times>(ONE,t_abstract)));
+            return (this->operator<(make_shared<Times>(ONE,expr)));
         }
         break;
 
         case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator<(make_shared<Times>(ONE,t_abstract)));
+            return (this->operator<(make_shared<Times>(ONE,expr)));
         }
         break;
 
@@ -1708,12 +1708,12 @@ bool Times::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool Times::operator>(const Expr& t_abstract) const
+bool Times::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -1747,19 +1747,19 @@ bool Times::operator>(const Expr& t_abstract) const
 
         case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator<(make_shared<Times>(ONE,t_abstract)));
+            return (this->operator<(make_shared<Times>(ONE,expr)));
         }
         break;
 
         case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
-            nMax = min(nArgs, t_abstract->getNArgs());
-            t_nArgs = t_abstract->getNArgs();
+            nMax = min(nArgs, expr->getNArgs());
+            t_nArgs = expr->getNArgs();
             for (int i=0; i<nMax; i++)
             {
-                if (*argument[nArgs-1-i] > t_abstract->getArgument(t_nArgs-1-i))
+                if (*argument[nArgs-1-i] > expr->getArgument(t_nArgs-1-i))
                     return true;
-                else if (*argument[nArgs-1-i] < t_abstract->getArgument(t_nArgs-1-i))
+                else if (*argument[nArgs-1-i] < expr->getArgument(t_nArgs-1-i))
                     return false;
             }
             return nArgs > t_nArgs;
@@ -1774,29 +1774,29 @@ bool Times::operator>(const Expr& t_abstract) const
 
         case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator>(make_shared<Times>(ONE,t_abstract)));
+            return (this->operator>(make_shared<Times>(ONE,expr)));
         }
         break;
 
         case smType::Polynomial:
-        return this->operator>(t_abstract->getRegularExpression());
+        return this->operator>(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator>(make_shared<Times>(ONE,t_abstract)));
+            return (this->operator>(make_shared<Times>(ONE,expr)));
         }
         break;
 
         case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator>(make_shared<Times>(ONE,t_abstract)));
+            return (this->operator>(make_shared<Times>(ONE,expr)));
         }
         break;
 
         case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator>(make_shared<Times>(ONE,t_abstract)));
+            return (this->operator>(make_shared<Times>(ONE,expr)));
         }
         break;
 
@@ -1837,12 +1837,12 @@ bool Times::operator>(const Expr& t_abstract) const
     return false;
 }
 
-bool Fraction::operator<(const Expr& t_abstract) const
+bool Fraction::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -1899,7 +1899,7 @@ bool Fraction::operator<(const Expr& t_abstract) const
         break;
 
         case smType::Polynomial:
-        return this->operator<(t_abstract->getRegularExpression());
+        return this->operator<(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
@@ -1957,12 +1957,12 @@ bool Fraction::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool Fraction::operator>(const Expr& t_abstract) const
+bool Fraction::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -2019,7 +2019,7 @@ bool Fraction::operator>(const Expr& t_abstract) const
         break;
 
         case smType::Polynomial:
-        return this->operator>(t_abstract->getRegularExpression());
+        return this->operator>(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
@@ -2077,12 +2077,12 @@ bool Fraction::operator>(const Expr& t_abstract) const
     return false;
 }
 
-bool Pow::operator<(const Expr& t_abstract) const
+bool Pow::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -2116,50 +2116,50 @@ bool Pow::operator<(const Expr& t_abstract) const
 
         case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator<(make_shared<Pow>(t_abstract, ONE)));
+            return (this->operator<(make_shared<Pow>(expr, ONE)));
         }
         break;
 
         case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Times>(ONE,Copy(this)) < t_abstract);
+            return (*make_shared<Times>(ONE,Copy(this)) < expr);
         }
         break;
 
         case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator<(make_shared<Pow>(t_abstract, ONE)));
+            return (this->operator<(make_shared<Pow>(expr, ONE)));
         }
         break;
 
         case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
-            foo = t_abstract->getArgument(0);
+            foo = expr->getArgument(0);
             if (*argument[0] != foo)
-                return (*argument[0] < t_abstract->getArgument(0));
-            return (*argument[1] < t_abstract->getArgument(1));
+                return (*argument[0] < expr->getArgument(0));
+            return (*argument[1] < expr->getArgument(1));
         }
         break;
 
         case smType::Polynomial:
-        return this->operator<(t_abstract->getRegularExpression());
+        return this->operator<(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator<(make_shared<Pow>(t_abstract, ONE)));
+            return (this->operator<(make_shared<Pow>(expr, ONE)));
         }
         break;
 
         case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator<(make_shared<Pow>(t_abstract, ONE)));
+            return (this->operator<(make_shared<Pow>(expr, ONE)));
         }
         break;
 
         case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator<(make_shared<Pow>(t_abstract,ONE)));
+            return (this->operator<(make_shared<Pow>(expr,ONE)));
         }
         break;
 
@@ -2200,12 +2200,12 @@ bool Pow::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool Pow::operator>(const Expr& t_abstract) const
+bool Pow::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -2239,50 +2239,50 @@ bool Pow::operator>(const Expr& t_abstract) const
 
         case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator>(make_shared<Pow>(t_abstract, ONE)));
+            return (this->operator>(make_shared<Pow>(expr, ONE)));
         }
         break;
 
         case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Times>(ONE,Copy(this)) > t_abstract);
+            return (*make_shared<Times>(ONE,Copy(this)) > expr);
         }
         break;
 
         case smType::Fraction:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator>(make_shared<Pow>(t_abstract, ONE)));
+            return (this->operator>(make_shared<Pow>(expr, ONE)));
         }
         break;
 
         case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
-            foo = t_abstract->getArgument(0);
+            foo = expr->getArgument(0);
             if (*argument[0] != foo)
-                return (*argument[0] > t_abstract->getArgument(0));
-            return (*argument[1] > t_abstract->getArgument(1));
+                return (*argument[0] > expr->getArgument(0));
+            return (*argument[1] > expr->getArgument(1));
         }
         break;
 
         case smType::Polynomial:
-        return this->operator>(t_abstract->getRegularExpression());
+        return this->operator>(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator>(make_shared<Pow>(t_abstract, ONE)));
+            return (this->operator>(make_shared<Pow>(expr, ONE)));
         }
         break;
 
         case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator>(make_shared<Pow>(t_abstract, ONE)));
+            return (this->operator>(make_shared<Pow>(expr, ONE)));
         }
         break;
 
         case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (this->operator>(make_shared<Pow>(t_abstract,ONE)));
+            return (this->operator>(make_shared<Pow>(expr,ONE)));
         }
         break;
 
@@ -2323,22 +2323,22 @@ bool Pow::operator>(const Expr& t_abstract) const
     return false;
 }
 
-bool Polynomial::operator<(const Expr& t_abstract) const
+bool Polynomial::operator<(const Expr& expr) const
 {
-    return getRegularExpression() < t_abstract;
+    return getRegularExpression() < expr;
 }
 
-bool Polynomial::operator>(const Expr& t_abstract) const
+bool Polynomial::operator>(const Expr& expr) const
 {
-    return getRegularExpression() > t_abstract;
+    return getRegularExpression() > expr;
 }
 
-bool Derivative::operator<(const Expr& t_abstract) const
+bool Derivative::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -2372,13 +2372,13 @@ bool Derivative::operator<(const Expr& t_abstract) const
 
         case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Plus>(ZERO,Copy(this)) < t_abstract);
+            return (*make_shared<Plus>(ZERO,Copy(this)) < expr);
         }
         break;
 
         case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Times>(ONE, Copy(this)) < t_abstract);
+            return (*make_shared<Times>(ONE, Copy(this)) < expr);
         }
         break;
 
@@ -2390,19 +2390,19 @@ bool Derivative::operator<(const Expr& t_abstract) const
 
         case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Pow>(Copy(this),ONE) < t_abstract);
+            return (*make_shared<Pow>(Copy(this),ONE) < expr);
         }
         break;
 
         case smType::Polynomial:
-        return this->operator<(t_abstract->getRegularExpression());
+        return this->operator<(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
-            if (*argument[1] != t_abstract->getArgument(1))
-                return (*argument[1] < t_abstract->getArgument(1));
-            return *argument[0] < t_abstract->getArgument(0);
+            if (*argument[1] != expr->getArgument(1))
+                return (*argument[1] < expr->getArgument(1));
+            return *argument[0] < expr->getArgument(0);
         }
         break;
 
@@ -2414,7 +2414,7 @@ bool Derivative::operator<(const Expr& t_abstract) const
 
         case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
-            return smType::Derivative < t_abstract->getType();
+            return smType::Derivative < expr->getType();
         }
         break;
 
@@ -2455,12 +2455,12 @@ bool Derivative::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool Derivative::operator>(const Expr& t_abstract) const
+bool Derivative::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -2494,13 +2494,13 @@ bool Derivative::operator>(const Expr& t_abstract) const
 
         case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Plus>(ZERO,Copy(this)) > t_abstract);
+            return (*make_shared<Plus>(ZERO,Copy(this)) > expr);
         }
         break;
 
         case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Times>(ONE, Copy(this)) > t_abstract);
+            return (*make_shared<Times>(ONE, Copy(this)) > expr);
         }
         break;
 
@@ -2512,19 +2512,19 @@ bool Derivative::operator>(const Expr& t_abstract) const
 
         case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Pow>(Copy(this),ONE) > t_abstract);
+            return (*make_shared<Pow>(Copy(this),ONE) > expr);
         }
         break;
 
         case smType::Polynomial:
-        return this->operator>(t_abstract->getRegularExpression());
+        return this->operator>(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
         if (SIMPLIFICATION_METHOD == 1) {
-            if (*argument[1] != t_abstract->getArgument(1))
-                return (*argument[1] > t_abstract->getArgument(1));
-            return *argument[0] > t_abstract->getArgument(0);
+            if (*argument[1] != expr->getArgument(1))
+                return (*argument[1] > expr->getArgument(1));
+            return *argument[0] > expr->getArgument(0);
         }
         break;
 
@@ -2536,7 +2536,7 @@ bool Derivative::operator>(const Expr& t_abstract) const
 
         case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
-            return smType::Derivative > t_abstract->getType();
+            return smType::Derivative > expr->getType();
         }
         break;
 
@@ -2577,12 +2577,12 @@ bool Derivative::operator>(const Expr& t_abstract) const
     return false;
 }
 
-bool Angle::operator<(const Expr& t_abstract) const
+bool Angle::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -2616,13 +2616,13 @@ bool Angle::operator<(const Expr& t_abstract) const
 
         case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Plus>(ZERO,Copy(this)) < t_abstract);
+            return (*make_shared<Plus>(ZERO,Copy(this)) < expr);
         }
         break;
 
         case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Times>(ONE,Copy(this)) < t_abstract);
+            return (*make_shared<Times>(ONE,Copy(this)) < expr);
         }
         break;
 
@@ -2634,12 +2634,12 @@ bool Angle::operator<(const Expr& t_abstract) const
 
         case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Pow>(Copy(this), ONE) < t_abstract);
+            return (*make_shared<Pow>(Copy(this), ONE) < expr);
         }
         break;
 
         case smType::Polynomial:
-        return this->operator<(t_abstract->getRegularExpression());
+        return this->operator<(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
@@ -2650,15 +2650,15 @@ bool Angle::operator<(const Expr& t_abstract) const
 
         case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
-            if (*argument[0] != t_abstract->getArgument(0))
-                return *argument[0] < t_abstract->getArgument(0);
-            return *argument[1] < t_abstract->getArgument(1);
+            if (*argument[0] != expr->getArgument(0))
+                return *argument[0] < expr->getArgument(0);
+            return *argument[1] < expr->getArgument(1);
         }
         break;
 
         case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
-            return smType::Angle < t_abstract->getType();
+            return smType::Angle < expr->getType();
         }
         break;
 
@@ -2699,12 +2699,12 @@ bool Angle::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool Angle::operator>(const Expr& t_abstract) const
+bool Angle::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -2738,13 +2738,13 @@ bool Angle::operator>(const Expr& t_abstract) const
 
         case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Plus>(ZERO,Copy(this)) > t_abstract);
+            return (*make_shared<Plus>(ZERO,Copy(this)) > expr);
         }
         break;
 
         case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Times>(ONE,Copy(this)) > t_abstract);
+            return (*make_shared<Times>(ONE,Copy(this)) > expr);
         }
         break;
 
@@ -2756,12 +2756,12 @@ bool Angle::operator>(const Expr& t_abstract) const
 
         case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Pow>(Copy(this), ONE) > t_abstract);
+            return (*make_shared<Pow>(Copy(this), ONE) > expr);
         }
         break;
 
         case smType::Polynomial:
-        return this->operator>(t_abstract->getRegularExpression());
+        return this->operator>(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
@@ -2772,15 +2772,15 @@ bool Angle::operator>(const Expr& t_abstract) const
 
         case smType::Angle:
         if (SIMPLIFICATION_METHOD == 1) {
-            if (*argument[0] != t_abstract->getArgument(0))
-                return *argument[0] > t_abstract->getArgument(0);
-            return *argument[1] > t_abstract->getArgument(1);
+            if (*argument[0] != expr->getArgument(0))
+                return *argument[0] > expr->getArgument(0);
+            return *argument[1] > expr->getArgument(1);
         }
         break;
 
         case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
-            return smType::Angle > t_abstract->getType();
+            return smType::Angle > expr->getType();
         }
         break;
 
@@ -2821,12 +2821,12 @@ bool Angle::operator>(const Expr& t_abstract) const
     return false;
 }
 
-bool AbstractFunc::operator<(const Expr& t_abstract) const
+bool AbstractFunc::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -2860,13 +2860,13 @@ bool AbstractFunc::operator<(const Expr& t_abstract) const
 
         case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Plus>(ZERO,Copy(this)) < t_abstract);
+            return (*make_shared<Plus>(ZERO,Copy(this)) < expr);
         }
         break;
 
         case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Times>(ONE,Copy(this)) < t_abstract);
+            return (*make_shared<Times>(ONE,Copy(this)) < expr);
         }
         break;
 
@@ -2878,12 +2878,12 @@ bool AbstractFunc::operator<(const Expr& t_abstract) const
 
         case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
-           return (*make_shared<Pow>(Copy(this), ONE) < t_abstract);
+           return (*make_shared<Pow>(Copy(this), ONE) < expr);
         }
         break;
 
         case smType::Polynomial:
-        return this->operator<(t_abstract->getRegularExpression());
+        return this->operator<(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
@@ -2900,9 +2900,9 @@ bool AbstractFunc::operator<(const Expr& t_abstract) const
 
         case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
-            if (getType() == t_abstract->getType())
-                return *argument < t_abstract->getArgument();
-            return getType() < t_abstract->getType();
+            if (getType() == expr->getType())
+                return *argument < expr->getArgument();
+            return getType() < expr->getType();
         }
         break;
 
@@ -2943,12 +2943,12 @@ bool AbstractFunc::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool AbstractFunc::operator>(const Expr& t_abstract) const
+bool AbstractFunc::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -2982,13 +2982,13 @@ bool AbstractFunc::operator>(const Expr& t_abstract) const
 
         case smType::Plus:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Plus>(ZERO,Copy(this)) > t_abstract);
+            return (*make_shared<Plus>(ZERO,Copy(this)) > expr);
         }
         break;
 
         case smType::Times:
         if (SIMPLIFICATION_METHOD == 1) {
-            return (*make_shared<Times>(ONE,Copy(this)) > t_abstract);
+            return (*make_shared<Times>(ONE,Copy(this)) > expr);
         }
         break;
 
@@ -3000,12 +3000,12 @@ bool AbstractFunc::operator>(const Expr& t_abstract) const
 
         case smType::Pow:
         if (SIMPLIFICATION_METHOD == 1) {
-           return (*make_shared<Pow>(Copy(this), ONE) > t_abstract);
+           return (*make_shared<Pow>(Copy(this), ONE) > expr);
         }
         break;
 
         case smType::Polynomial:
-        return this->operator>(t_abstract->getRegularExpression());
+        return this->operator>(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
@@ -3022,9 +3022,9 @@ bool AbstractFunc::operator>(const Expr& t_abstract) const
 
         case smType::ScalarFunction:
         if (SIMPLIFICATION_METHOD == 1) {
-            if (getType() == t_abstract->getType())
-                return *argument > t_abstract->getArgument();
-            return getType() > t_abstract->getType();
+            if (getType() == expr->getType())
+                return *argument > expr->getArgument();
+            return getType() > expr->getType();
         }
         break;
 
@@ -3065,12 +3065,12 @@ bool AbstractFunc::operator>(const Expr& t_abstract) const
     return false;
 }
 
-bool Vector::operator<(const Expr& t_abstract) const
+bool Vector::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -3127,7 +3127,7 @@ bool Vector::operator<(const Expr& t_abstract) const
         break;
 
         case smType::Polynomial:
-        return this->operator<(t_abstract->getRegularExpression());
+        return this->operator<(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
@@ -3185,12 +3185,12 @@ bool Vector::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool Vector::operator>(const Expr& t_abstract) const
+bool Vector::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -3247,7 +3247,7 @@ bool Vector::operator>(const Expr& t_abstract) const
         break;
 
         case smType::Polynomial:
-        return this->operator>(t_abstract->getRegularExpression());
+        return this->operator>(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
@@ -3305,12 +3305,12 @@ bool Vector::operator>(const Expr& t_abstract) const
     return false;
 }
 
-bool Matrix::operator<(const Expr& t_abstract) const
+bool Matrix::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -3367,7 +3367,7 @@ bool Matrix::operator<(const Expr& t_abstract) const
         break;
 
         case smType::Polynomial:
-        return this->operator<(t_abstract->getRegularExpression());
+        return this->operator<(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
@@ -3425,12 +3425,12 @@ bool Matrix::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool Matrix::operator>(const Expr& t_abstract) const
+bool Matrix::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -3487,7 +3487,7 @@ bool Matrix::operator>(const Expr& t_abstract) const
         break;
 
         case smType::Polynomial:
-        return this->operator>(t_abstract->getRegularExpression());
+        return this->operator>(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
@@ -3545,12 +3545,12 @@ bool Matrix::operator>(const Expr& t_abstract) const
     return false;
 }
 
-bool HighDTensor::operator<(const Expr& t_abstract) const
+bool HighDTensor::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -3607,7 +3607,7 @@ bool HighDTensor::operator<(const Expr& t_abstract) const
         break;
 
         case smType::Polynomial:
-        return this->operator<(t_abstract->getRegularExpression());
+        return this->operator<(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
@@ -3665,12 +3665,12 @@ bool HighDTensor::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool HighDTensor::operator>(const Expr& t_abstract) const
+bool HighDTensor::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -3727,7 +3727,7 @@ bool HighDTensor::operator>(const Expr& t_abstract) const
         break;
 
         case smType::Polynomial:
-        return this->operator>(t_abstract->getRegularExpression());
+        return this->operator>(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
@@ -3785,12 +3785,12 @@ bool HighDTensor::operator>(const Expr& t_abstract) const
     return false;
 }
 
-bool ITensor::operator<(const Expr& t_abstract) const
+bool ITensor::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -3847,7 +3847,7 @@ bool ITensor::operator<(const Expr& t_abstract) const
         break;
 
         case smType::Polynomial:
-        return this->operator<(t_abstract->getRegularExpression());
+        return this->operator<(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
@@ -3888,7 +3888,7 @@ bool ITensor::operator<(const Expr& t_abstract) const
 
         case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
-            return getIndexStructure().size() < t_abstract->getIndexStructure().size();
+            return getIndexStructure().size() < expr->getIndexStructure().size();
         }
         break;
 
@@ -3905,12 +3905,12 @@ bool ITensor::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool ITensor::operator>(const Expr& t_abstract) const
+bool ITensor::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -3967,7 +3967,7 @@ bool ITensor::operator>(const Expr& t_abstract) const
         break;
 
         case smType::Polynomial:
-        return this->operator>(t_abstract->getRegularExpression());
+        return this->operator>(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
@@ -4008,7 +4008,7 @@ bool ITensor::operator>(const Expr& t_abstract) const
 
         case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
-            return getIndexStructure().size() > t_abstract->getIndexStructure().size();
+            return getIndexStructure().size() > expr->getIndexStructure().size();
         }
         break;
 
@@ -4025,12 +4025,12 @@ bool ITensor::operator>(const Expr& t_abstract) const
     return false;
 }
 
-bool ITerm::operator<(const Expr& t_abstract) const
+bool ITerm::operator<(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -4087,7 +4087,7 @@ bool ITerm::operator<(const Expr& t_abstract) const
         break;
 
         case smType::Polynomial:
-        return this->operator<(t_abstract->getRegularExpression());
+        return this->operator<(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
@@ -4135,13 +4135,13 @@ bool ITerm::operator<(const Expr& t_abstract) const
         case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             nMax = getIndexStructure().size();
-            t_nArgs = t_abstract->getIndexStructure().size();
+            t_nArgs = expr->getIndexStructure().size();
             if (nMax != t_nArgs)
                 return nMax < t_nArgs;
-            nMax = min(nArgs, t_abstract->getNArgs());
-            t_nArgs = t_abstract->getNArgs();
+            nMax = min(nArgs, expr->getNArgs());
+            t_nArgs = expr->getNArgs();
             for (int i=0; i<nMax; i++)
-                if (*argument[nArgs-1-i] < t_abstract->getArgument(t_nArgs-1-i))
+                if (*argument[nArgs-1-i] < expr->getArgument(t_nArgs-1-i))
                     return true;
             return nArgs < t_nArgs;
         }
@@ -4154,12 +4154,12 @@ bool ITerm::operator<(const Expr& t_abstract) const
     return false;
 }
 
-bool ITerm::operator>(const Expr& t_abstract) const
+bool ITerm::operator>(const Expr& expr) const
 {
-    int type = t_abstract->getType();
+    int type = expr->getType();
     int nMax, t_nArgs;
     Expr foo;
-    if (t_abstract->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = smType::ScalarFunction;
     switch(type)
     {
@@ -4216,7 +4216,7 @@ bool ITerm::operator>(const Expr& t_abstract) const
         break;
 
         case smType::Polynomial:
-        return this->operator>(t_abstract->getRegularExpression());
+        return this->operator>(expr->getRegularExpression());
         break;
 
         case smType::Derivative:
@@ -4264,13 +4264,13 @@ bool ITerm::operator>(const Expr& t_abstract) const
         case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             nMax = getIndexStructure().size();
-            t_nArgs = t_abstract->getIndexStructure().size();
+            t_nArgs = expr->getIndexStructure().size();
             if (nMax != t_nArgs)
                 return nMax > t_nArgs;
-            nMax = min(nArgs, t_abstract->getNArgs());
-            t_nArgs = t_abstract->getNArgs();
+            nMax = min(nArgs, expr->getNArgs());
+            t_nArgs = expr->getNArgs();
             for (int i=0; i<nMax; i++)
-                if (*argument[nArgs-1-i] > t_abstract->getArgument(t_nArgs-1-i))
+                if (*argument[nArgs-1-i] > expr->getArgument(t_nArgs-1-i))
                     return true;
             return nArgs > t_nArgs;
         }
@@ -4308,8 +4308,8 @@ END TypeS
 */
 
 /* SWITCH STATEMENT
-    int type = t_abstract->getType();
-    if (t_abstract->getPrimaryType() == ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
+    int type = expr->getType();
+    if (expr->getPrimaryType() == ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
         type = ScalarFunction;
     switch(type)
     {
@@ -4347,7 +4347,7 @@ END TypeS
         break;
 
         case Polynomial:
-        return this->operator>(t_abstract->getRegularExpression());
+        return this->operator>(expr->getRegularExpression());
         break;
 
         case Angle:

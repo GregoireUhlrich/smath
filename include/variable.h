@@ -12,8 +12,8 @@
 /*************************************************/
 
 /*! \class AbstractBuildingBlock
- * \brief Abstract class from which derive all building blocks of expressions,
- * i.e. objects not function of further expressions: the leafs of the recursive tree. 
+ * \brief Abstract class from which derive all building blocks of exprs,
+ * i.e. objects not function of further exprs: the leafs of the recursive tree. 
  */
 class AbstractBuildingBlock: public AbstractScalar,
                              public std::enable_shared_from_this<Abstract>{
@@ -27,11 +27,11 @@ class AbstractBuildingBlock: public AbstractScalar,
 
     Expr develop(bool full=false) override;
     Expr factor(bool full=false) override;
-    Expr factor(const Expr& t_abstract, bool full=false) override;
+    Expr factor(const Expr& expr, bool full=false) override;
     Expr getTerm() override;
     Expr getRealPart() override;
     Expr getComplexModulus() override;
-    Expr getPolynomialTerm(const Expr& t_abstract, int order) override;
+    Expr getPolynomialTerm(const Expr& expr, int order) override;
 };
 
 /*! \class AbstractNumerical
@@ -85,7 +85,7 @@ inline AbstractLiteral::AbstractLiteral(const std::string& t_name)
 /*************************************************/
 
 /*! \class Integer
- * \brief Handle numbers in expression
+ * \brief Handle numbers in expr
  * \details Handle the same manner for now double or int values (in a double).
  */
 class Integer: public AbstractNumerical{
@@ -130,43 +130,43 @@ class Integer: public AbstractNumerical{
     Expr evaluate() override;
 
     /*! \brief Multiplicates two pure Numbers.
-     * \details If \a t_abstract is not a Number, returns 0. Else returns a 
-     * Number which value is equal to the product of \b value and t_abstract.value.
-     * \param t_abstract Other Number for the multiplication.
-     * \return **value*t_abstract.evaluateScalar()**.
+     * \details If \a expr is not a Number, returns 0. Else returns a 
+     * Number which value is equal to the product of \b value and expr.value.
+     * \param expr Other Number for the multiplication.
+     * \return **value*expr.evaluateScalar()**.
      */
-    Expr multiplication_own(const Expr& t_abstract) const override;
+    Expr multiplication_own(const Expr& expr) const override;
 
     /*! \brief Adds two pure Numbers.
-     * \details If \a t_abstract is not a Number, returns 0. Else returns a 
-     * Number which value is equal to the sum of \b value and t_abstract.value.
-     * \param t_abstract Other Number for the sum.
-     * \return **value+t_abstract.evaluateScalar()**.
+     * \details If \a expr is not a Number, returns 0. Else returns a 
+     * Number which value is equal to the sum of \b value and expr.value.
+     * \param expr Other Number for the sum.
+     * \return **value+expr.evaluateScalar()**.
      */
-    Expr addition_own(const Expr& t_abstract) const override;
+    Expr addition_own(const Expr& expr) const override;
 
     /*! \brief Derive the Number.
      * \details The derivative of a Number is \b always 0.
-     * \param t_abstract Argument of the derivation.
+     * \param expr Argument of the derivation.
      * \return \b 0
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     /*! \brief Sets value to t_value
      * \param t_value
      */
     void operator=(int t_value);
    
-    bool operator==(const Expr& t_abstract) const override;
+    bool operator==(const Expr& expr) const override;
 
-    bool operator>(const Expr& t_abstract) const override;
+    bool operator>(const Expr& expr) const override;
 
-    bool operator<(const Expr& t_abstract) const override;
+    bool operator<(const Expr& expr) const override;
 };
 
 
 /*! \class Double
- * \brief Handle numbers in expression
+ * \brief Handle numbers in expr
  * \details Handle the same manner for now double or int values (in a double).
  */
 class Double: public AbstractNumerical{
@@ -212,27 +212,27 @@ class Double: public AbstractNumerical{
     Expr evaluate() override;
 
     /*! \brief Multiplicates two numbers.
-     * \details If \a t_abstract is not a Number, returns 0. Else returns a 
-     * Number which value is equal to the product of \b value and t_abstract.value.
-     * \param t_abstract Other Number for the multiplication.
-     * \return **value*t_abstract.evaluateScalar()**.
+     * \details If \a expr is not a Number, returns 0. Else returns a 
+     * Number which value is equal to the product of \b value and expr.value.
+     * \param expr Other Number for the multiplication.
+     * \return **value*expr.evaluateScalar()**.
      */
-    Expr multiplication_own(const Expr& t_abstract) const override;
+    Expr multiplication_own(const Expr& expr) const override;
 
     /*! \brief Adds two pure Numbers.
-     * \details If \a t_abstract is not a Number, returns 0. Else returns a 
-     * Number which value is equal to the sum of \b value and t_abstract.value.
-     * \param t_abstract Other Number for the sum.
-     * \return **value+t_abstract.evaluateScalar()**.
+     * \details If \a expr is not a Number, returns 0. Else returns a 
+     * Number which value is equal to the sum of \b value and expr.value.
+     * \param expr Other Number for the sum.
+     * \return **value+expr.evaluateScalar()**.
      */
-    Expr addition_own(const Expr& t_abstract) const override;
+    Expr addition_own(const Expr& expr) const override;
 
     /*! \brief Derives the Double.
      * \details The derivative of a Double is \b always 0.
-     * \param t_abstract Argument of the derivation.
+     * \param expr Argument of the derivation.
      * \return \b 0
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     /*! \brief Sets value to t_value
      * \param t_value
@@ -244,11 +244,11 @@ class Double: public AbstractNumerical{
      */
     void operator=(double t_value) override;
 
-    bool operator==(const Expr& t_abstract) const override;
+    bool operator==(const Expr& expr) const override;
 
-    bool operator>(const Expr& t_abstract) const override;
+    bool operator>(const Expr& expr) const override;
 
-    bool operator<(const Expr& t_abstract) const override;
+    bool operator<(const Expr& expr) const override;
 };
 
 /*! \class CFraction
@@ -315,25 +315,25 @@ class CFraction: public AbstractNumerical{
      * \details This function is specialy designed for the multiplication of 
      * numbers. It shouldn't be used directly by the user in general, because
      * more general product functions will \b automatically call this one when needed.
-     * \param t_abstract Number or CFraction for the product.
+     * \param expr Number or CFraction for the product.
      * \return The product.
      */
-    Expr multiplication_own(const Expr& t_abstract) const override;
+    Expr multiplication_own(const Expr& expr) const override;
 
     /*! \brief \b Adds the CFraction with a Number or a CFraction.
      * \details This function is specialy designed for the multiplication of 
      * numbers. It shouldn't be used directly by the user in general, because
      * more general sum functions will \b automatically call this one when needed.
-     * \param t_abstract Number or CFraction for the sum.
+     * \param expr Number or CFraction for the sum.
      * \return The sum.
      */
-    Expr addition_own(const Expr& t_abstract) const override;
+    Expr addition_own(const Expr& expr) const override;
 
     /*! \brief Derives the CFraction wrt the argument.
-     * \param t_abstract Argument of the derivation.
+     * \param expr Argument of the derivation.
      * \return \b 0
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     /*! \brief Sets num to t_value and denom to 1.
      * \param t_value
@@ -345,11 +345,11 @@ class CFraction: public AbstractNumerical{
      */
     void operator=(double t_value) override;
 
-    bool operator==(const Expr& t_abstract) const override;
+    bool operator==(const Expr& expr) const override;
 
-    bool operator>(const Expr& t_abstract) const override;
+    bool operator>(const Expr& expr) const override;
 
-    bool operator<(const Expr& t_abstract) const override;
+    bool operator<(const Expr& expr) const override;
 };
 
 /*************************************************/
@@ -419,14 +419,14 @@ class Constant: public AbstractLiteral{
 
     /*! \brief Sets the \b value.
      * \details Allows to associate a number to each Constant 
-     * before evaluating an expression.
+     * before evaluating an expr.
      * \param t_value New \b value for the Constant.
      */
     void setValue(double t_value) override;
 
     /*! \brief Displays the Constant on standard output.
      * \details If mode==0 prints the Constant alone with its \b value, else 
-     * prints the Constant considering it in a larger expression.
+     * prints the Constant considering it in a larger expr.
      * \param mode Type of printing.
      */
     void print(int mode=0) const override;
@@ -437,12 +437,12 @@ class Constant: public AbstractLiteral{
 
     Expr evaluate() override;
 
-    /*! \brief Derives the Constant wrt \b t_abstract.
-     * \param t_abstract Abstract
-     * \return \b 1 if \b t_abstract is a Constant with the **same name**.
+    /*! \brief Derives the Constant wrt \b expr.
+     * \param expr Abstract
+     * \return \b 1 if \b expr is a Constant with the **same name**.
      * \return \b 0 else.
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 
@@ -452,15 +452,15 @@ class Constant: public AbstractLiteral{
     void operator=(double t_value) override;
 
     /*! \brief Compares \b value with another Abstract.
-     * \param t_abstract Abstract to compare.
-     * \return \b 1 if t_abstract is a Constant with the **same name**.
+     * \param expr Abstract to compare.
+     * \return \b 1 if expr is a Constant with the **same name**.
      * \return \b 0 else.
      */
-    bool operator==(const Expr& t_abstract) const override;
+    bool operator==(const Expr& expr) const override;
 
-    bool operator>(const Expr& t_abstract) const override;
+    bool operator>(const Expr& expr) const override;
 
-    bool operator<(const Expr& t_abstract) const override;
+    bool operator<(const Expr& expr) const override;
 };
 
 /*! \class Variable
@@ -512,14 +512,14 @@ class Variable: public AbstractLiteral{
 
     /*! \brief Sets the \b value.
      * \details Allows to associate a number to each Variable 
-     * before evaluating an expression.
+     * before evaluating an expr.
      * \param t_value New \b value for the Variable.
      */
     void setValue(double t_value) override;
 
     /*! \brief Displays the Variable on standard output.
      * \details If mode==0 prints the Variable alone with its \b value, else 
-     * prints the Variable considering it in a larger expression.
+     * prints the Variable considering it in a larger expr.
      * \param mode Type of printing.
      */
     void print(int mode=0) const override;
@@ -530,12 +530,12 @@ class Variable: public AbstractLiteral{
 
     Expr evaluate() override;
 
-    /*! \brief Derives the Variable wrt \b t_abstract.
-     * \param t_abstract Abstract
-     * \return \b 1 if \b t_abstract is a Variable with the **same name**.
+    /*! \brief Derives the Variable wrt \b expr.
+     * \param expr Abstract
+     * \return \b 1 if \b expr is a Variable with the **same name**.
      * \return \b 0 else.
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     int getParity(const Expr& t_variable) const override;
 
@@ -545,15 +545,15 @@ class Variable: public AbstractLiteral{
     void operator=(double t_value) override;
 
     /*! \brief Compares \b value with another Abstract.
-     * \param t_abstract Abstract to compare.
-     * \return \b 1 if t_abstract is a Variable with the **same name**.
+     * \param expr Abstract to compare.
+     * \return \b 1 if expr is a Variable with the **same name**.
      * \return \b 0 else.
      */
-    bool operator==(const Expr& t_abstract) const override;
+    bool operator==(const Expr& expr) const override;
 
-    bool operator>(const Expr& t_abstract) const override;
+    bool operator>(const Expr& expr) const override;
 
-    bool operator<(const Expr& t_abstract) const override;
+    bool operator<(const Expr& expr) const override;
 };
 
 /*! \class CFactorial
@@ -570,7 +570,7 @@ class CFactorial: public AbstractLiteral{
     public:
 
     /*! \brief Default Constructor.
-     * \details Initializes \b value to 0, then the expression evaluates to 0!=1.
+     * \details Initializes \b value to 0, then the expr evaluates to 0!=1.
      */
     CFactorial();
 
@@ -619,26 +619,26 @@ class CFactorial: public AbstractLiteral{
 
     Expr evaluate() override;
 
-    /*! \brief Derives the CFactorial wrt t_abstract.
-     * \param t_abstract Argument of the derivative.
+    /*! \brief Derives the CFactorial wrt expr.
+     * \param expr Argument of the derivative.
      * \return \b 0
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
     /*! \brief Sets value to t_value
      * \param t_value
      */
     void operator=(int t_value);
     /*! Compares value with another Abstract
-     * \param t_abstract Abstract
-     * \return 1 if t_abstract is a CFactorial with the same value
+     * \param expr Abstract
+     * \return 1 if expr is a CFactorial with the same value
      * \return 0 else
      */
-    bool operator==(const Expr& t_abstract) const override;
+    bool operator==(const Expr& expr) const override;
 
-    bool operator>(const Expr& t_abstract) const override;
+    bool operator>(const Expr& expr) const override;
 
-    bool operator<(const Expr& t_abstract) const override;
+    bool operator<(const Expr& expr) const override;
 };
 
 /*! \class Imaginary
@@ -693,21 +693,21 @@ class Imaginary: public AbstractLiteral{
      * \details This function should return the object itself since we cannot
      * further evaluate \b i. Because of the shared_ptr machinery this object 
      * cannot do that and the functions returns \b nullptr. We then need the use 
-     * of the Recover() function to keep a valid expression.
+     * of the Recover() function to keep a valid expr.
      * \return \b nullptr
      */
     Expr evaluate() override;
 
-    /*! \brief Derives the Imaginary wrt \b t_abstract.
+    /*! \brief Derives the Imaginary wrt \b expr.
      * \return \b 0
      */
-    Expr derive(const Expr& t_abstract) const override;
+    Expr derive(const Expr& expr) const override;
 
-    bool operator==(const Expr& t_abstract) const override; 
+    bool operator==(const Expr& expr) const override; 
 
-    bool operator>(const Expr& t_abstract) const override;
+    bool operator>(const Expr& expr) const override;
 
-    bool operator<(const Expr& t_abstract) const override;
+    bool operator<(const Expr& expr) const override;
 };
 
 /*************************************************/
@@ -744,7 +744,7 @@ static const Expr i_ = std::make_shared<Imaginary>();
 
 /*!
  * \var pi_
- * \brief Represents the number \b pi to include in expressions
+ * \brief Represents the number \b pi to include in exprs
  */
 static const Expr ZERO = std::make_shared<Integer>(0);
 static const Expr ONE = std::make_shared<Integer>(1);
@@ -757,7 +757,7 @@ static const Expr e_ = std::make_shared<Variable>("e",M_E);
  * \brief Represents \b infinity in the program.
  * \details When an infinity appears in the abstract evaluation the program 
  * should return \b INF. \b INF is treated like a Variable. It is simply here 
- * to inform the user that *something bad happened** in the expression.
+ * to inform the user that *something bad happened** in the expr.
  * \bug Will not work for many cases, in particular log(0)!=\b INF. 
  * Not yet implemented.
  */
@@ -765,7 +765,7 @@ static Expr INF = std::make_shared<Variable>("inf");
 
 /*!
  * \var WHATEVER
- * Variable that returns true when compared to another expression.
+ * Variable that returns true when compared to another expr.
  * (WHATEVER == X) = (X == WHATEVER) = true
  */
 static Expr WHATEVER = std::make_shared<Variable>("###");
