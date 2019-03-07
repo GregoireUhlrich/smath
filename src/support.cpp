@@ -17,7 +17,7 @@ int PGCD(int a, int b)
         a = b;
         b = foo;
     }
-    if (a > 100000) return 1; // too big number
+    //if (a > 1000000) return 1; // too big number
     if (b == 0) return 1;
     return internal_PGCD(a,b);
 }

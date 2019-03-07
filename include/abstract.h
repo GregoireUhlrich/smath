@@ -37,7 +37,6 @@ typedef std::vector<Expr>::const_iterator const_iter;
 
 namespace smType{
 
-
     /*! \enum Enum of the different primaryTypes of Abstract.*/
     enum PrimaryType {
 
@@ -98,36 +97,54 @@ namespace smType{
 
 namespace smProperty{
 
-    enum OwnBProperty{
-        BuildingBlock=0,
-        Integer,
-        Valued,
-        Commutable,
+    /*! \enum Enum of boolean (non recursive) properties of expressions
+     */
+    enum BooleanProperty{
+        BuildingBlock=0, /*!<  = 0. Is the expression a building block. */
+        Integer, /*!<  = 1. Is the expression an integer. */
+        Valued, /*!<  = 2. Is the expression valued. */
     };
 
-    enum DependBProperty{
-        Proportionnal=0,
-        Depends,
-    };
-
-    enum OwnIProperty{
-        Value=0,
-        Dim,
-        Numerator,
-        Denominator,
-        NFactor,
-        Order,
-        NIndices,
-    };
-
-    enum DependIProperty{
-        Polynomial=0,
-        Parity,
+    /*! \enum Enum of integer (non recursive) properties of expressions
+     */
+    enum IntegerProperty{
+        Value=0, /*!<  = 0. Integer value attached to the expression. */
+        Dim, /*!<  = 1. Dimension of the expression. */
+        Numerator, /*!<  = 2. Numerator if CFraction. */
+        Denominator, /*!<  = 3. Denominator if CFraction. */
+        Order, /*!<  = 4. Order (Derivative, Integral, Polynomial). */
+        NIndices, /*!<  = 5. Number of indices for Indicial expressions. */
     };
 
 }; // End of namespace smProperty
 
+namespace smEval{
+
+    /*! \enum Enum of different modes of evaluation for the expressions.
+     */
+    enum mode{
+        All=0, /*!<  = 0. Evaluates all. */
+        Numerical, /*!<  = 1. Evaluates all Numerical expressions in double. */
+        Literal, /*!<  = 2. Evaluates all valued Literal. */
+        Simplify, /*!<  = 3. Simplifies the expression. */
+    };
+}; // End of namespace smEval
+
+/*! \func std::ostream& operator<<(std::ostream& fout, smType::type)
+ * \brief Displays the name of a given smType::Type in order to be readable.
+ * \param fout Out stream in which the type is send.
+ * \param type Type to display.
+ * \return \b fout
+ */
 std::ostream& operator<<(std::ostream& fout, smType::Type type);
+
+/*! \func std::ostream& operator<<(std::ostream& fout,
+                                  smType::PrimaryType primaryType)
+ * \brief Displays the name of a given smType::PrimaryType in order to be readable.
+ * \param fout Out stream in which the type is send.
+ * \param type PrimaryType to display.
+ * \return \b fout
+ */
 std::ostream& operator<<(std::ostream& fout, smType::PrimaryType primaryType);
 
 // Creates a generic Expression of a given type
@@ -162,11 +179,11 @@ class Abstract{
 
     /*!
      * \brief Default Constructor.
-     * \details Initializes name empty and commutable to one.
+     * \details Initializes name empty and commutable to \b True.
      */
     Abstract();
     
-    /*! \brief Set the name to t_name. */
+    /*! \brief Set the name to t_name and commutable to \b True. */
     explicit Abstract(const std::string& t_name);
 
     /*! \brief Destructor.*/
@@ -185,6 +202,10 @@ class Abstract{
      */
     virtual void print(int mode=0) const = 0;
 
+    /*! \brief Displays explicitely the expression, with types of each component.
+     * This function is only used for debug.
+     * \param mode Mode of printing.
+     */
     void printExplicit(int mode=0) const;
 
     /*! \brief Creates a LaTeX output for the Abstract.
@@ -361,18 +382,37 @@ class Abstract{
     // Indicial-type expressions
     ///////////////////////////////////////////////////
 
-    /*! \return The number of indices of an Indicial expression.
+    /*! \return The number of indices of an \b Indicial expression.
      */    
     virtual int getNIndices() const;
+
     /*! \param i Spot of the index to get.
-     * \return the i^{th} index of an Indicial expression.
+     * \return the i^{th} index of an \b Indicial expression.
      */
     virtual Index getIndex(int i=0) const;
-    /*! \return The index structure of the expression
+
+    /*! \return The index structure of the \b Indicial expression
      */
     virtual std::vector<Index> getIndexStructure() const;
+
+    /*! \brief Returns the number of contracted pairs of indices **in an Indicial
+     * expression**.
+     * \return The number of contracted pairs of indices.
+     */
     virtual int getNContractedPairs() const;
+
+    /*! \brief Returns a std::vector of all possible permutations of an \b Indicial
+     * expression. The possible permutations are determined from the posible
+     * symmetries and anti-symmetries of the object.
+     * \return A std::vector containing all possible permutations of the tensor.
+     */
     virtual std::vector<Expr> getPermutations() const;
+
+    /*! \return All contracted pairs of indices of an \b Indicial 
+     * expression. 
+     * \warning This function is not yet well implemented and may not be useful
+     * in the future.
+     */
     virtual std::set<std::pair<int,int> > getContractedPair() const;
 
                                                        
@@ -459,12 +499,56 @@ class Abstract{
     // Indicial types
     ///////////////////////////////////////////////////
 
+     /*! \brief Replaces the index structure of the object, that must be an 
+      * \b Indicial expression.
+      * \param t_index A std::vector of Index which takes the place of the 
+      * structure index.
+      */
     virtual void setIndexStructure(const std::vector<Index>& t_index);
+
+    /*! \brief Sets an \b Indicial object fully symmetric. Allows to set quickly
+     * a frequent property of tensors. This function then erases all properties
+     * of symmetry / antisymmetry and sets \b fullySymmetric to \b True.
+     */
     virtual void setFullySymmetric();
+
+    /*! \brief Sets an \b Indicial object fully anti-symmetric. Allows to set 
+     * quickly a frequent property of tensors. This function then erases all
+     * properties * of symmetry / antisymmetry and sets \b fullyAntiSymmetric to 
+     * \b True.
+     */
     virtual void setFullyAntiSymmetric();
+
+    /*! \brief Add a symmetry between the i1^{th} and the i2^{th} indices. If
+     * those indices are anti-symmetric, an error is thrown.
+     * \param i1 Position of the first index.
+     * \param i2 Position of the second index.
+     */
     virtual void addSymmetry(int i1, int i2);
+
+    /*! \brief Add an anti-symmetry between the i1^{th} and the i2^{th} indices.
+     * If those indices are symmetric, an error is thrown.
+     * \param i1 Position of the first index.
+     * \param i2 Position of the second index.
+     */
     virtual void addAntiSymmetry(int i1, int i2);
+
+    /*! \brief Tries to permut indices at place \b i1 and \b i2. If those two indices 
+     * have a symmetry property, indices are swaped and the symmetry is returned.
+     * Else the fnuction does nothing and returns 0.
+     * \param i1 Position of the first index.
+     * \param i2 Position of the second index.
+     * \return 1 if the permutation **(i1,i2) is symmetric**.
+     * \return -1 if the permutation **(i1,i2) is anti-symmetric**.
+     * \return 0 else (and do not permut the two indices).
+     */
     virtual int permut(int i1, int i2);
+
+    /*! \brief Contracts the indices at position \b axis1 and \b axis2. The 
+     * indices then become dummy indices.
+     * \param axis1 Position of the first index to contract.
+     * \param axis2 Position of the second index to contract.
+     */
     virtual void contractIndices(int axis1, int axis2);
 
                                                        
@@ -474,15 +558,58 @@ class Abstract{
     // Getting properties that need calculation      //
     /*************************************************/
 
-    // Usefull for factorization and
-    // making canonical exprs
+    ///////////////////////////////////////////////////
+    // Useful functions in factorization and
+    // for making canonical expressions (basic 
+    // simplifications).
+    ///////////////////////////////////////////////////
+
+    /*! \brief Returns the numerical factor of the expression, i.e. returns 
+     * \b C if the expression if of the form **C*x** (\b x having a numerical
+     * factor equal to 1), and return 1 else.
+     * \note This function returns the factor in an Expression (then of Numerical
+     * type).
+     * \return The numerical factor in front of the expression.
+     */
     virtual Expr getNumericalFactor() const;
+
+    /*! \return The number of possible factors for the expression
+     */
     virtual int getNFactor() const;
+
+    /*! \brief Allows to get a std::vector of all terms than could factor the 
+     * expression.
+     * \return A std::vector containing the possible factors of \b *this.
+     */
     virtual std::vector<Expr > getFactors() const;
+
+    /*! \brief This function returns the same expression as *this but amputated
+     * of its numerical factor. Example: (4*cos(x) -> cos(x)).
+     * \return The term without numerical factor corresponding to \b *this.
+     */
     virtual Expr getTerm();
 
-    // Vectorial-expr: matching shapes before calculation
+    ///////////////////////////////////////////////////
+    // Checking matching of different indicial 
+    // expressions in calculations.
+    ///////////////////////////////////////////////////
+
+    /*! \brief Checks the compatibility of the index structure of an \b Indicial
+     * expression with another. In a sum, two terms must have exaclty the same
+     * index structure.
+     * \param t_index A std::vector of Index to compare.
+     * \return \b True if the two structures match.
+     * \return \b False else.
+     */
     virtual bool checkIndexStructure(const std::vector<Index>& t_index) const;
+
+    /*! \brief Checks the compatibility of the index structure of an \b Indicial
+     * expression with another. In a sum, two terms must have exaclty the same
+     * index structure.
+     * \param t_index A std::initializer_list of Index to compare.
+     * \return \b True if the two structures match.
+     * \return \b False else.
+     */
     virtual bool checkIndexStructure(const std::initializer_list<Index>& index) const;
 
                                                        
@@ -492,16 +619,53 @@ class Abstract{
     // Getting properties depending on an expr //
     /*************************************************/
 
+    /*! \brief Returns the parity property of the expression with respect to
+     * \b t_variable. 
+     * \param t_variable.
+     * \return 1  if the expression is \b even in \b t_variable.
+     * \return -1 if the expression is \b odd in \b t_variable.
+     * \return 0  else.
+     */
     virtual int getParity(const Expr& t_variable) const;
 
+    /*! \brief Check if \b expr can factor \b *this. 
+     * \details In almost every case this corresponds just to the comparison
+     * ** *this == expr**. For Times, Pow, Fraction types (all that are 
+     * multiplicative) we must check if the factor hides in a product.
+     * \param expr Factor to search in the expression.
+     * \return \b True if \b expr is a possible factor.
+     * \return \b False else.
+     */
     virtual bool askTerm(const Expr& expr, bool exact=false) const;
 
+    /*! \brief Check recursively if \b expr is present in the expression.
+     * \param expr Expression to search.
+     * \return \b True if \b expr is found.
+     * \return \b False else.
+     */
     virtual bool dependsOn(const Expr& expr) const;
 
+    /*! \brief Determines if the expression is a mononomial term in \b expr, i.e.
+     * a term of the form C*expr^n with C independent of expr, n integer.
+     * \param expr Variable of the supposed mononomial.
+     * \return The order of the exponent if there is one (n in the example).
+     * \return -1 else.
+     */
     virtual int isPolynomial(const Expr& expr) const;
 
-    virtual bool isProportionalTo(const Expr& expr) const;
-
+    /*! \brief In the case of a vectorial-type expression, this function
+     * checks if the shape of expr matches itself. 
+     * \details If \b exact is true, the function search an exact match i.e. either
+     * the two shapes are exactly equal or one of the two objects is a scalar. 
+     * If \b exact is false, this function only search for a possible dot product
+     * between the two expressions, and see if the last axis of \b *this matches the
+     * first of \b expr (or if one of the two objects is scalar also). Then, a
+     * product \sum _k (*this)[i,j,...,k]*expr[k,l,m,...] is possible.
+     * \param expr Expression of which we compare the shape.
+     * \param exact Boolean than specifies if we need an exact match or not.
+     * \return \b True if the two shapes correspond.
+     * \return \b False else.
+     */
     virtual bool matchShape(const Expr& expr, bool exact=false) const;
 
 
@@ -593,11 +757,31 @@ class Abstract{
      */
     virtual Expr getComplexArgument();
 
+    /*! \brief Calculates and returns the complex conjugate of the expression.
+     * \return \bar{*this}.
+     */
     virtual Expr getComplexConjugate();
 
+    /*! \brief Calculates and returns the polynomial term corresponding to 
+     * \b *this with the variable \b t_variable at order \b order. In particular,
+     * this function assumes that the checks have already been made with the 
+     * function isPolynomial(). 
+     * \param t_variable Variable of the polynomial.
+     * \order Order of \b *this in \b t_variable.
+     * \return The same expression as (*this) with the term **t_variable^order**
+     * removed.
+     */
     virtual Expr getPolynomialTerm(const Expr& t_variable, int order);
 
-    // Alternate forms for simplification
+    /*! \brief Calculates and returns all possible alternate forms of the
+     * expression in terms of simplifications. For example 1-sin^2(x) is one of
+     * the alternate forms of cos^2(x).
+     * \details Those alternate forms are then compared in terms of simplicity,
+     * this allows automatic simplification. Alternates are tried to simplify,
+     * and the bests are chosed. More details and algorithms in file
+     * alternateForms.cpp.
+     * \return A std::vector containing the alternate forms of the expression.
+     */
     virtual std::vector<Expr > getAlternateForms() const;
 
 
@@ -656,17 +840,44 @@ class Abstract{
     // Vectorial type
     ///////////////////////////////////////////////////
 
+    /*! \brief Returns the tensor_dot of two \b Vectorial expressions.
+     * \param expr The right operand of the tensor_dot
+     * \return The tensor dot of \b *this and \b expr.
+     */
     virtual Expr tensor_dot(const Expr& expr) const;
+
+    /*! \brief Returns the dot product of two \b Vectorial expressions.
+     * \param expr The right operand of the dot product.
+     * \return sum _k (*this)[i,j,...,k]*expr[k,l,m,...].
+     */
     virtual Expr dot(const Expr& expr) const;
+
+    /*! \brief Calculates and returns the sum of all elements in the \b Vectorial
+     * object.
+     * \return The sum of all elements.
+     */
     virtual Expr getSum() const;
+
+    /*! \brief Calculates and returns the product of all elements in the \b Vectorial
+     * object.
+     * \return The product of all elements.
+     */
     virtual Expr getProduct() const; 
+
+    /*! \brief Returns the Vectorial modulus of the \b Vectorial object, that is
+     * defined here as the squared root of the sum of element squared. Example:
+     * \sqrt{A_{11}^2+A_{12}^2+\ldot}.
+     * \return The vectorial modulus of the expression.
+     */
     virtual Expr getVectorialModulus() const;
+
     /*! \brief Allows to pick a part of a Vectorial expression, excluding
      * the iExcept^{th} element.
      * \param iExcept Element to ignore.
      * \return The part of *this excluding iExcept.
      */
     virtual Expr getSubVectorial(int iExcept) const;
+
     /*! \brief Allows to pick a part of a Vectorial expression, excluding
      * the [iExcept^{th},jExcept^{th}] element (useful for matrices).
      * \param iExcept Element of the first axis to ignore.
@@ -674,18 +885,56 @@ class Abstract{
      * \return The part of *this excluding iExcept.
      */
     virtual Expr getSubVectorial(int iExcept, int jExcept) const;
+
     /*! \brief Allows to pick a part of a Vectorial expression, excluding
      * the iExcept^{th} element.
      * \param iExcept Element to ignore.
      * \return The part of *this excluding iExcept.
      */
     virtual Expr getSubVectorial(const std::vector<int>& exceptions) const;
+
+    /*! \brief Returns the determinant of the object if it corresponds to a 
+     * square matrix (or a scalar), 0 else.
+     * \return det(\b *this) if \b *this is a square matrix or scalar.
+     * \return 0 else.
+     */
     virtual Expr determinant() const;
+
+    /*! \return \sum _i A_{ii} for a square matrix A.
+     * \return A for a scalar A.
+     * \return 0 else.
+     */
     virtual Expr trace() const;
+
+    /*! \brief Calculates the trace over the axis \b axis1 and \b axis2 of a 
+     * tensor. \b axis1 and \b axis2 can be the same, in which case the trace
+     * just corresponds to the sum over this particular axis.
+     * \param axis1 First axis to contract.
+     * \param axis2 Second axis to contract.
+     * \return the trace over axis \b axis1 and \b axis2.
+     */
     virtual Expr trace(int axis1, int axis2) const;
+
+    /*! \brief Calculates and returns the transpose of a 2D matrix.
+     * \return A^T for a matrix (2D) A.
+     */
     virtual Expr transpose() const;
+
+    /*! \brief Calculates and returns the symmetrization of a 2D matrix.
+     * \return 1/2*(A + A^T) for a matrix (2D) A.
+     */
     virtual Expr symmetrise() const;
+
+    /*! \brief Calculates and returns the anti-symmetrization of a 2D matrix.
+     * \return 1/2*(A - A^T) for a matrix (2D) A.
+     */
     virtual Expr antisymmetrise() const;
+
+    /*! \brief Calculates and returns the inverse of a 2D square matrix. The 
+     * applied method is: A^{-1} = 1/det(A)*Com(A)^T.
+     * \return A^{-1} for a matrix (2D) A if det(A) != 0.
+     * \return 0 else
+     */
     virtual Expr inverseMatrix() const;
 
 
@@ -734,12 +983,18 @@ class Abstract{
      */
     virtual bool operator!=(const Expr& expr) const; 
 
-    // Access operator for multi-argument exprs
+    /*! \brief Access operator for multi-argument expressions, equivalent to 
+     * the function setArgument().
+     * \param iArg Index of the argument to get.
+     * \return \b argument[iArg].
+     */
     virtual Expr operator[](int iArg);
 
-    // Comparison operators in terms of simplicity (for simplifications)
-    // For example x < x² and (y*x + 1) > (1 + x*y)
 
+    ///////////////////////////////////////////////////
+    // Comparison operators in terms of simplicity
+    // For example x < x^2, (y*x+1) > (1+x*y) etc
+    ///////////////////////////////////////////////////
 
     /*! \brief Compares the simplicity of the expression to another.
      * \param expr \b Expression to compare.
@@ -837,17 +1092,52 @@ inline AbstractScalar::AbstractScalar(const std::string& t_name)
 /*************************************************/
 ///////////////////////////////////////////////////
 
+/*! \brief see Abstract::operator==()
+ */
 bool operator==(const Expr& a, const Expr& b);
+
+/*! \brief see Abstract::operator==()
+ */
 bool operator==(const Expr& a, int b);
+
+/*! \brief see Abstract::operator==()
+ */
 bool operator==(const Expr& a, double b);
+
+/*! \brief see Abstract::operator!=()
+ */
 bool operator!=(const Expr& a, const Expr& b);
+
+/*! \brief see Abstract::operator!=()
+ */
 bool operator!=(const Expr& a, int b);
+
+/*! \brief see Abstract::operator!=()
+ */
 bool operator!=(const Expr& a, double b);
+
+/*! \brief see Abstract::operator>=()
+ */
 bool operator>=(const Expr& a, const Expr& b);
+
+/*! \brief see Abstract::operator<=()
+ */
 bool operator<=(const Expr& a, const Expr& b);
+
+/*! \brief see Abstract::operator>()
+ */
 bool operator>(const Expr& a, const Expr& b);
+
+/*! \brief see Abstract::operator<()
+ */
 bool operator<(const Expr& a, const Expr& b);
+
+/*! \brief see Abstract::operator|=()
+ */
 bool operator|=(const Expr& a, const Expr& b);
+
+/*! \brief see Abstract::operator&=()
+ */
 bool operator&=(const Expr& a, const Expr& b);
 
 ///////////////////////////////////////////////////

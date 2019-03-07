@@ -20,7 +20,7 @@ for h in headers:
             i += 1
             tmp = np.array(line.split(), dtype='string')
             a, = np.where(tmp == "class")
-            if (len(a) > 0):
+            if (len(a) > 0 and len(tmp) > a[0]+1):
                 b, = np.where(listClasses == tmp[a[0]+1])
                 if (len(b) == 0):
                     listClasses = np.hstack((listClasses, tmp[a[0]+1]))

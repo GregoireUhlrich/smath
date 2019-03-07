@@ -122,6 +122,57 @@ Expr Double::multiplication_own(const Expr& expr) const
     }
 }
 
+Expr Double::division_own(const Expr& expr) const
+{
+    if (not expr or expr->getPrimaryType() != smType::Numerical)
+        return ZERO;
+
+    switch(expr->getType()) {
+        case smType::Integer:
+        case smType::Double:
+        return auto_number_(value*1/expr->evaluateScalar());
+        break;
+
+        case smType::CFraction:
+        if (value == round(value))
+            return _cfraction_(value*expr->getDenom(),
+                               expr->getNum());
+        return double_(value*1/expr->evaluateScalar());
+        break;
+
+        default:
+        cout<<"Warning: numerical type \""<<expr->getType();
+        cout<<"\" not recognized in number oeprations.\n";
+        return ZERO;
+    }
+}
+
+Expr Double::exponentiation_own(const Expr& expr) const
+{
+    if (not expr or expr->getPrimaryType() != smType::Numerical)
+        return ZERO;
+
+    double value2 = expr->evaluateScalar();
+    switch(expr->getType()) {
+        case smType::Integer:
+        case smType::Double:
+        if (value2 > 0)
+            return auto_number_(pow(value,expr->evaluateScalar()));
+        else
+            return _cfraction_(1,pow(value,-value2));
+        break;
+
+        case smType::CFraction:
+        return make_shared<Pow>(Copy(this),expr);
+        break;
+
+        default:
+        cout<<"Warning: numerical type \""<<expr->getType();
+        cout<<"\" not recognized in number oeprations.\n";
+        return ZERO;
+    }
+}
+
 Expr Double::addition_own(const Expr& expr) const
 {
     if (not expr or expr->getPrimaryType() != smType::Numerical)
@@ -264,6 +315,63 @@ Expr Integer::addition_own(const Expr& expr) const
     }
 }
 
+Expr Integer::division_own(const Expr& expr) const
+{
+    if (not expr or expr->getPrimaryType() != smType::Numerical)
+        return ZERO;
+
+    switch(expr->getType()) {
+        case smType::Integer:
+        case smType::Double:
+        return auto_number_(value*1./expr->evaluateScalar());
+        break;
+
+        case smType::CFraction:
+        if (value == round(value))
+            return _cfraction_(value*expr->getDenom(),
+                               expr->getNum());
+        return double_(value*1./expr->evaluateScalar());
+        break;
+
+        default:
+        cout<<"Warning: numerical type \""<<expr->getType();
+        cout<<"\" not recognized in number oeprations.\n";
+        return ZERO;
+    }
+}
+
+Expr Integer::exponentiation_own(const Expr& expr) const
+{
+    if (not expr or expr->getPrimaryType() != smType::Numerical)
+        return ZERO;
+
+    double value2 = expr->evaluateScalar();
+    switch(expr->getType()) {
+        case smType::Integer:
+        if (value2 > 0)
+            return auto_number_(pow(value,expr->evaluateScalar()));
+        else
+            return _cfraction_(1,pow(value,-value2));
+        break;
+        
+        case smType::Double:
+        if (value2 > 0 or value2 != round(value2))
+            return auto_number_(pow(value,expr->evaluateScalar()));
+        else
+            return _cfraction_(1,pow(value,-value2));
+        break;
+
+        case smType::CFraction:
+        return make_shared<Pow>(Copy(this),expr);
+        break;
+
+        default:
+        cout<<"Warning: numerical type \""<<expr->getType();
+        cout<<"\" not recognized in number oeprations.\n";
+        return ZERO;
+    }
+}
+
 Expr Integer::derive(const Expr& expr) const {
     return ZERO;
 }
@@ -334,7 +442,7 @@ double CFraction::evaluateScalar() const {
 }
 
 Expr CFraction::evaluate() {
-    return auto_number_(num*1./denom);
+    return shared_from_this();
 }
 
 Expr CFraction::multiplication_own(const Expr& expr) const
@@ -370,6 +478,40 @@ Expr CFraction::addition_own(const Expr& expr) const
     int t_denom = expr->getDenom();
 
     return _cfraction_(num*t_denom+t_num*denom,denom*t_denom);
+}
+
+Expr CFraction::division_own(const Expr& expr) const
+{
+    if (expr == nullptr or expr->getPrimaryType() != smType::Numerical) 
+        return ZERO;
+
+    double value = expr->evaluateScalar();
+    if (expr->isInteger()) // Integer
+        return _cfraction_(num, denom*value);
+    else if (expr->getType() == smType::Double) 
+        return double_(evaluateScalar()*1./value);
+
+    // Fraction
+    int t_num = expr->getNum();
+    int t_denom = expr->getDenom();
+
+    return _cfraction_(num*t_denom,denom*t_num);
+}
+
+Expr CFraction::exponentiation_own(const Expr& expr) const
+{
+    if (expr == nullptr or expr->getPrimaryType() != smType::Numerical) 
+        return ZERO;
+
+    double value = expr->evaluateScalar();
+    if (expr->isInteger() and value > 0) // Integer
+        return _cfraction_(pow(num,(int)value), pow(denom,int(value)));
+    else if (expr->isInteger())
+        return _cfraction_(pow(denom,(int)(-value)),pow(num,(int)(-value)));
+    else if (expr->getType() == smType::Double) 
+        return double_(pow(evaluateScalar(),value));
+
+    return make_shared<Pow>(Copy(this), expr);
 }
 
 Expr CFraction::derive(const Expr& expr) const {
@@ -466,7 +608,7 @@ Expr Constant::evaluate()
     if (valued)
         return auto_number_(value);
     else
-        return ZERO;
+        return shared_from_this();
 }
 
 int Constant::getParity(const Expr& t_variable) const
@@ -560,7 +702,7 @@ Expr Variable::evaluate()
     if (valued)
         return auto_number_(value);
     else
-        return ZERO;
+        return shared_from_this();
 }
 
 int Variable::getParity(const Expr& t_variable) const

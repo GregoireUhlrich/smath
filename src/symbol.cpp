@@ -659,7 +659,7 @@ Symbol operator-(const Symbol& t_symbol, int t_value)
 }
 Symbol operator-(int t_value, const Symbol& t_symbol)
 {
-    Expr new_object = minus_(t_symbol.getAbstract(), int_(t_value));
+    Expr new_object = minus_(int_(t_value),t_symbol.getAbstract());
     Symbol new_symbol(new_object);
     return new_symbol;
 }
@@ -671,7 +671,7 @@ Symbol operator-(const Symbol& t_symbol, double t_value)
 }
 Symbol operator-(double t_value, const Symbol& t_symbol)
 {
-    Expr new_object = minus_(t_symbol.getAbstract(), auto_number_(t_value));
+    Expr new_object = minus_(auto_number_(t_value), t_symbol.getAbstract());
     Symbol new_symbol(new_object);
     return new_symbol;
 }

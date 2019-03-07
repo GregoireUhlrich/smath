@@ -559,7 +559,7 @@ void ITensor::addSymmetry(int i1, int i2)
 
     if (i1 < 0 or i2 < 0 or 
         i1 >= nIndices or i2 >= nIndices)
-        callError(smError::OutOfBounds,"ITensor::permut(int i1, int i2)",
+        callError(smError::OutOfBounds,"ITensor::addSymmetry(int i1, int i2)",
                 (i1<0 or i1>=nIndices) ? i1 : i2);
 }
 void ITensor::addAntiSymmetry(int i1, int i2)
@@ -568,7 +568,7 @@ void ITensor::addAntiSymmetry(int i1, int i2)
     if (fullySymmetric) fullySymmetric = false;
     if (i1 < 0 or i2 < 0 or 
         i1 >= nIndices or i2 >= nIndices)
-        callError(smError::OutOfBounds,"ITensor::permut(int i1, int i2)",
+        callError(smError::OutOfBounds,"ITensor::addAntiSymmetry(int i1, int i2)",
                 (i1<0 or i1>=nIndices) ? i1 : i2);
 }
 

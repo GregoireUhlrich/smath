@@ -471,7 +471,7 @@ Symbol Interpreter::readSingleSymbol(vector<string>& split, bool minusSign)
     if (split[0] == "i")
     {
         split = subVector(split,1,split.size());
-        expr = i_;
+        expr = Symbol(i_);
     }
     else if (split[0] == "cos")
     {

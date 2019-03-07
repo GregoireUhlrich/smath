@@ -366,11 +366,6 @@ Expr Abstract::getPolynomialTerm(const Expr& t_variable, int order)
     return ZERO;
 }
 
-bool Abstract::isProportionalTo(const Expr& expr) const
-{
-    return (*this == expr);
-}
-
 int Abstract::getParity(const Expr& t_variable) const
 {
     return 1;

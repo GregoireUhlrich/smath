@@ -74,7 +74,6 @@ Expr abs_(const Expr& expr)
                            abs(expr->getDenom()));
 
     Expr res = make_shared<Abs>(expr);
-    applyFuncParity(res);
 
     return res;
 }
@@ -183,7 +182,6 @@ Expr exp_(const Expr& expr)
         return expr->getArgument();
 
     Expr res = make_shared<Exp>(expr);
-    applyFuncParity(res);
 
     return res;
 }
@@ -275,7 +273,6 @@ Expr log_(const Expr& expr)
         return expr->getArgument();
 
     Expr res = make_shared<Log>(expr);
-    applyFuncParity(res);
 
     return res;
 }
@@ -396,7 +393,6 @@ Expr cos_(const Expr& expr)
         return times_(int_(-1),fraction_(sqrt_(int_(2)),int_(2)));
     
     Expr res = make_shared<Cos>(expr);
-    applyFuncParity(res);
 
     return res;
 }
@@ -517,7 +513,6 @@ Expr sin_(const Expr& expr)
             return fraction_(sqrt_(int_(2)),int_(2));
     }
     Expr res = make_shared<Sin>(expr);
-    applyFuncParity(res);
 
     return res;
 }
@@ -661,7 +656,6 @@ Expr tan_(const Expr& expr)
             return int_(1);
     }
     Expr res = make_shared<Tan>(expr);
-    applyFuncParity(res);
 
     return res;
 }
@@ -922,7 +916,6 @@ Expr atan_(const Expr& expr)
     if (*expr == ZERO)
         return ZERO;
     Expr res = make_shared<ATan>(expr);
-    applyFuncParity(res);
 
     return res;
 }
@@ -1016,7 +1009,6 @@ Expr cosh_(const Expr& expr)
     if (*expr == ZERO)
         return int_(1);
     Expr res = make_shared<Cosh>(expr);
-    applyFuncParity(res);
 
     return res;
 }
@@ -1110,7 +1102,6 @@ Expr sinh_(const Expr& expr)
     if (expr == ZERO)
         return ZERO;
     Expr res = make_shared<Sinh>(expr);
-    applyFuncParity(res);
 
     return res;
 }
@@ -1229,7 +1220,6 @@ Expr tanh_(const Expr& expr)
     if (*expr == ZERO)
         return ZERO;
     Expr res = make_shared<Tanh>(expr);
-    applyFuncParity(res);
 
     return res;
 }
@@ -1319,7 +1309,6 @@ Expr acosh_(const Expr& expr)
     if (*expr == ZERO)
         return int_(1);
     Expr res = make_shared<ACosh>(expr);
-    applyFuncParity(res);
 
     return res;
 }
@@ -1413,7 +1402,6 @@ Expr asinh_(const Expr& expr)
     if (*expr == ZERO)
         return ZERO;
     Expr res = make_shared<ASinh>(expr);
-    applyFuncParity(res);
 
     return res;
 }
@@ -1506,7 +1494,6 @@ Expr atanh_(const Expr& expr)
     if (*expr == ZERO)
         return ZERO;
     Expr res = make_shared<ATanh>(expr);
-    applyFuncParity(res);
 
     return res;
 }
@@ -1675,17 +1662,8 @@ int Factorial::getParity(const Expr& t_variable) const {
 }
 
 Expr factorial_(const Expr& expr) {
+    if (expr->isInteger())
+        return make_shared<CFactorial>(expr->evaluateScalar());
     return make_shared<Factorial>(expr);
 }
 
-void applyFuncParity(Expr& func) 
-{
-    if (func->getPrimaryType() != smType::ScalarFunction) return;
-    const Expr arg = func->getArgument();
-    const int parity = func->getParity(arg);
-    if (parity != 0 and arg->getNumericalFactor()->evaluateScalar() < 0) {
-        func->setArgument(times_(int_(-1),arg));
-        if (parity == -1)
-            func = times_(int_(-1),func);
-    }
-}

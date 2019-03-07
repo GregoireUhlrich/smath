@@ -209,7 +209,7 @@ Expr Plus::evaluate()
     // their values
 {
     bool number = true;
-    double numericalRes = 0;
+    Expr numericalRes = ZERO;
     Expr result = ZERO;
     Expr foo;
     // In the loop we keep track separately of numbers and expression that do not
@@ -217,16 +217,16 @@ Expr Plus::evaluate()
     for (int i=0; i<nArgs; i++) {
         foo = argument[i]->evaluate();
         if (foo->getPrimaryType() == smType::Numerical)
-            numericalRes += foo->evaluateScalar();
+            numericalRes = numericalRes->addition_own(foo);
         else {
             result = plus_(result, foo);
             number = false;
         }
     }
     if (number) 
-        return double_(numericalRes);
+        return numericalRes;
 
-    return plus_(double_(numericalRes),result);
+    return plus_(numericalRes,result);
 }
 bool Plus::mergeTerms()
     // Merges similar terms: numbers and identical terms to a numerical factor
@@ -307,8 +307,8 @@ bool Plus::mergeTerms()
             }
         }
     }
-
     orderTerms();
+
     return simplified;
 }
 
@@ -583,7 +583,7 @@ Expr plus_(const vector<Expr >& operands)
 }
 
 Expr minus_(const Expr& leftOperand, const Expr& rightOperand) {
-    // minus(a,b) = plus(a,_b)
+    // minus(a,b) = plus(a,-b)
     return plus_(leftOperand,times_(int_(-1),rightOperand));
 }
 
@@ -997,19 +997,19 @@ double Times::evaluateScalar() const
 Expr Times::evaluate()
 {
     bool number = true;
-    double numericalRes = 1;
+    Expr numericalRes = ONE;
     Expr result = int_(1);
     for (int i=0; i<nArgs; i++) {
         const Expr foo = argument[i]->evaluate();
         if (foo->getPrimaryType() == smType::Numerical)
-            numericalRes *= foo->evaluateScalar();
+            numericalRes = numericalRes->multiplication_own(foo);
         else {
             result = times_(result, foo);
             number = false;
         }
     }
-    if (number) return double_(numericalRes);
-    else        return times_(double_(numericalRes),result);
+    if (number) return numericalRes;
+    else        return times_(numericalRes,result);
 }
 
 bool Times::mergeTerms()
@@ -1485,10 +1485,9 @@ Expr Fraction::evaluate()
     Expr foo2 = argument[1]->evaluate();
     if (foo1->getPrimaryType() == smType::Numerical and
         foo2->getPrimaryType() == smType::Numerical)
-        return double_(fraction_(foo1,foo2)->evaluateScalar());
+        return foo1->division_own(foo2);
 
-    foo1 = fraction_(foo1,foo2);
-    return foo1->evaluate();
+    return fraction_(foo1,foo2);
 }
 
 bool Fraction::mergeTerms()
@@ -1768,7 +1767,7 @@ Expr Pow::evaluate()
     Expr foo2 = argument[1]->evaluate();
     if (foo1->getPrimaryType() == smType::Numerical
             and foo2->getPrimaryType() == smType::Numerical)
-        return double_(pow_(foo1,foo2)->evaluateScalar());
+        return foo1->exponentiation_own(foo2);
     return pow_(foo1,foo2);
 }
 
@@ -2426,7 +2425,7 @@ Expr Derivative::evaluate()
     for (int i=0; i<order; i++)
         df = df->derive(argument[1]);
 
-    return df;
+    return df->evaluate();
 }
 
 Expr Derivative::derive(const Expr& expr) const

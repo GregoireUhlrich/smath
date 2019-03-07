@@ -53,7 +53,7 @@ cout<<variable->evaluateScalar()<<" "<<developed->evaluateScalar()<<endl;
     Symbol x("x"), y("y"), z("z"), t("t");
 
     Symbol WEVER("#");
-    WEVER = WHATEVER;
+    WEVER = Symbol(WHATEVER);
 
     cout<<compare("a","x")<<-1<<endl;
     cout<<compare("y","x")<<1<<endl;
@@ -137,11 +137,11 @@ cout<<variable->evaluateScalar()<<" "<<developed->evaluateScalar()<<endl;
     cout<<endl;
 
     cout<<"  (1/4)*[2sin(x)^2 + 2*((1+sin(5*pi/2-2*x))/2 + 1)] = ";
-    Simplify(Symbol(1)/4*(2*(sin_(x)^2) + 2*((1+sin_(pi_/2-2*x))/2+1))).print();
+    Simplify(Symbol(1)/4*(2*(sin_(x)^2) + 2*((1+sin_(Symbol(pi_)/2-2*x))/2+1))).print();
     cout<<endl;
 
     cout<<"                                      sin(pi/2 - x) = ";
-    Simplify(sin_(pi_/2-x)).print();
+    Simplify(sin_(Symbol(pi_)/2-x)).print();
     cout<<endl;
 
     int N = 3;
@@ -193,6 +193,19 @@ cout<<variable->evaluateScalar()<<" "<<developed->evaluateScalar()<<endl;
     S.addSymmetry(antiSym1,-1);
     S.addSymmetry(antiSym2,-1);
     cout<<S<<endl;
+    
+    Symbol beta("beta"), m("m"), gamma("gamma"), E("E"), p("p");
+    gamma = 1/sqrt_(1-beta*beta);
+    gamma.print();
+    sqrt_(1-beta*beta).print();
+    (1-beta*beta).print();
+    E = gamma*m;
+    p = gamma*m*beta;
+    E.print();
+    p.print();
+    m.evaluate().print();
+    Taylor(E,beta,10).evaluate().print();
+    Taylor(p,beta,10).evaluate().print();
 
     return 0;
     /*Symbol i("i"), j("j");

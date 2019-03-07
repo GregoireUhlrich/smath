@@ -31,7 +31,7 @@ class Symbol{
 
     /*! \brief Initializes \b name and the Abstract to 0.
      */    
-    Symbol(std::string t_name);
+    explicit Symbol(std::string t_name);
 
     /*! \brief Initialized the Abstract to Number(value).
      * \param value 
@@ -320,6 +320,12 @@ Symbol DeepCopy(const Symbol& t_symbol);
  */
 Symbol Refresh(const Symbol& t_symbol1);
 
+/*! \fn Symbol DeepRefresh(const Symbol& t_symbol)
+ * \brief Refresh recursively the \b abstract of \a t_symbol and put it in a new
+ * one: see DeepRefresh(const Expr&).
+ * \param t_symbol Symbol to refresh.
+ * \return The refreshed Symbol.
+ */
 Symbol DeepRefresh(const Symbol& t_symbol);
 
 Symbol Simplify(const Symbol& t_symbol, int recursion=-1);

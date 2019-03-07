@@ -145,6 +145,10 @@ class Integer: public AbstractNumerical{
      */
     Expr addition_own(const Expr& expr) const override;
 
+    Expr division_own(const Expr& expr) const override;
+
+    Expr exponentiation_own(const Expr& expr) const override;
+
     /*! \brief Derive the Number.
      * \details The derivative of a Number is \b always 0.
      * \param expr Argument of the derivation.
@@ -226,6 +230,10 @@ class Double: public AbstractNumerical{
      * \return **value+expr.evaluateScalar()**.
      */
     Expr addition_own(const Expr& expr) const override;
+
+    Expr division_own(const Expr& expr) const override;
+
+    Expr exponentiation_own(const Expr& expr) const override;
 
     /*! \brief Derives the Double.
      * \details The derivative of a Double is \b always 0.
@@ -328,6 +336,10 @@ class CFraction: public AbstractNumerical{
      * \return The sum.
      */
     Expr addition_own(const Expr& expr) const override;
+
+    Expr division_own(const Expr& expr) const override;
+
+    Expr exponentiation_own(const Expr& expr) const override;
 
     /*! \brief Derives the CFraction wrt the argument.
      * \param expr Argument of the derivation.
