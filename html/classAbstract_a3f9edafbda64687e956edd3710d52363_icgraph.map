@@ -1,0 +1,6 @@
+<map id="getNArgs" name="getNArgs">
+<area shape="rect" id="node2" href="$classAbstractVectorial.html#a41679a5ac7ec7a7b338d7a240fa9a0ec" title="In the case of a vectorial&#45;type expression, this function checks if the shape of expr matches itself..." alt="" coords="133,5,263,47"/>
+<area shape="rect" id="node3" href="$classMatrix.html#a513f51419fbea6ca79d6478918c34b76" title="Returns the determinant of the object if it corresponds to a square matrix (or a scalar), 0 else. " alt="" coords="131,71,265,98"/>
+<area shape="rect" id="node4" href="$classMatrix.html#a44da233e3914a4d5a0eb1d310ff43f60" title="Matrix::trace" alt="" coords="151,122,245,149"/>
+<area shape="rect" id="node5" href="$classMatrix.html#ab00c3c8f79df6685908055355a90856f" title="Calculates and returns the transpose of a 2D matrix. " alt="" coords="137,173,259,199"/>
+</map>

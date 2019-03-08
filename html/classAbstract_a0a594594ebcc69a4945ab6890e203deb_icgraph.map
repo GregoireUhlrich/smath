@@ -1,0 +1,17 @@
+<map id="getComplexArgument" name="getComplexArgument">
+<area shape="rect" id="node2" href="$classExp.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of the exponential function. " alt="" coords="219,5,319,32"/>
+<area shape="rect" id="node3" href="$classLog.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of the logarithm function. " alt="" coords="219,56,318,83"/>
+<area shape="rect" id="node4" href="$classCos.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of the cos function. " alt="" coords="218,107,319,133"/>
+<area shape="rect" id="node5" href="$classSin.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of the sin function. " alt="" coords="221,157,317,184"/>
+<area shape="rect" id="node6" href="$classTan.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of the tan function. " alt="" coords="219,208,318,235"/>
+<area shape="rect" id="node7" href="$classACos.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of the acos function. " alt="" coords="213,259,324,285"/>
+<area shape="rect" id="node8" href="$classASin.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of the asin function. " alt="" coords="216,309,321,336"/>
+<area shape="rect" id="node9" href="$classCosh.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of the cosh function. " alt="" coords="215,360,323,387"/>
+<area shape="rect" id="node10" href="$classSinh.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of the sinh function. " alt="" coords="217,411,320,437"/>
+<area shape="rect" id="node11" href="$classTanh.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of the tanh function. " alt="" coords="215,461,322,488"/>
+<area shape="rect" id="node13" href="$classACosh.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of the acosh function. " alt="" coords="210,512,327,539"/>
+<area shape="rect" id="node14" href="$classASinh.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of the asinh function. " alt="" coords="213,563,325,589"/>
+<area shape="rect" id="node15" href="$classATanh.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of the atanh function. " alt="" coords="211,613,326,640"/>
+<area shape="rect" id="node16" href="$classImaginary.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of the Imaginary. " alt="" coords="201,664,336,691"/>
+<area shape="rect" id="node12" href="$classITerm.html#aacdc998afa6abe3cd8b2f230005b3950" title="Allows to get the entire std::vector of arguments of the expression. " alt="" coords="384,461,560,488"/>
+</map>

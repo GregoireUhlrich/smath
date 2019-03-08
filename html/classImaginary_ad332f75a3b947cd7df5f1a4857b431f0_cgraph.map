@@ -1,0 +1,9 @@
+<map id="getType" name="getType">
+<area shape="rect" id="node2" href="$classNumber.html#ac82b0501ac3f92e3ba60dd04f4372b10" title="Displays the abstract in standard output. " alt="" coords="155,5,256,32"/>
+<area shape="rect" id="node3" href="$classNumber.html#af21ac36bebac371e07ca725f91c9a21c" title="Creates a LaTeX output for the Abstract. " alt="" coords="136,56,275,83"/>
+<area shape="rect" id="node4" href="$classNumber.html#abd473f3a4f62f338f5b0ee3b10453f39" title="Evaluates the value of the Abstract. " alt="" coords="124,107,287,133"/>
+<area shape="rect" id="node5" href="$classAbstractScalar.html#a75b66cfaa27495aedb25637c031a5cfb" title="Evaluates the scalar. " alt="" coords="123,157,288,184"/>
+<area shape="rect" id="node7" href="$classNumber.html#a6754efdf044e1b148f67a770fdc66275" title="Derive the Number. " alt="" coords="150,208,261,235"/>
+<area shape="rect" id="node8" href="$classNumber.html#af8b09150ff827cbf6fc2c5773ef59a6e" title="Compares the Abstract with another. " alt="" coords="136,259,275,285"/>
+<area shape="rect" id="node6" href="$classAbstract.html#abd473f3a4f62f338f5b0ee3b10453f39" title="Evaluates the value of the Abstract. " alt="" coords="336,157,501,184"/>
+</map>

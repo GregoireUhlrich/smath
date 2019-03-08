@@ -1,0 +1,8 @@
+<map id="getTerm" name="getTerm">
+<area shape="rect" id="node2" href="$classTimes.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of a Times object. " alt="" coords="124,81,237,108"/>
+<area shape="rect" id="node3" href="$classTimes.html#a80cd2077e413cdb05d2e9142ea5c0095" title="Tells if the factor expr appear in the product. " alt="" coords="296,5,413,32"/>
+<area shape="rect" id="node4" href="$classTimes.html#abd9f12af3b52f041754d10bc7f106a96" title="Displays the abstract in standard output. " alt="" coords="309,56,400,83"/>
+<area shape="rect" id="node5" href="$classTimes.html#a8086e83f45a0d609ebe40a6f0a269e88" title="Creates a LaTeX output for the Abstract. " alt="" coords="290,107,419,133"/>
+<area shape="rect" id="node6" href="$classTimes.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="285,157,424,184"/>
+<area shape="rect" id="node7" href="$classTimes.html#a456bbe5fdcbe4076538636e87ac118bf" title="Creates the product of &amp; leftOperand and rightOperand. " alt="" coords="472,157,575,184"/>
+</map>

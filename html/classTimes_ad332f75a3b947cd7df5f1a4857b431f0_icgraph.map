@@ -1,0 +1,9 @@
+<map id="getType" name="getType">
+<area shape="rect" id="node2" href="$classTimes.html#ab455e348359f7105b4add73d54922584" title="getNumericalFactor" alt="" coords="123,5,259,32"/>
+<area shape="rect" id="node3" href="$classTimes.html#ae126651a50b5e31eae5324999850b6da" title="getTerm" alt="" coords="155,56,226,83"/>
+<area shape="rect" id="node4" href="$classTimes.html#a09729c96f8966f64ef40785b57654b52" title="Tells if the factor t_abstract appear in the product. " alt="" coords="154,107,227,133"/>
+<area shape="rect" id="node5" href="$classTimes.html#a8c6189d981cc22ffb8e3a9aacd79f3bb" title="Suppresses the term t_abstract in the product. " alt="" coords="307,132,412,159"/>
+<area shape="rect" id="node6" href="$classTimes.html#af21ac36bebac371e07ca725f91c9a21c" title="Creates a LaTeX output for the Abstract. " alt="" coords="148,208,233,235"/>
+<area shape="rect" id="node7" href="$classTimes.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="143,259,238,285"/>
+<area shape="rect" id="node8" href="$classTimes.html#aa5b76bb2c43c0ac2ce327a2ef4d6ca55" title="Default constructor. Initializes argument to an empty std::vector. " alt="" coords="330,259,389,285"/>
+</map>

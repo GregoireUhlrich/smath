@@ -1,0 +1,6 @@
+<map id="getType" name="getType">
+<area shape="rect" id="node2" href="$classPow.html#a5fdf2d5371e8c8ead87ef2b5d6fe43c0" title="Returns all the possible factors. " alt="" coords="128,5,212,32"/>
+<area shape="rect" id="node3" href="$classPow.html#aa5643c3978c744d9c7917a60307e84a5" title="Tells if the factor t_abstract appear in the exponentiation. " alt="" coords="133,56,207,83"/>
+<area shape="rect" id="node4" href="$classPow.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of exponentiations. " alt="" coords="123,107,217,133"/>
+<area shape="rect" id="node5" href="$classPow.html#adcd6da98c13a86cd230c2bdaa4ff8c3c" title="Creates the exponentiation of &amp; leftOperand wrt rightOperand. " alt="" coords="265,107,313,133"/>
+</map>

@@ -12,13 +12,12 @@ void printVector(const vector<Expr >& vector)
 void addAlternateForm(vector<Expr >& alternateForms, const Expr& newAlternate, bool add_factor_develop)
 {
     if (alternateForms.size() == 0) alternateForms.push_back(newAlternate);
-    vector<Expr >::iterator it;
+    iter it;
     it = find(alternateForms.begin(), alternateForms.end(), newAlternate);
     if (it == alternateForms.end()) // We did not find the newAlternate
         alternateForms.push_back(newAlternate);
 
-    if (add_factor_develop)
-    {
+    if (add_factor_develop) {
         Expr foo = newAlternate->develop();
         if (*foo != newAlternate)
             addAlternateForm(alternateForms, foo, false);
@@ -38,7 +37,7 @@ void reduceAlternate(vector<Expr >& alternateForms)
     alternateForms.erase(alternateForms.begin()+MAX_ALTERNATE_FORMS, alternateForms.end());
 }
 
-void clearRedundancyAlternate(vector<Expr > alternateForms)
+void clearRedundancyAlternate(vector<Expr >& alternateForms)
 {
     for (size_t i=0; i!=alternateForms.size(); ++i) 
         for (size_t j=i+1; j!=alternateForms.size(); ++j) 

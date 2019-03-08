@@ -1,0 +1,5 @@
+<map id="derive" name="derive">
+<area shape="rect" id="node2" href="$operations_8h.html#a37fbd886b025c44d0d193d4831618989" title="Returns the product of the two operands, applying basic simplifications. " alt="" coords="111,5,172,32"/>
+<area shape="rect" id="node3" href="$operations_8h.html#acbd18b645825198b8efbcfe6442c6dea" title="Returns the exponentiation of the two operands, applying basic simplifications. " alt="" coords="115,56,168,83"/>
+<area shape="rect" id="node4" href="$mathFunctions_8h.html#ab57d3ee32ce9373e144f82a30ea1b659" title="Creates an object of type Log acting on t_abstract. " alt="" coords="118,107,165,133"/>
+</map>

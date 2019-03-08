@@ -1,0 +1,8 @@
+<map id="AbstractNumerical" name="AbstractNumerical">
+<area shape="rect" id="node6" href="$classCFraction.html" title="Handles fractions of Number. " alt="" coords="5,319,84,345"/>
+<area shape="rect" id="node7" href="$classDouble.html" title="Handle numbers in expr. " alt="" coords="108,319,171,345"/>
+<area shape="rect" id="node8" href="$classInteger.html" title="Handle numbers in expr. " alt="" coords="195,319,257,345"/>
+<area shape="rect" id="node2" href="$classAbstractBuildingBlock.html" title="Abstract class from which derive all building blocks of exprs, i.e. objects not function of further e..." alt="" coords="64,169,215,196"/>
+<area shape="rect" id="node3" href="$classAbstractScalar.html" title="Abstract class concerning all scalars (dim = 0). Allows to implement one time getDim() = 0 for all sc..." alt="" coords="12,87,120,114"/>
+<area shape="rect" id="node4" href="$classAbstract.html" title="Root class of the inheritance tree of abstracts. " alt="" coords="31,5,101,32"/>
+</map>

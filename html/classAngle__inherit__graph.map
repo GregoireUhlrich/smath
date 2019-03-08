@@ -1,0 +1,5 @@
+<map id="Angle" name="Angle">
+<area shape="rect" id="node2" href="$classAbstractDuoFunc.html" title="Handle functions of multiple arguments. In the case of the call of a simplification function..." alt="" coords="5,155,129,181"/>
+<area shape="rect" id="node3" href="$classAbstractScalar.html" title="Abstract class concerning all scalars (dim = 0). Allows to implement one time getDim() = 0 for all sc..." alt="" coords="13,80,121,107"/>
+<area shape="rect" id="node4" href="$classAbstract.html" title="Root class of the inheritance tree of abstracts. " alt="" coords="32,5,103,32"/>
+</map>

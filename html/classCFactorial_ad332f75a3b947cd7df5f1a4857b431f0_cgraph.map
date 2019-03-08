@@ -1,0 +1,9 @@
+<map id="getType" name="getType">
+<area shape="rect" id="node2" href="$classNumber.html#afbf2751548904140aa7aa4a1e8e59346" title="Sets the value of the Number. " alt="" coords="141,5,267,32"/>
+<area shape="rect" id="node3" href="$classNumber.html#ac82b0501ac3f92e3ba60dd04f4372b10" title="Displays the abstract in standard output. " alt="" coords="153,56,255,83"/>
+<area shape="rect" id="node4" href="$classNumber.html#af21ac36bebac371e07ca725f91c9a21c" title="Creates a LaTeX output for the Abstract. " alt="" coords="135,107,273,133"/>
+<area shape="rect" id="node5" href="$classNumber.html#abd473f3a4f62f338f5b0ee3b10453f39" title="Evaluates the value of the Abstract. " alt="" coords="123,157,285,184"/>
+<area shape="rect" id="node6" href="$classNumber.html#a6754efdf044e1b148f67a770fdc66275" title="Derive the Number. " alt="" coords="149,208,259,235"/>
+<area shape="rect" id="node7" href="$classNumber.html#a5d55f266548bcad814af038dd13d50ee" title="Sets value to t_value. " alt="" coords="139,259,269,285"/>
+<area shape="rect" id="node8" href="$classNumber.html#af8b09150ff827cbf6fc2c5773ef59a6e" title="Compares the Abstract with another. " alt="" coords="135,309,273,336"/>
+</map>

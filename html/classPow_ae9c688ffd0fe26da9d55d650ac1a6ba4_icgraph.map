@@ -1,0 +1,5 @@
+<map id="evaluateScalar" name="evaluateScalar">
+<area shape="rect" id="node2" href="$classPow.html#ac2bc6e6cd2c5da919e3987ef31170357" title="Returns the number of possible factors in the expr. " alt="" coords="185,5,272,32"/>
+<area shape="rect" id="node3" href="$classPow.html#a80cd2077e413cdb05d2e9142ea5c0095" title="Tells if the factor expr appear in the exponentiation. " alt="" coords="192,56,265,83"/>
+<area shape="rect" id="node4" href="$classPow.html#a4f53ffbf9f3f7e810754da1938db3254" title="Calculates and returns the polynomial term corresponding to *this with the variable t_variable at ord..." alt="" coords="161,107,296,133"/>
+</map>

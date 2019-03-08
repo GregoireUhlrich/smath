@@ -1,0 +1,6 @@
+<map id="getArgument" name="getArgument">
+<area shape="rect" id="node2" href="$classFraction.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of fractions. " alt="" coords="149,5,300,32"/>
+<area shape="rect" id="node4" href="$classPow.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of exponentiations. " alt="" coords="160,56,289,83"/>
+<area shape="rect" id="node3" href="$classFraction.html#a5c6432713390abdc0c80216e7580be70" title="Creates the fraction of &amp; leftOperand and rightOperand. " alt="" coords="348,5,472,32"/>
+<area shape="rect" id="node5" href="$classPow.html#adcd6da98c13a86cd230c2bdaa4ff8c3c" title="Creates the exponentiation of &amp; leftOperand wrt rightOperand. " alt="" coords="369,56,451,83"/>
+</map>

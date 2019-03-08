@@ -1,0 +1,10 @@
+<map id="sin_" name="sin_">
+<area shape="rect" id="node2" href="$classSin.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of the sin function. " alt="" coords="145,5,241,32"/>
+<area shape="rect" id="node3" href="$classExp.html#a71aea8e6392b27ef3c114c3e04908e0c" title="Evaluates the imaginary part of t getConstSharedFromThis();he Abstract and returns it..." alt="" coords="117,56,269,83"/>
+<area shape="rect" id="node4" href="$classSin.html#a3796711e63a2d5a048d44475e9c78f01" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="133,107,252,133"/>
+<area shape="rect" id="node5" href="$classTan.html#a3d06a129ca3e2e920aecf3e4432c149e" title="Evaluates the argument in the complex plane of the Abstract and returns it. " alt="" coords="103,157,282,184"/>
+<area shape="rect" id="node6" href="$classCosh.html#a71aea8e6392b27ef3c114c3e04908e0c" title="Evaluates the imaginary part of t getConstSharedFromThis();he Abstract and returns it..." alt="" coords="113,208,273,235"/>
+<area shape="rect" id="node7" href="$classSinh.html#a71aea8e6392b27ef3c114c3e04908e0c" title="Evaluates the imaginary part of t getConstSharedFromThis();he Abstract and returns it..." alt="" coords="115,259,270,285"/>
+<area shape="rect" id="node8" href="$classTanh.html#a3d06a129ca3e2e920aecf3e4432c149e" title="Evaluates the argument in the complex plane of the Abstract and returns it. " alt="" coords="100,309,285,336"/>
+<area shape="rect" id="node9" href="$symbol_8h.html#a12a0ed890c00b9cc7e1a6a4ff0b890ab" title="Returns the sin function applied on t_symbol. " alt="" coords="169,360,216,387"/>
+</map>

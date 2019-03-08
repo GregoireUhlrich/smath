@@ -1,0 +1,5 @@
+<map id="determinant" name="determinant">
+<area shape="rect" id="node2" href="$classMatrix.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of Abstract. " alt="" coords="159,5,273,32"/>
+<area shape="rect" id="node3" href="$classMatrix.html#ab00c3c8f79df6685908055355a90856f" title="Calculates and returns the transpose of a 2D matrix. " alt="" coords="155,56,277,83"/>
+<area shape="rect" id="node4" href="$classMatrix.html#aac42a297369ad16861d383d1173d5360" title="Calculates and returns the inverse of a 2D square matrix. The applied method is: A^{&#45;1} = 1/det(A)*Co..." alt="" coords="144,107,288,133"/>
+</map>

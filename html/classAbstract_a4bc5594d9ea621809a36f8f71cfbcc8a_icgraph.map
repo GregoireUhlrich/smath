@@ -1,0 +1,9 @@
+<map id="multiplication_own" name="multiplication_own">
+<area shape="rect" id="node2" href="$classPolynomial.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of a Polynomial object. " alt="" coords="188,5,329,32"/>
+<area shape="rect" id="node3" href="$classInteger.html#a251299017ba90f23114a3dc9b4814111" title="Tells if the expression is an integer. Either an Integer object directly, or a Double that has an int..." alt="" coords="199,56,319,83"/>
+<area shape="rect" id="node4" href="$classDouble.html#a251299017ba90f23114a3dc9b4814111" title="Tells if the expression is an integer. Either an Integer object directly, or a Double that has an int..." alt="" coords="198,107,319,133"/>
+<area shape="rect" id="node5" href="$classCFraction.html#abc0170d70d0aff50ddeb00f94ea820b1" title="Destructor. " alt="" coords="183,157,335,184"/>
+<area shape="rect" id="node6" href="$classTimes.html#aa32280c01018eba348c41392e23a089f" title="Inserts an expression in a sum or a product. " alt="" coords="209,208,308,235"/>
+<area shape="rect" id="node8" href="$classAbstractVectorial.html#a0adf32913aa9251d725b9e8acaf5d9ee" title="Returns the tensor_dot of two Vectorial expressions. " alt="" coords="193,259,324,301"/>
+<area shape="rect" id="node7" href="$classTimes.html#a456bbe5fdcbe4076538636e87ac118bf" title="Creates the product of &amp; leftOperand and rightOperand. " alt="" coords="383,208,485,235"/>
+</map>

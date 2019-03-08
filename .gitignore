@@ -1,7 +1,6 @@
 obj/*
 prog/obj/*
 latex/*
-html/*
 test*
 gInterpreter.cpp
 perf.data

@@ -1,0 +1,5 @@
+<map id="Sin" name="Sin">
+<area shape="rect" id="node2" href="$classAbstractFunc.html" title="Base class for scalar functions of one argument. " alt="" coords="9,155,109,181"/>
+<area shape="rect" id="node3" href="$classAbstractScalar.html" title="Abstract class concerning all scalars (dim = 0). Allows to implement one time getDim() = 0 for all sc..." alt="" coords="5,80,113,107"/>
+<area shape="rect" id="node4" href="$classAbstract.html" title="Root class of the inheritance tree of abstracts. " alt="" coords="24,5,95,32"/>
+</map>

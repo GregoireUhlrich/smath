@@ -1,0 +1,5 @@
+<map id="getRealPart" name="getRealPart">
+<area shape="rect" id="node2" href="$classTimes.html#a90bfbd0385611a65efa89646477c93e5" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="144,31,265,57"/>
+<area shape="rect" id="node3" href="$classTimes.html#afc876ba059d5e3a2a36b149ab7476ffc" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="317,5,458,32"/>
+<area shape="rect" id="node4" href="$classTimes.html#acc89b89e802a06fc06a747e45d2b25ce" title="Evaluates the argument in the complex plane of the Abstract and returns it. " alt="" coords="313,68,461,95"/>
+</map>

@@ -1,0 +1,32 @@
+<map id="getFactors" name="getFactors">
+<area shape="rect" id="node2" href="$classAbstractMultiSFunc.html#a1402c4a3f697de445748ff059d1ec8e0" title="Gives the primary type of an AbstractMultiSFunc. " alt="" coords="440,5,577,47"/>
+<area shape="rect" id="node4" href="$classPow.html#ad332f75a3b947cd7df5f1a4857b431f0" title="Gives the type of a Pow object. " alt="" coords="137,527,207,554"/>
+<area shape="rect" id="node29" href="$operations_8h.html#acbd18b645825198b8efbcfe6442c6dea" title="Returns the exponentiation of the two operands, applying basic simplifications. " alt="" coords="297,831,350,858"/>
+<area shape="rect" id="node30" href="$support_8h.html#a871c75b4c7379cdcf528796f7590ccdc" title="Returns the sign of a. " alt="" coords="151,629,193,655"/>
+<area shape="rect" id="node31" href="$support_8h.html#a15fe90ca93206f30725b080066b96a4f" title="Returns the PGCD of a and b. " alt="" coords="141,679,203,706"/>
+<area shape="rect" id="node3" href="$classAbstractScalarFunc.html#a008f58643c15d4f624e6aee7a98e699c" title="Tells if the AbstractScalarFunc is commutable. " alt="" coords="628,5,765,47"/>
+<area shape="rect" id="node5" href="$classPlus.html#ac82b0501ac3f92e3ba60dd04f4372b10" title="Displays the abstract in standard output. " alt="" coords="656,426,737,453"/>
+<area shape="rect" id="node6" href="$classPlus.html#af21ac36bebac371e07ca725f91c9a21c" title="Creates a LaTeX output for the Abstract. " alt="" coords="637,477,756,503"/>
+<area shape="rect" id="node7" href="$classPlus.html#abd473f3a4f62f338f5b0ee3b10453f39" title="Return the sum of all the arguments. " alt="" coords="625,219,768,246"/>
+<area shape="rect" id="node9" href="$classPlus.html#a75b66cfaa27495aedb25637c031a5cfb" title="Evaluates the scalar. " alt="" coords="644,527,749,554"/>
+<area shape="rect" id="node10" href="$operations_8h.html#a17e05312056d5b742d2c0a883d6df935" title="Returns the sum of the two operands, applying basic simplifications. " alt="" coords="869,527,922,554"/>
+<area shape="rect" id="node11" href="$classPlus.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="259,274,388,301"/>
+<area shape="rect" id="node13" href="$classPlus.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the sum. " alt="" coords="651,375,742,402"/>
+<area shape="rect" id="node22" href="$operations_8h.html#a37fbd886b025c44d0d193d4831618989" title="Returns the product of the two operands, applying basic simplifications. " alt="" coords="865,654,926,681"/>
+<area shape="rect" id="node23" href="$classPlus.html#af8b09150ff827cbf6fc2c5773ef59a6e" title="Compares the Abstract with another. " alt="" coords="637,679,756,706"/>
+<area shape="rect" id="node24" href="$operations_8h.html#a62730ae21860f7e2afbf9e836bcd1936" title="Returns the sum of the two operands (with a minus sign), applying basic simplifications. " alt="" coords="863,730,927,757"/>
+<area shape="rect" id="node26" href="$classAbstractMultiSFunc.html#a673a663ea0aa5429e49ce10ba89e4464" title="Develops the Abstract. " alt="" coords="255,165,392,207"/>
+<area shape="rect" id="node28" href="$operations_8h.html#a6c63344e7a3b5853a73f0eb158de88ef" title="Returns the fraction of the two operands, applying basic simplifications. " alt="" coords="287,325,359,351"/>
+<area shape="rect" id="node8" href="$classAbstractScalar.html#a402370b0efecd9621a68395c85e374eb" title="Gives the dimension of the Abstract. " alt="" coords="816,219,975,246"/>
+<area shape="rect" id="node12" href="$classPlus.html#ad332f75a3b947cd7df5f1a4857b431f0" title="Gives the type of a Plus object. " alt="" coords="457,325,560,351"/>
+<area shape="rect" id="node25" href="$abstract_8h.html#a2a725f77726bc5a9ec08677d2e2fd859" title="Recover an Abstract that cannot return itself. " alt="" coords="473,173,544,199"/>
+<area shape="rect" id="node14" href="$classPlus.html#a089586016d6a47e1694585a0f57aa2b5" title="Factors the expression if common factors are found. " alt="" coords="643,325,750,351"/>
+<area shape="rect" id="node15" href="$classAbstractMultiSFunc.html#aed7932effe05143de09405f7efe21b66" title="Returns one particular argument. " alt="" coords="827,321,964,363"/>
+<area shape="rect" id="node16" href="$classPlus.html#a74715678bbcdafc95c17c4837e7758f0" title="Default constructor. Initializes argument to an empty std::vector. " alt="" coords="854,270,937,297"/>
+<area shape="rect" id="node20" href="$abstract_8h.html#a94314fbd03e12f148f0b50948b20abb5" title="Copy an Abstract to depth 1. " alt="" coords="869,387,922,414"/>
+<area shape="rect" id="node21" href="$classAbstractMultiSFunc.html#a089586016d6a47e1694585a0f57aa2b5" title="Factors the Abstract. " alt="" coords="827,439,964,480"/>
+<area shape="rect" id="node17" href="$classAbstractMultiSFunc.html#a09a7e0c534d267fb0ef2aca078c09434" title="Default Constructor, initializes the std::vector argument empty. " alt="" coords="1023,263,1168,304"/>
+<area shape="rect" id="node18" href="$classAbstractScalar.html#a41e42a8607c96b14a2ff96f9ee2fcbfd" title="Default constructor. " alt="" coords="1216,263,1381,304"/>
+<area shape="rect" id="node19" href="$classAbstract.html#acc6e3314f7cec8a356e1ee6a9dde1d18" title="Default Constructor. " alt="" coords="1429,270,1557,297"/>
+<area shape="rect" id="node27" href="$abstract_8h.html#a67cec2384a77d5d1fd6fd93e0fc28ddd" title="Refresh an Abstract and apply basic simplifications. " alt="" coords="475,122,543,149"/>
+</map>

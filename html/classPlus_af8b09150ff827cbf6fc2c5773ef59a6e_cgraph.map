@@ -1,0 +1,5 @@
+<map id="operator==" name="operator==">
+<area shape="rect" id="node2" href="$operations_8h.html#a17e05312056d5b742d2c0a883d6df935" title="Returns the sum of the two operands, applying basic simplifications. " alt="" coords="144,5,197,32"/>
+<area shape="rect" id="node3" href="$operations_8h.html#a62730ae21860f7e2afbf9e836bcd1936" title="Returns the sum of the two operands (with a minus sign), applying basic simplifications. " alt="" coords="139,56,203,83"/>
+<area shape="rect" id="node4" href="$operations_8h.html#a37fbd886b025c44d0d193d4831618989" title="Returns the product of the two operands, applying basic simplifications. " alt="" coords="140,107,201,133"/>
+</map>

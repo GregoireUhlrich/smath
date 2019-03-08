@@ -1,0 +1,51 @@
+<map id="times_" name="times_">
+<area shape="rect" id="node2" href="$classDerivative.html#af65e25ca87c6774b92e637bb3c5628f2" title="Creates the derivative of &amp; leftOperand wrt rightOperand, to order t_order. " alt="" coords="345,1095,493,1121"/>
+<area shape="rect" id="node3" href="$classAbs.html#a9371625b49860dbbd2299b5de7043fe0" title="Evaluates the absolute value, return |argument|. " alt="" coords="155,5,257,32"/>
+<area shape="rect" id="node5" href="$classExp.html#afc3cdd2b7bf7c6a6df773b68c9af5153" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="145,107,267,133"/>
+<area shape="rect" id="node6" href="$classExp.html#a6fc37867d634b3538379f6256d6c7e29" title="Evaluates the imaginary part of t getConstSharedFromThis();he Abstract and returns it..." alt="" coords="130,157,282,184"/>
+<area shape="rect" id="node7" href="$classExp.html#ab8b04549139eda0ea3eaf6de89311b68" title="Derives the exponential function. " alt="" coords="162,208,250,235"/>
+<area shape="rect" id="node8" href="$classLog.html#ab8b04549139eda0ea3eaf6de89311b68" title="Derives the logarithm function. " alt="" coords="163,259,249,285"/>
+<area shape="rect" id="node9" href="$classCos.html#afc3cdd2b7bf7c6a6df773b68c9af5153" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="145,309,267,336"/>
+<area shape="rect" id="node10" href="$classCos.html#a6fc37867d634b3538379f6256d6c7e29" title="Evaluates the imaginary part of t getConstSharedFromThis();he Abstract and returns it..." alt="" coords="129,360,283,387"/>
+<area shape="rect" id="node11" href="$classCos.html#aff23826dac23c21b39a9d4ef59d50c76" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="119,411,293,437"/>
+<area shape="rect" id="node12" href="$classCos.html#ab8b04549139eda0ea3eaf6de89311b68" title="Derives the cos function. " alt="" coords="161,461,251,488"/>
+<area shape="rect" id="node13" href="$classSin.html#afc3cdd2b7bf7c6a6df773b68c9af5153" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="147,512,265,539"/>
+<area shape="rect" id="node14" href="$classSin.html#a6fc37867d634b3538379f6256d6c7e29" title="Evaluates the imaginary part of t getConstSharedFromThis();he Abstract and returns it..." alt="" coords="132,563,280,589"/>
+<area shape="rect" id="node15" href="$classSin.html#aff23826dac23c21b39a9d4ef59d50c76" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="122,613,290,640"/>
+<area shape="rect" id="node16" href="$classSin.html#ab8b04549139eda0ea3eaf6de89311b68" title="Derives the sin function. " alt="" coords="164,664,248,691"/>
+<area shape="rect" id="node17" href="$classTan.html#afc3cdd2b7bf7c6a6df773b68c9af5153" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="145,715,267,741"/>
+<area shape="rect" id="node18" href="$classTan.html#a6fc37867d634b3538379f6256d6c7e29" title="Evaluates the imaginary part of t getConstSharedFromThis();he Abstract and returns it..." alt="" coords="131,765,281,792"/>
+<area shape="rect" id="node19" href="$classTan.html#aff23826dac23c21b39a9d4ef59d50c76" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="121,816,291,843"/>
+<area shape="rect" id="node20" href="$classTan.html#ab8b04549139eda0ea3eaf6de89311b68" title="Derives the tan function. " alt="" coords="163,867,249,893"/>
+<area shape="rect" id="node21" href="$classACos.html#afc3cdd2b7bf7c6a6df773b68c9af5153" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="140,917,272,944"/>
+<area shape="rect" id="node22" href="$classACos.html#a6fc37867d634b3538379f6256d6c7e29" title="Evaluates the imaginary part of t getConstSharedFromThis();he Abstract and returns it..." alt="" coords="125,968,287,995"/>
+<area shape="rect" id="node23" href="$classACos.html#aff23826dac23c21b39a9d4ef59d50c76" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="115,1019,297,1045"/>
+<area shape="rect" id="node24" href="$classACos.html#ab8b04549139eda0ea3eaf6de89311b68" title="Derives the acos function. " alt="" coords="157,1069,255,1096"/>
+<area shape="rect" id="node25" href="$classASin.html#afc3cdd2b7bf7c6a6df773b68c9af5153" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="143,1120,269,1147"/>
+<area shape="rect" id="node26" href="$classASin.html#a6fc37867d634b3538379f6256d6c7e29" title="Evaluates the imaginary part of t getConstSharedFromThis();he Abstract and returns it..." alt="" coords="127,1171,285,1197"/>
+<area shape="rect" id="node27" href="$classASin.html#aff23826dac23c21b39a9d4ef59d50c76" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="117,1221,295,1248"/>
+<area shape="rect" id="node28" href="$classASin.html#ab8b04549139eda0ea3eaf6de89311b68" title="Derives the asin function. " alt="" coords="159,1272,253,1299"/>
+<area shape="rect" id="node29" href="$classCosh.html#afc3cdd2b7bf7c6a6df773b68c9af5153" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="141,1323,271,1349"/>
+<area shape="rect" id="node30" href="$classCosh.html#a6fc37867d634b3538379f6256d6c7e29" title="Evaluates the imaginary part of t getConstSharedFromThis();he Abstract and returns it..." alt="" coords="126,1373,286,1400"/>
+<area shape="rect" id="node31" href="$classCosh.html#aff23826dac23c21b39a9d4ef59d50c76" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="116,1424,296,1451"/>
+<area shape="rect" id="node32" href="$classCosh.html#ab8b04549139eda0ea3eaf6de89311b68" title="Derives the cosh function. " alt="" coords="158,1475,254,1501"/>
+<area shape="rect" id="node33" href="$classSinh.html#afc3cdd2b7bf7c6a6df773b68c9af5153" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="143,1525,269,1552"/>
+<area shape="rect" id="node34" href="$classSinh.html#a6fc37867d634b3538379f6256d6c7e29" title="Evaluates the imaginary part of t getConstSharedFromThis();he Abstract and returns it..." alt="" coords="129,1576,283,1603"/>
+<area shape="rect" id="node35" href="$classSinh.html#aff23826dac23c21b39a9d4ef59d50c76" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="119,1627,293,1653"/>
+<area shape="rect" id="node36" href="$classSinh.html#ab8b04549139eda0ea3eaf6de89311b68" title="Derives the sinh function. " alt="" coords="161,1677,251,1704"/>
+<area shape="rect" id="node37" href="$classTanh.html#afc3cdd2b7bf7c6a6df773b68c9af5153" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="142,1728,270,1755"/>
+<area shape="rect" id="node38" href="$classTanh.html#a6fc37867d634b3538379f6256d6c7e29" title="Evaluates the imaginary part of t getConstSharedFromThis();he Abstract and returns it..." alt="" coords="127,1779,285,1805"/>
+<area shape="rect" id="node39" href="$classTanh.html#aff23826dac23c21b39a9d4ef59d50c76" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="117,1829,295,1856"/>
+<area shape="rect" id="node40" href="$classTanh.html#ab8b04549139eda0ea3eaf6de89311b68" title="Derives the tanh function. " alt="" coords="159,1880,253,1907"/>
+<area shape="rect" id="node41" href="$classACosh.html#ab8b04549139eda0ea3eaf6de89311b68" title="Derives the acosh function. " alt="" coords="153,1931,259,1957"/>
+<area shape="rect" id="node42" href="$classASinh.html#ab8b04549139eda0ea3eaf6de89311b68" title="Derives the asinh function. " alt="" coords="156,1981,256,2008"/>
+<area shape="rect" id="node43" href="$classATanh.html#ab8b04549139eda0ea3eaf6de89311b68" title="Derives the atanh function. " alt="" coords="155,2032,257,2059"/>
+<area shape="rect" id="node44" href="$classPlus.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="141,2083,271,2109"/>
+<area shape="rect" id="node45" href="$operations_8h.html#ac89ad275b725cb84a0c99d79bdf9526a" title="Returns the sum of the two operands (with a minus sign), applying basic simplifications. " alt="" coords="174,2133,238,2160"/>
+<area shape="rect" id="node46" href="$classTimes.html#ad4eab0d3915f47bc492ecaaf508afca4" title="Times::getTerm" alt="" coords="149,2184,263,2211"/>
+<area shape="rect" id="node47" href="$classFraction.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of fractions. " alt="" coords="131,2235,281,2261"/>
+<area shape="rect" id="node48" href="$classPow.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of exponentiations. " alt="" coords="141,2285,271,2312"/>
+<area shape="rect" id="node49" href="$symbol_8h.html#a21ec8cb1040c2195cf981fec92ecc79d" title="Returns the product of t_symbol and t_value. " alt="" coords="169,2336,243,2363"/>
+<area shape="rect" id="node50" href="$variable_8h.html#a83def42c826b9ec01d8acb7a80048e10" title="cfactorial_" alt="" coords="165,2387,247,2413"/>
+<area shape="rect" id="node4" href="$classAbs.html#a3c84cc1ee6a9e16cfa5e372851ea04ad" title="Gives the type of the abs funtion function. " alt="" coords="369,5,469,32"/>
+</map>

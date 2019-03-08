@@ -1,0 +1,5 @@
+<map id="factor" name="factor">
+<area shape="rect" id="node2" href="$classAbstractScalarFunc.html#aab82d9300af7e389dd63831ed7391043" title="getPrimaryType" alt="" coords="119,5,234,32"/>
+<area shape="rect" id="node3" href="$classAbstractMultiSFunc.html#a3f9edafbda64687e956edd3710d52363" title="Returns the number of arguments of the AbstractMultiSFunc. " alt="" coords="108,57,245,98"/>
+<area shape="rect" id="node4" href="$classFraction.html#a594a570f0139f92f284f31e91c0c6dd8" title="Returns the number of possible factors in the expression. " alt="" coords="293,64,436,91"/>
+</map>

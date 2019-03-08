@@ -1,0 +1,20 @@
+<map id="cos_" name="cos_">
+<area shape="rect" id="node2" href="$classCos.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of the cos function. " alt="" coords="146,5,247,32"/>
+<area shape="rect" id="node3" href="$classCos.html#a9ec4272e14880906aaebc6d2aa15cac6" title="Calculates and returns all possible alternate forms of the expression in terms of simplifications..." alt="" coords="116,56,277,83"/>
+<area shape="rect" id="node4" href="$classSin.html#a9ec4272e14880906aaebc6d2aa15cac6" title="Calculates and returns all possible alternate forms of the expression in terms of simplifications..." alt="" coords="119,107,275,133"/>
+<area shape="rect" id="node5" href="$classTan.html#a9ec4272e14880906aaebc6d2aa15cac6" title="Calculates and returns all possible alternate forms of the expression in terms of simplifications..." alt="" coords="117,157,276,184"/>
+<area shape="rect" id="node6" href="$classExp.html#a3796711e63a2d5a048d44475e9c78f01" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="135,208,258,235"/>
+<area shape="rect" id="node7" href="$classCos.html#a3796711e63a2d5a048d44475e9c78f01" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="135,259,258,285"/>
+<area shape="rect" id="node8" href="$classSin.html#a71aea8e6392b27ef3c114c3e04908e0c" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="123,309,271,336"/>
+<area shape="rect" id="node9" href="$classSin.html#a9ab0f86191b05d660845c2f0ab25acea" title="Derives the sin function. " alt="" coords="155,360,239,387"/>
+<area shape="rect" id="node10" href="$classTan.html#a3d06a129ca3e2e920aecf3e4432c149e" title="Evaluates the argument in the complex plane of the Abstract and returns it. " alt="" coords="107,411,286,437"/>
+<area shape="rect" id="node11" href="$classCosh.html#a3796711e63a2d5a048d44475e9c78f01" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="131,461,262,488"/>
+<area shape="rect" id="node12" href="$classCosh.html#ab4dc712689d15bfa67e816bbd0426ab3" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="107,512,287,539"/>
+<area shape="rect" id="node13" href="$classSinh.html#a3796711e63a2d5a048d44475e9c78f01" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="134,563,259,589"/>
+<area shape="rect" id="node14" href="$classSinh.html#ab4dc712689d15bfa67e816bbd0426ab3" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="109,613,284,640"/>
+<area shape="rect" id="node15" href="$classTanh.html#a3796711e63a2d5a048d44475e9c78f01" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="133,664,261,691"/>
+<area shape="rect" id="node16" href="$classTanh.html#a71aea8e6392b27ef3c114c3e04908e0c" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="117,715,276,741"/>
+<area shape="rect" id="node17" href="$classTanh.html#ab4dc712689d15bfa67e816bbd0426ab3" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="107,765,286,792"/>
+<area shape="rect" id="node18" href="$classTanh.html#a3d06a129ca3e2e920aecf3e4432c149e" title="Evaluates the argument in the complex plane of the Abstract and returns it. " alt="" coords="104,816,289,843"/>
+<area shape="rect" id="node19" href="$symbol_8h.html#ab5e1060f3d901c1fc6bb7ee4a8b6f210" title="Returns the cos function applied on t_symbol. " alt="" coords="171,867,222,893"/>
+</map>

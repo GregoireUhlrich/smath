@@ -1,0 +1,5 @@
+<map id="derive" name="derive">
+<area shape="rect" id="node2" href="$classInteger.html#a251299017ba90f23114a3dc9b4814111" title="Tells if the expression is an integer. Either an Integer object directly, or a Double that has an int..." alt="" coords="127,5,247,32"/>
+<area shape="rect" id="node3" href="$classDouble.html#a251299017ba90f23114a3dc9b4814111" title="Tells if the expression is an integer. Either an Integer object directly, or a Double that has an int..." alt="" coords="126,56,247,83"/>
+<area shape="rect" id="node4" href="$classCFraction.html#abc0170d70d0aff50ddeb00f94ea820b1" title="Destructor. " alt="" coords="111,107,263,133"/>
+</map>

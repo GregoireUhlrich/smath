@@ -1,0 +1,6 @@
+<map id="derive" name="derive">
+<area shape="rect" id="node2" href="$operations_8h.html#a6c63344e7a3b5853a73f0eb158de88ef" title="Returns the fraction of the two operands, applying basic simplifications. " alt="" coords="111,5,183,32"/>
+<area shape="rect" id="node3" href="$operations_8h.html#a62730ae21860f7e2afbf9e836bcd1936" title="Returns the sum of the two operands (with a minus sign), applying basic simplifications. " alt="" coords="115,56,179,83"/>
+<area shape="rect" id="node4" href="$operations_8h.html#a37fbd886b025c44d0d193d4831618989" title="Returns the product of the two operands, applying basic simplifications. " alt="" coords="116,107,177,133"/>
+<area shape="rect" id="node5" href="$operations_8h.html#acbd18b645825198b8efbcfe6442c6dea" title="Returns the exponentiation of the two operands, applying basic simplifications. " alt="" coords="120,157,173,184"/>
+</map>

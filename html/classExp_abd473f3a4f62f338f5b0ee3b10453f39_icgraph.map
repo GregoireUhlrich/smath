@@ -1,0 +1,6 @@
+<map id="evaluateScalar" name="evaluateScalar">
+<area shape="rect" id="node2" href="$classExp.html#ad332f75a3b947cd7df5f1a4857b431f0" title="Gives the type of the exponential function. " alt="" coords="177,5,247,32"/>
+<area shape="rect" id="node3" href="$classLog.html#ad332f75a3b947cd7df5f1a4857b431f0" title="Gives the type of the logarithm function. " alt="" coords="163,56,261,83"/>
+<area shape="rect" id="node4" href="$classCos.html#ad332f75a3b947cd7df5f1a4857b431f0" title="Gives the type of the cos function. " alt="" coords="161,107,263,133"/>
+<area shape="rect" id="node5" href="$classSin.html#ad332f75a3b947cd7df5f1a4857b431f0" title="Gives the type of the sin function. " alt="" coords="164,157,260,184"/>
+</map>

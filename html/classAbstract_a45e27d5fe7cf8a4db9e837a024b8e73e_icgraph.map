@@ -1,0 +1,5 @@
+<map id="operator=" name="operator=">
+<area shape="rect" id="node2" href="$classInteger.html#a251299017ba90f23114a3dc9b4814111" title="Tells if the expression is an integer. Either an Integer object directly, or a Double that has an int..." alt="" coords="147,5,267,32"/>
+<area shape="rect" id="node3" href="$classDouble.html#a251299017ba90f23114a3dc9b4814111" title="Tells if the expression is an integer. Either an Integer object directly, or a Double that has an int..." alt="" coords="146,56,267,83"/>
+<area shape="rect" id="node4" href="$classCFraction.html#abc0170d70d0aff50ddeb00f94ea820b1" title="Destructor. " alt="" coords="131,107,283,133"/>
+</map>

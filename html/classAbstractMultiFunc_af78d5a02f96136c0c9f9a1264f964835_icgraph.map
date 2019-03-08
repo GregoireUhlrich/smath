@@ -1,0 +1,23 @@
+<map id="getPrimaryType" name="getPrimaryType">
+<area shape="rect" id="node2" href="$classPlus.html#a3d06a129ca3e2e920aecf3e4432c149e" title="Evaluates the argument in the complex plane of the Abstract and returns it. " alt="" coords="168,233,351,260"/>
+<area shape="rect" id="node4" href="$classPlus.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="549,132,679,159"/>
+<area shape="rect" id="node9" href="$classTimes.html#a8086e83f45a0d609ebe40a6f0a269e88" title="Creates a LaTeX output for the Abstract. " alt="" coords="952,309,1081,336"/>
+<area shape="rect" id="node10" href="$classTimes.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="947,360,1086,387"/>
+<area shape="rect" id="node21" href="$classTimes.html#a0678331620669f2ad08c32a88615fe8c" title="Times::getNumericalFactor" alt="" coords="169,411,349,437"/>
+<area shape="rect" id="node22" href="$classTimes.html#abfb9626259e3fb5e719f638cff60b316" title="Times::getTerm" alt="" coords="202,461,317,488"/>
+<area shape="rect" id="node3" href="$classPlus.html#a3c84cc1ee6a9e16cfa5e372851ea04ad" title="Gives the type of a Plus object. " alt="" coords="399,157,501,184"/>
+<area shape="rect" id="node6" href="$classTimes.html#a3c84cc1ee6a9e16cfa5e372851ea04ad" title="Gives the type of a Times object. " alt="" coords="753,259,867,285"/>
+<area shape="rect" id="node15" href="$classPow.html#a3c84cc1ee6a9e16cfa5e372851ea04ad" title="Gives the type of a Pow object. " alt="" coords="759,157,861,184"/>
+<area shape="rect" id="node5" href="$classPolynomial.html#a76a79f8935a3e8d332ba34f9358d6dcc" title="Destructor. " alt="" coords="727,5,893,32"/>
+<area shape="rect" id="node12" href="$classFraction.html#a3c84cc1ee6a9e16cfa5e372851ea04ad" title="Gives the type of a Fraction object. " alt="" coords="748,56,872,83"/>
+<area shape="rect" id="node20" href="$classPlus.html#a42d5dbf810d78ca6053801d0088a95ab" title="Creates the sum of &amp; leftOperand and rightOperand. " alt="" coords="769,107,851,133"/>
+<area shape="rect" id="node7" href="$classTimes.html#a0beb1f929265921ad879fac9c68e357f" title="Tells if the factor t_abstract appear in the product. " alt="" coords="958,259,1075,285"/>
+<area shape="rect" id="node8" href="$classTimes.html#abd9f12af3b52f041754d10bc7f106a96" title="Displays the abstract in standard output. " alt="" coords="971,208,1062,235"/>
+<area shape="rect" id="node11" href="$classTimes.html#a456bbe5fdcbe4076538636e87ac118bf" title="Creates the product of &amp; leftOperand and rightOperand. " alt="" coords="1151,360,1253,387"/>
+<area shape="rect" id="node13" href="$classFraction.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of fractions. " alt="" coords="941,5,1092,32"/>
+<area shape="rect" id="node14" href="$classFraction.html#a5c6432713390abdc0c80216e7580be70" title="Creates the fraction of &amp; leftOperand and rightOperand. " alt="" coords="1140,5,1264,32"/>
+<area shape="rect" id="node16" href="$classPow.html#acee0097dec8a4e721575bd38c830c81d" title="Returns all the possible factors. " alt="" coords="957,157,1076,184"/>
+<area shape="rect" id="node17" href="$classPow.html#a0beb1f929265921ad879fac9c68e357f" title="Tells if the factor t_abstract appear in the exponentiation. " alt="" coords="963,56,1070,83"/>
+<area shape="rect" id="node18" href="$classPow.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of exponentiations. " alt="" coords="952,107,1081,133"/>
+<area shape="rect" id="node19" href="$classPow.html#adcd6da98c13a86cd230c2bdaa4ff8c3c" title="Creates the exponentiation of &amp; leftOperand wrt rightOperand. " alt="" coords="1161,107,1243,133"/>
+</map>

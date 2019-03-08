@@ -1,0 +1,26 @@
+<map id="mergeTerms" name="mergeTerms">
+<area shape="rect" id="node2" href="$classFraction.html#ad332f75a3b947cd7df5f1a4857b431f0" title="Gives the type of a Fraction object. " alt="" coords="148,143,217,170"/>
+<area shape="rect" id="node13" href="$classAbstractMultiSFunc.html#aed7932effe05143de09405f7efe21b66" title="Returns one particular argument. " alt="" coords="829,553,967,594"/>
+<area shape="rect" id="node20" href="$operations_8h.html#a37fbd886b025c44d0d193d4831618989" title="Returns the product of the two operands, applying basic simplifications. " alt="" coords="867,320,929,347"/>
+<area shape="rect" id="node3" href="$classPlus.html#ac82b0501ac3f92e3ba60dd04f4372b10" title="Displays the abstract in standard output. " alt="" coords="659,118,740,144"/>
+<area shape="rect" id="node4" href="$classPlus.html#af21ac36bebac371e07ca725f91c9a21c" title="Creates a LaTeX output for the Abstract. " alt="" coords="640,168,759,195"/>
+<area shape="rect" id="node5" href="$classPlus.html#abd473f3a4f62f338f5b0ee3b10453f39" title="Return the sum of all the arguments. " alt="" coords="628,320,771,347"/>
+<area shape="rect" id="node7" href="$classPlus.html#a75b66cfaa27495aedb25637c031a5cfb" title="Evaluates the scalar. " alt="" coords="647,219,752,246"/>
+<area shape="rect" id="node9" href="$classPlus.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="265,346,395,372"/>
+<area shape="rect" id="node11" href="$classPlus.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the sum. " alt="" coords="654,16,745,43"/>
+<area shape="rect" id="node21" href="$classPlus.html#af8b09150ff827cbf6fc2c5773ef59a6e" title="Compares the Abstract with another. " alt="" coords="640,67,759,94"/>
+<area shape="rect" id="node6" href="$classAbstractScalar.html#a402370b0efecd9621a68395c85e374eb" title="Gives the dimension of the Abstract. " alt="" coords="819,371,977,398"/>
+<area shape="rect" id="node8" href="$operations_8h.html#a17e05312056d5b742d2c0a883d6df935" title="Returns the sum of the two operands, applying basic simplifications. " alt="" coords="871,135,925,162"/>
+<area shape="rect" id="node10" href="$classPlus.html#ad332f75a3b947cd7df5f1a4857b431f0" title="Gives the type of a Plus object. " alt="" coords="460,219,563,246"/>
+<area shape="rect" id="node23" href="$classAbstractMultiSFunc.html#a1402c4a3f697de445748ff059d1ec8e0" title="Gives the primary type of an AbstractMultiSFunc. " alt="" coords="443,422,580,464"/>
+<area shape="rect" id="node25" href="$abstract_8h.html#a2a725f77726bc5a9ec08677d2e2fd859" title="Recover an Abstract that cannot return itself. " alt="" coords="476,488,547,515"/>
+<area shape="rect" id="node12" href="$classPlus.html#a089586016d6a47e1694585a0f57aa2b5" title="Factors the expression if common factors are found. " alt="" coords="646,270,753,296"/>
+<area shape="rect" id="node14" href="$classPlus.html#a74715678bbcdafc95c17c4837e7758f0" title="Default constructor. Initializes argument to an empty std::vector. " alt="" coords="857,480,939,507"/>
+<area shape="rect" id="node18" href="$abstract_8h.html#a94314fbd03e12f148f0b50948b20abb5" title="Copy an Abstract to depth 1. " alt="" coords="871,270,925,296"/>
+<area shape="rect" id="node19" href="$classAbstractMultiSFunc.html#a089586016d6a47e1694585a0f57aa2b5" title="Factors the Abstract. " alt="" coords="829,204,967,245"/>
+<area shape="rect" id="node15" href="$classAbstractMultiSFunc.html#a09a7e0c534d267fb0ef2aca078c09434" title="Default Constructor, initializes the std::vector argument empty. " alt="" coords="1025,473,1171,514"/>
+<area shape="rect" id="node16" href="$classAbstractScalar.html#a41e42a8607c96b14a2ff96f9ee2fcbfd" title="Default constructor. " alt="" coords="1219,473,1384,514"/>
+<area shape="rect" id="node17" href="$classAbstract.html#acc6e3314f7cec8a356e1ee6a9dde1d18" title="Default Constructor. " alt="" coords="1432,480,1560,507"/>
+<area shape="rect" id="node22" href="$operations_8h.html#a62730ae21860f7e2afbf9e836bcd1936" title="Returns the sum of the two operands (with a minus sign), applying basic simplifications. " alt="" coords="866,67,930,94"/>
+<area shape="rect" id="node24" href="$classAbstractScalarFunc.html#a008f58643c15d4f624e6aee7a98e699c" title="Tells if the AbstractScalarFunc is commutable. " alt="" coords="631,422,768,464"/>
+</map>

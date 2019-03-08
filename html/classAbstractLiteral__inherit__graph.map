@@ -1,0 +1,9 @@
+<map id="AbstractLiteral" name="AbstractLiteral">
+<area shape="rect" id="node6" href="$classCFactorial.html" title="Handles factorial of a Number. " alt="" coords="5,319,88,345"/>
+<area shape="rect" id="node7" href="$classConstant.html" title="Handle an object with a name and a value. " alt="" coords="112,319,187,345"/>
+<area shape="rect" id="node8" href="$classImaginary.html" title="Numerical representation of i. " alt="" coords="211,319,290,345"/>
+<area shape="rect" id="node9" href="$classVariable.html" title="Handle an object with a name and a value. " alt="" coords="315,319,384,345"/>
+<area shape="rect" id="node2" href="$classAbstractBuildingBlock.html" title="Abstract class from which derive all building blocks of exprs, i.e. objects not function of further e..." alt="" coords="125,169,275,196"/>
+<area shape="rect" id="node3" href="$classAbstractScalar.html" title="Abstract class concerning all scalars (dim = 0). Allows to implement one time getDim() = 0 for all sc..." alt="" coords="73,87,181,114"/>
+<area shape="rect" id="node4" href="$classAbstract.html" title="Root class of the inheritance tree of abstracts. " alt="" coords="91,5,162,32"/>
+</map>

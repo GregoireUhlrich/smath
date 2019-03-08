@@ -1,0 +1,12 @@
+<map id="fraction_" name="fraction_">
+<area shape="rect" id="node2" href="$classDerivative.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Derivative object. " alt="" coords="137,5,273,32"/>
+<area shape="rect" id="node3" href="$classACos.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the acos function. " alt="" coords="156,56,255,83"/>
+<area shape="rect" id="node4" href="$classASin.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the asin function. " alt="" coords="159,107,252,133"/>
+<area shape="rect" id="node5" href="$classACosh.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the acosh function. " alt="" coords="153,157,258,184"/>
+<area shape="rect" id="node6" href="$classASinh.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the asinh function. " alt="" coords="155,208,255,235"/>
+<area shape="rect" id="node7" href="$classATanh.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the atanh function. " alt="" coords="154,259,257,285"/>
+<area shape="rect" id="node8" href="$classATan.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the atan function. " alt="" coords="157,309,253,336"/>
+<area shape="rect" id="node9" href="$classFraction.html#a8c6189d981cc22ffb8e3a9aacd79f3bb" title="Suppresses the term t_abstract in the fraction. " alt="" coords="125,360,285,387"/>
+<area shape="rect" id="node10" href="$symbol_8h.html#a5bbf903159e014b4d85af7840fdf151c" title="Creates the fraction t_symbol1/t_symbol2. " alt="" coords="169,411,241,437"/>
+<area shape="rect" id="node11" href="$symbol_8h.html#a1f1bc8031a77842adebe08134edc6382" title="Returns the division of t_symbol and t_value. " alt="" coords="169,461,242,488"/>
+</map>

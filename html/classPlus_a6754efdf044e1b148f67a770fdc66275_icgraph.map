@@ -1,0 +1,22 @@
+<map id="derive" name="derive">
+<area shape="rect" id="node2" href="$classPlus.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Plus object. " alt="" coords="147,181,216,208"/>
+<area shape="rect" id="node4" href="$classTimes.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Times object. " alt="" coords="520,131,633,157"/>
+<area shape="rect" id="node10" href="$classFraction.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Fraction object. " alt="" coords="515,232,639,259"/>
+<area shape="rect" id="node13" href="$classPow.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Pow object. " alt="" coords="525,283,628,309"/>
+<area shape="rect" id="node19" href="$classPolynomial.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Polynomial object. " alt="" coords="111,333,252,360"/>
+<area shape="rect" id="node21" href="$classDerivative.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Derivative object. " alt="" coords="113,384,249,411"/>
+<area shape="rect" id="node3" href="$classPlus.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="336,181,431,208"/>
+<area shape="rect" id="node18" href="$classPlus.html#a74715678bbcdafc95c17c4837e7758f0" title="Default constructor. Initializes argument to an empty std::vector. " alt="" coords="553,181,601,208"/>
+<area shape="rect" id="node5" href="$classTimes.html#a43c5859f067bbebc8ac485b7f59899c7" title="Tells if the factor t_abstract appear in the product. " alt="" coords="703,5,821,32"/>
+<area shape="rect" id="node6" href="$classTimes.html#ac82b0501ac3f92e3ba60dd04f4372b10" title="Displays the abstract in standard output. " alt="" coords="717,80,807,107"/>
+<area shape="rect" id="node7" href="$classTimes.html#af21ac36bebac371e07ca725f91c9a21c" title="Creates a LaTeX output for the Abstract. " alt="" coords="697,131,827,157"/>
+<area shape="rect" id="node8" href="$classTimes.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="693,181,831,208"/>
+<area shape="rect" id="node9" href="$classTimes.html#aa5b76bb2c43c0ac2ce327a2ef4d6ca55" title="Default constructor. Initializes argument to an empty std::vector. " alt="" coords="896,181,999,208"/>
+<area shape="rect" id="node11" href="$classFraction.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of fractions. " alt="" coords="687,232,837,259"/>
+<area shape="rect" id="node12" href="$classFraction.html#af9b855b61347eb6359b10187ed957f35" title="Default constructor. Initializes both arguments to 0. " alt="" coords="885,232,1009,259"/>
+<area shape="rect" id="node14" href="$classPow.html#a435622326b38de2abfe3782d3c5086cf" title="Returns all the possible factors. " alt="" coords="703,283,821,309"/>
+<area shape="rect" id="node15" href="$classPow.html#a43c5859f067bbebc8ac485b7f59899c7" title="Tells if the factor t_abstract appear in the exponentiation. " alt="" coords="709,333,815,360"/>
+<area shape="rect" id="node16" href="$classPow.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of exponentiations. " alt="" coords="697,384,827,411"/>
+<area shape="rect" id="node17" href="$classPow.html#a3431ea3574b4ed59dc3dc4bf9396c40c" title="Default constructor. Initializes both arguments to 0. " alt="" coords="906,384,989,411"/>
+<area shape="rect" id="node20" href="$classPolynomial.html#a76a79f8935a3e8d332ba34f9358d6dcc" title="Destructor. " alt="" coords="300,333,467,360"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="derive" name="derive">
+<area shape="rect" id="node2" href="$operations_8h.html#a37fbd886b025c44d0d193d4831618989" title="Returns the product of the two operands, applying basic simplifications. " alt="" coords="111,5,172,32"/>
+<area shape="rect" id="node3" href="$mathFunctions_8h.html#a89f32522dbc6ba6db56b22a438dcc5b1" title="Creates an object of type Sin acting on t_abstract. " alt="" coords="118,56,165,83"/>
+<area shape="rect" id="node4" href="$mathFunctions_8h.html#a2ab26d4ab4ccc02ec923294cd1e1080d" title="Creates an object of type Cos acting on t_abstract. " alt="" coords="116,107,167,133"/>
+</map>

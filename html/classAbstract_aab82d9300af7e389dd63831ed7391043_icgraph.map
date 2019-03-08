@@ -1,0 +1,33 @@
+<map id="getPrimaryType" name="getPrimaryType">
+<area shape="rect" id="node2" href="$classAbstract.html#a67ef9b71019b8c2c3b9133497349262e" title="Destructor. " alt="" coords="208,291,287,317"/>
+<area shape="rect" id="node3" href="$classVariable.html#a3496fcbaf4dfaa72537027961e58a8b4" title="Destructor. " alt="" coords="181,341,313,368"/>
+<area shape="rect" id="node4" href="$classConstant.html#ad65da8101f8917b7fce7e0c32bcd63f3" title="Destructor. " alt="" coords="175,392,319,419"/>
+<area shape="rect" id="node5" href="$classAbstractScalar.html#a402370b0efecd9621a68395c85e374eb" title="Gives the dimension of the Abstract. " alt="" coords="168,443,327,469"/>
+<area shape="rect" id="node6" href="$classPlus.html#abd473f3a4f62f338f5b0ee3b10453f39" title="Return the sum of all the arguments. " alt="" coords="393,304,536,331"/>
+<area shape="rect" id="node27" href="$classTimes.html#abd473f3a4f62f338f5b0ee3b10453f39" title="Return the product of all the arguments. " alt="" coords="1007,76,1159,103"/>
+<area shape="rect" id="node28" href="$classFraction.html#abd473f3a4f62f338f5b0ee3b10453f39" title="Return the division of the two arguments. " alt="" coords="383,468,546,495"/>
+<area shape="rect" id="node29" href="$classPow.html#abd473f3a4f62f338f5b0ee3b10453f39" title="Return the exponentiation of the two arguments. " alt="" coords="393,417,536,444"/>
+<area shape="rect" id="node31" href="$classPolynomial.html#abd473f3a4f62f338f5b0ee3b10453f39" title="Return the polynomial of all the arguments. " alt="" coords="375,519,555,545"/>
+<area shape="rect" id="node32" href="$classDerivative.html#abd473f3a4f62f338f5b0ee3b10453f39" title="Return the derivative of the first argument wrt the second. " alt="" coords="377,569,552,596"/>
+<area shape="rect" id="node7" href="$classPlus.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Plus object. " alt="" coords="622,329,725,356"/>
+<area shape="rect" id="node8" href="$classPlus.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="811,329,940,356"/>
+<area shape="rect" id="node9" href="$classTimes.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Times object. " alt="" coords="1026,128,1139,155"/>
+<area shape="rect" id="node15" href="$classFraction.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Fraction object. " alt="" coords="1021,428,1145,455"/>
+<area shape="rect" id="node18" href="$classPow.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Pow object. " alt="" coords="1031,279,1134,305"/>
+<area shape="rect" id="node24" href="$classPolynomial.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Polynomial object. " alt="" coords="603,177,744,204"/>
+<area shape="rect" id="node26" href="$classDerivative.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Derivative object. " alt="" coords="605,380,741,407"/>
+<area shape="rect" id="node23" href="$classPlus.html#a74715678bbcdafc95c17c4837e7758f0" title="Default constructor. Initializes argument to an empty std::vector. " alt="" coords="1041,329,1124,356"/>
+<area shape="rect" id="node10" href="$classTimes.html#a43c5859f067bbebc8ac485b7f59899c7" title="Tells if the factor t_abstract appear in the product. " alt="" coords="1223,131,1341,157"/>
+<area shape="rect" id="node11" href="$classTimes.html#ac82b0501ac3f92e3ba60dd04f4372b10" title="Displays the abstract in standard output. " alt="" coords="1237,29,1327,56"/>
+<area shape="rect" id="node12" href="$classTimes.html#af21ac36bebac371e07ca725f91c9a21c" title="Creates a LaTeX output for the Abstract. " alt="" coords="1217,181,1347,208"/>
+<area shape="rect" id="node13" href="$classTimes.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="1213,80,1351,107"/>
+<area shape="rect" id="node14" href="$classTimes.html#aa5b76bb2c43c0ac2ce327a2ef4d6ca55" title="Default constructor. Initializes argument to an empty std::vector. " alt="" coords="1416,80,1519,107"/>
+<area shape="rect" id="node16" href="$classFraction.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of fractions. " alt="" coords="1207,428,1357,455"/>
+<area shape="rect" id="node17" href="$classFraction.html#af9b855b61347eb6359b10187ed957f35" title="Default constructor. Initializes both arguments to 0. " alt="" coords="1405,428,1529,455"/>
+<area shape="rect" id="node19" href="$classPow.html#a435622326b38de2abfe3782d3c5086cf" title="Returns all the possible factors. " alt="" coords="1223,239,1341,265"/>
+<area shape="rect" id="node20" href="$classPow.html#a43c5859f067bbebc8ac485b7f59899c7" title="Tells if the factor t_abstract appear in the exponentiation. " alt="" coords="1229,365,1335,392"/>
+<area shape="rect" id="node21" href="$classPow.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of exponentiations. " alt="" coords="1217,289,1347,316"/>
+<area shape="rect" id="node22" href="$classPow.html#a3431ea3574b4ed59dc3dc4bf9396c40c" title="Default constructor. Initializes both arguments to 0. " alt="" coords="1426,289,1509,316"/>
+<area shape="rect" id="node25" href="$classPolynomial.html#a76a79f8935a3e8d332ba34f9358d6dcc" title="Destructor. " alt="" coords="792,177,959,204"/>
+<area shape="rect" id="node30" href="$classPow.html#a594a570f0139f92f284f31e91c0c6dd8" title="Returns the number of possible factors in the expression. " alt="" coords="613,532,734,559"/>
+</map>

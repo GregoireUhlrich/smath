@@ -1,0 +1,7 @@
+<map id="getShape" name="getShape">
+<area shape="rect" id="node2" href="$classAbstractVectorial.html#a41679a5ac7ec7a7b338d7a240fa9a0ec" title="In the case of a vectorial&#45;type expression, this function checks if the shape of expr matches itself..." alt="" coords="131,5,261,47"/>
+<area shape="rect" id="node3" href="$classAbstractVectorial.html#a0adf32913aa9251d725b9e8acaf5d9ee" title="Returns the tensor_dot of two Vectorial expressions. " alt="" coords="131,71,261,112"/>
+<area shape="rect" id="node4" href="$classAbstractVectorial.html#acf1ccb84aa901bcbba4394444d18c633" title="Develops the Abstract. " alt="" coords="131,136,261,177"/>
+<area shape="rect" id="node5" href="$classAbstractVectorial.html#ad9d353d7c78473d62f37948937b41296" title="Factors the Abstract. " alt="" coords="131,201,261,243"/>
+<area shape="rect" id="node6" href="$classMatrix.html#ab00c3c8f79df6685908055355a90856f" title="Calculates and returns the transpose of a 2D matrix. " alt="" coords="135,267,257,294"/>
+</map>

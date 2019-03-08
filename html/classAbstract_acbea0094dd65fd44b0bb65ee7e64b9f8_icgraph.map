@@ -1,0 +1,17 @@
+<map id="getRealPart" name="getRealPart">
+<area shape="rect" id="node2" href="$classAbstract.html#a67ef9b71019b8c2c3b9133497349262e" title="Destructor. " alt="" coords="172,5,251,32"/>
+<area shape="rect" id="node3" href="$classExp.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the exponential function. " alt="" coords="161,56,261,83"/>
+<area shape="rect" id="node4" href="$classLog.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the logarithm function. " alt="" coords="162,107,261,133"/>
+<area shape="rect" id="node5" href="$classCos.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the cos function. " alt="" coords="161,157,262,184"/>
+<area shape="rect" id="node6" href="$classSin.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the sin function. " alt="" coords="163,208,259,235"/>
+<area shape="rect" id="node7" href="$classTan.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the tan function. " alt="" coords="162,259,261,285"/>
+<area shape="rect" id="node8" href="$classACos.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the acos function. " alt="" coords="156,309,267,336"/>
+<area shape="rect" id="node9" href="$classASin.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the asin function. " alt="" coords="159,360,264,387"/>
+<area shape="rect" id="node10" href="$classCosh.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the cosh function. " alt="" coords="157,411,265,437"/>
+<area shape="rect" id="node11" href="$classSinh.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the sinh function. " alt="" coords="160,461,263,488"/>
+<area shape="rect" id="node12" href="$classTanh.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the tanh function. " alt="" coords="158,512,265,539"/>
+<area shape="rect" id="node13" href="$classACosh.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the acosh function. " alt="" coords="153,563,270,589"/>
+<area shape="rect" id="node14" href="$classASinh.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the asinh function. " alt="" coords="155,613,267,640"/>
+<area shape="rect" id="node15" href="$classATanh.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the atanh function. " alt="" coords="154,664,269,691"/>
+<area shape="rect" id="node16" href="$classImaginary.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the Imaginary. " alt="" coords="144,715,279,741"/>
+</map>

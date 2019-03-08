@@ -1,0 +1,13 @@
+<map id="develop" name="develop">
+<area shape="rect" id="node2" href="$classTimes.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Times object. " alt="" coords="120,107,233,133"/>
+<area shape="rect" id="node8" href="$classPow.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Pow object. " alt="" coords="125,233,228,260"/>
+<area shape="rect" id="node3" href="$classTimes.html#a43c5859f067bbebc8ac485b7f59899c7" title="Tells if the factor t_abstract appear in the product. " alt="" coords="292,5,409,32"/>
+<area shape="rect" id="node4" href="$classTimes.html#ac82b0501ac3f92e3ba60dd04f4372b10" title="Displays the abstract in standard output. " alt="" coords="305,56,396,83"/>
+<area shape="rect" id="node5" href="$classTimes.html#af21ac36bebac371e07ca725f91c9a21c" title="Creates a LaTeX output for the Abstract. " alt="" coords="286,107,415,133"/>
+<area shape="rect" id="node6" href="$classTimes.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="281,157,420,184"/>
+<area shape="rect" id="node7" href="$classTimes.html#aa5b76bb2c43c0ac2ce327a2ef4d6ca55" title="Default constructor. Initializes argument to an empty std::vector. " alt="" coords="468,157,571,184"/>
+<area shape="rect" id="node9" href="$classPow.html#a435622326b38de2abfe3782d3c5086cf" title="Returns all the possible factors. " alt="" coords="291,208,410,235"/>
+<area shape="rect" id="node10" href="$classPow.html#a43c5859f067bbebc8ac485b7f59899c7" title="Tells if the factor t_abstract appear in the exponentiation. " alt="" coords="297,259,404,285"/>
+<area shape="rect" id="node11" href="$classPow.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of exponentiations. " alt="" coords="286,309,415,336"/>
+<area shape="rect" id="node12" href="$classPow.html#a3431ea3574b4ed59dc3dc4bf9396c40c" title="Default constructor. Initializes both arguments to 0. " alt="" coords="478,309,561,336"/>
+</map>

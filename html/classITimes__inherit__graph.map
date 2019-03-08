@@ -1,0 +1,6 @@
+<map id="ITimes" name="ITimes">
+<area shape="rect" id="node2" href="$classTimes.html" title="Handles a product, function of multiple arguments. " alt="" coords="40,229,99,256"/>
+<area shape="rect" id="node3" href="$classAbstractMultiFunc.html" title="Handle functions of multiple arguments. In the case of the call of a simplification function..." alt="" coords="5,155,133,181"/>
+<area shape="rect" id="node4" href="$classAbstractScalar.html" title="Abstract class concerning all scalars (dim = 0). Allows to implement one time getDim() = 0 for all sc..." alt="" coords="15,80,123,107"/>
+<area shape="rect" id="node5" href="$classAbstract.html" title="Root class of the inheritance tree of abstracts. " alt="" coords="34,5,105,32"/>
+</map>

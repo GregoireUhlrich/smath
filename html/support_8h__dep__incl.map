@@ -1,0 +1,9 @@
+<map id="include/support.h" name="include/support.h">
+<area shape="rect" id="node2" href="$variable_8h.html" title="Scalar objects not functions of others. " alt="" coords="87,80,209,107"/>
+<area shape="rect" id="node7" href="$operations_8h.html" title="Objects handling multi&#45;argument functions, primordial operations (+,*,/,etc) " alt="" coords="107,229,245,256"/>
+<area shape="rect" id="node3" href="$symbol_8h.html" title="User class that encapsulate every nasty detail. " alt="" coords="13,379,133,405"/>
+<area shape="rect" id="node5" href="$simplification_8h.html" title="include/simplification.h" alt="" coords="177,453,332,480"/>
+<area shape="rect" id="node6" href="$scalarFunc_8h.html" title="Base classes for scalar functions. " alt="" coords="107,155,250,181"/>
+<area shape="rect" id="node4" href="$interpreter_8h.html" title="Interpreter. Useful for real&#45;time tests. " alt="" coords="5,453,141,480"/>
+<area shape="rect" id="node8" href="$mathFunctions_8h.html" title="Objects handling mathematical functions. " alt="" coords="209,304,373,331"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="operator=" name="operator=">
+<area shape="rect" id="node2" href="$abstract_8h.html#a2a725f77726bc5a9ec08677d2e2fd859" title="Recover an Abstract that cannot return itself. " alt="" coords="137,5,208,32"/>
+<area shape="rect" id="node3" href="$abstract_8h.html#a94314fbd03e12f148f0b50948b20abb5" title="Copy an Abstract to depth 1. " alt="" coords="146,56,199,83"/>
+<area shape="rect" id="node4" href="$abstract_8h.html#a9e67b0f229789a2c9ce5806860e3ebc4" title="Copy an Abstract to the maximum depth. " alt="" coords="131,107,215,133"/>
+<area shape="rect" id="node5" href="$abstract_8h.html#a67cec2384a77d5d1fd6fd93e0fc28ddd" title="Refresh an Abstract and apply basic simplifications. " alt="" coords="139,157,207,184"/>
+<area shape="rect" id="node6" href="$abstract_8h.html#a23d32ae2c3f9f9fe4597bb2ff1f5fc7d" title="Replace an Abstract by another in an expression. " alt="" coords="137,208,208,235"/>
+</map>

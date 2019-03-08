@@ -1,0 +1,6 @@
+<map id="getNFactor" name="getNFactor">
+<area shape="rect" id="node2" href="$classAbstractMultiSFunc.html#a1402c4a3f697de445748ff059d1ec8e0" title="Gives the primary type of an AbstractMultiSFunc. " alt="" coords="140,5,277,47"/>
+<area shape="rect" id="node4" href="$classPow.html#abd473f3a4f62f338f5b0ee3b10453f39" title="Return the exponentiation of the two arguments. " alt="" coords="155,71,263,98"/>
+<area shape="rect" id="node3" href="$classAbstractScalarFunc.html#a008f58643c15d4f624e6aee7a98e699c" title="Tells if the AbstractScalarFunc is commutable. " alt="" coords="336,5,473,47"/>
+<area shape="rect" id="node5" href="$classAbstractScalar.html#a402370b0efecd9621a68395c85e374eb" title="Gives the dimension of the Abstract. " alt="" coords="325,71,484,98"/>
+</map>

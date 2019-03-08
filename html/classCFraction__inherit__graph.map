@@ -1,0 +1,6 @@
+<map id="CFraction" name="CFraction">
+<area shape="rect" id="node2" href="$classAbstractNumerical.html" title="Abstract class from which derive numerical types, i.e. Double, Integer, CFraction. " alt="" coords="67,244,198,271"/>
+<area shape="rect" id="node3" href="$classAbstractBuildingBlock.html" title="Abstract class from which derive all building blocks of exprs, i.e. objects not function of further e..." alt="" coords="57,169,208,196"/>
+<area shape="rect" id="node4" href="$classAbstractScalar.html" title="Abstract class concerning all scalars (dim = 0). Allows to implement one time getDim() = 0 for all sc..." alt="" coords="5,87,113,114"/>
+<area shape="rect" id="node5" href="$classAbstract.html" title="Root class of the inheritance tree of abstracts. " alt="" coords="24,5,95,32"/>
+</map>

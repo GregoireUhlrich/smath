@@ -1,0 +1,19 @@
+<map id="getType" name="getType">
+<area shape="rect" id="node2" href="$classPlus.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="123,208,217,235"/>
+<area shape="rect" id="node3" href="$classPolynomial.html#a76a79f8935a3e8d332ba34f9358d6dcc" title="Destructor. " alt="" coords="265,81,432,108"/>
+<area shape="rect" id="node4" href="$classTimes.html#a3c84cc1ee6a9e16cfa5e372851ea04ad" title="Gives the type of a Times object. " alt="" coords="292,132,405,159"/>
+<area shape="rect" id="node10" href="$classFraction.html#a3c84cc1ee6a9e16cfa5e372851ea04ad" title="Gives the type of a Fraction object. " alt="" coords="287,208,411,235"/>
+<area shape="rect" id="node13" href="$classPow.html#a3c84cc1ee6a9e16cfa5e372851ea04ad" title="Gives the type of a Pow object. " alt="" coords="297,259,400,285"/>
+<area shape="rect" id="node18" href="$classPlus.html#a42d5dbf810d78ca6053801d0088a95ab" title="Creates the sum of &amp; leftOperand and rightOperand. " alt="" coords="325,309,373,336"/>
+<area shape="rect" id="node5" href="$classTimes.html#a0beb1f929265921ad879fac9c68e357f" title="Tells if the factor t_abstract appear in the product. " alt="" coords="497,5,614,32"/>
+<area shape="rect" id="node6" href="$classTimes.html#abd9f12af3b52f041754d10bc7f106a96" title="Displays the abstract in standard output. " alt="" coords="510,56,601,83"/>
+<area shape="rect" id="node7" href="$classTimes.html#a8086e83f45a0d609ebe40a6f0a269e88" title="Creates a LaTeX output for the Abstract. " alt="" coords="491,107,620,133"/>
+<area shape="rect" id="node8" href="$classTimes.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="486,157,625,184"/>
+<area shape="rect" id="node9" href="$classTimes.html#a456bbe5fdcbe4076538636e87ac118bf" title="Creates the product of &amp; leftOperand and rightOperand. " alt="" coords="689,157,792,184"/>
+<area shape="rect" id="node11" href="$classFraction.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of fractions. " alt="" coords="480,208,631,235"/>
+<area shape="rect" id="node12" href="$classFraction.html#a5c6432713390abdc0c80216e7580be70" title="Creates the fraction of &amp; leftOperand and rightOperand. " alt="" coords="679,208,803,235"/>
+<area shape="rect" id="node14" href="$classPow.html#acee0097dec8a4e721575bd38c830c81d" title="Returns all the possible factors. " alt="" coords="496,259,615,285"/>
+<area shape="rect" id="node15" href="$classPow.html#a0beb1f929265921ad879fac9c68e357f" title="Tells if the factor t_abstract appear in the exponentiation. " alt="" coords="502,309,609,336"/>
+<area shape="rect" id="node16" href="$classPow.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of exponentiations. " alt="" coords="491,360,620,387"/>
+<area shape="rect" id="node17" href="$classPow.html#adcd6da98c13a86cd230c2bdaa4ff8c3c" title="Creates the exponentiation of &amp; leftOperand wrt rightOperand. " alt="" coords="699,360,782,387"/>
+</map>

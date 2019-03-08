@@ -1,0 +1,9 @@
+<map id="sin_" name="sin_">
+<area shape="rect" id="node2" href="$classSin.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the sin function. " alt="" coords="132,5,228,32"/>
+<area shape="rect" id="node3" href="$classExp.html#a90bfbd0385611a65efa89646477c93e5" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="104,56,256,83"/>
+<area shape="rect" id="node4" href="$classSin.html#adde62b228eff01bed39b82b227f9f04e" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="121,107,239,133"/>
+<area shape="rect" id="node5" href="$classSin.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the sin function. " alt="" coords="138,157,222,184"/>
+<area shape="rect" id="node6" href="$classCosh.html#a90bfbd0385611a65efa89646477c93e5" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="100,208,260,235"/>
+<area shape="rect" id="node7" href="$classSinh.html#a90bfbd0385611a65efa89646477c93e5" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="103,259,257,285"/>
+<area shape="rect" id="node8" href="$symbol_8h.html#a12a0ed890c00b9cc7e1a6a4ff0b890ab" title="Returns the sin function applied on t_symbol. " alt="" coords="157,309,203,336"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="minus_" name="minus_">
+<area shape="rect" id="node2" href="$classDerivative.html#af65e25ca87c6774b92e637bb3c5628f2" title="Creates the derivative of &amp; leftOperand wrt rightOperand, to order t_order. " alt="" coords="125,5,273,32"/>
+<area shape="rect" id="node3" href="$classPow.html#a9ec4272e14880906aaebc6d2aa15cac6" title="Calculates and returns all possible alternate forms of the expression in terms of simplifications..." alt="" coords="117,56,280,83"/>
+<area shape="rect" id="node4" href="$classCos.html#a9ec4272e14880906aaebc6d2aa15cac6" title="Calculates and returns all possible alternate forms of the expression in terms of simplifications..." alt="" coords="118,107,279,133"/>
+<area shape="rect" id="node5" href="$classPow.html#a5ff960d2a10c2ad34917e2238dcfde30" title="Suppresses the term expr in the exponentiation. " alt="" coords="129,157,268,184"/>
+<area shape="rect" id="node6" href="$symbol_8h.html#abb0bdde7e397fb50d7df3d017d3a2c04" title="Returns the difference of t_symbol and t_value. " alt="" coords="162,208,235,235"/>
+</map>

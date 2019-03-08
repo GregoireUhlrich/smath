@@ -1,0 +1,22 @@
+<map id="evaluateScalar" name="evaluateScalar">
+<area shape="rect" id="node2" href="$classPlus.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of a Plus object. " alt="" coords="197,107,267,133"/>
+<area shape="rect" id="node5" href="$classTimes.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of a Times object. " alt="" coords="520,132,633,159"/>
+<area shape="rect" id="node11" href="$classFraction.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of a Fraction object. " alt="" coords="515,208,639,235"/>
+<area shape="rect" id="node14" href="$classPow.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of a Pow object. " alt="" coords="525,259,628,285"/>
+<area shape="rect" id="node20" href="$classPolynomial.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of a Polynomial object. " alt="" coords="161,309,303,336"/>
+<area shape="rect" id="node21" href="$classDerivative.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of a Derivative object. " alt="" coords="164,360,300,387"/>
+<area shape="rect" id="node3" href="$classPlus.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="351,107,445,133"/>
+<area shape="rect" id="node4" href="$classPolynomial.html#a76a79f8935a3e8d332ba34f9358d6dcc" title="Destructor. " alt="" coords="493,81,660,108"/>
+<area shape="rect" id="node19" href="$classPlus.html#a42d5dbf810d78ca6053801d0088a95ab" title="Creates the sum of &amp; leftOperand and rightOperand. " alt="" coords="553,31,601,57"/>
+<area shape="rect" id="node6" href="$classTimes.html#a80cd2077e413cdb05d2e9142ea5c0095" title="Tells if the factor expr appear in the product. " alt="" coords="725,5,842,32"/>
+<area shape="rect" id="node7" href="$classTimes.html#abd9f12af3b52f041754d10bc7f106a96" title="Displays the abstract in standard output. " alt="" coords="738,56,829,83"/>
+<area shape="rect" id="node8" href="$classTimes.html#a8086e83f45a0d609ebe40a6f0a269e88" title="Creates a LaTeX output for the Abstract. " alt="" coords="719,107,848,133"/>
+<area shape="rect" id="node9" href="$classTimes.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="714,157,853,184"/>
+<area shape="rect" id="node10" href="$classTimes.html#a456bbe5fdcbe4076538636e87ac118bf" title="Creates the product of &amp; leftOperand and rightOperand. " alt="" coords="917,157,1020,184"/>
+<area shape="rect" id="node12" href="$classFraction.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of fractions. " alt="" coords="708,208,859,235"/>
+<area shape="rect" id="node13" href="$classFraction.html#a5c6432713390abdc0c80216e7580be70" title="Creates the fraction of &amp; leftOperand and rightOperand. " alt="" coords="907,208,1031,235"/>
+<area shape="rect" id="node15" href="$classPow.html#acee0097dec8a4e721575bd38c830c81d" title="Returns all the possible factors. " alt="" coords="724,259,843,285"/>
+<area shape="rect" id="node16" href="$classPow.html#a80cd2077e413cdb05d2e9142ea5c0095" title="Tells if the factor expr appear in the exponentiation. " alt="" coords="730,309,837,336"/>
+<area shape="rect" id="node17" href="$classPow.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of exponentiations. " alt="" coords="719,360,848,387"/>
+<area shape="rect" id="node18" href="$classPow.html#adcd6da98c13a86cd230c2bdaa4ff8c3c" title="Creates the exponentiation of &amp; leftOperand wrt rightOperand. " alt="" coords="927,360,1010,387"/>
+</map>

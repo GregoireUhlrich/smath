@@ -19,19 +19,30 @@
 #include <mutex>
 #include "error.h"
 
-// Forward declaration of Abstract class
+// Forward declaration of Abstract class for the type definitions.
 class Abstract;
 
-// Definition of Expr type 
+/*! \typedef Expr
+ * \brief Replaces std::shared_ptr<Abstract> everywhere in order to improve
+ * readability.
+ */
 typedef std::shared_ptr<Abstract> Expr;
 
-// Definition of contExpr type
+/*! \typedef constExpr
+ * \brief Replaces std::shared_ptr<const Abstract> everywhere in order to improve
+ * readability (less used than Expr).
+ */
 typedef std::shared_ptr<const Abstract> constExpr;
 
-// Definition of iter type
+/*! \typedef iter
+ * \brief Replaces std::vector<Expr>::iterator in order to improve readability.
+ */
 typedef std::vector<Expr>::iterator iter;
 
-// Definition of const_iter type
+/*! \typedef const_iter
+ * \brief Replaces std::vector<Expr>::const_iterator in order to improve
+ * readability.
+ */
 typedef std::vector<Expr>::const_iterator const_iter;
 
 
@@ -46,7 +57,7 @@ namespace smType{
                             (Plus, Times, Pow, etc). */
         ScalarFunction=20, /*!< = 20. Concerns all scalar uni-variate functions
                              (Exp, Log, Cos, etc). */
-        Vectorial=50,
+        Vectorial=50, /*!<  = 50. Concerns Vector, Matrix and HighDTensor. */
         Indicial=60, /*!<  = 60. Concerns all indicial exprs (and indices). */
     };
 
@@ -147,7 +158,11 @@ std::ostream& operator<<(std::ostream& fout, smType::Type type);
  */
 std::ostream& operator<<(std::ostream& fout, smType::PrimaryType primaryType);
 
-// Creates a generic Expression of a given type
+/*! \fn Empty(smType::Type type)
+ * \brief Creates an empty expression from a given type.
+ * \param type Type of the expression to create.
+ * \return An empty expression of type \b type.
+ */
 Expr Empty(smType::Type type); // source in symbol.cpp
 
 // Forward declaration of Index class (indicial.h)
@@ -1146,9 +1161,14 @@ bool operator&=(const Expr& a, const Expr& b);
 /*************************************************/
 ///////////////////////////////////////////////////
 
+/*! \fn Expr Copy(const Abstract* expr)
+ * \brief See Copy(const Expr& expr).
+ * \note With the apparition of shared_from_this(), this function should be 
+ * removed soon.
+ */
 Expr Copy(const Abstract* expr);
 
-/*! \fn Expr Copy(const Expr& expr) Expr Copy(const Expr& expr)
+/*! \fn Expr Copy(const Expr& expr)
  * \brief \b Copy an Abstract to depth 1.
  * \details \b Copy the depth 0 structure. For example the copy of cos(x+exp(y)) 
  * creates another cos function but take a reference to x+exp(y). Note that copy
@@ -1159,9 +1179,14 @@ Expr Copy(const Abstract* expr);
  */
 Expr Copy(const Expr& expr);
 
+/*! \fn Expr DeepCopy(const Abstract* expr)
+ * \brief See DeepCopy(const Expr& expr).
+ * \note With the apparition of shared_from_this(), this function should be 
+ * removed soon.
+ */
 Expr DeepCopy(const Abstract* expr);
 
-/*! \fn Expr DeepCopy(const Expr& expr) Expr DeepCopy(const Expr& expr)
+/*! \fn Expr DeepCopy(const Expr& expr)
  * \brief \b Copy an Abstract to the \b maximum depth.
  * \details \b Copy \b recursively the entire Abstract.
  * \param expr The Abstract to copy.
@@ -1169,18 +1194,31 @@ Expr DeepCopy(const Abstract* expr);
  */
 Expr DeepCopy(const Expr& expr);
 
+/*! \fn Expr Refresh(const Abstract* expr)
+ * \brief See Refresh(const Expr& expr).
+ * \note With the apparition of shared_from_this(), this function should be 
+ * removed soon.
+ */
 Expr Refresh(const Abstract* expr);
 
-/*! \fn Expr Refresh(const Expr& expr) Expr Refresh(const Expr& expr)
+/*! \fn Expr Refresh(const Expr& expr)
  * \brief \b Refresh an Abstract and apply basic simplifications.
  * \details Apply all simplifications that take place normally at the creation
  * of an Abstract. For example, a sum with only one term gives just the term in
- * question. The refresh is automatically resursive.
+ * question.
  * \param expr The Abstract to refresh.
  * \return The refreshed Abstract.
  */
 Expr Refresh(const Expr& expr);
 
+/*! \fn Expr DeepRefresh(const Expr& expr) 
+ * \brief \b Refresh recursively an Abstract and apply basic simplifications.
+ * \details Apply all simplifications that take place normally at the creation
+ * of an Abstract. For example, a sum with only one term gives just the term in
+ * question. The refresh is resursive.
+ * \param expr The Abstract to refresh.
+ * \return The refreshed Abstract.
+ */
 Expr DeepRefresh(const Expr& expr);
 
 /*! \fn Expr Replace(const Expr& expr,

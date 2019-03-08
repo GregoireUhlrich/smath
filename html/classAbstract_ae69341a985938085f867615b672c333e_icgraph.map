@@ -1,0 +1,9 @@
+<map id="getType" name="getType">
+<area shape="rect" id="node2" href="$classAbstract.html#a67ef9b71019b8c2c3b9133497349262e" title="Destructor. " alt="" coords="152,5,231,32"/>
+<area shape="rect" id="node3" href="$classAbstractScalarFunc.html#ab876fb51aa3a6223346117ab4adaa3af" title="AbstractScalarFunc\l::operator=" alt="" coords="123,57,260,98"/>
+<area shape="rect" id="node7" href="$classAbstractScalarFunc.html#a8e08758ab4a9422c56b18af734f9ed18" title="Compares the scalar with a double. the case of the Imaginary i it can be a problem because (i==0) wil..." alt="" coords="123,122,260,163"/>
+<area shape="rect" id="node8" href="$classAbstractMultiSFunc.html#ab876fb51aa3a6223346117ab4adaa3af" title="AbstractMultiSFunc\l::operator=" alt="" coords="123,187,260,229"/>
+<area shape="rect" id="node4" href="$classAbstractScalarFunc.html#a1402c4a3f697de445748ff059d1ec8e0" title="AbstractScalarFunc\l::getPrimaryType" alt="" coords="308,25,445,66"/>
+<area shape="rect" id="node5" href="$classAbstractMultiSFunc.html#ae8856b65ecfbb24fb715fde519857a79" title="Returns the number of arguments of the AbstractMultiSFunc. " alt="" coords="308,90,445,131"/>
+<area shape="rect" id="node6" href="$classFraction.html#a594a570f0139f92f284f31e91c0c6dd8" title="Returns the number of possible factors in the expression. " alt="" coords="493,97,636,124"/>
+</map>

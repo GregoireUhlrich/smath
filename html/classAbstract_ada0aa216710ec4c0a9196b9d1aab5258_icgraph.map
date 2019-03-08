@@ -1,0 +1,30 @@
+<map id="getType" name="getType">
+<area shape="rect" id="node2" href="$classAbstract.html#a67ef9b71019b8c2c3b9133497349262e" title="Destructor. " alt="" coords="353,9,432,35"/>
+<area shape="rect" id="node3" href="$classDouble.html#aef1bb1dcc0519ee4eeb528442c60bfef" title="Destructor. " alt="" coords="139,59,259,86"/>
+<area shape="rect" id="node4" href="$classInteger.html#af92cb3febe9fc2e61ed31959bb274dd1" title="Destructor. " alt="" coords="140,110,259,137"/>
+<area shape="rect" id="node5" href="$classVariable.html#a3496fcbaf4dfaa72537027961e58a8b4" title="Destructor. " alt="" coords="133,161,265,187"/>
+<area shape="rect" id="node6" href="$classConstant.html#ad65da8101f8917b7fce7e0c32bcd63f3" title="Destructor. " alt="" coords="127,211,271,238"/>
+<area shape="rect" id="node7" href="$classCFraction.html#abc0170d70d0aff50ddeb00f94ea820b1" title="Destructor. " alt="" coords="123,262,275,289"/>
+<area shape="rect" id="node8" href="$classAbstract.html#adde62b228eff01bed39b82b227f9f04e" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="154,363,245,390"/>
+<area shape="rect" id="node22" href="$classAbstract.html#a128daf984905d30e5c966492001c23b4" title="Allows the abstract to commute or not. " alt="" coords="142,313,257,339"/>
+<area shape="rect" id="node23" href="$classITerm.html#af21ac36bebac371e07ca725f91c9a21c" title="Creates a LaTeX output for the Abstract. " alt="" coords="136,414,263,441"/>
+<area shape="rect" id="node24" href="$classAbstractScalarFunc.html#ab876fb51aa3a6223346117ab4adaa3af" title="AbstractScalarFunc\l::operator=" alt="" coords="131,465,268,507"/>
+<area shape="rect" id="node28" href="$classAbstractMultiSFunc.html#aa701a17df6a7cde06091c8f8d79827f9" title="Destructor. " alt="" coords="123,531,276,572"/>
+<area shape="rect" id="node29" href="$classAbstractMultiSFunc.html#ab876fb51aa3a6223346117ab4adaa3af" title="AbstractMultiSFunc\l::operator=" alt="" coords="131,596,268,637"/>
+<area shape="rect" id="node9" href="$classExp.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the exponential function. " alt="" coords="343,59,443,86"/>
+<area shape="rect" id="node10" href="$classLog.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the logarithm function. " alt="" coords="343,110,442,137"/>
+<area shape="rect" id="node11" href="$classCos.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the cos function. " alt="" coords="342,161,443,187"/>
+<area shape="rect" id="node12" href="$classSin.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the sin function. " alt="" coords="345,211,441,238"/>
+<area shape="rect" id="node13" href="$classTan.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the tan function. " alt="" coords="343,262,442,289"/>
+<area shape="rect" id="node14" href="$classACos.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the acos function. " alt="" coords="337,313,448,339"/>
+<area shape="rect" id="node15" href="$classASin.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the asin function. " alt="" coords="340,363,445,390"/>
+<area shape="rect" id="node16" href="$classCosh.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the cosh function. " alt="" coords="339,414,447,441"/>
+<area shape="rect" id="node17" href="$classSinh.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the sinh function. " alt="" coords="341,465,444,491"/>
+<area shape="rect" id="node18" href="$classTanh.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the tanh function. " alt="" coords="339,515,446,542"/>
+<area shape="rect" id="node19" href="$classACosh.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the acosh function. " alt="" coords="334,566,451,593"/>
+<area shape="rect" id="node20" href="$classASinh.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the asinh function. " alt="" coords="337,617,449,643"/>
+<area shape="rect" id="node21" href="$classATanh.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the atanh function. " alt="" coords="335,667,450,694"/>
+<area shape="rect" id="node25" href="$classAbstractScalarFunc.html#aab82d9300af7e389dd63831ed7391043" title="AbstractScalarFunc\l::getPrimaryType" alt="" coords="324,719,461,760"/>
+<area shape="rect" id="node26" href="$classAbstractMultiSFunc.html#a3f9edafbda64687e956edd3710d52363" title="Returns the number of arguments of the AbstractMultiSFunc. " alt="" coords="324,784,461,825"/>
+<area shape="rect" id="node27" href="$classFraction.html#a594a570f0139f92f284f31e91c0c6dd8" title="Returns the number of possible factors in the expression. " alt="" coords="509,791,652,818"/>
+</map>

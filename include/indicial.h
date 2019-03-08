@@ -1,3 +1,9 @@
+/*! \file indicial.h
+ * \author Grégoire Uhlrich
+ * \version 1.0
+ * \brief Objects handling indexed expressions in order to perform indicial tensor
+ * calculations.
+ */
 #ifndef Indicial_H_INCLUDED
 #define Indicial_H_INCLUDED
 

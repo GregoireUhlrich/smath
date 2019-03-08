@@ -1,0 +1,9 @@
+<map id="sinh_" name="sinh_">
+<area shape="rect" id="node2" href="$classSinh.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the sinh function. " alt="" coords="135,5,238,32"/>
+<area shape="rect" id="node3" href="$classSin.html#a90bfbd0385611a65efa89646477c93e5" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="113,56,261,83"/>
+<area shape="rect" id="node4" href="$classCosh.html#a90bfbd0385611a65efa89646477c93e5" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="107,107,267,133"/>
+<area shape="rect" id="node5" href="$classCosh.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the cosh function. " alt="" coords="139,157,235,184"/>
+<area shape="rect" id="node6" href="$classSinh.html#adde62b228eff01bed39b82b227f9f04e" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="124,208,249,235"/>
+<area shape="rect" id="node7" href="$classSinh.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the sinh function. " alt="" coords="141,259,232,285"/>
+<area shape="rect" id="node8" href="$symbol_8h.html#a1c4ccfb476e5f62caa140f8000ecc4f0" title="Returns the sinh function applied on t_symbol. " alt="" coords="160,309,213,336"/>
+</map>

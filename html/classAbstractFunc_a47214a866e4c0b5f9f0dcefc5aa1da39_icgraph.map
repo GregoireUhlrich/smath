@@ -1,0 +1,6 @@
+<map id="factor" name="factor">
+<area shape="rect" id="node2" href="$classAbstractFunc.html#a1209d5f30f296d413809f98f30798ae9" title="getPrimaryType" alt="" coords="144,5,259,32"/>
+<area shape="rect" id="node3" href="$classAbstractDuoFunc.html#a3f9edafbda64687e956edd3710d52363" title="Returns the number of arguments of the AbstractDuoFunc. " alt="" coords="108,56,295,83"/>
+<area shape="rect" id="node5" href="$classAbstractMultiFunc.html#a3f9edafbda64687e956edd3710d52363" title="Returns the number of arguments of the AbstractMultiFunc. " alt="" coords="133,107,269,149"/>
+<area shape="rect" id="node4" href="$classFraction.html#a594a570f0139f92f284f31e91c0c6dd8" title="Returns the number of possible factors in the expression. " alt="" coords="343,56,485,83"/>
+</map>

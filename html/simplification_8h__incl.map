@@ -1,0 +1,9 @@
+<map id="include/simplification.h" name="include/simplification.h">
+<area shape="rect" id="node2" href="$abstract_8h.html" title="Base classes for all expressions in the program. " alt="" coords="307,453,387,480"/>
+<area shape="rect" id="node9" href="$variable_8h.html" title="Scalar objects not functions of others. " alt="" coords="206,379,285,405"/>
+<area shape="rect" id="node12" href="$operations_8h.html" title="Objects handling multi&#45;argument functions, primordial operations (+,*,/,etc) " alt="" coords="11,229,104,256"/>
+<area shape="rect" id="node14" href="$mathFunctions_8h.html" title="Objects handling mathematical functions. " alt="" coords="89,155,207,181"/>
+<area shape="rect" id="node15" href="$symbol_8h.html" title="User class that encapsulate every nasty detail. " alt="" coords="184,80,259,107"/>
+<area shape="rect" id="node10" href="$support_8h.html" title="Some useful functions. " alt="" coords="54,453,130,480"/>
+<area shape="rect" id="node13" href="$scalarFunc_8h.html" title="Base classes for scalar functions. " alt="" coords="109,304,206,331"/>
+</map>

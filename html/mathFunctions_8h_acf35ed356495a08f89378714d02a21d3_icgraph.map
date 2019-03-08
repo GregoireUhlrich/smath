@@ -1,0 +1,5 @@
+<map id="tanh_" name="tanh_">
+<area shape="rect" id="node2" href="$classTanh.html#a7e3d0659d118ba83932b71540239d0b5" title="Gives the type of the tanh function. " alt="" coords="108,5,215,32"/>
+<area shape="rect" id="node4" href="$symbol_8h.html#a320a7102746b52f35e110bb5dbdf018f" title="Returns the tanh function applied on t_symbol. " alt="" coords="134,56,189,83"/>
+<area shape="rect" id="node3" href="$classITerm.html#aacdc998afa6abe3cd8b2f230005b3950" title="Allows to get the entire std::vector of arguments of the expression. " alt="" coords="263,5,439,32"/>
+</map>

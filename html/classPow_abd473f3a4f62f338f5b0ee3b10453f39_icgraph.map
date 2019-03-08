@@ -1,0 +1,4 @@
+<map id="evaluateScalar" name="evaluateScalar">
+<area shape="rect" id="node2" href="$classPow.html#a594a570f0139f92f284f31e91c0c6dd8" title="Returns the number of possible factors in the expression. " alt="" coords="161,5,248,32"/>
+<area shape="rect" id="node3" href="$classPow.html#aa5643c3978c744d9c7917a60307e84a5" title="Tells if the factor t_abstract appear in the exponentiation. " alt="" coords="168,56,241,83"/>
+</map>

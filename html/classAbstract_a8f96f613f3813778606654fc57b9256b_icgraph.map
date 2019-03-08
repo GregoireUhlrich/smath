@@ -1,0 +1,7 @@
+<map id="isInteger" name="isInteger">
+<area shape="rect" id="node2" href="$classTimes.html#abd9f12af3b52f041754d10bc7f106a96" title="Displays the abstract in standard output. " alt="" coords="164,5,255,32"/>
+<area shape="rect" id="node3" href="$classPow.html#a80cd2077e413cdb05d2e9142ea5c0095" title="Tells if the factor expr appear in the exponentiation. " alt="" coords="156,56,263,83"/>
+<area shape="rect" id="node4" href="$classPow.html#a2026130e23bb5b4ee6ee7ae2b1521a26" title="Determines if the expression is a mononomial term in expr, i.e. a term of the form C*expr^n with C in..." alt="" coords="144,107,275,133"/>
+<area shape="rect" id="node5" href="$classPow.html#a4f53ffbf9f3f7e810754da1938db3254" title="Calculates and returns the polynomial term corresponding to *this with the variable t_variable at ord..." alt="" coords="125,157,293,184"/>
+<area shape="rect" id="node6" href="$classPow.html#aa90ed274a34d81fdea756d81a74783dc" title="Returns the parity property of the expression with respect to t_variable. " alt="" coords="155,208,263,235"/>
+</map>

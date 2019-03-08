@@ -1,0 +1,6 @@
+<map id="suppressTerm" name="suppressTerm">
+<area shape="rect" id="node2" href="$classFraction.html#a09729c96f8966f64ef40785b57654b52" title="Tells if the factor t_abstract appear in the fraction. " alt="" coords="159,5,232,32"/>
+<area shape="rect" id="node3" href="$operations_8h.html#acbd18b645825198b8efbcfe6442c6dea" title="Returns the exponentiation of the two operands, applying basic simplifications. " alt="" coords="280,31,333,57"/>
+<area shape="rect" id="node4" href="$operations_8h.html#a6c63344e7a3b5853a73f0eb158de88ef" title="Returns the fraction of the two operands, applying basic simplifications. " alt="" coords="159,107,231,133"/>
+<area shape="rect" id="node5" href="$abstract_8h.html#a94314fbd03e12f148f0b50948b20abb5" title="Copy an Abstract to depth 1. " alt="" coords="169,157,222,184"/>
+</map>

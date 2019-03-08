@@ -1,0 +1,7 @@
+<map id="include/scalarFunc.h" name="include/scalarFunc.h">
+<area shape="rect" id="node2" href="$operations_8h.html" title="Objects handling multi&#45;argument functions, primordial operations (+,*,/,etc) " alt="" coords="149,80,288,107"/>
+<area shape="rect" id="node6" href="$mathFunctions_8h.html" title="Objects handling mathematical functions. " alt="" coords="250,155,414,181"/>
+<area shape="rect" id="node3" href="$symbol_8h.html" title="User class that encapsulate every nasty detail. " alt="" coords="55,229,175,256"/>
+<area shape="rect" id="node5" href="$simplification_8h.html" title="include/simplification.h" alt="" coords="165,304,320,331"/>
+<area shape="rect" id="node4" href="$interpreter_8h.html" title="Interpreter. Useful for real&#45;time tests. " alt="" coords="5,304,141,331"/>
+</map>

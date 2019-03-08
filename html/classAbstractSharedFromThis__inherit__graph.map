@@ -1,0 +1,11 @@
+<map id="AbstractSharedFromThis" name="AbstractSharedFromThis">
+<area shape="rect" id="node5" href="$classCFactorial.html" title="Handles factorial of a Number. " alt="" coords="5,244,88,271"/>
+<area shape="rect" id="node6" href="$classCFraction.html" title="Handles fractions of Number. " alt="" coords="113,244,191,271"/>
+<area shape="rect" id="node7" href="$classConstant.html" title="Handle an object with a name and a value. " alt="" coords="216,244,291,271"/>
+<area shape="rect" id="node8" href="$classDouble.html" title="Handle numbers in expression. " alt="" coords="315,244,378,271"/>
+<area shape="rect" id="node9" href="$classImaginary.html" title="Numerical representation of i. " alt="" coords="402,244,481,271"/>
+<area shape="rect" id="node10" href="$classInteger.html" title="Handle numbers in expression. " alt="" coords="505,244,567,271"/>
+<area shape="rect" id="node11" href="$classVariable.html" title="Handle an object with a name and a value. " alt="" coords="592,244,661,271"/>
+<area shape="rect" id="node2" href="$classAbstractScalar.html" title="Base class for scalars. " alt="" coords="219,87,327,114"/>
+<area shape="rect" id="node3" href="$classAbstract.html" title="Root class of the inheritance tree of abstracts. " alt="" coords="238,5,309,32"/>
+</map>

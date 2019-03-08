@@ -1,0 +1,16 @@
+<map id="getPrimaryType" name="getPrimaryType">
+<area shape="rect" id="node2" href="$classAbstractScalarFunc.html#a008f58643c15d4f624e6aee7a98e699c" title="Tells if the AbstractScalarFunc is commutable. " alt="" coords="168,5,283,32"/>
+<area shape="rect" id="node3" href="$classAbstractScalarFunc.html#aed7932effe05143de09405f7efe21b66" title="Returns the argument of the function. " alt="" coords="177,56,273,83"/>
+<area shape="rect" id="node4" href="$classAbstractScalarFunc.html#a36a4f680c33c0668a76610e8de6a78c3" title="Replace the argument of the AbstractScalarFunc. " alt="" coords="177,107,273,133"/>
+<area shape="rect" id="node5" href="$classAbstractScalarFunc.html#a089586016d6a47e1694585a0f57aa2b5" title="Factors the Abstract. " alt="" coords="189,157,261,184"/>
+<area shape="rect" id="node6" href="$classAbstractScalarFunc.html#a351e494bfa0f3c4217b3a308093caf9c" title="Develops the Abstract. " alt="" coords="192,208,259,235"/>
+<area shape="rect" id="node9" href="$classAbstractScalarFunc.html#a0580f5b543391148404278629c495668" title="Displays the abstract in standard output. " alt="" coords="202,259,249,285"/>
+<area shape="rect" id="node10" href="$classAbstractScalarFunc.html#a75b66cfaa27495aedb25637c031a5cfb" title="Evaluates the function after evaluating the argument. " alt="" coords="190,309,261,336"/>
+<area shape="rect" id="node12" href="$classAbstractScalarFunc.html#ab876fb51aa3a6223346117ab4adaa3af" title="operator=" alt="" coords="187,360,264,387"/>
+<area shape="rect" id="node14" href="$classAbstractScalarFunc.html#a9687663de691e5ce2750370e0c6ab295" title="Compares the scalar with an integer. " alt="" coords="183,411,268,437"/>
+<area shape="rect" id="node7" href="$abstract_8h.html#a2a725f77726bc5a9ec08677d2e2fd859" title="Recover an Abstract that cannot return itself. " alt="" coords="378,183,449,209"/>
+<area shape="rect" id="node8" href="$abstract_8h.html#a67cec2384a77d5d1fd6fd93e0fc28ddd" title="Refresh an Abstract and apply basic simplifications. " alt="" coords="379,233,447,260"/>
+<area shape="rect" id="node11" href="$abstract_8h.html#a94314fbd03e12f148f0b50948b20abb5" title="Copy an Abstract to depth 1. " alt="" coords="387,309,440,336"/>
+<area shape="rect" id="node13" href="$classAbstract.html#ae69341a985938085f867615b672c333e" title="Gives the type of Abstract. " alt="" coords="350,360,477,387"/>
+<area shape="rect" id="node15" href="$classAbstract.html#abd473f3a4f62f338f5b0ee3b10453f39" title="Evaluates the value of the Abstract. " alt="" coords="331,411,496,437"/>
+</map>

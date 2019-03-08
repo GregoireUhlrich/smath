@@ -1,0 +1,5 @@
+<map id="getSubVectorial" name="getSubVectorial">
+<area shape="rect" id="node2" href="$classAbstract.html#a409da64180d33314dc802014dc6d963f" title="Allows to pick a part of a Vectorial expression, excluding the [iExcept^{th},jExcept^{th}] element (u..." alt="" coords="190,5,305,32"/>
+<area shape="rect" id="node3" href="$classMatrix.html#a6c4abc5525b38c04f4fffed517214d74" title="Allows to pick a part of a Vectorial expression, excluding the [iExcept^{th},jExcept^{th}] element (u..." alt="" coords="168,56,327,83"/>
+<area shape="rect" id="node4" href="$classMatrix.html#ab00c3c8f79df6685908055355a90856f" title="Calculates and returns the transpose of a 2D matrix. " alt="" coords="186,107,309,133"/>
+</map>

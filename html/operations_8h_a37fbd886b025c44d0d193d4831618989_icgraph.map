@@ -1,0 +1,51 @@
+<map id="times_" name="times_">
+<area shape="rect" id="node2" href="$classDerivative.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Derivative object. " alt="" coords="138,5,274,32"/>
+<area shape="rect" id="node3" href="$classAbs.html#a07625c553b8b8971bf5ee138eff9c23d" title="Evaluates the absolute value, return |argument|. " alt="" coords="155,56,257,83"/>
+<area shape="rect" id="node6" href="$classExp.html#adde62b228eff01bed39b82b227f9f04e" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="145,107,267,133"/>
+<area shape="rect" id="node7" href="$classExp.html#a90bfbd0385611a65efa89646477c93e5" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="130,157,282,184"/>
+<area shape="rect" id="node8" href="$classExp.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the exponential function. " alt="" coords="162,208,250,235"/>
+<area shape="rect" id="node9" href="$classLog.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the logarithm function. " alt="" coords="163,259,249,285"/>
+<area shape="rect" id="node10" href="$classCos.html#adde62b228eff01bed39b82b227f9f04e" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="145,309,267,336"/>
+<area shape="rect" id="node11" href="$classCos.html#a90bfbd0385611a65efa89646477c93e5" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="129,360,283,387"/>
+<area shape="rect" id="node12" href="$classCos.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="119,411,293,437"/>
+<area shape="rect" id="node13" href="$classCos.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the cos function. " alt="" coords="161,461,251,488"/>
+<area shape="rect" id="node14" href="$classSin.html#adde62b228eff01bed39b82b227f9f04e" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="147,512,265,539"/>
+<area shape="rect" id="node15" href="$classSin.html#a90bfbd0385611a65efa89646477c93e5" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="132,563,280,589"/>
+<area shape="rect" id="node16" href="$classSin.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="122,613,290,640"/>
+<area shape="rect" id="node17" href="$classSin.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the sin function. " alt="" coords="164,664,248,691"/>
+<area shape="rect" id="node18" href="$classTan.html#adde62b228eff01bed39b82b227f9f04e" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="145,715,267,741"/>
+<area shape="rect" id="node19" href="$classTan.html#a90bfbd0385611a65efa89646477c93e5" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="131,765,281,792"/>
+<area shape="rect" id="node20" href="$classTan.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="121,816,291,843"/>
+<area shape="rect" id="node21" href="$classTan.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the tan function. " alt="" coords="163,867,249,893"/>
+<area shape="rect" id="node22" href="$classACos.html#adde62b228eff01bed39b82b227f9f04e" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="140,917,272,944"/>
+<area shape="rect" id="node23" href="$classACos.html#a90bfbd0385611a65efa89646477c93e5" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="125,968,287,995"/>
+<area shape="rect" id="node24" href="$classACos.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="115,1019,297,1045"/>
+<area shape="rect" id="node25" href="$classACos.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the acos function. " alt="" coords="157,1069,255,1096"/>
+<area shape="rect" id="node26" href="$classASin.html#adde62b228eff01bed39b82b227f9f04e" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="143,1120,269,1147"/>
+<area shape="rect" id="node27" href="$classASin.html#a90bfbd0385611a65efa89646477c93e5" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="127,1171,285,1197"/>
+<area shape="rect" id="node28" href="$classASin.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="117,1221,295,1248"/>
+<area shape="rect" id="node29" href="$classASin.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the asin function. " alt="" coords="159,1272,253,1299"/>
+<area shape="rect" id="node30" href="$classCosh.html#adde62b228eff01bed39b82b227f9f04e" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="141,1323,271,1349"/>
+<area shape="rect" id="node31" href="$classCosh.html#a90bfbd0385611a65efa89646477c93e5" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="126,1373,286,1400"/>
+<area shape="rect" id="node32" href="$classCosh.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="116,1424,296,1451"/>
+<area shape="rect" id="node33" href="$classCosh.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the cosh function. " alt="" coords="158,1475,254,1501"/>
+<area shape="rect" id="node34" href="$classSinh.html#adde62b228eff01bed39b82b227f9f04e" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="143,1525,269,1552"/>
+<area shape="rect" id="node35" href="$classSinh.html#a90bfbd0385611a65efa89646477c93e5" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="129,1576,283,1603"/>
+<area shape="rect" id="node36" href="$classSinh.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="119,1627,293,1653"/>
+<area shape="rect" id="node37" href="$classSinh.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the sinh function. " alt="" coords="161,1677,251,1704"/>
+<area shape="rect" id="node38" href="$classTanh.html#adde62b228eff01bed39b82b227f9f04e" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="142,1728,270,1755"/>
+<area shape="rect" id="node39" href="$classTanh.html#a90bfbd0385611a65efa89646477c93e5" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="127,1779,285,1805"/>
+<area shape="rect" id="node40" href="$classTanh.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="117,1829,295,1856"/>
+<area shape="rect" id="node41" href="$classTanh.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the tanh function. " alt="" coords="159,1880,253,1907"/>
+<area shape="rect" id="node42" href="$classACosh.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the acosh function. " alt="" coords="153,1931,259,1957"/>
+<area shape="rect" id="node43" href="$classASinh.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the asinh function. " alt="" coords="156,1981,256,2008"/>
+<area shape="rect" id="node44" href="$classATanh.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the atanh function. " alt="" coords="155,2032,257,2059"/>
+<area shape="rect" id="node45" href="$classPlus.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="141,2083,271,2109"/>
+<area shape="rect" id="node46" href="$classTimes.html#ae126651a50b5e31eae5324999850b6da" title="Times::getTerm" alt="" coords="149,2133,263,2160"/>
+<area shape="rect" id="node47" href="$classFraction.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of fractions. " alt="" coords="131,2184,281,2211"/>
+<area shape="rect" id="node48" href="$classPow.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of exponentiations. " alt="" coords="141,2235,271,2261"/>
+<area shape="rect" id="node49" href="$symbol_8h.html#a21ec8cb1040c2195cf981fec92ecc79d" title="Returns the product of t_symbol and t_value. " alt="" coords="169,2285,243,2312"/>
+<area shape="rect" id="node50" href="$variable_8h.html#a4a9e249803d494ef85d69b036109b10a" title="cfactorial_" alt="" coords="165,2336,247,2363"/>
+<area shape="rect" id="node4" href="$classAbs.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the abs funtion function. " alt="" coords="351,31,451,57"/>
+<area shape="rect" id="node5" href="$classAngle.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of an Angle object. " alt="" coords="345,81,456,108"/>
+</map>

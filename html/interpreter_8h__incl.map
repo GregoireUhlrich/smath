@@ -1,0 +1,9 @@
+<map id="include/interpreter.h" name="include/interpreter.h">
+<area shape="rect" id="node3" href="$symbol_8h.html" title="User class that encapsulate every nasty detail. " alt="" coords="299,80,373,107"/>
+<area shape="rect" id="node4" href="$abstract_8h.html" title="Base classes for all expressions in the program. " alt="" coords="323,453,403,480"/>
+<area shape="rect" id="node10" href="$variable_8h.html" title="Scalar objects not functions of others. " alt="" coords="169,379,247,405"/>
+<area shape="rect" id="node13" href="$operations_8h.html" title="Objects handling multi&#45;argument functions, primordial operations (+,*,/,etc) " alt="" coords="133,229,227,256"/>
+<area shape="rect" id="node15" href="$mathFunctions_8h.html" title="Objects handling mathematical functions. " alt="" coords="121,155,239,181"/>
+<area shape="rect" id="node11" href="$support_8h.html" title="Some useful functions. " alt="" coords="94,453,170,480"/>
+<area shape="rect" id="node14" href="$scalarFunc_8h.html" title="Base classes for scalar functions. " alt="" coords="43,304,141,331"/>
+</map>

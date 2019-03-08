@@ -1,0 +1,20 @@
+<map id="getImaginaryPart" name="getImaginaryPart">
+<area shape="rect" id="node2" href="$classPlus.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Plus object. " alt="" coords="364,232,433,259"/>
+<area shape="rect" id="node4" href="$classTimes.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Times object. " alt="" coords="629,131,743,157"/>
+<area shape="rect" id="node13" href="$classPow.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Pow object. " alt="" coords="635,333,737,360"/>
+<area shape="rect" id="node19" href="$classPlus.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="175,257,316,284"/>
+<area shape="rect" id="node3" href="$classPlus.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="481,232,576,259"/>
+<area shape="rect" id="node10" href="$classFraction.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Fraction object. " alt="" coords="624,232,748,259"/>
+<area shape="rect" id="node18" href="$classPlus.html#a74715678bbcdafc95c17c4837e7758f0" title="Default constructor. Initializes argument to an empty std::vector. " alt="" coords="662,283,710,309"/>
+<area shape="rect" id="node5" href="$classTimes.html#a43c5859f067bbebc8ac485b7f59899c7" title="Tells if the factor t_abstract appear in the product. " alt="" coords="813,181,930,208"/>
+<area shape="rect" id="node6" href="$classTimes.html#ac82b0501ac3f92e3ba60dd04f4372b10" title="Displays the abstract in standard output. " alt="" coords="826,29,917,56"/>
+<area shape="rect" id="node7" href="$classTimes.html#af21ac36bebac371e07ca725f91c9a21c" title="Creates a LaTeX output for the Abstract. " alt="" coords="807,80,936,107"/>
+<area shape="rect" id="node8" href="$classTimes.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="802,131,941,157"/>
+<area shape="rect" id="node9" href="$classTimes.html#aa5b76bb2c43c0ac2ce327a2ef4d6ca55" title="Default constructor. Initializes argument to an empty std::vector. " alt="" coords="1005,131,1108,157"/>
+<area shape="rect" id="node11" href="$classFraction.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of fractions. " alt="" coords="796,232,947,259"/>
+<area shape="rect" id="node12" href="$classFraction.html#af9b855b61347eb6359b10187ed957f35" title="Default constructor. Initializes both arguments to 0. " alt="" coords="995,232,1119,259"/>
+<area shape="rect" id="node14" href="$classPow.html#a435622326b38de2abfe3782d3c5086cf" title="Returns all the possible factors. " alt="" coords="812,384,931,411"/>
+<area shape="rect" id="node15" href="$classPow.html#a43c5859f067bbebc8ac485b7f59899c7" title="Tells if the factor t_abstract appear in the exponentiation. " alt="" coords="818,283,925,309"/>
+<area shape="rect" id="node16" href="$classPow.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of exponentiations. " alt="" coords="807,333,936,360"/>
+<area shape="rect" id="node17" href="$classPow.html#a3431ea3574b4ed59dc3dc4bf9396c40c" title="Default constructor. Initializes both arguments to 0. " alt="" coords="1015,333,1098,360"/>
+</map>

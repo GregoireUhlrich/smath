@@ -1,3 +1,10 @@
+/*! \file error.h
+ * \author Grégoire Uhlrich
+ * \version 1.0
+ * \brief File containing functions that are called by the program
+ * when something wrong happened: determines the behaviour in unexpected
+ * cases.
+ */
 #ifndef ERROR_H_INCLUDED
 #define ERROR_H_INCLUDED
 
@@ -5,34 +12,60 @@
 #include <string>
 #include <memory>
 
+/*! \var STOP_ERROR_DEBUG_MODE
+ * \brief This variable is set to true in debug mode, in order to intentionnaly
+ * crash the program and allow gdb to get the Traceback of function calls. In 
+ * release mode, this variable should be set to false.
+ */
 static const bool STOP_ERROR_DEBUG_MODE = true;
 
 namespace smError{
 
+    /*! \enum Error
+     * \brief List all error possible.
+     */
     enum Error{
-        AbstractFuncCalled=1,
-        ElementSequence,
-        OutOfBounds,
-        EvalNotValued,
-        UndefiniedBehaviour,
-        ContractDummy,
-        ContractionMismatch,
-        SymmetryMismatch,
-        UnknownProperty,
+        AbstractFuncCalled=1, /*!<  A function has been called with an object 
+                               for which it is not defined. */
+        ElementSequence, /*!<  Setting an element of a vectorial expression  
+                          with a sequence of element. */
+        OutOfBounds, /*!<  Index out of bounds for Expression with mutiple
+                      arguments. */
+        EvalNotValued, /*!<  Evaluating an expression that cannot have a value. */
+        UndefiniedBehaviour, /*!<  Apparition of a case that has not been defined.*/
+        ContractDummy, /*!<  Trying to contract an index that is already contracted. */
+        ContractionMismatch, /*!<  Trying to contract indices that do not match. */
+        SymmetryMismatch, /*!<  Incompatibility between symmetries in the 
+                           properties of an indicial expression. */
+        UnknownProperty, /*!<  Trying to get a property of Abstract that is not
+                          defined..*/
 
     };
 
+    /*! \enum Warning
+     * \brief List of all warning possible.
+     */
     enum Warning{
-        UnknownType=0,
-        InvalidDimension,
-        FactorialFloat,
-        NotValued,
-        Infinity,
+        UnknownType=0, /*!<   The type of an expression is not handled in some
+                        function.*/
+        InvalidDimension, /*!<  Dimension mismatch when using Vectorial. */
+        FactorialFloat, /*!<   Evaluating a factorial of non-integer value.*/
+        NotValued, /*!<  Evaluating a literal that is not valued. */
+        Infinity, /*!<  Apparition of infinity or undefined value in calculation. */
 
     };
 
 };
 
+/*! \fn callError(smError::Error error, const std::string& caller, T spec)
+ * \brief Displays an error message depending on the error \b error, the name 
+ * of the caller function \b caller and a possible specificity of the error \b spec.
+ * For example spec is the index for OutOfBound error. This function stops 
+ * the program.
+ * \param error The type of error.
+ * \param caller The caller function.
+ * \param spec A printable specificity of the error.
+ */
 template<typename T>
 inline void callError(smError::Error error, const std::string& caller, T spec)
 {
@@ -70,8 +103,20 @@ inline void callError(smError::Error error, const std::string& caller, T spec)
         std::cout<<*a<<std::endl;
     }
 }
+/*! \fn callError(smError::Error error, const std::string& caller)
+ * \brief Calls callError(smError::Error, const std::string&,T) with no spec.
+ */
 void callError(smError::Error error, const std::string& caller);
 
+/*! \fn callWarning(smError::Warning warning, const std::string& caller, T spec)
+ * \brief Displays a warning message depending on the warning \b warning, the name 
+ * of the caller function \b caller and a possible specificity of the warning \b spec.
+ * For example spec is the dimension for InvalidDimension error. This function
+ * does not stop the program.
+ * \param warning The type of warning.
+ * \param caller The caller function.
+ * \param spec A printable specificity of the warning.
+ */
 template<typename T>
 inline void callWarning(smError::Warning warning, const std::string& caller, T spec)
 {
@@ -94,6 +139,9 @@ inline void callWarning(smError::Warning warning, const std::string& caller, T s
                std::cout<<"ScmType "<<(int)warning<<" not recognized.\n";
     }
 }
+/*! \fn callWarning(smError::Warning warning, const std::string& caller)
+ * \brief Calls callWarning(smError::Warning, const std::string&,T) with no spec.
+ */
 void callWarning(smError::Warning warning, const std::string& caller);
 
 #endif

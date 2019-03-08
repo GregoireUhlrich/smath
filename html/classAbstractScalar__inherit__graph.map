@@ -1,0 +1,43 @@
+<map id="AbstractScalar" name="AbstractScalar">
+<area shape="rect" id="node3" href="$classAbstractBuildingBlock.html" title="Abstract class from which derive all building blocks of exprs, i.e. objects not function of further e..." alt="" coords="280,233,431,260"/>
+<area shape="rect" id="node13" href="$classAbstractDuoFunc.html" title="Handle functions of multiple arguments. In the case of the call of a simplification function..." alt="" coords="293,385,417,412"/>
+<area shape="rect" id="node18" href="$classAbstractFunc.html" title="Base class for scalar functions of one argument. " alt="" coords="305,867,405,893"/>
+<area shape="rect" id="node35" href="$classAbstractIndicial.html" title="AbstractIndicial" alt="" coords="299,1297,411,1324"/>
+<area shape="rect" id="node38" href="$classAbstractMultiFunc.html" title="Handle functions of multiple arguments. In the case of the call of a simplification function..." alt="" coords="291,1424,419,1451"/>
+<area shape="rect" id="node2" href="$classAbstract.html" title="Root class of the inheritance tree of abstracts. " alt="" coords="5,867,76,893"/>
+<area shape="rect" id="node4" href="$classAbstractLiteral.html" title="Abstract class from which derive literal building blocks: Constant, Variable, Imaginary and CFactoria..." alt="" coords="491,107,597,133"/>
+<area shape="rect" id="node9" href="$classAbstractNumerical.html" title="Abstract class from which derive numerical types, i.e. Double, Integer, CFraction. " alt="" coords="479,233,609,260"/>
+<area shape="rect" id="node5" href="$classCFactorial.html" title="Handles factorial of a Number. " alt="" coords="657,5,740,32"/>
+<area shape="rect" id="node6" href="$classConstant.html" title="Handle an object with a name and a value. " alt="" coords="661,56,736,83"/>
+<area shape="rect" id="node7" href="$classImaginary.html" title="Numerical representation of i. " alt="" coords="659,107,738,133"/>
+<area shape="rect" id="node8" href="$classVariable.html" title="Handle an object with a name and a value. " alt="" coords="664,157,733,184"/>
+<area shape="rect" id="node10" href="$classCFraction.html" title="Handles fractions of Number. " alt="" coords="659,208,738,235"/>
+<area shape="rect" id="node11" href="$classDouble.html" title="Handle numbers in expr. " alt="" coords="667,259,730,285"/>
+<area shape="rect" id="node12" href="$classInteger.html" title="Handle numbers in expr. " alt="" coords="667,309,730,336"/>
+<area shape="rect" id="node14" href="$classAngle.html" title="Handles a angle of 2 arguments. " alt="" coords="517,284,571,311"/>
+<area shape="rect" id="node15" href="$classDerivative.html" title="Handles the exponentiation of one Abstract wrt another. " alt="" coords="503,335,585,361"/>
+<area shape="rect" id="node16" href="$classFraction.html" title="Handles a fraction of 2 arguments. " alt="" coords="509,385,579,412"/>
+<area shape="rect" id="node17" href="$classPow.html" title="Handles the exponentiation of one Abstract wrt another. " alt="" coords="520,436,568,463"/>
+<area shape="rect" id="node19" href="$classAbs.html" title="Final specialization of AbstractFunc, the abs function. " alt="" coords="521,487,567,513"/>
+<area shape="rect" id="node20" href="$classACos.html" title="Final specialization of AbstractFunc, the acos function. " alt="" coords="517,537,571,564"/>
+<area shape="rect" id="node21" href="$classACosh.html" title="Final specialization of AbstractFunc, the acosh function. " alt="" coords="513,588,575,615"/>
+<area shape="rect" id="node22" href="$classASin.html" title="Final specialization of AbstractFunc, the asin function. " alt="" coords="519,639,569,665"/>
+<area shape="rect" id="node23" href="$classASinh.html" title="Final specialization of AbstractFunc, the asinh function. " alt="" coords="515,689,573,716"/>
+<area shape="rect" id="node24" href="$classATan.html" title="Final specialization of AbstractFunc, the atan function. " alt="" coords="517,740,571,767"/>
+<area shape="rect" id="node25" href="$classATanh.html" title="Final specialization of AbstractFunc, the atanh function. " alt="" coords="514,791,574,817"/>
+<area shape="rect" id="node26" href="$classCos.html" title="Final specialization of AbstractFunc, the cos function. " alt="" coords="521,841,567,868"/>
+<area shape="rect" id="node27" href="$classCosh.html" title="Final specialization of AbstractFunc, the cosh function. " alt="" coords="517,892,571,919"/>
+<area shape="rect" id="node28" href="$classExp.html" title="Final specialization of AbstractFunc, the exponential function. " alt="" coords="521,943,567,969"/>
+<area shape="rect" id="node29" href="$classFactorial.html" title="Final specialization of AbstractFunc, the factorial function. " alt="" coords="508,993,580,1020"/>
+<area shape="rect" id="node30" href="$classLog.html" title="Final specialization of AbstractFunc, the logarithm function. " alt="" coords="523,1044,565,1071"/>
+<area shape="rect" id="node31" href="$classSin.html" title="Final specialization of AbstractFunc, the sin function. " alt="" coords="523,1095,565,1121"/>
+<area shape="rect" id="node32" href="$classSinh.html" title="Final specialization of AbstractFunc, the sinh function. " alt="" coords="520,1145,568,1172"/>
+<area shape="rect" id="node33" href="$classTan.html" title="Final specialization of AbstractFunc, the tan function. " alt="" coords="522,1196,566,1223"/>
+<area shape="rect" id="node34" href="$classTanh.html" title="Final specialization of AbstractFunc, the tanh function. " alt="" coords="519,1247,569,1273"/>
+<area shape="rect" id="node36" href="$classITensor.html" title="ITensor" alt="" coords="511,1297,577,1324"/>
+<area shape="rect" id="node37" href="$classITerm.html" title="ITerm" alt="" coords="516,1348,572,1375"/>
+<area shape="rect" id="node39" href="$classPlus.html" title="Handles a sum, function of multiple arguments. " alt="" coords="520,1399,568,1425"/>
+<area shape="rect" id="node40" href="$classPolynomial.html" title="Handles a polynomial, function of multiple arguments. " alt="" coords="501,1449,587,1476"/>
+<area shape="rect" id="node41" href="$classTimes.html" title="Handles a product, function of multiple arguments. " alt="" coords="515,1500,573,1527"/>
+<area shape="rect" id="node42" href="$classITimes.html" title="ITimes" alt="" coords="667,1500,730,1527"/>
+</map>

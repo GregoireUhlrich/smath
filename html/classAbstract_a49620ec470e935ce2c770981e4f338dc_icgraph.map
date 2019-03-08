@@ -1,0 +1,3 @@
+<map id="insert" name="insert">
+<area shape="rect" id="node2" href="$classITensor.html#a083435ba5f565de3b5c96f3fa0cf11ad" title="Tries to permut indices at place i1 and i2. If those two indices have a symmetry property, indices are swaped and the symmetry is returned. Else the fnuction does nothing and returns 0. " alt="" coords="108,5,223,32"/>
+</map>

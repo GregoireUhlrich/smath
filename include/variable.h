@@ -755,13 +755,29 @@ inline Imaginary::Imaginary(): AbstractLiteral(){}
 static const Expr i_ = std::make_shared<Imaginary>();
 
 /*!
- * \var pi_
- * \brief Represents the number \b pi to include in exprs
+ * \var ZERO
+ * \brief Represents 0. Useful to avoid make_shared<Integer>(0) at many
+ * places in the program.
  */
 static const Expr ZERO = std::make_shared<Integer>(0);
+
+/*!
+ * \var ONE
+ * \brief Represents 1. Useful to avoid make_shared<Integer>(1) at many
+ * places in the program.
+ */
 static const Expr ONE = std::make_shared<Integer>(1);
 
+/*!
+ * \var pi_
+ * \brief Represents the number \b pi to include in expressions.
+ */
 static const Expr pi_ = std::make_shared<Variable>("\\pi ",M_PI);
+
+/*!
+ * \var e_
+ * \brief Represents the number \b e to include in expressions.
+ */
 static const Expr e_ = std::make_shared<Variable>("e",M_E);
 
 /*!
@@ -778,7 +794,7 @@ static Expr INF = std::make_shared<Variable>("inf");
 /*!
  * \var WHATEVER
  * Variable that returns true when compared to another expr.
- * (WHATEVER == X) = (X == WHATEVER) = true
+ * (WHATEVER == X) = (X == WHATEVER) = \b true
  */
 static Expr WHATEVER = std::make_shared<Variable>("###");
 
@@ -786,6 +802,7 @@ static Expr WHATEVER = std::make_shared<Variable>("###");
 // User-functions for the creation of            //
 // Building blocks (numerical or literal)        //
 /*************************************************/
+
 /*! \fn Expr cfactorial_(int value)
  * \param value \b Initializer of the CFactorial.
  * \return CFactorial(value) if value > 2

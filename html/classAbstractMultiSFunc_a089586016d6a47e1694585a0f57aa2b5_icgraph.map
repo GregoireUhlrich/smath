@@ -1,0 +1,22 @@
+<map id="factorize" name="factorize">
+<area shape="rect" id="node2" href="$classPlus.html#a089586016d6a47e1694585a0f57aa2b5" title="Factors the expression if common factors are found. " alt="" coords="125,360,232,387"/>
+<area shape="rect" id="node3" href="$classPlus.html#ad332f75a3b947cd7df5f1a4857b431f0" title="Gives the type of a Plus object. " alt="" coords="280,360,383,387"/>
+<area shape="rect" id="node4" href="$classPlus.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="431,360,560,387"/>
+<area shape="rect" id="node5" href="$classTimes.html#ad332f75a3b947cd7df5f1a4857b431f0" title="Gives the type of a Times object. " alt="" coords="613,157,727,184"/>
+<area shape="rect" id="node13" href="$classFraction.html#ad332f75a3b947cd7df5f1a4857b431f0" title="Gives the type of a Fraction object. " alt="" coords="608,309,732,336"/>
+<area shape="rect" id="node16" href="$classPow.html#ad332f75a3b947cd7df5f1a4857b431f0" title="Gives the type of a Pow object. " alt="" coords="619,360,721,387"/>
+<area shape="rect" id="node21" href="$classPlus.html#a74715678bbcdafc95c17c4837e7758f0" title="Default constructor. Initializes argument to an empty std::vector. " alt="" coords="629,411,711,437"/>
+<area shape="rect" id="node6" href="$classTimes.html#ab455e348359f7105b4add73d54922584" title="Times::getNumericalFactor" alt="" coords="780,5,960,32"/>
+<area shape="rect" id="node7" href="$classTimes.html#ae126651a50b5e31eae5324999850b6da" title="Times::getTerm" alt="" coords="813,56,927,83"/>
+<area shape="rect" id="node8" href="$classTimes.html#a09729c96f8966f64ef40785b57654b52" title="Tells if the factor t_abstract appear in the product. " alt="" coords="811,107,929,133"/>
+<area shape="rect" id="node9" href="$classTimes.html#a8c6189d981cc22ffb8e3a9aacd79f3bb" title="Suppresses the term t_abstract in the product. " alt="" coords="1008,132,1157,159"/>
+<area shape="rect" id="node10" href="$classTimes.html#af21ac36bebac371e07ca725f91c9a21c" title="Creates a LaTeX output for the Abstract. " alt="" coords="805,208,935,235"/>
+<area shape="rect" id="node11" href="$classTimes.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="801,259,939,285"/>
+<area shape="rect" id="node12" href="$classTimes.html#aa5b76bb2c43c0ac2ce327a2ef4d6ca55" title="Default constructor. Initializes argument to an empty std::vector. " alt="" coords="1031,259,1134,285"/>
+<area shape="rect" id="node14" href="$classFraction.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of fractions. " alt="" coords="795,309,945,336"/>
+<area shape="rect" id="node15" href="$classFraction.html#af9b855b61347eb6359b10187ed957f35" title="Default constructor. Initializes both arguments to 0. " alt="" coords="1021,309,1145,336"/>
+<area shape="rect" id="node17" href="$classPow.html#a435622326b38de2abfe3782d3c5086cf" title="Returns all the possible factors. " alt="" coords="811,360,929,387"/>
+<area shape="rect" id="node18" href="$classPow.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of exponentiations. " alt="" coords="805,411,935,437"/>
+<area shape="rect" id="node20" href="$classPow.html#a673a663ea0aa5429e49ce10ba89e4464" title="Develops the exponentiation by expanding the sums inside. " alt="" coords="819,461,921,488"/>
+<area shape="rect" id="node19" href="$classPow.html#a3431ea3574b4ed59dc3dc4bf9396c40c" title="Default constructor. Initializes both arguments to 0. " alt="" coords="1041,411,1124,437"/>
+</map>

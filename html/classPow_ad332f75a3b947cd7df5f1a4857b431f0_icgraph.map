@@ -1,0 +1,6 @@
+<map id="getType" name="getType">
+<area shape="rect" id="node2" href="$classPow.html#a435622326b38de2abfe3782d3c5086cf" title="Returns all the possible factors. " alt="" coords="128,5,212,32"/>
+<area shape="rect" id="node3" href="$classPow.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of exponentiations. " alt="" coords="123,56,217,83"/>
+<area shape="rect" id="node5" href="$classPow.html#a673a663ea0aa5429e49ce10ba89e4464" title="Develops the exponentiation by expanding the sums inside. " alt="" coords="137,107,203,133"/>
+<area shape="rect" id="node4" href="$classPow.html#a3431ea3574b4ed59dc3dc4bf9396c40c" title="Default constructor. Initializes both arguments to 0. " alt="" coords="265,56,313,83"/>
+</map>

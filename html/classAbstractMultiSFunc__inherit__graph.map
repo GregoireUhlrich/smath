@@ -1,0 +1,12 @@
+<map id="AbstractMultiSFunc" name="AbstractMultiSFunc">
+<area shape="rect" id="node5" href="$classAngle.html" title="Handles a angle of 2 arguments. " alt="" coords="5,319,60,345"/>
+<area shape="rect" id="node6" href="$classDerivative.html" title="Handles the exponentiation of one Abstract wrt another. " alt="" coords="84,319,165,345"/>
+<area shape="rect" id="node7" href="$classFraction.html" title="Handles a fraction of 2 arguments. " alt="" coords="190,319,259,345"/>
+<area shape="rect" id="node8" href="$classPlus.html" title="Handles a sum, function of multiple arguments. " alt="" coords="283,319,331,345"/>
+<area shape="rect" id="node9" href="$classPolynomial.html" title="Handles a polynomial, function of multiple arguments. " alt="" coords="356,319,443,345"/>
+<area shape="rect" id="node10" href="$classPow.html" title="Handles the exponentiation of one Abstract wrt another. " alt="" coords="467,319,515,345"/>
+<area shape="rect" id="node11" href="$classTimes.html" title="Handles a product, function of multiple arguments. " alt="" coords="539,319,598,345"/>
+<area shape="rect" id="node2" href="$classAbstractScalar.html" title="Base class for scalars. " alt="" coords="253,169,361,196"/>
+<area shape="rect" id="node3" href="$classAbstract.html" title="Root class of the inheritance tree of abstracts. " alt="" coords="272,95,343,121"/>
+<area shape="rect" id="node12" href="$classITimes.html" title="ITimes" alt="" coords="537,393,600,420"/>
+</map>

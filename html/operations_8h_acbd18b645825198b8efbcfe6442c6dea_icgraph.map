@@ -1,0 +1,43 @@
+<map id="pow_" name="pow_">
+<area shape="rect" id="node2" href="$classDerivative.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Derivative object. " alt="" coords="131,5,267,32"/>
+<area shape="rect" id="node3" href="$classLog.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="114,56,285,83"/>
+<area shape="rect" id="node4" href="$classLog.html#a6754efdf044e1b148f67a770fdc66275" title="Derives the logarithm function. " alt="" coords="156,107,243,133"/>
+<area shape="rect" id="node5" href="$classCos.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="113,157,286,184"/>
+<area shape="rect" id="node6" href="$classSin.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="115,208,283,235"/>
+<area shape="rect" id="node7" href="$classTan.html#adde62b228eff01bed39b82b227f9f04e" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="139,259,260,285"/>
+<area shape="rect" id="node8" href="$classTan.html#a90bfbd0385611a65efa89646477c93e5" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="124,309,275,336"/>
+<area shape="rect" id="node9" href="$classTan.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="114,360,285,387"/>
+<area shape="rect" id="node10" href="$classACos.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="108,411,291,437"/>
+<area shape="rect" id="node11" href="$classASin.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="111,461,288,488"/>
+<area shape="rect" id="node12" href="$classCosh.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="109,512,289,539"/>
+<area shape="rect" id="node13" href="$classSinh.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="112,563,287,589"/>
+<area shape="rect" id="node14" href="$classTanh.html#adde62b228eff01bed39b82b227f9f04e" title="Evaluates the real part of the Abstract and returns it. " alt="" coords="135,613,263,640"/>
+<area shape="rect" id="node15" href="$classTanh.html#a90bfbd0385611a65efa89646477c93e5" title="Evaluates the imaginary part of the Abstract and returns it. " alt="" coords="120,664,279,691"/>
+<area shape="rect" id="node16" href="$classTanh.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="110,715,289,741"/>
+<area shape="rect" id="node17" href="$classPlus.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="112,765,287,792"/>
+<area shape="rect" id="node30" href="$classPow.html#a435622326b38de2abfe3782d3c5086cf" title="Returns all the possible factors. " alt="" coords="913,816,1032,843"/>
+<area shape="rect" id="node35" href="$classTimes.html#a146a54bf8c630ab58614f6d46991cfb9" title="Evaluates the modulus in the complex plane of the Abstract and returns it. " alt="" coords="107,867,292,893"/>
+<area shape="rect" id="node36" href="$classFraction.html#a435622326b38de2abfe3782d3c5086cf" title="Returns all the possible factors. " alt="" coords="130,917,269,944"/>
+<area shape="rect" id="node37" href="$classFraction.html#a43c5859f067bbebc8ac485b7f59899c7" title="Tells if the factor t_abstract appear in the fraction. " alt="" coords="135,968,263,995"/>
+<area shape="rect" id="node38" href="$classFraction.html#a8c6189d981cc22ffb8e3a9aacd79f3bb" title="Suppresses the term t_abstract in the fraction. " alt="" coords="340,993,500,1020"/>
+<area shape="rect" id="node39" href="$classPow.html#a8c6189d981cc22ffb8e3a9aacd79f3bb" title="Suppresses the term t_abstract in the exponentiation. " alt="" coords="130,1069,269,1096"/>
+<area shape="rect" id="node40" href="$symbol_8h.html#a78117ff4aa0016b50c84fb81b7eab8de" title="Creates the exponentiation t_symbol1/t_symbol2. " alt="" coords="173,1120,226,1147"/>
+<area shape="rect" id="node41" href="$symbol_8h.html#a6343793dfb578c70841f6b1081899757" title="Returns the division of t_symbol and t_value. " alt="" coords="162,1171,237,1197"/>
+<area shape="rect" id="node42" href="$variable_8h.html#a4a9e249803d494ef85d69b036109b10a" title="cfactorial_" alt="" coords="158,1221,241,1248"/>
+<area shape="rect" id="node18" href="$classPlus.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Plus object. " alt="" coords="369,715,471,741"/>
+<area shape="rect" id="node20" href="$classTimes.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Times object. " alt="" coords="731,613,844,640"/>
+<area shape="rect" id="node29" href="$classPow.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Pow object. " alt="" coords="736,765,839,792"/>
+<area shape="rect" id="node19" href="$classPlus.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="548,715,677,741"/>
+<area shape="rect" id="node26" href="$classFraction.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a Fraction object. " alt="" coords="725,664,849,691"/>
+<area shape="rect" id="node34" href="$classPlus.html#a74715678bbcdafc95c17c4837e7758f0" title="Default constructor. Initializes argument to an empty std::vector. " alt="" coords="746,715,829,741"/>
+<area shape="rect" id="node21" href="$classTimes.html#a43c5859f067bbebc8ac485b7f59899c7" title="Tells if the factor t_abstract appear in the product. " alt="" coords="914,437,1031,464"/>
+<area shape="rect" id="node22" href="$classTimes.html#ac82b0501ac3f92e3ba60dd04f4372b10" title="Displays the abstract in standard output. " alt="" coords="927,512,1018,539"/>
+<area shape="rect" id="node23" href="$classTimes.html#af21ac36bebac371e07ca725f91c9a21c" title="Creates a LaTeX output for the Abstract. " alt="" coords="908,563,1037,589"/>
+<area shape="rect" id="node24" href="$classTimes.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge identical terms. " alt="" coords="903,613,1042,640"/>
+<area shape="rect" id="node25" href="$classTimes.html#aa5b76bb2c43c0ac2ce327a2ef4d6ca55" title="Default constructor. Initializes argument to an empty std::vector. " alt="" coords="1107,613,1209,640"/>
+<area shape="rect" id="node27" href="$classFraction.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of fractions. " alt="" coords="897,664,1048,691"/>
+<area shape="rect" id="node28" href="$classFraction.html#af9b855b61347eb6359b10187ed957f35" title="Default constructor. Initializes both arguments to 0. " alt="" coords="1096,664,1220,691"/>
+<area shape="rect" id="node31" href="$classPow.html#a43c5859f067bbebc8ac485b7f59899c7" title="Tells if the factor t_abstract appear in the exponentiation. " alt="" coords="919,715,1026,741"/>
+<area shape="rect" id="node32" href="$classPow.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of exponentiations. " alt="" coords="908,765,1037,792"/>
+<area shape="rect" id="node33" href="$classPow.html#a3431ea3574b4ed59dc3dc4bf9396c40c" title="Default constructor. Initializes both arguments to 0. " alt="" coords="1117,765,1199,792"/>
+</map>

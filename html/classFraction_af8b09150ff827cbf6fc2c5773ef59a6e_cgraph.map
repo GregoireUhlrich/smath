@@ -1,0 +1,5 @@
+<map id="operator==" name="operator==">
+<area shape="rect" id="node2" href="$operations_8h.html#a6c63344e7a3b5853a73f0eb158de88ef" title="Returns the fraction of the two operands, applying basic simplifications. " alt="" coords="139,5,211,32"/>
+<area shape="rect" id="node3" href="$operations_8h.html#a37fbd886b025c44d0d193d4831618989" title="Returns the product of the two operands, applying basic simplifications. " alt="" coords="144,56,205,83"/>
+<area shape="rect" id="node4" href="$abstract_8h.html#a2a725f77726bc5a9ec08677d2e2fd859" title="Recover an Abstract that cannot return itself. " alt="" coords="139,107,210,133"/>
+</map>

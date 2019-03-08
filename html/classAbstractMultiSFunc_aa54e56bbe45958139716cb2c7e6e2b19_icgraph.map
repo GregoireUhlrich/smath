@@ -1,0 +1,7 @@
+<map id="getArgument" name="getArgument">
+<area shape="rect" id="node2" href="$classTimes.html#abd9f12af3b52f041754d10bc7f106a96" title="Displays the abstract in standard output. " alt="" coords="179,5,270,32"/>
+<area shape="rect" id="node3" href="$classFraction.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of fractions. " alt="" coords="149,56,300,83"/>
+<area shape="rect" id="node5" href="$classPow.html#a3521fa38a5d91c804254d992f0fe61c3" title="Merge composition of exponentiations. " alt="" coords="160,107,289,133"/>
+<area shape="rect" id="node4" href="$classFraction.html#a5c6432713390abdc0c80216e7580be70" title="Creates the fraction of &amp; leftOperand and rightOperand. " alt="" coords="348,56,472,83"/>
+<area shape="rect" id="node6" href="$classPow.html#adcd6da98c13a86cd230c2bdaa4ff8c3c" title="Creates the exponentiation of &amp; leftOperand wrt rightOperand. " alt="" coords="369,107,451,133"/>
+</map>

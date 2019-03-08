@@ -1,3 +1,8 @@
+/*! \file vector.h
+ * \author Grégoire Uhlrich
+ * \version 1.0
+ * \brief Objects handling vectors, matrices and higher-dimensional tensors.
+ */
 #ifndef Vector_H_INCLUDED
 #define Vector_H_INCLUDED
 

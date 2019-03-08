@@ -1,0 +1,11 @@
+<map id="derive" name="derive">
+<area shape="rect" id="node2" href="$classAbstract.html#a6078086e04ea4020ed54806d6d6b07d8" title="Creates a LaTeX output for the Abstract. " alt="" coords="111,157,196,184"/>
+<area shape="rect" id="node3" href="$classDouble.html#aef1bb1dcc0519ee4eeb528442c60bfef" title="Destructor. " alt="" coords="260,5,380,32"/>
+<area shape="rect" id="node4" href="$classInteger.html#af92cb3febe9fc2e61ed31959bb274dd1" title="Destructor. " alt="" coords="261,56,379,83"/>
+<area shape="rect" id="node5" href="$classVariable.html#a3496fcbaf4dfaa72537027961e58a8b4" title="Destructor. " alt="" coords="254,107,386,133"/>
+<area shape="rect" id="node6" href="$classConstant.html#ad65da8101f8917b7fce7e0c32bcd63f3" title="Destructor. " alt="" coords="248,208,392,235"/>
+<area shape="rect" id="node7" href="$classCFactorial.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of a CFraction. " alt="" coords="251,259,389,285"/>
+<area shape="rect" id="node8" href="$classCFraction.html#abc0170d70d0aff50ddeb00f94ea820b1" title="Destructor. " alt="" coords="244,309,396,336"/>
+<area shape="rect" id="node9" href="$classImaginary.html#aaa61f7f673c760f92b9e6fdff720e50a" title="Gives the type of the Imaginary. " alt="" coords="253,360,387,387"/>
+<area shape="rect" id="node10" href="$classITerm.html#af21ac36bebac371e07ca725f91c9a21c" title="Creates a LaTeX output for the Abstract. " alt="" coords="257,157,383,184"/>
+</map>
