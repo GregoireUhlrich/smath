@@ -2,6 +2,7 @@ obj/*
 prog/obj/*
 latex/*
 test*
+html/*
 gInterpreter.cpp
 perf.data
 perf*
