@@ -625,11 +625,11 @@ int main(){
     (tensor-lambda*eps).print();
     (tensor-lambda*eps).determinant().print();
 
-    N = 7;
+    N = 10;
     eps = matrix_(N,N);
     for (int i=0; i<N; i++)
         for (int j=0; j<N; j++)
-            eps.setArgument(pow(-1,i+j)*(i+j*1./2)+i*i-j*j+i*j*1./10 +i*i*i/(1.+j)+j*j*j/(1.+i),i,j);
+            eps.setArgument(i*j/(i+1+j)+i*i*j/(1+i+j)+i*j*j/(1+i+j)+i*i*j*j/(1+i+j)+pow(-1,i+j)*(i+j*1./2)+i*i-j*j+i*j*1./10 +i*i*i/(1.+j)+j*j*j/(1.+i),i,j);
     eps.setArgument(5,2,2);
     eps.print();
     eps.determinant().print();
@@ -641,6 +641,24 @@ int main(){
     eps = eps*eps;
     eps.print();
     cout<<eps.getAbstract()->getSum()/(N*N)<<endl;
+
+    eps = matrix_(3,3);
+    Symbol t("t");
+    xS.clear(); 
+    yS.clear();
+    z.clear();
+    eps.setArgument(xS,{0,0});
+    eps.setArgument(zS,{0,2});
+    eps.setArgument(xS,{1,1});
+    eps.setArgument(t,{1,2});
+    eps.setArgument(zS,{2,0});
+    eps.setArgument(yS,{2,2});
+    Simplify(eps.determinant()).print();
+    eps.inverseMatrix().print();
+    dot(eps, eps.inverseMatrix()).print();
+    cout<<"Simplify:  \n";
+    eps = Simplify(dot(eps, eps.inverseMatrix()));
+    eps.print();
     
     tensor = tensor-lambda*eps;
 
@@ -701,6 +719,7 @@ int main(){
     tensor.print();
 
     mat1.print();
+    (mat1*mat1).print();
     mat1.transpose().print();
     mat1.symmetrise().print();
     mat1.antisymmetrise().print();

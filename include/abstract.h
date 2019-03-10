@@ -339,6 +339,26 @@ class Abstract{
      */
     virtual int getNArgs(int axis=0) const;
 
+    /*! \return A std::vector<Expr>::iterator at the beginning of argument
+     * for multi-argument expressions.
+     */    
+    virtual iter begin();
+
+    /*! \return A std::vector<Expr>::iterator at the end of argument
+     * for multi-argument expressions.
+     */    
+    virtual iter end();
+
+    /*! \return A std::vector<Expr>::iterator at the beginning of argument
+     * for multi-argument expressions.
+     */    
+    virtual const_iter begin() const;
+
+    /*! \return A std::vector<Expr>::iterator at the end of argument
+     * for multi-argument expressions.
+     */    
+    virtual const_iter end() const;
+
     /*! \warning This function must not be called for building blocks, one must
      * check first that the expression has arguments.
      * \return The i^{th} argument of the expression.

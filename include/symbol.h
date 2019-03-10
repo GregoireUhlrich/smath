@@ -1,7 +1,8 @@
 /*! \file symbol.h
  * \author Grégoire Uhlrich
  * \version 1.0
- * \brief User class that encapsulate every nasty detail.
+ * \brief User class that encapsulates a shared_ptr to an Abstract
+ * in order to have a user-friendly object to manipulate.
  */
 #ifndef SYMBOL_H_INCLUDED
 #define SYMBOL_H_INCLUDED

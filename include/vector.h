@@ -40,6 +40,18 @@ class AbstractVectorial: public Abstract{
 
     int getNArgs(int axis=0) const override;
 
+    iter begin() override;
+    const_iter begin() const override
+    {
+        return argument.begin();
+    }
+
+    iter end() override;
+    const_iter end() const override
+    {
+        return argument.end();
+    }
+
     Expr getArgument(int iArg=0) const override;
 
     Expr getArgument(const std::initializer_list<int>& indices) const override;

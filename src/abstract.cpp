@@ -152,6 +152,34 @@ const vector<Expr >& Abstract::getVectorArgument() const
     callError(smError::AbstractFuncCalled, "Abstract::getVectorArgument() const");
 }
 
+iter Abstract::begin()
+{
+    print();
+    callError(smError::AbstractFuncCalled, "Abstract::begin() const");
+    return std::vector<Expr>::iterator();
+}
+
+iter Abstract::end()
+{
+    print();
+    callError(smError::AbstractFuncCalled, "Abstract::begin() const");
+    return std::vector<Expr>::iterator();
+}
+
+const_iter Abstract::begin() const
+{
+    print();
+    callError(smError::AbstractFuncCalled, "Abstract::begin() const");
+    return std::vector<Expr>::iterator();
+}
+
+const_iter Abstract::end() const
+{
+    print();
+    callError(smError::AbstractFuncCalled, "Abstract::begin() const");
+    return std::vector<Expr>::iterator();
+}
+
 Expr Abstract::getArgument(int iArg) const
 {
     print();
@@ -674,8 +702,8 @@ ostream& operator<<(ostream& fout, smType::PrimaryType primaryType)
     switch(primaryType) {
         case smType::Numerical:             cout<<"Purely numerical";      break;
         case smType::Literal:               cout<<"Variable Numerical";    break;
-        case smType::MultiFunction: cout<<"Multi Scalar Function"; break;
-        case smType::ScalarFunction:       cout<<"Scalar Function";       break;
+        case smType::MultiFunction:         cout<<"Multi Scalar Function"; break;
+        case smType::ScalarFunction:        cout<<"Scalar Function";       break;
         case smType::Vectorial:             cout<<"Vectorial";             break;
         case smType::Indicial:              cout<<"Indicial";              break;
 

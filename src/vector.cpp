@@ -107,6 +107,16 @@ int AbstractVectorial::getNArgs(int axis) const
     return argument[0]->getNArgs(axis-1);
 }
 
+iter AbstractVectorial::begin()
+{
+    return argument.begin();
+}
+
+iter AbstractVectorial::end()
+{
+    return argument.end();
+}
+
 Expr AbstractVectorial::getArgument(int iArg) const
 {
     if (iArg >= 0 and iArg < nArgs)
@@ -291,24 +301,24 @@ Expr AbstractVectorial::getSubVectorial(const vector<int>& exceptions) const
     }
     vector<int> shape = getShape();
     for (int i=0; i<dim; i++)
-        shape[i]--;
+        --shape[i];
     Expr foo = tensor_(shape);
-    if (exceptions.size() > 1) {
+    if (dim > 1) {
         vector<int> newExceptions(exceptions);
         newExceptions.erase(newExceptions.begin());
-        for (int i=0; i<nArgs; i++) {
-            if (i < exceptions[0])
-                foo->setArgument(argument[i]->getSubVectorial(newExceptions),i);
-            else if (i > exceptions[0])
-                foo->setArgument(argument[i]->getSubVectorial(newExceptions),i-1);
+        int i=0; 
+        for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i) {
+            if (i == exceptions[0])
+                ++i;
+            *arg = argument[i]->getSubVectorial(newExceptions);
         }
     }
     else {
-        for (int i=0; i<nArgs; i++) {
-            if (i < exceptions[0])
-                foo->setArgument(argument[i],i);
-            else if (i > exceptions[0])
-                foo->setArgument(argument[i],i-1);
+        int i=0;
+        for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i) {
+            if (i == exceptions[0])
+                ++i;
+            *arg = argument[i];
         }
     }
 
@@ -335,42 +345,48 @@ Expr AbstractVectorial::getVectorialModulus() const
 Expr AbstractVectorial::dot(const Expr& expr) const
 {
     int t_dim = expr->getDim();
-    if (dim == 0) {
-        if (t_dim == 0)
-            return times_(argument[0],(*expr)[0]);
-        return expr->dot(Copy(this));
-    }
-    Expr foo;
     if (t_dim == 0) {
-        foo = Copy(this);
+        Expr foo = Copy(this);
         if (dim == 1) {
-            for (int i=0; i<nArgs; i++)
-                foo->setArgument(times_(argument[i],expr),i);
+            int i=0;
+            for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i)
+                *arg = times_(argument[i], expr);
             return foo;
         }
-        for (int i=0; i<nArgs; i++)
-            foo->setArgument(argument[i]->dot(expr),i);
+        int i=0;
+        for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i)
+            *arg = argument[i]->dot(expr);
         return foo;
     }
     else {
-        vector<int> shape1(getShape()), shape2(expr->getShape());
-        vector<int> newShape(shape1.size()+shape2.size()-2);
-        if (shape1[shape1.size()-1] != shape2[0]) {
+        vector<int> shape2(expr->getShape());
+        vector<int> newShape(dim+shape2.size()-2);
+        if (shape[dim-1] != shape2[0]) {
             cout<<"Warning: shapes do not match in dot product.\n";
             return ZERO;
         }
-        for (size_t i=0; i<shape1.size()-1; i++)
-            newShape[i] = shape1[i];
-        for (size_t j=shape1.size()-1; j<newShape.size(); j++)
-            newShape[j] = shape2[2+j-shape1.size()];
+        for (int i=0; i<dim-1; i++)
+            newShape[i] = shape[i];
+        for (size_t j=dim-1; j<newShape.size(); j++)
+            newShape[j] = shape2[2+j-dim];
 
         Expr foo = tensor_(newShape);
-        if (dim == 1)
+        vector<Expr> vec(nArgs);
+        if (dim == 1) {
+            int i=0;
+            for (iter arg=expr->begin(); arg!=expr->end(); ++arg, ++i)
+                vec[i] = times_(argument[i], *arg);
             for (int i=0; i<nArgs; i++)
                 foo = plus_(foo, times_(argument[i],(*expr)[i]));
-        else
+            foo = plus_(vec);
+        }
+        else {
+            for (int i=0; i<nArgs; ++i)
+                vec[i] = argument[i]->dot(expr);
             for (int i=0; i<nArgs; i++)
                 foo->setArgument(argument[i]->dot(expr), i);
+            foo = highDTensor_(vec);
+        }
 
         return foo;
     }
@@ -385,21 +401,27 @@ Expr AbstractVectorial::addition_own(const Expr& expr) const
     Expr foo = tensor_(getShape());
     if (expr->getDim() == 0) {
         if (dim == 1) {
-            for (int i=0; i<nArgs; i++)
-                foo->setArgument(plus_(expr, argument[i]),i);
+            int i=0;
+            for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i)
+                *arg = plus_(expr, argument[i]);
             return foo;
         }
-        for (int i=0; i<nArgs; i++)
-            foo->setArgument(argument[i]->addition_own(expr));
+        int i=0;
+        for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i)
+            *arg = argument[i]->addition_own(expr);
         return foo;
     }
     if (dim == 1) {
-        for (int i=0; i<nArgs; i++)
-            foo->setArgument(plus_(argument[i],(*expr)[i]),i);
+        int i=0;
+        iter arg2=expr->begin();
+        for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++arg2, ++i)
+            *arg = plus_(argument[i], *arg2);
     }
     else {
-        for (int i=0; i<nArgs; i++)
-            foo->setArgument(argument[i]->addition_own((*expr)[i]),i);
+        int i=0;
+        iter arg2=expr->begin();
+        for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++arg2, ++i)
+            *arg = argument[i]->addition_own(*arg2);
     }
 
     return foo;
@@ -414,20 +436,30 @@ Expr AbstractVectorial::multiplication_own(const Expr& expr) const
     Expr foo = tensor_(getShape());
     if (expr->getDim() == 0) {
         if (dim == 1) {
-            for (int i=0; i<nArgs; i++)
-                foo->setArgument(times_(expr, argument[i]),i);
+            int i=0;
+            for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i)
+                *arg = times_(expr, argument[i]);
+
             return foo;
         }
-        for (int i=0; i<nArgs; i++)
-            foo->setArgument(argument[i]->multiplication_own(expr),i);
+        int i=0;
+        for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i)
+            *arg = argument[i]->multiplication_own(expr);
+
         return foo;
     }
-    if (dim == 1)
-        for (int i=0; i<nArgs; i++)
-            foo->setArgument(times_(argument[i],(*expr)[i]),i);
-    else
-        for (int i=0; i<nArgs; i++)
-            foo->setArgument(argument[i]->multiplication_own((*expr)[i]),i);
+    if (dim == 1) {
+        int i=0;
+        iter arg2 = expr->begin();
+        for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++arg2, ++i)
+            *arg = times_(argument[i],*arg2);
+    }
+    else {
+        int i=0;
+        iter arg2 = expr->begin();
+        for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++arg2, ++i)
+            *arg = argument[i]->multiplication_own(*arg2);
+    }
 
     return foo;
 }
@@ -440,12 +472,16 @@ Expr AbstractVectorial::tensor_dot(const Expr& expr) const
     vector<int> shape2 = expr->getShape();
     shape.insert(shape.end(), shape2.begin(), shape2.end());
     Expr foo = tensor_(shape);
-    if (dim > 1) 
-        for (int i=0; i<nArgs; i++)
-            foo->setArgument(argument[i]->tensor_dot(expr),i);
-    else 
-        for (int i=0; i<nArgs; i++)
-            foo->setArgument(expr->multiplication_own(argument[i]),i);
+    if (dim > 1)  {
+        int i=0;
+        for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i)
+            *arg = argument[i]->tensor_dot(expr);
+    }
+    else  {
+        int i=0;
+        for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i)
+            *arg = expr->multiplication_own(argument[i]);
+    }
     
     return foo;
 }
@@ -456,7 +492,6 @@ Expr AbstractVectorial::trace(int axis1, int axis2) const
         cout<<"Warning: taking trace of axis out of scope.\n";
         return ZERO;
     }
-    vector<int> shape = getShape();
     vector<int> newShape = shape;
     for (int i=0; i<dim; i++)
         if (i == axis1 or i == axis2)
@@ -499,8 +534,9 @@ Expr AbstractVectorial::trace(int axis1, int axis2) const
 Expr AbstractVectorial::develop(bool full)
 {
     Expr foo = tensor_(getShape());
-    for (int i=0; i<nArgs; i++)
-        foo->setArgument(argument[i]->develop(full), i);
+    int i=0;
+    for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i)
+        *arg = argument[i]->develop(full);
 
     return foo;
 }
@@ -508,8 +544,9 @@ Expr AbstractVectorial::develop(bool full)
 Expr AbstractVectorial::factor(bool full)
 {
     Expr foo = tensor_(getShape());
-    for (int i=0; i<nArgs; i++)
-        foo->setArgument(argument[i]->factor(full), i);
+    int i=0;
+    for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i)
+        *arg = argument[i]->factor(full);
 
     return foo;
 }
@@ -517,8 +554,9 @@ Expr AbstractVectorial::factor(bool full)
 Expr AbstractVectorial::factor(const Expr& expr, bool full)
 {
     Expr foo = tensor_(getShape());
-    for (int i=0; i<nArgs; i++)
-        foo->setArgument(argument[i]->factor(expr,full), i);
+    int i=0;
+    for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i)
+        *arg = argument[i]->factor(expr, full);
 
     return foo;
 }
@@ -529,8 +567,9 @@ bool AbstractVectorial::operator==(const Expr& expr) const
         return true;
     if (dim != expr->getDim() or nArgs != expr->getNArgs()) 
         return false;
-    for (int i=0; i<nArgs; i++)
-        if (*argument[i] != expr->getArgument(i))
+    int i=0;
+    for (iter arg=expr->begin(); arg!=expr->end(); ++arg, ++i)
+        if (*argument[i] != *arg)
             return false;
 
     return true;
@@ -734,6 +773,10 @@ Expr Matrix::determinant() const
         cout<<"Warning: taking determinant of non-square matrix.\n";
         return ZERO;
     }
+
+    // Former algo in N!
+    
+    /*
     Expr foo = ZERO;
     if (nArgs > 2 and argument[0]->getNArgs() > 2) 
         for (int i=0; i<nArgs; i++)
@@ -747,8 +790,57 @@ Expr Matrix::determinant() const
                         times_(argument[i]->getArgument(0),
                                times_(int_(pow(-1,i)),
                                       getSubVectorial(i,0))));    
+    */
+   
 
-    return foo;
+    // New algo in N^3
+    Expr copy = DeepCopy(this);
+    const int n = nArgs;
+    const int m = argument[0]->getNArgs();
+    int h = 0;
+    int k = 0;
+    int pivot = n-1;
+    int sign = 1;
+    iter arg_h = copy->begin();
+    while (h < n and k < m) {
+        if ((*arg_h)->getArgument(k) == ZERO) {
+            if (pivot == h)
+                return ZERO;
+            Expr foo = copy->getArgument(pivot);
+            copy->setArgument(*arg_h, pivot);
+            *arg_h = foo;
+            --pivot;
+            sign *= -1;
+        }
+        else {
+            pivot = n-1;
+            for (iter arg_i=1+arg_h; arg_i!=copy->end(); ++arg_i) {
+                Expr f = fraction_((*arg_i)->getArgument(k),
+                                   (*arg_h)->getArgument(k));
+                (*arg_i)->setArgument(ZERO,k);
+                for (int j=k+1; j<m; ++j)
+                    (*arg_i)->setArgument(minus_((*arg_i)->getArgument(j),
+                                times_((*arg_h)->getArgument(j),f)),j);
+            }
+            ++h;
+            ++arg_h;
+            ++k;
+        }
+    };
+    vector<Expr> vec(nArgs);
+    int i=0;
+    for (iter arg=copy->begin(); arg!=copy->end(); ++arg, ++i) {
+        vec[i] = (*arg)->getArgument(i);
+    }
+//    cout<<"Det à moi: "; foo->print();
+//    cout<<"new Det: "; times_(vec)->print();
+//    if (*foo != times_(vec))
+//    {
+//        cout<<"DIFFERENCE IN "; print();
+//    }
+
+
+    return times_(int_(sign),times_(vec));
 }
 
 Expr Matrix::trace() const
@@ -757,11 +849,11 @@ Expr Matrix::trace() const
         cout<<"Warning: taking the trace of non-square matrix.\n";
         return ZERO;
     }
-    Expr foo = ZERO;
+    vector<Expr> vec(nArgs);
     for (int i=0; i<nArgs; i++)
-        foo = plus_(foo, argument[i]->getArgument(i));
+        vec[i] = argument[i]->getArgument(i);
 
-    return foo;
+    return plus_(vec);
 }
 
 Expr Matrix::transpose() const
@@ -771,9 +863,12 @@ Expr Matrix::transpose() const
     newShape[0] = newShape[1];
     newShape[1] = fooInt;
     Expr foo = tensor_(newShape);
-    for (int i=0; i<shape[0]; i++)
-        for (int j=0; j<shape[1]; j++)
-            foo->setArgument(getArgument({j,i}),{i,j});
+    int j=0;
+    for (iter arg_i=foo->begin(); arg_i!=foo->end(); ++arg_i, ++j) {
+        int i=0;
+        for (iter arg_j=(**arg_i).begin(); arg_j!=(**arg_i).end(); ++arg_j, ++i)
+            *arg_j = argument[i]->getArgument(j);
+    }
 
     return foo;
 }
@@ -896,7 +991,21 @@ Expr highDTensor_(const vector<int>& shape)
 
 Expr highDTensor_(const vector<Expr >& t_argument)
 {
-    return make_shared<HighDTensor>(t_argument);
+    if (t_argument.size() == 0)
+        return ZERO;
+    switch (t_argument[0]->getDim()) {
+
+        case 0:
+        return vector_(t_argument);
+        break;
+
+        case 1:
+        return matrix_(t_argument);
+        break;
+
+        default:
+        return make_shared<HighDTensor>(t_argument);
+    }
 }
 
 Expr tensor_(const std::vector<int>& shape)

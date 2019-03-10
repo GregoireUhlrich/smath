@@ -549,7 +549,6 @@ Expr plus_(const Expr& leftOperand, const Expr& rightOperand)
     // Creates a Plus object a priori but can return other types
     // in particular cases
 {
-    Expr foo = make_shared<Plus>(leftOperand, rightOperand);
     if (leftOperand->getPrimaryType() == smType::Vectorial)
         return leftOperand->addition_own(rightOperand);
     if (rightOperand->getPrimaryType() == smType::Vectorial)
@@ -559,6 +558,7 @@ Expr plus_(const Expr& leftOperand, const Expr& rightOperand)
     if (rightOperand->getType() == smType::Polynomial)
         return rightOperand->addition_own(leftOperand);
 
+    Expr foo = make_shared<Plus>(leftOperand, rightOperand);
     if (foo->getNArgs() == 1) {
         Expr foo2 = foo->getArgument();
         return foo2;
@@ -571,6 +571,12 @@ Expr plus_(const Expr& leftOperand, const Expr& rightOperand)
 
 Expr plus_(const vector<Expr >& operands)
 {
+    if (operands.size() == 0)
+        return ZERO;
+    if (operands[0]->getPrimaryType() == smType::Vectorial) {
+        Expr foo = highDTensor_(operands);
+        return foo->trace(0,0);
+    }
     Expr foo = make_shared<Plus>(operands);
     if (foo->getNArgs() == 1) {
         Expr foo2 = foo->getArgument();
@@ -800,7 +806,7 @@ void Times::print(int mode) const
                 if (i < denominatorIndices.size()-1)
                     cout<<"*";
             }
-            cout<<"(";
+            cout<<")";
         }
     }
     if (mode > 2)
@@ -1346,22 +1352,9 @@ Expr times_(const Expr& leftOperand, const Expr& rightOperand, bool explicitTime
         return rightOperand->multiplication_own(leftOperand);
     }
 
-    if (leftOperand->getType() == smType::Fraction) {
-        if (rightOperand->getType() == smType::Fraction) {
-            return fraction_(times_(leftOperand->getArgument(0),
-                                    rightOperand->getArgument(0)),
-                             times_(leftOperand->getArgument(1),
-                                    rightOperand->getArgument(1)));
-        }
-        return fraction_(times_(leftOperand->getArgument(0),
-                                rightOperand),
-                         leftOperand->getArgument(1));
-    }
-    else if (rightOperand->getType() == smType::Fraction) {
-        return fraction_(times_(leftOperand,
-                                rightOperand->getArgument(0)),
-                         rightOperand->getArgument(1));
-    }
+    if (leftOperand->getPrimaryType() == smType::Numerical) 
+        if (rightOperand->getPrimaryType() == smType::Numerical) 
+            return leftOperand->multiplication_own(rightOperand);
 
     Expr foo = make_shared<Times>(leftOperand, rightOperand, explicitTimes);
     if (foo->getNArgs() == 1)
