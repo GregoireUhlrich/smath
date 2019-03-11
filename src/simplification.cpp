@@ -3888,7 +3888,7 @@ bool ITensor::operator<(const Expr& expr) const
 
         case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
-            return getIndexStructure().size() < expr->getIndexStructure().size();
+            return getIndexStructure().getNIndices() < expr->getIndexStructure().getNIndices();
         }
         break;
 
@@ -4008,7 +4008,7 @@ bool ITensor::operator>(const Expr& expr) const
 
         case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
-            return getIndexStructure().size() > expr->getIndexStructure().size();
+            return getIndexStructure().getNIndices() > expr->getIndexStructure().getNIndices();
         }
         break;
 
@@ -4134,8 +4134,8 @@ bool ITerm::operator<(const Expr& expr) const
 
         case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
-            nMax = getIndexStructure().size();
-            t_nArgs = expr->getIndexStructure().size();
+            nMax = getIndexStructure().getNIndices();
+            t_nArgs = expr->getIndexStructure().getNIndices();
             if (nMax != t_nArgs)
                 return nMax < t_nArgs;
             nMax = min(nArgs, expr->getNArgs());
@@ -4263,8 +4263,8 @@ bool ITerm::operator>(const Expr& expr) const
 
         case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
-            nMax = getIndexStructure().size();
-            t_nArgs = expr->getIndexStructure().size();
+            nMax = getIndexStructure().getNIndices();
+            t_nArgs = expr->getIndexStructure().getNIndices();
             if (nMax != t_nArgs)
                 return nMax > t_nArgs;
             nMax = min(nArgs, expr->getNArgs());

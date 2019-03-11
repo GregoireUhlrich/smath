@@ -88,7 +88,7 @@ Expr Plus::getComplexArgument()
     return make_shared<Angle>(im,real);
 }
 
-vector<Index> Plus::getIndexStructure() const
+IndexStructure Plus::getIndexStructure() const
 {
     // If the expression has a non trivial index structure, we suppose 
     // (the program should maintain that property) that all arguments have the 
@@ -96,7 +96,7 @@ vector<Index> Plus::getIndexStructure() const
     if (nArgs > 0 and argument[0]->getPrimaryType() == smType::Indicial)
         return argument[0]->getIndexStructure();
 
-    return vector<Index>(0);
+    return IndexStructure();
 }
 
 void Plus::insert(const Expr& expr, bool side)

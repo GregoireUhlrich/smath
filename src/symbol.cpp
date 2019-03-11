@@ -923,7 +923,7 @@ Expr Copy(const Abstract* expr)
         break;
 
         case smType::ITensor:
-        newAbstract = make_shared<ITensor>(expr->getName(), expr->getIndexStructure());
+        newAbstract = make_shared<ITensor>(expr);
         break;
         
         case smType::ITerm:
@@ -1098,7 +1098,7 @@ Expr DeepCopy(const Abstract* expr)
         break;
 
         case smType::ITensor:
-        return make_shared<ITensor>(expr->getName(), expr->getIndexStructure());
+        return make_shared<ITensor>(expr);
         break;
         
         case smType::ITerm:
@@ -1270,7 +1270,7 @@ Expr Refresh(const Abstract* expr)
         break;
 
         case smType::ITensor:
-        newAbstract = make_shared<ITensor>(expr->getName(), expr->getIndexStructure());
+        newAbstract = make_shared<ITensor>(expr);
         break;
         
         case smType::ITerm:
@@ -1421,7 +1421,7 @@ Expr Refresh(const Expr& expr)
         break;
 
         case smType::ITensor:
-        newAbstract = make_shared<ITensor>(expr->getName(), expr->getIndexStructure());
+        newAbstract = make_shared<ITensor>(expr);
         break;
         
         case smType::ITerm:
@@ -1612,7 +1612,7 @@ Expr DeepRefresh(const Expr& expr)
         break;
 
         case smType::ITensor:
-        newAbstract = make_shared<ITensor>(expr->getName(), expr->getIndexStructure());
+        newAbstract = make_shared<ITensor>(expr);
         break;
         
         case smType::ITerm:
@@ -1705,7 +1705,8 @@ Expr Empty(smType::Type type)
         case smType::Vector:      return make_shared<Vector>();      break;
         case smType::Matrix:      return make_shared<Matrix>();      break;
         case smType::HighDTensor: return make_shared<HighDTensor>(); break;
-        case smType::ITensor:     return make_shared<ITensor>();     break;
+        // case ITensor not allowed!
+        //case smType::ITensor:     return make_shared<ITensor>();     break;
         case smType::ITerm:       return make_shared<ITerm>();       break;
 
         default: callWarning<smType::Type>(smError::UnknownType, "Empty(Type)", type); return ZERO;

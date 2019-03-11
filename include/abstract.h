@@ -165,8 +165,11 @@ std::ostream& operator<<(std::ostream& fout, smType::PrimaryType primaryType);
  */
 Expr Empty(smType::Type type); // source in symbol.cpp
 
-// Forward declaration of Index class (indicial.h)
+// Forward declaration of Index IndicialParent 
+// and IndexStructure classes (indicial.h)
 class Index;
+class IndexStructure;
+class IndicialParent;
 
 
 /*! \class Abstract
@@ -428,7 +431,13 @@ class Abstract{
 
     /*! \return The index structure of the \b Indicial expression
      */
-    virtual std::vector<Index> getIndexStructure() const;
+    virtual IndexStructure getIndexStructure() const;
+
+    /*! \brief For indicial expressions this function returns a pointer 
+     * to the parent object of type IndicialParent (not an expression).
+     * \return \b parent for ITensor-type expression.
+     */
+    virtual IndicialParent* getParent() const;
 
     /*! \brief Returns the number of contracted pairs of indices **in an Indicial
      * expression**.

@@ -39,6 +39,7 @@ namespace smError{
                            properties of an indicial expression. */
         UnknownProperty, /*!<  Trying to get a property of Abstract that is not
                           defined..*/
+        InvalidITensor, /*!<  Invalid creation of ITensor: bad indices. */
 
     };
 
@@ -91,6 +92,8 @@ inline void callError(smError::Error error, const std::string& caller, T spec)
                std::cout<<"Mismatch in symmetry in "<<caller<<".\n"; break;
         case UnknownProperty:
                std::cout<<"Unknown property in "<<caller<<": "<<spec<<std::endl; break;
+        case InvalidITensor:
+               std::cout<<"Bad set of indices in creation of ITensor in "<<caller<<std::endl; break;
 
         default:
                std::cout<<"ScmType "<<(int)error<<" not recognized.\n";

@@ -50,7 +50,7 @@ class Plus: public AbstractMultiFunc{
     
     Expr getComplexArgument() override;
 
-    std::vector<Index> getIndexStructure() const override;
+    IndexStructure getIndexStructure() const override;
 
     void insert(const Expr& expr, bool side=0) override;
 

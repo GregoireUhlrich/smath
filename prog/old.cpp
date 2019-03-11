@@ -647,6 +647,7 @@ int main(){
     xS.clear(); 
     yS.clear();
     z.clear();
+
     eps.setArgument(xS,{0,0});
     eps.setArgument(zS,{0,2});
     eps.setArgument(xS,{1,1});

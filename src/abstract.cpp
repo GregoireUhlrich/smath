@@ -59,9 +59,9 @@ Index Abstract::getIndex(int i) const
     return Index();
 }
 
-vector<Index> Abstract::getIndexStructure() const
+IndexStructure Abstract::getIndexStructure() const
 {
-    return vector<Index>(0);
+    return IndexStructure();
 }
 
 void Abstract::setIndexStructure(const vector<Index>& index)

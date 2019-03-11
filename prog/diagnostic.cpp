@@ -52,6 +52,11 @@ cout<<variable->evaluateScalar()<<" "<<developed->evaluateScalar()<<endl;
 
     Symbol x("x"), y("y"), z("z"), t("t");
 
+    Symbol TTT = ((cos_(x)^2)+(sin_(x)^2));
+    TTT.print();
+    TTT = Simplify(TTT);
+    TTT.print();
+
     Symbol WEVER("#");
     WEVER = Symbol(WHATEVER);
 

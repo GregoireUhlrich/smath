@@ -15,16 +15,69 @@
 #include <set>
 #include <initializer_list>
 
-enum VectorSpace {
-    Default,
-    Lorentz,
-    Dirac,
-
-};
 
 // Returns a < b with specific rules on a and b
 bool operator<(std::pair<int,int> a, std::pair<int,int> b);
 bool operator>(std::pair<int,int> a, std::pair<int,int> b);
+
+// Only using Space* type. Non-copyable class, One space corresponds to only
+// one instance --> comparison of spaces <==> comparison of pointers.
+class Space{
+
+    private:
+
+    std::string name;
+    int dim;
+    bool signedIndex;
+
+    public:
+
+    Space() = delete;
+    Space(const Space&) = delete;
+    Space(const std::string& t_name, int t_dim);
+    Space(const std::string& t_name, int t_dim, bool t_signedIndexed);
+    ~Space(){};
+
+    std::string getName() const;
+    int getDim() const;
+    bool getSignedIndex() const;
+
+    Space& operator=(const Space&) = delete;
+};
+
+///////////////////////////////////////////////////
+//// Inline functions
+///////////////////////////////////////////////////
+
+inline Space::Space(const std::string& t_name, int t_dim)
+    :name(t_name), dim(t_dim), signedIndex(false) 
+{}
+
+inline Space::Space(const std::string& t_name, int t_dim, bool t_signedIndexed)
+    :name(t_name), dim(t_dim), signedIndex(t_signedIndexed) 
+{}
+
+inline std::string Space::getName() const {
+    return name;
+}
+
+inline int Space::getDim() const {
+    return dim;
+}
+
+inline bool Space::getSignedIndex() const {
+    return signedIndex;
+}
+
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+
+
+static const Space Euclid_R("R", 1);
+static const Space Euclid_R2("R2", 2);
+static const Space Euclid_R3("R3", 3);
+static const Space Euclid_R4("R4", 4);
+static const Space Lorentz("L",4,true);
 
 class Index{
 
@@ -32,7 +85,7 @@ class Index{
 
     std::string name;
     bool free;
-    int max;
+    const Space* space;
 
     public:
 
@@ -42,7 +95,7 @@ class Index{
 
     Index(const Index& index) = default;
 
-    Index(const std::string& t_name, unsigned int t_max);
+    Index(const std::string& t_name, const Space* t_space);
 
     ~Index(){};
 
@@ -51,6 +104,8 @@ class Index{
     bool getFree() const;
 
     int getMax() const;
+
+    const Space* getSpace() const;
 
     void setName(const std::string& t_name);
 
@@ -70,15 +125,16 @@ class Index{
 /////
 // Inline functions
 
-inline Index::Index(): name("i"), free(true), max(3){}
+inline Index::Index(): name("i"), free(true), space(&Euclid_R3){}
 inline Index::Index(const std::string& t_name): name(t_name), free(true),
-                                                max(3){}
-inline Index::Index(const std::string& t_name, unsigned int t_max): name(t_name),
-                                    free(true), max(t_max){}
+                                              space(&Euclid_R3){}
+inline Index::Index(const std::string& t_name, const Space* t_space)
+     :name(t_name), free(true), space(t_space){}
 
 inline std::string Index::getName() const { return name;}
 inline bool Index::getFree() const { return free;}
-inline int Index::getMax() const { return max;}
+inline const Space* Index::getSpace() const { return space;}
+inline int Index::getMax() const { return space->getDim();}
 
 inline void Index::setName(const std::string& t_name) { name = t_name;}
 inline void Index::setFree(bool t_free) { free = t_free;}
@@ -95,11 +151,11 @@ class IndexStructure{
 
     IndexStructure();
 
-    IndexStructure(const IndexStructure& t_index);
+    IndexStructure(const IndexStructure& structure);
 
-    explicit IndexStructure(const std::initializer_list<Index>& t_index);
+    explicit IndexStructure(const std::initializer_list<Index>& structure);
 
-    explicit IndexStructure(const std::vector<Index>& t_index);
+    explicit IndexStructure(const std::vector<Index>& structure);
 
     ~IndexStructure(){}
 
@@ -113,7 +169,13 @@ class IndexStructure{
 
     IndexStructure getPermutation(const std::vector<int>& permutation) const;
 
-    IndexStructure& operator=(const IndexStructure& t_index) = default;
+    IndexStructure& operator=(const IndexStructure& structure) = default;
+
+    bool operator==(const IndexStructure& structure) const;
+
+    bool operator!=(const IndexStructure& structure) const;
+
+    Index operator[](int i) const;
 };
 
 /////
@@ -182,6 +244,7 @@ class Symmetry{
 
     private:
 
+    int dim;
     std::vector<Permutation > permutation;
 
     public:
@@ -192,37 +255,80 @@ class Symmetry{
 
     ~Symmetry(){}
 
+    int getDim() const;
+
+    size_t getNPermutation() const;
+
+    std::vector<Permutation> getPermutation() const;
+
     void addSymmetry(const Permutation& newPermutation, int sym=1);
 
     Symmetry operator*(const Symmetry& symmetry) const;
 
+    bool operator==(const Symmetry& symmetry) const;
+
+    bool operator!=(const Symmetry& symmetry) const;
+
     friend std::ostream& operator<<(std::ostream& fout, const Symmetry& symmetry);
 };
 
-class AbstractIndicial: public AbstractScalar{
+class ITensor;
+
+class IndicialParent{
 
     protected:
 
-    int nIndices;
-    std::vector<Index> index;
+    std::string name;
+    bool commutable;
 
-    std::set<std::pair<int,int> > contraction;
+    int dim;
+    std::vector<const Space*> space;
+    Symmetry symmetry;
+
     bool fullySymmetric;
     bool fullyAntiSymmetric;
 
     public:
 
-    AbstractIndicial();
+    IndicialParent();
 
-    explicit AbstractIndicial(const std::string& t_name);
+    explicit IndicialParent(const std::string& t_name);
 
-    explicit AbstractIndicial(const std::vector<Index>& t_index);
+    IndicialParent(const IndicialParent& abstract) = default;
 
-    AbstractIndicial(const AbstractIndicial& abstract) = default;
-
-    AbstractIndicial(const std::string& t_name, const std::vector<Index>& t_index);
+    IndicialParent(const std::string& t_name,
+                   std::initializer_list<const Space*> t_space);
      
-    ~AbstractIndicial(){};
+    ~IndicialParent(){};
+
+    std::string getName() const;
+
+    bool getCommutable() const;
+
+    int getDim() const;
+
+    int getDim(const Space* t_space) const;
+
+    bool getFullySymmetric() const;
+
+    bool getFullyAntiSymmetric() const;
+
+    void setName(const std::string& t_name);
+
+    void setCommutable(bool t_commutable);
+
+    void setFullySymmetric();
+
+    void setFullyAntiSymmetric();
+
+    void addSymmetry(int i1, int i2);
+
+    void addAntiSymmetry(int i1, int i2);
+
+    Expr operator()(const std::initializer_list<Index>& indices) const;
+
+};
+/*
 
     smType::PrimaryType getPrimaryType() const override { return smType::Indicial;}
 
@@ -244,26 +350,47 @@ class AbstractIndicial: public AbstractScalar{
 
     void setIndexStructure(const std::vector<Index>& t_index) override;
 };
-
+*/
 std::vector<std::vector<int> > permutations(const std::vector<int>& init);
 
-class ITensor: public AbstractIndicial{
 
-    private:
-
-    Symmetry symmetry;
+class AbstractIndicial: public AbstractScalar{
 
     public:
 
-    ITensor();
+    AbstractIndicial();
+    explicit AbstractIndicial(const std::string& t_name);
+    ~AbstractIndicial(){};
 
-    explicit ITensor(const std::string& t_name);
+    smType::PrimaryType getPrimaryType() const override {
+        return smType::Indicial;
+    }
+};
 
-    ITensor(const std::string& t_name, const std::vector<Index>& t_index);
+class ITensor: public AbstractIndicial{
 
-    explicit ITensor(const std::vector<Index>& t_index);
+    protected:
 
-    ITensor(const ITensor& tensor) = default;
+    IndicialParent* parent;
+    IndexStructure index;
+
+    // Private constructors
+    ITensor() = delete;   
+
+    ITensor(const std::string& t_name,
+            bool t_commutable, 
+            const std::initializer_list<Index>& indices, 
+            IndicialParent* t_parent);
+
+    public:
+
+    // Friend member of IndicialParent that has access to constructors of 
+    // ITensor.
+    friend Expr IndicialParent::operator()(
+            const std::initializer_list<Index>& indices) const;
+
+    ITensor(const Abstract*& expression);
+    ITensor(const Expr& expression);
 
     ~ITensor(){};
 
@@ -271,14 +398,26 @@ class ITensor: public AbstractIndicial{
         return smType::ITensor;
     }
 
-    bool getFullySymmetric() const;
-    bool getFullyAntiSymmetric() const;
-    void setFullySymmetric() override;
-    void setFullyAntiSymmetric() override;
-    void addSymmetry(int i1, int i2) override;
-    void addAntiSymmetry(int i1, int i2) override;
+    int getNIndices() const override;
+
+    Index getIndex(int i) const override;
+    
+    IndicialParent* getParent() const override;
+
+    IndexStructure getIndexStructure() const override;
+
+    bool checkIndexStructure(const std::vector<Index>& t_index) const override;
+
+    bool checkIndexStructure(const std::initializer_list<Index>& index) const override;
+
+    void contractIndices(int axis1, int axis2) override;
+
+    void setIndexStructure(const std::vector<Index>& t_index) override;
+
     int permut(int i1, int i2) override;
+
     Expr applyPermutation(const std::vector<int>& permutations) const;
+
     std::vector<Expr> getPermutations() const override;
 
     void print(int mode=0) const override;
