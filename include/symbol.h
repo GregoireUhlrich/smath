@@ -47,7 +47,7 @@ class Symbol{
     /*! \brief Initializes \b abstract to \a expr.
      *  \param expr
      */   
-    Symbol(const Expr& expr);
+    explicit Symbol(const Expr& expr);
 
     /*! \brief Copy constructor, copy \a name and \a abstract of \a t_symbol.
      * \param t_symbol Symbol to copy.
@@ -165,7 +165,7 @@ class Symbol{
      * \param t_symbol Symbol wrt which we derive.
      * \return The derivative.
      */
-    Symbol derive(Symbol t_symbol) const;
+    Symbol derive(Symbol t_symbol);
 
     /*! \fn void full_factor(Symbol& t_symbol)
      * \brief \b Factors recursively the Symbol \a t_symbol: see Abstract::factor(bool).
@@ -481,10 +481,6 @@ Symbol matrix_(int t_x_nArgs, int t_y_nArgs);
 Symbol matrix_(int t_x_nArgs, int t_y_nArgs, const Symbol& t_symbol, const Symbol& index_x, const Symbol& index_y);
 
 Symbol matrix_(const std::vector<std::vector<Symbol> >& t_argument);
-
-Symbol itensor_(std::string t_name, Index index);
-
-Symbol itensor_(std::string t_name, std::initializer_list<Index> t_indices);
 
 Symbol scalarDot(const Symbol& t_symbol1, const Symbol& t_symbol2);
 

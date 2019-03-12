@@ -161,6 +161,8 @@ class IndexStructure{
 
     int getNIndices() const;
 
+    Index getIndex(int i) const;
+
     std::vector<Index> getIndex() const;
 
     std::vector<Index> getFreeIndex() const;
@@ -170,6 +172,10 @@ class IndexStructure{
     IndexStructure getPermutation(const std::vector<int>& permutation) const;
 
     IndexStructure& operator=(const IndexStructure& structure) = default;
+
+    IndexStructure& operator+=(const Index& newIndex);
+    IndexStructure& operator+=(const IndexStructure& structure);
+    IndexStructure operator+(const IndexStructure& structure) const;
 
     bool operator==(const IndexStructure& structure) const;
 
@@ -328,42 +334,36 @@ class IndicialParent{
     Expr operator()(const std::initializer_list<Index>& indices) const;
 
 };
-/*
 
-    smType::PrimaryType getPrimaryType() const override { return smType::Indicial;}
-
-    int getNIndices() const override;
-
-    Index getIndex(int i) const override;
-
-    std::vector<Index> getIndexStructure() const override;
-
-    bool checkIndexStructure(const std::vector<Index>& t_index) const override;
-
-    bool checkIndexStructure(const std::initializer_list<Index>& index) const override;
-
-    int getNContractedPairs() const override;
-
-    std::set<std::pair<int,int> > getContractedPair() const override;
-
-    void contractIndices(int axis1, int axis2) override;
-
-    void setIndexStructure(const std::vector<Index>& t_index) override;
-};
-*/
 std::vector<std::vector<int> > permutations(const std::vector<int>& init);
 
 
 class AbstractIndicial: public AbstractScalar{
 
+    protected:
+
+    int nIndices;
+    IndexStructure index;
+
     public:
 
     AbstractIndicial();
     explicit AbstractIndicial(const std::string& t_name);
+    explicit AbstractIndicial(const IndexStructure& t_index);
+    AbstractIndicial(const std::string& t_name,
+                     const std::initializer_list<Index>& indices);
     ~AbstractIndicial(){};
 
     smType::PrimaryType getPrimaryType() const override {
         return smType::Indicial;
+    }
+
+    int getNIndices() const override {
+        return nIndices;
+    }
+
+    IndexStructure getIndexStructure() const override {
+        return index;
     }
 };
 
@@ -371,26 +371,25 @@ class ITensor: public AbstractIndicial{
 
     protected:
 
-    IndicialParent* parent;
-    IndexStructure index;
-
-    // Private constructors
-    ITensor() = delete;   
-
-    ITensor(const std::string& t_name,
-            bool t_commutable, 
-            const std::initializer_list<Index>& indices, 
-            IndicialParent* t_parent);
+    const IndicialParent* parent;
 
     public:
 
     // Friend member of IndicialParent that has access to constructors of 
     // ITensor.
-    friend Expr IndicialParent::operator()(
-            const std::initializer_list<Index>& indices) const;
+    //friend Expr IndicialParent::operator()(
+    //        const std::initializer_list<Index>& indices) const;
 
-    ITensor(const Abstract*& expression);
-    ITensor(const Expr& expression);
+    //ITensor() = delete;   
+
+    ITensor(const std::string& t_name,
+            bool t_commutable, 
+            const std::initializer_list<Index>& indices, 
+            const IndicialParent* t_parent);
+
+    explicit ITensor(const Abstract*& expression);
+
+    explicit ITensor(const Expr& expression);
 
     ~ITensor(){};
 
@@ -398,13 +397,9 @@ class ITensor: public AbstractIndicial{
         return smType::ITensor;
     }
 
-    int getNIndices() const override;
-
     Index getIndex(int i) const override;
     
-    IndicialParent* getParent() const override;
-
-    IndexStructure getIndexStructure() const override;
+    const IndicialParent* getParent() const override;
 
     bool checkIndexStructure(const std::vector<Index>& t_index) const override;
 
@@ -413,8 +408,6 @@ class ITensor: public AbstractIndicial{
     void contractIndices(int axis1, int axis2) override;
 
     void setIndexStructure(const std::vector<Index>& t_index) override;
-
-    int permut(int i1, int i2) override;
 
     Expr applyPermutation(const std::vector<int>& permutations) const;
 
@@ -475,27 +468,5 @@ class ITerm: public AbstractIndicial{
     bool operator<(const Expr& expr) const override;
 };
 
-class ITimes: public Times{
-
-    public:
-
-    ITimes();
-
-    ITimes(const std::vector<Expr >& t_argument, bool explicitTimes=0);
-
-    ITimes(const Expr& leftOperand, const Expr& rightOperand, bool explicitTimes=0);
-
-    ~ITimes(){};
-
-    smType::PrimaryType getPrimaryType() const override {
-       return smType::Indicial;
-    }
-};
-
-
-Expr _itensor_(const std::string& name, Index index);
-
-Expr _itensor_(const std::string& name,
-               const std::initializer_list<Index>& indices);
 
 #endif

@@ -167,11 +167,11 @@ int main(){
         everythingOK = false;
     }
 
-    Symbol toFactor = x*cos_(x*x+x) + 2*x*x*cos_(x*x+x) + 3*x*x*x*cos_(x+x*x);
-    toFactor = toFactor.factor(x);
+    Symbol toFactor = xS*cos_(xS*xS+xS) + 2*xS*xS*cos_(xS*xS+xS) + 3*xS*xS*xS*cos_(xS+xS*xS);
+    toFactor = toFactor.factor(xS);
     toFactor.print();
     cout<<"x*(cos(x^2 + x) + 2*cos(x^2 + x)*x + 3*cos(x + x^2)*x^2)\n";
-    toFactor = toFactor.factor(cos_(x+x*x));
+    toFactor = toFactor.factor(cos_(xS+xS*xS));
     toFactor.print();
     cout<<"cos(x + x^2)*(x + 2*x^2 + 3*x^3)\n";
     toFactor = toFactor.full_factor();
@@ -186,16 +186,16 @@ int main(){
     developFull.print();
     cout<<"3*cos(x + x^2)*x^3 + x*cos(x + x^2) + 2*cos(x + x^2)*x^2\n";
 
-    cout<<fraction_(3*(x+pow_(x,2)),9*x);
+    cout<<fraction_(3*(xS+pow_(xS,2)),9*xS);
     cout<<"(1/3*(x + x^2))/x\n";
-    cout<<fraction_((x+pow_(x,2)),9*x);
+    cout<<fraction_((xS+pow_(xS,2)),9*xS);
     cout<<"(1/9*(x + x^2))/x\n";
-    cout<<pow_(x/(x+pow_(x,2)),-3*pow_(x,3));
+    cout<<pow_(xS/(xS+pow_(xS,2)),-3*pow_(xS,3));
     cout<<"((x + x^2)/x)^(3*x^3)\n";
-    cout<<pow_(fraction_(3*(x+pow_(x,2)),9*x),-2);
+    cout<<pow_(fraction_(3*(xS+pow_(xS,2)),9*xS),-2);
     cout<<"(x/(1/3*(x + x^2)))^2\n";
 
-    toFactor = x*cos_(x*x+x) + 2*x*x*cos_(x*x+x) + 3*x*x*x*cos_(x+x*x);
+    toFactor = xS*cos_(xS*xS+xS) + 2*xS*xS*cos_(xS*xS+xS) + 3*xS*xS*xS*cos_(xS+xS*xS);
     toFactor = toFactor.factor();
     toFactor.print();
     cout<<"cos(x^2 + x)*(1 + 3*x^2 + 2*x)*x\n";
@@ -203,28 +203,28 @@ int main(){
     toFactor.print();
     cout<<"x*cos((1 + x)*x)*(1 + 2*x + 3*x^2)\n";
 
-    toFactor = pow_(x,2)+cfraction_(3,4)*pow_(x,4);
+    toFactor = pow_(xS,2)+cfraction_(3,4)*pow_(xS,4);
     toFactor = toFactor.factor();
     toFactor.print();
     cout<<"(1 + 3/4*x^2)*x^2\n";
     
-    toFactor = pow_(x,fraction_(1,3))+3*pow_(x,fraction_(4,3));
+    toFactor = pow_(xS,fraction_(1,3))+3*pow_(xS,fraction_(4,3));
     toFactor.print();
     toFactor = toFactor.factor();
     toFactor.print();
     cout<<"(1 + 3*x)*x^(1/3)\n";
 
-    toFactor = pow_(x,-1)+fraction_(1,x);
+    toFactor = pow_(xS,-1)+fraction_(1,xS);
     toFactor = toFactor.factor();
     toFactor.print();
     cout<<"x^(-1) + 1/x\n";
     
-    toFactor = pow_(fraction_(1,x),-1)+x;
+    toFactor = pow_(fraction_(1,xS),-1)+xS;
     toFactor = toFactor.factor();
     toFactor.print();
     cout<<"2*x\n";
     
-    toFactor = pow_(x,2)+pow_(x,cfraction_(1,3));
+    toFactor = pow_(xS,2)+pow_(xS,cfraction_(1,3));
     toFactor = toFactor.factor();
     toFactor.print();
     cout<<"x^2 + x^(1/3)\n";
@@ -241,15 +241,15 @@ int main(){
     toFactor.print();
     cout<<"inf = 0\n";
 
-    toFactor = x*cos_(x*x+x) + 2*x*x*cos_(x*x+x) + 3*x*x*x*cos_(x+x*x);
-    toFactor = toFactor.replace(cos_(x*x+x),sin_(x*x+x));
-    toFactor = toFactor.replace(x,y);
+    toFactor = xS*cos_(xS*xS+xS) + 2*xS*xS*cos_(xS*xS+xS) + 3*xS*xS*xS*cos_(xS+xS*xS);
+    toFactor = toFactor.replace(cos_(xS*xS+xS),sin_(xS*xS+xS));
+    toFactor = toFactor.replace(xS,yS);
     toFactor.print();
     cout<<"y*sin(y^2 + y) + 2*sin(y^2 + y)*y^2 + 3*sin(y^2 + y)*y^3\n";
 
     xS.clear();
     yS.clear();
-    Symbol z = (xS+i_*yS)*(xS+i_*yS);
+    Symbol z = (xS+Symbol(i_)*yS)*(xS+Symbol(i_)*yS);
     xS = 1;
     yS = 2;
     //cout<<z.evaluateScalar()<<endl;
@@ -264,7 +264,7 @@ int main(){
     cout<<"Modulus of z   = 5\n";
     cout<<"Argument of z  = "<<z.getComplexArgument().evaluate();
     cout<<"Argument of z  = 2.214297436\n";
-    z = xS+yS*2*i_;
+    z = xS+yS*2*Symbol(i_);
     z.print();
     cout<<"x + 2*i*y\n";
     cout<<"Real part of z = "<<z.getRealPart();
@@ -275,48 +275,48 @@ int main(){
     cout<<"Modulus of z   = (x^2 + (2*y)^2)^0.5\n";
     cout<<"Argument of z  = "<<z.getComplexArgument();
     cout<<"Argument of z  = Angle(2*y, x)\n";
-    (i_*i_).print();
+    (Symbol(i_)*Symbol(i_)).print();
     cout<<"-1\n";
-    pow_(i_,3).print();
+    pow_(Symbol(i_),3).print();
     cout<<"(-1)*i\n";
-    pow_(i_,4).print();
+    pow_(Symbol(i_),4).print();
     cout<<"1\n";
-    pow_(i_,5).print();
+    pow_(Symbol(i_),5).print();
     cout<<"i\n";
-    pow_(i_,6).print();
+    pow_(Symbol(i_),6).print();
     cout<<"-1\n";
 
     cout<<"cos(0) = "; cos_(Symbol(0)).print();
-    cout<<"cos(pi_/6) = "; cos_(pi_/6).print();
-    cout<<"cos(pi_/4) = "; cos_(pi_/4).print();
-    cout<<"cos(pi_/3) = "; cos_(pi_/3).print();
-    cout<<"cos(pi_/2) = "; cos_(pi_/2).print();
-    cout<<"cos(2*pi_/3) = "; cos_(2*pi_/3).print();
-    cout<<"cos(3*pi_/4) = "; cos_(3*pi_/4).print();
-    cout<<"cos(5*pi_/6) = "; cos_(5*pi_/6).print();
-    cout<<"cos(pi_) = "; cos_(Symbol(pi_)).print();
+    cout<<"cos(Symbol(pi_)/6) = "; cos_(Symbol(pi_)/6).print();
+    cout<<"cos(Symbol(pi_)/4) = "; cos_(Symbol(pi_)/4).print();
+    cout<<"cos(Symbol(pi_)/3) = "; cos_(Symbol(pi_)/3).print();
+    cout<<"cos(Symbol(pi_)/2) = "; cos_(Symbol(pi_)/2).print();
+    cout<<"cos(2*Symbol(pi_)/3) = "; cos_(2*Symbol(pi_)/3).print();
+    cout<<"cos(3*Symbol(pi_)/4) = "; cos_(3*Symbol(pi_)/4).print();
+    cout<<"cos(5*Symbol(pi_)/6) = "; cos_(5*Symbol(pi_)/6).print();
+    cout<<"cos(Symbol(pi_)) = "; cos_(Symbol(Symbol(pi_))).print();
     cout<<endl;
 
     cout<<"sin(0) = "; sin_(Symbol(0)).print();
-    cout<<"sin(pi_/6) = "; sin_(pi_/6).print();
-    cout<<"sin(pi_/4) = "; sin_(pi_/4).print();
-    cout<<"sin(pi_/3) = "; sin_(pi_/3).print();
-    cout<<"sin(pi_/2) = "; sin_(pi_/2).print();
-    cout<<"sin(2*pi_/3) = "; sin_(2*pi_/3).print();
-    cout<<"sin(3*pi_/4) = "; sin_(3*pi_/4).print();
-    cout<<"sin(5*pi_/6) = "; sin_(5*pi_/6).print();
-    cout<<"sin(pi_) = "; sin_(Symbol(pi_)).print();
+    cout<<"sin(Symbol(pi_)/6) = "; sin_(Symbol(pi_)/6).print();
+    cout<<"sin(Symbol(pi_)/4) = "; sin_(Symbol(pi_)/4).print();
+    cout<<"sin(Symbol(pi_)/3) = "; sin_(Symbol(pi_)/3).print();
+    cout<<"sin(Symbol(pi_)/2) = "; sin_(Symbol(pi_)/2).print();
+    cout<<"sin(2*Symbol(pi_)/3) = "; sin_(2*Symbol(pi_)/3).print();
+    cout<<"sin(3*Symbol(pi_)/4) = "; sin_(3*Symbol(pi_)/4).print();
+    cout<<"sin(5*Symbol(pi_)/6) = "; sin_(5*Symbol(pi_)/6).print();
+    cout<<"sin(Symbol(pi_)) = "; sin_(Symbol(Symbol(pi_))).print();
     cout<<endl;
 
     cout<<"tan(0) = "; tan_(Symbol(0)).print();
-    cout<<"tan(pi_/6) = "; tan_(pi_/6).print();
-    cout<<"tan(pi_/4) = "; tan_(pi_/4).print();
-    cout<<"tan(pi_/3) = "; tan_(pi_/3).print();
-    cout<<"tan(pi_/2) = "; tan_(pi_/2).print();
-    cout<<"tan(2*pi_/3) = "; tan_(2*pi_/3).print();
-    cout<<"tan(3*pi_/4) = "; tan_(3*pi_/4).print();
-    cout<<"tan(5*pi_/6) = "; tan_(5*pi_/6).print();
-    cout<<"tan(pi_) = "; tan_(Symbol(pi_)).print();
+    cout<<"tan(Symbol(pi_)/6) = "; tan_(Symbol(pi_)/6).print();
+    cout<<"tan(Symbol(pi_)/4) = "; tan_(Symbol(pi_)/4).print();
+    cout<<"tan(Symbol(pi_)/3) = "; tan_(Symbol(pi_)/3).print();
+    cout<<"tan(Symbol(pi_)/2) = "; tan_(Symbol(pi_)/2).print();
+    cout<<"tan(2*Symbol(pi_)/3) = "; tan_(2*Symbol(pi_)/3).print();
+    cout<<"tan(3*Symbol(pi_)/4) = "; tan_(3*Symbol(pi_)/4).print();
+    cout<<"tan(5*Symbol(pi_)/6) = "; tan_(5*Symbol(pi_)/6).print();
+    cout<<"tan(Symbol(pi_)) = "; tan_(Symbol(Symbol(pi_))).print();
     cout<<endl;
 
     (xS^4).print();
@@ -337,11 +337,11 @@ int main(){
     cout<<"H*cos(G) + 2*H*F + cos(G)*H\n";
     
     Symbol taylor;
-    taylor = Taylor(cos_(x), x, 8);
+    taylor = Taylor(cos_(xS), xS, 8);
     taylor.print();
     cout<<"1 + ((-1)*x^2)/2 + x^4/4! + ((-1)*x^6)/6! + x^8/8!\n";
 
-    taylor = Taylor(pow_(4*x,y),y,2);
+    taylor = Taylor(pow_(4*xS,yS),yS,2);
     taylor = taylor - 1;
     taylor = taylor.full_factor();
     //full_develop(taylor);
@@ -422,7 +422,7 @@ int main(){
     yS.derive(xS).print();
     yS.derive(yS).print();
 
-    yS = pi_/2 +i_*log_(pow_(1-pow_(xS,2), Symbol(1)/2)+i_*xS);
+    yS = Symbol(pi_)/2 +Symbol(i_)*log_(pow_(1-pow_(xS,2), Symbol(1)/2)+Symbol(i_)*xS);
     yS.print();
     yS = Taylor(yS,xS,4);
     yS.print();
@@ -539,7 +539,7 @@ int main(){
     cout<<vec2.getType()<<endl;
 
     vector<int> shape(3,3);
-    Symbol tensor = tensor_(shape);
+    Symbol tensor = Symbol(tensor_(shape));
     for (int i=0; i<3; i++)
         for (int j=0; j<3; j++)
             for (int k=0; k<3; k++)
@@ -573,7 +573,7 @@ int main(){
     tensor.setArgument(zS,1,0);
     tensor.determinant().print();
 
-    eps = tensor_(vector<int>(2,2));
+    eps = Symbol(tensor_(vector<int>(2,2)));
     for (int i=0; i<2; i++)
     {
         for (int j=0; j<2; j++)
@@ -663,7 +663,7 @@ int main(){
     
     tensor = tensor-lambda*eps;
 
-    eps = tensor_(vector<int>(3,3));
+    eps = Symbol(tensor_(vector<int>(3,3)));
     for (int i=0; i<3; i++)
     {
         for (int j=0; j<3; j++)
@@ -706,7 +706,7 @@ int main(){
     foo->trace(0,2)->print();
 
     shape = vector<int>(3,3);
-    eps = tensor_(shape);
+    eps = Symbol(tensor_(shape));
     for (int i=0; i<3; i++)
         for (int j=0; j<3; j++)
             for (int k=0; k<3; k++)
@@ -728,7 +728,7 @@ int main(){
     Refresh(mat1.antisymmetrise() + mat1.antisymmetrise().transpose()).print();
 
     Symbol F_munu("F_munu");
-    F_munu = tensor_(vector<int>(2,4));
+    F_munu = Symbol(tensor_(vector<int>(2,4)));
     F_munu.print();
 
     Symbol E("E");
@@ -771,7 +771,7 @@ int main(){
     tensor.print();
     tensor.trace(0,1).print();
 
-    eps = tensor_(vector<int>(4,4));
+    eps = Symbol(tensor_(vector<int>(4,4)));
     for (int i=0; i<4; i++)
     {
         for (int j=0; j<4; j++)
@@ -821,7 +821,7 @@ int main(){
     tensor.print();
     (tensor/2).develop().print();
 
-    Index i("i",3), j("j",3), k("k",3);
+    /*Index i("i"), j("j"), k("k");
     itensor_("A",{i,j}).print();
     itensor_("A",i).print();
     itensor_("A",{i}).print();
@@ -883,17 +883,17 @@ int main(){
     for (auto it=pair_.begin(); it!=pair_.end(); ++it)
         cout<<"   -pair "<<(*it).first<<"<->"<<(*it).second<<endl;
 
-    Symbol gamma, psi, psi_bar;
+    Symbol gamma, psi, psSymbol(i_)bar;
     Index alpha("\\alpha",4);
     Index beta("\\beta",4);
     Index delta("\\delta",4);
     Index epsilon("\\epsilon",4);
     Index mu("mu", 4);
     psi = itensor_("\\psi", {alpha});
-    psi_bar = itensor_("\\bar{\\psi}", {beta});
+    psSymbol(i_)bar = itensor_("\\bar{\\psi}", {beta});
     gamma = itensor_("gamma", {mu,delta,epsilon});
 
-    (psi_bar*2*gamma*xS*psi).print(); 
+    (psSymbol(i_)bar*2*gamma*xS*psi).print(); */
 
     if (everythingOK) cout<<"Everything is ok for the diagnostic. Well done !\n";
     else cout<<"Problems occured during the run... Please work a little bit harder !\n";

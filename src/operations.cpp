@@ -18,6 +18,7 @@ Plus::Plus(const vector<Expr >& operands, bool explicitPlus)
     argument = operands;
     if (not explicitPlus and nArgs > 0)
         mergeTerms();
+    selfCheckIndexStructure();
 }
 
 Plus::Plus(const Expr& leftOperand, const Expr& rightOperand)
@@ -47,6 +48,7 @@ Plus::Plus(const Expr& leftOperand, const Expr& rightOperand)
         argument[1] = rightOperand;
         mergeTerms();
     }
+    selfCheckIndexStructure();
 }
 
 Expr Plus::getRealPart()
@@ -97,6 +99,17 @@ IndexStructure Plus::getIndexStructure() const
         return argument[0]->getIndexStructure();
 
     return IndexStructure();
+}
+
+void Plus::selfCheckIndexStructure() const
+{
+    // Checking if all terms have the same indexStructure.
+    if (nArgs == 0) return;
+    IndexStructure structure = argument[0]->getIndexStructure();
+    for (const_iter arg=1+argument.begin(); arg!=argument.end(); ++arg)
+        if (structure != (**arg).getIndexStructure())
+            callError(smError::InvalidIndicialSum,
+                    "Plus::selfCheckIndexStructure() const");
 }
 
 void Plus::insert(const Expr& expr, bool side)
@@ -322,7 +335,7 @@ void Plus::orderTerms()
     return;
 }
 
-Expr Plus::derive(const Expr& expr) const
+Expr Plus::derive(const Expr& expr)
 {
     // Derivative is the sum of the derivatives of arguments
     Expr rep = ZERO;
@@ -606,6 +619,8 @@ Times::Times(const vector<Expr >& operands, bool explicitTimes)
     argument = operands;
     if (not explicitTimes and nArgs > 0)
         mergeTerms();
+    else 
+        orderTerms();
     nArgs = argument.size();
 }
 
@@ -620,6 +635,8 @@ Times::Times(const Expr& leftOperand,
         nArgs = argument.size();
         insert(rightOperand, true); // rightOperand inserted to the right
                                     // of leftOperand
+        if (rightOperand->getPrimaryType() == smType::Indicial)
+            selfCheckIndexStructure();
     }
     else if (rightOperand->getType() == smType::Times and
              leftOperand->getType() != smType::Times)    
@@ -628,6 +645,8 @@ Times::Times(const Expr& leftOperand,
         nArgs = argument.size();
         insert(leftOperand, false); // leftOperand inserted to the left
                                     // of rightOperand
+        if (leftOperand->getPrimaryType() == smType::Indicial)
+            selfCheckIndexStructure();
     }
     else {
         nArgs = 2;
@@ -636,6 +655,9 @@ Times::Times(const Expr& leftOperand,
         argument[1] = rightOperand;
         if (not explicitTimes)
             mergeTerms();
+        else 
+            orderTerms();
+        selfCheckIndexStructure();
     }
 }
 
@@ -719,6 +741,34 @@ Expr Times::suppressTerm(const Expr& expr) const
     }
 
     return newAbstract;
+}
+
+IndexStructure Times::getIndexStructure() const
+{
+    if (isIndexed()) {
+        IndexStructure structure;
+        for (auto arg=argument.rbegin(); arg!=argument.rend(); ++arg) {
+            if ((**arg).isIndexed())
+                structure += (**arg).getIndexStructure();
+            else 
+                break;
+        }
+
+        return structure;
+    }
+
+    return IndexStructure();
+}
+
+void Times::selfCheckIndexStructure()
+{
+    IndexStructure structure;
+    int nIndices = 0;
+    for (auto arg=argument.rend(); arg!=argument.rbegin(); ++arg) {
+        if ((*arg)->getPrimaryType() != smType::Indicial)
+            break;
+        // To complete
+    }
 }
 
 Expr Times::getRealPart()
@@ -1193,7 +1243,7 @@ void Times::orderTerms()
     }
 }
 
-Expr Times::derive(const Expr& expr) const
+Expr Times::derive(const Expr& expr)
 {
     if (expr == nullptr) return ZERO;
     Expr rep = ZERO;
@@ -1507,7 +1557,7 @@ bool Fraction::mergeTerms()
     return simplified;
 }
 
-Expr Fraction::derive(const Expr& expr) const
+Expr Fraction::derive(const Expr& expr)
 {
     if (expr == nullptr)
         return ZERO;
@@ -1822,7 +1872,7 @@ bool Pow::mergeTerms()
     return simplified;
 }
 
-Expr Pow::derive(const Expr& expr) const
+Expr Pow::derive(const Expr& expr)
 {
     if (expr == nullptr)
         return ZERO;
@@ -2051,6 +2101,22 @@ Expr Polynomial::getVariable() const
     return variable;
 }
 
+bool Polynomial::isIndexed() const
+{
+    return (variable->isIndexed() or AbstractMultiFunc::isIndexed());
+}
+
+IndexStructure Polynomial::getIndexStructure() const
+{
+    // If the expression has a non trivial index structure, we suppose 
+    // (the program should maintain that property) that all arguments have the 
+    // same structure, in particular the first
+    if (nArgs > 0 and argument[0]->getPrimaryType() == smType::Indicial)
+        return argument[0]->getIndexStructure()+variable->getIndexStructure();
+
+    return variable->getIndexStructure();
+}
+
 void Polynomial::print(int mode) const
 {
     if (mode == 0 and name != "")
@@ -2122,7 +2188,7 @@ Expr Polynomial::evaluate()
     return result;
 }
 
-Expr Polynomial::derive(const Expr& expr) const
+Expr Polynomial::derive(const Expr& expr)
 {
     Expr rep;
     vector<Expr > newTerms = argument;
@@ -2421,7 +2487,7 @@ Expr Derivative::evaluate()
     return df->evaluate();
 }
 
-Expr Derivative::derive(const Expr& expr) const
+Expr Derivative::derive(const Expr& expr)
 {
     return derivative_(argument[0]->derive(expr), argument[1], order);
 }
@@ -2456,10 +2522,50 @@ Expr derivative_(const Expr& leftOperand, const Expr& rightOperand, int order)
 {
     if (order <= 0)
         return rightOperand;
-    if (*leftOperand == rightOperand)
-        return int_(order == 1);
+    //We calculate the derivative and if it is 0 (many cases) we return 0.
+    if (*leftOperand->derive(rightOperand) == ZERO)
+        return ZERO;
 
-    return make_shared<Derivative>(leftOperand, rightOperand, order);
+    vector<Expr> foo;
+    bool commut;
+    int posDerivative=0;
+    switch(rightOperand->getType()) {
+
+        case smType::Plus:
+        // d/dx(a1+a2...) = da1/dx+da2/dx+...
+        foo = rightOperand->getVectorArgument();
+        for (auto& arg : foo)
+            arg = derivative_(leftOperand, arg, order);
+
+        return plus_(foo);
+        break;
+
+        case smType::Times:
+        // d/dx(a*f(x)*...) = a*df(x)/dx...
+        foo = rightOperand->getVectorArgument();
+        commut = true;
+        for (size_t i=0; i!=foo.size(); ++i) {
+            bool selfCommut = true;
+            if (not foo[i]->getCommutable()) {
+                commut = false;
+                selfCommut = false;
+            }
+            if(not foo[i]->dependsOn(leftOperand)) {
+                if (posDerivative == (int)i)
+                    ++posDerivative;
+                else if (commut or selfCommut) {
+                    swap(foo[posDerivative],foo[i]);
+                    ++posDerivative;
+                }
+            }
+        }
+        // making explicit times because we know it is already canonical.
+        return times_(foo, true);
+        break;
+
+        default:
+        return make_shared<Derivative>(leftOperand, rightOperand, order);
+    }
 }
 
 Expr derivative_(const Expr& variable, int order)

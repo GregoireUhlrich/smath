@@ -201,7 +201,7 @@ Expr Double::addition_own(const Expr& expr) const
     }
 }
 
-Expr Double::derive(const Expr& expr) const {
+Expr Double::derive(const Expr& expr) {
     return ZERO;
 }
 
@@ -372,7 +372,7 @@ Expr Integer::exponentiation_own(const Expr& expr) const
     }
 }
 
-Expr Integer::derive(const Expr& expr) const {
+Expr Integer::derive(const Expr& expr) {
     return ZERO;
 }
 
@@ -514,7 +514,7 @@ Expr CFraction::exponentiation_own(const Expr& expr) const
     return make_shared<Pow>(Copy(this), expr);
 }
 
-Expr CFraction::derive(const Expr& expr) const {
+Expr CFraction::derive(const Expr& expr) {
     return ZERO;
 }
 
@@ -634,13 +634,9 @@ bool Constant::operator==(const Expr& expr) const
     return name==expr->getName();
 }
 
-Expr Constant::derive(const Expr& expr) const
+Expr Constant::derive(const Expr& expr)
 {
-    if (expr == nullptr) 
-        return ZERO;
-
-    return int_((expr->getType() == smType::Constant) and 
-                (expr->getName() == name));
+    return ZERO;
 }
 
 ///////////////////////////////////////////////////
@@ -660,6 +656,24 @@ bool Variable::getValued() const {
 }
 double Variable::getValue() const {
     return value;
+}
+
+bool Variable::dependsOn(const Expr& expr) const
+{
+    // Elementary variable: depends only on itself
+    if (elementary) 
+        return operator==(expr);
+
+    // All dependencies: the Variable depends on everything by default
+    if (allDependencies)
+        return true;
+
+    // We check the explicit dependencies of the variable
+    for (const auto& dep : dependencies)
+        if (operator==(dep))
+            return true;
+
+    return false;
 }
 
 void Variable::setValue(double t_value)
@@ -713,6 +727,45 @@ int Variable::getParity(const Expr& t_variable) const
         return 1;
 }
 
+void Variable::setElementary(bool t_elementary)
+{
+    elementary = t_elementary;
+    if (elementary) {
+        allDependencies = false;
+        dependencies.clear();
+    }
+}
+
+void Variable::setAllDependencies(bool t_allDependencies)
+{
+    if (allDependencies == t_allDependencies)
+        return;
+    allDependencies = t_allDependencies;
+    //We change of dependance mode
+    dependencies.clear();
+    if (allDependencies and elementary)
+        callError(smError::BadDependency,
+                "Variable::setAllDependencies(bool t_allDependencies)",name);
+}
+
+void Variable::addDependency(const Expr& expr)
+{
+    if (elementary)
+        callError(smError::BadDependency,
+                "Variable::addDependency(const Expr& expr)",name);
+    if (not allDependencies)
+        dependencies.push_back(expr);
+}
+
+void Variable::removeDependency(const Expr& expr)
+{
+    if (allDependencies) {
+        auto pos = find(dependencies.begin(), dependencies.end(), expr);
+        if (pos != dependencies.end())
+            dependencies.erase(pos);
+    }
+}
+
 void Variable::operator=(double t_value) {
     valued = true;
     value = t_value;
@@ -728,10 +781,16 @@ bool Variable::operator==(const Expr& expr) const
     return name==expr->getName();
 }
 
-Expr Variable::derive(const Expr& expr) const
+Expr Variable::derive(const Expr& expr)
 {
-    return int_((expr->getType() == smType::Variable) and
-                (expr->getName() == name));
+    // dx/dx = 1
+    if (operator==(expr)) 
+        return ONE;
+    // If elementary: dx/dy=0
+    else if (not elementary and dependsOn(expr))
+        return make_shared<Derivative>(shared_from_this(), expr);
+
+    return ZERO;
 }
 
 ///////////////////////////////////////////////////
@@ -790,7 +849,7 @@ bool CFactorial::operator==(const Expr& expr) const
     return value==expr->getValue();
 }
 
-Expr CFactorial::derive(const Expr& expr) const
+Expr CFactorial::derive(const Expr& expr)
 {
     return ZERO;
 }
@@ -853,7 +912,7 @@ Expr Imaginary::evaluate() {
     return make_shared<Imaginary>();
 }
 
-Expr Imaginary::derive(const Expr& expr) const {
+Expr Imaginary::derive(const Expr& expr) {
     return ZERO;
 }
 
@@ -882,6 +941,14 @@ Expr auto_number_(double value)
         return int_(value);
 
     return double_(value);
+}
+
+Expr constant_(string name) {
+    return make_shared<Constant>(name);
+}
+
+Expr constant_(string name, double value) {
+    return make_shared<Constant>(name, value);
 }
 
 Expr var_(string name) {

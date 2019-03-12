@@ -51,6 +51,10 @@ class AbstractFunc: public AbstractScalar{
      */
     bool getCommutable() const override;
 
+    bool isIndexed() const override;
+
+    IndexStructure getIndexStructure() const override;
+
     int getNArgs(int axis=0) const override;
 
     /*! \brief Returns the \b argument of the function.
@@ -139,6 +143,10 @@ class AbstractDuoFunc: public AbstractScalar{
      */
     bool getCommutable() const override;
 
+    bool isIndexed() const override;
+
+    IndexStructure getIndexStructure() const override;
+
     /*! \brief Returns the **number of arguments** of the AbstractDuoFunc.
      * \return \b nArgs
      */
@@ -216,6 +224,8 @@ class AbstractMultiFunc: public AbstractScalar{
      * \return \b False else.
      */
     bool getCommutable() const override;
+
+    virtual bool isIndexed() const override;
 
     /*! \brief Returns the **number of arguments** of the AbstractMultiFunc.
      * \return \b nArgs

@@ -92,6 +92,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a543e3e72f78bf20e1d63630404566262"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstractVectorial.html#a543e3e72f78bf20e1d63630404566262">getNArgs</a> (int axis=0) const override</td></tr>
 <tr class="memdesc:a543e3e72f78bf20e1d63630404566262"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of arguments of the expression. If the expression is a building block (<a class="el" href="classAbstractBuildingBlock.html" title="Abstract class from which derive all building blocks of exprs, i.e. objects not function of further e...">AbstractBuildingBlock</a>), this function returns 0.  <a href="#a543e3e72f78bf20e1d63630404566262">More...</a><br /></td></tr>
 <tr class="separator:a543e3e72f78bf20e1d63630404566262"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7464cab53ca461aa7a8892b0dae42ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="abstract_8h.html#a1fc3ae6bd5c6a80e9b81b27fc7b7a11a">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstractVectorial.html#ad7464cab53ca461aa7a8892b0dae42ad">begin</a> () override</td></tr>
+<tr class="separator:ad7464cab53ca461aa7a8892b0dae42ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a6bf18a6497121de6a24684f727a88d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="abstract_8h.html#ac50bb217e67a9c51fa2b4322f56ec1a4">const_iter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstractVectorial.html#a7a6bf18a6497121de6a24684f727a88d">begin</a> () const override</td></tr>
+<tr class="separator:a7a6bf18a6497121de6a24684f727a88d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac02492275aeabe839fa74aa7952e7fad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="abstract_8h.html#a1fc3ae6bd5c6a80e9b81b27fc7b7a11a">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstractVectorial.html#ac02492275aeabe839fa74aa7952e7fad">end</a> () override</td></tr>
+<tr class="separator:ac02492275aeabe839fa74aa7952e7fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbd533082e1ba5a159f746c26828f132"><td class="memItemLeft" align="right" valign="top"><a class="el" href="abstract_8h.html#ac50bb217e67a9c51fa2b4322f56ec1a4">const_iter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstractVectorial.html#acbd533082e1ba5a159f746c26828f132">end</a> () const override</td></tr>
+<tr class="separator:acbd533082e1ba5a159f746c26828f132"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae61b5bdbc1b2651da335257b057e7491"><td class="memItemLeft" align="right" valign="top"><a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstractVectorial.html#ae61b5bdbc1b2651da335257b057e7491">getArgument</a> (int iArg=0) const override</td></tr>
 <tr class="separator:ae61b5bdbc1b2651da335257b057e7491"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9465ac47b8a768dec6e08daa1376777"><td class="memItemLeft" align="right" valign="top"><a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstractVectorial.html#ad9465ac47b8a768dec6e08daa1376777">getArgument</a> (const std::initializer_list&lt; int &gt; &amp;indices) const override</td></tr>
@@ -216,8 +224,11 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="separator:ac702310492abaed2dfef1ee4d988d7c2 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0d151ec6c57077235d5664cdc993827 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classIndex.html">Index</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#ad0d151ec6c57077235d5664cdc993827">getIndex</a> (int i=0) const</td></tr>
 <tr class="separator:ad0d151ec6c57077235d5664cdc993827 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c284d6ca61eada36477d8463973b5c9 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; <a class="el" href="classIndex.html">Index</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a5c284d6ca61eada36477d8463973b5c9">getIndexStructure</a> () const</td></tr>
-<tr class="separator:a5c284d6ca61eada36477d8463973b5c9 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bd19eb640458e6e70ddaf35115aa2d2 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classIndexStructure.html">IndexStructure</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a6bd19eb640458e6e70ddaf35115aa2d2">getIndexStructure</a> () const</td></tr>
+<tr class="separator:a6bd19eb640458e6e70ddaf35115aa2d2 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7960d79b133f222a433de92b9562c7cc inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="classIndicialParent.html">IndicialParent</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a7960d79b133f222a433de92b9562c7cc">getParent</a> () const</td></tr>
+<tr class="memdesc:a7960d79b133f222a433de92b9562c7cc inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">For indicial expressions this function returns a pointer to the parent object of type <a class="el" href="classIndicialParent.html">IndicialParent</a> (not an expression).  <a href="classAbstract.html#a7960d79b133f222a433de92b9562c7cc">More...</a><br /></td></tr>
+<tr class="separator:a7960d79b133f222a433de92b9562c7cc inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae39a18f5d58508346e4c19d3c26a80d4 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#ae39a18f5d58508346e4c19d3c26a80d4">getNContractedPairs</a> () const</td></tr>
 <tr class="memdesc:ae39a18f5d58508346e4c19d3c26a80d4 inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of contracted pairs of indices <b>in an Indicial expression</b>.  <a href="classAbstract.html#ae39a18f5d58508346e4c19d3c26a80d4">More...</a><br /></td></tr>
 <tr class="separator:ae39a18f5d58508346e4c19d3c26a80d4 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -444,6 +455,62 @@ std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>s
 
 </div>
 </div>
+<a id="ad7464cab53ca461aa7a8892b0dae42ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7464cab53ca461aa7a8892b0dae42ad">&#9670;&nbsp;</a></span>begin() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="abstract_8h.html#a1fc3ae6bd5c6a80e9b81b27fc7b7a11a">iter</a> begin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>A std::vector&lt;Expr&gt;::iterator at the beginning of argument for multi-argument expressions. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classAbstract.html#a035a4c5ffac26b9ee25d38b84030cd2e">Abstract</a>.</p>
+
+</div>
+</div>
+<a id="a7a6bf18a6497121de6a24684f727a88d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a6bf18a6497121de6a24684f727a88d">&#9670;&nbsp;</a></span>begin() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="abstract_8h.html#ac50bb217e67a9c51fa2b4322f56ec1a4">const_iter</a> begin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>A std::vector&lt;Expr&gt;::iterator at the beginning of argument for multi-argument expressions. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classAbstract.html#a652cef4522482a03d616e8d39749a390">Abstract</a>.</p>
+
+</div>
+</div>
 <a id="acf1ccb84aa901bcbba4394444d18c633"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acf1ccb84aa901bcbba4394444d18c633">&#9670;&nbsp;</a></span>develop()</h2>
 
@@ -515,6 +582,62 @@ std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>s
 <dl class="section return"><dt>Returns</dt><dd>sum _k (*this)[i,j,...,k]*expr[k,l,m,...]. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classAbstract.html#a7ac2674de22496c96d6229eae2968fdd">Abstract</a>.</p>
+
+</div>
+</div>
+<a id="ac02492275aeabe839fa74aa7952e7fad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac02492275aeabe839fa74aa7952e7fad">&#9670;&nbsp;</a></span>end() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="abstract_8h.html#a1fc3ae6bd5c6a80e9b81b27fc7b7a11a">iter</a> end </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>A std::vector&lt;Expr&gt;::iterator at the end of argument for multi-argument expressions. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classAbstract.html#ad803d52cf561b46554883cc14251788f">Abstract</a>.</p>
+
+</div>
+</div>
+<a id="acbd533082e1ba5a159f746c26828f132"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbd533082e1ba5a159f746c26828f132">&#9670;&nbsp;</a></span>end() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="abstract_8h.html#ac50bb217e67a9c51fa2b4322f56ec1a4">const_iter</a> end </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>A std::vector&lt;Expr&gt;::iterator at the end of argument for multi-argument expressions. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classAbstract.html#a77b8b381ee63c795f2ed54c36000b1ab">Abstract</a>.</p>
 
 </div>
 </div>

@@ -154,7 +154,7 @@ class Integer: public AbstractNumerical{
      * \param expr Argument of the derivation.
      * \return \b 0
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     /*! \brief Sets value to t_value
      * \param t_value
@@ -240,7 +240,7 @@ class Double: public AbstractNumerical{
      * \param expr Argument of the derivation.
      * \return \b 0
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     /*! \brief Sets value to t_value
      * \param t_value
@@ -345,7 +345,7 @@ class CFraction: public AbstractNumerical{
      * \param expr Argument of the derivation.
      * \return \b 0
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     /*! \brief Sets num to t_value and denom to 1.
      * \param t_value
@@ -454,7 +454,7 @@ class Constant: public AbstractLiteral{
      * \return \b 1 if \b expr is a Constant with the **same name**.
      * \return \b 0 else.
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 
@@ -481,6 +481,15 @@ class Constant: public AbstractLiteral{
 class Variable: public AbstractLiteral{
 
     protected:
+
+    bool elementary;
+    // If not elementary, the variable can a priori depend on other variables.
+    // If allDependencies = true, dependencies is a list of all variables of 
+    // which *this DOES NOT depend, *this depends on all the rest by default.
+    // IF allDependencies = false, dependecies is a list of all variables of 
+    // which *this DOES depend, *this is by default independant of all the rest.
+    bool allDependencies;
+    std::vector<Expr> dependencies;
 
     bool valued;
     double value; /*!<  Value of the Variable. */
@@ -522,12 +531,22 @@ class Variable: public AbstractLiteral{
 
     double getValue() const override;
 
+    bool dependsOn(const Expr& expr) const override;
+
     /*! \brief Sets the \b value.
      * \details Allows to associate a number to each Variable 
      * before evaluating an expr.
      * \param t_value New \b value for the Variable.
      */
     void setValue(double t_value) override;
+
+    void setElementary(bool t_elementary);
+
+    void setAllDependencies(bool t_allDependencies);
+
+    void addDependency(const Expr& expr);
+
+    void removeDependency(const Expr& expr);
 
     /*! \brief Displays the Variable on standard output.
      * \details If mode==0 prints the Variable alone with its \b value, else 
@@ -547,7 +566,7 @@ class Variable: public AbstractLiteral{
      * \return \b 1 if \b expr is a Variable with the **same name**.
      * \return \b 0 else.
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 
@@ -635,7 +654,7 @@ class CFactorial: public AbstractLiteral{
      * \param expr Argument of the derivative.
      * \return \b 0
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     /*! \brief Sets value to t_value
      * \param t_value
@@ -713,7 +732,7 @@ class Imaginary: public AbstractLiteral{
     /*! \brief Derives the Imaginary wrt \b expr.
      * \return \b 0
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     bool operator==(const Expr& expr) const override; 
 
@@ -725,12 +744,16 @@ class Imaginary: public AbstractLiteral{
 /*************************************************/
 // Inline functions (non virtual and short)      //
 /*************************************************/
-inline Variable::Variable(): AbstractLiteral(), valued(false), value(0){}
+inline Variable::Variable(): AbstractLiteral(), elementary(true), 
+    allDependencies(false), dependencies(std::vector<Expr>(0)), valued(false),
+    value(0){}
 inline Variable::Variable(const std::string& t_name)
-    :AbstractLiteral(t_name), valued(false), value(0){}
+    :AbstractLiteral(t_name),elementary(true), allDependencies(false), 
+    dependencies(std::vector<Expr>(0)), valued(false), value(0){}
 
 inline Variable::Variable(const std::string& t_name, double t_value)
-    :AbstractLiteral(t_name), valued(true), value(t_value){}
+    :AbstractLiteral(t_name),elementary(true), allDependencies(false),
+    dependencies(std::vector<Expr>(0)), valued(true), value(t_value){}
 
 inline Constant::Constant(): AbstractLiteral(), valued(false), value(0){}
 inline Constant::Constant(const std::string& t_name)
@@ -772,13 +795,13 @@ static const Expr ONE = std::make_shared<Integer>(1);
  * \var pi_
  * \brief Represents the number \b pi to include in expressions.
  */
-static const Expr pi_ = std::make_shared<Variable>("\\pi ",M_PI);
+static const Expr pi_ = std::make_shared<Constant>("\\pi ",M_PI);
 
 /*!
  * \var e_
  * \brief Represents the number \b e to include in expressions.
  */
-static const Expr e_ = std::make_shared<Variable>("e",M_E);
+static const Expr e_ = std::make_shared<Constant>("e",M_E);
 
 /*!
  * \var INF
@@ -789,14 +812,14 @@ static const Expr e_ = std::make_shared<Variable>("e",M_E);
  * \bug Will not work for many cases, in particular log(0)!=\b INF. 
  * Not yet implemented.
  */
-static Expr INF = std::make_shared<Variable>("inf");
+static Expr INF = std::make_shared<Constant>("inf");
 
 /*!
  * \var WHATEVER
  * Variable that returns true when compared to another expr.
  * (WHATEVER == X) = (X == WHATEVER) = \b true
  */
-static Expr WHATEVER = std::make_shared<Variable>("###");
+static Expr WHATEVER = std::make_shared<Constant>("###");
 
 /*************************************************/
 // User-functions for the creation of            //
@@ -820,6 +843,10 @@ Expr int_(int value);
 Expr auto_number_(double value);
 
 Expr _cfraction_(int num, int denom);
+
+Expr constant_(std::string name);
+
+Expr constant_(std::string name, double value);
 
 Expr var_(std::string name);
 

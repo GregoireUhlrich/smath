@@ -171,7 +171,7 @@ Symbol Symbol::evaluate()
     return Symbol(abstract->evaluate());
 }
 
-Symbol Symbol::derive(Symbol t_symbol) const
+Symbol Symbol::derive(Symbol t_symbol)
 {
     Expr foo = abstract->derive(t_symbol.getAbstract()); 
     return Symbol(foo);
@@ -522,7 +522,7 @@ Symbol vector_(int t_nElements)
 
 Symbol vector_(int t_nElements, const Symbol& t_symbol, const Symbol& index)
 {
-    return vector_(t_nElements, t_symbol.getAbstract(), index.getAbstract());
+    return Symbol(vector_(t_nElements, t_symbol.getAbstract(), index.getAbstract()));
 }
 
 Symbol vector_(const vector<Symbol>& t_argument)
@@ -563,16 +563,6 @@ Symbol matrix_(const vector<vector<Symbol> >& t_argument)
     return Symbol(make_shared<Matrix>(result));
 }
 
-Symbol itensor_(std::string name, Index index)
-{
-    return Symbol(_itensor_(name, index));
-}
-
-Symbol itensor_(std::string name, initializer_list<Index> t_indices)
-{
-    return Symbol(_itensor_(name, t_indices));
-}
-
 Symbol tensor_dot(const Symbol& t_symbol1, const Symbol& t_symbol2)
 {
     return Symbol(t_symbol1.getAbstract()->tensor_dot(t_symbol2.getAbstract()));
@@ -607,14 +597,14 @@ Symbol dot(const Symbol& t_symbol1, const Symbol& t_symbol2)
 Symbol Taylor(const Symbol& t_symbol, const Symbol& t_variable, unsigned int max_order)
 {
     Symbol Taylor = Copy(t_symbol);
-    Taylor = Taylor.replace(t_variable, ZERO);
+    Taylor = Taylor.replace(t_variable, Symbol(ZERO));
     Symbol derivative = Copy(t_symbol);
     Symbol foo;
     for (size_t order=1; order<=max_order; order++) 
     {
         derivative = derivative.derive(t_variable);
         foo = Copy(derivative);
-        foo = foo.replace(t_variable,ZERO);
+        foo = foo.replace(t_variable,Symbol(ZERO));
         Taylor = Taylor + (fraction_(pow_(t_variable,(int)order),Symbol(cfactorial_(order)))*foo);
     }
     return Refresh(Taylor);
@@ -788,7 +778,9 @@ std::ostream& operator<<(std::ostream& fout, const Symbol& t_symbol)
 
 Expr Copy(const Abstract* expr)
 {    
-    if (expr == nullptr) return ZERO;
+    if (expr->isBuildingBlock())
+        callWarning(smError::CopyingBuildingBlock,
+                "Copy(const Abstract* expr)", expr->printLaTeX(1));
     int type = expr->getType();
     Expr newAbstract;
     bool commutable = expr->getCommutable();
@@ -802,8 +794,18 @@ Expr Copy(const Abstract* expr)
         newAbstract = int_(expr->evaluateScalar());
         break;
 
+        case smType::Constant:
+        if (expr->getValued())
+            newAbstract = constant_(expr->getName(), expr->getValue());
+        else
+            newAbstract = constant_(expr->getName());
+        break;
+
         case smType::Variable:
-        newAbstract = var_(expr->getName(), expr->getValue());
+        if (expr->getValued())
+            newAbstract = var_(expr->getName(), expr->getValue());
+        else
+            newAbstract = var_(expr->getName());
         break;
 
         case smType::CFraction:
@@ -939,6 +941,9 @@ Expr Copy(const Abstract* expr)
 
 Expr Copy(const Expr& expr)
 {
+    if (expr->isBuildingBlock())
+        // If building block we do not copy
+        return expr;
     return Copy(expr.get());
 }
 
@@ -947,7 +952,9 @@ Expr DeepCopy(const Abstract* expr)
     //////
     ////// copy of commutable to add in this function
     //////
-    if (expr == nullptr) return ZERO;
+    if (expr->isBuildingBlock())
+        callWarning(smError::CopyingBuildingBlock,
+                "DeepCopy(const Abstract* expr)", expr->printLaTeX(1));
     int type = expr->getType();
     vector<Expr > foo(0), foo2(0);
     switch(type)
@@ -961,7 +968,17 @@ Expr DeepCopy(const Abstract* expr)
         break;
 
         case smType::Variable:
-        return var_(expr->getName(), expr->getValue());
+        if (expr->getValued())
+            return var_(expr->getName(), expr->getValue());
+        else 
+            return var_(expr->getName());
+        break;
+
+        case smType::Constant:
+        if (expr->getValued())
+            return constant_(expr->getName(), expr->getValue());
+        else 
+            return constant_(expr->getName());
         break;
 
         case smType::CFraction:
@@ -1115,12 +1132,17 @@ Expr DeepCopy(const Abstract* expr)
 }
 Expr DeepCopy(const Expr& expr)
 {
+    if (expr->isBuildingBlock())
+        //If building block we do not copy
+        return expr;
     return DeepCopy(expr.get());
 }
 
 Expr Refresh(const Abstract* expr)
 {
-    if (!expr) return ZERO;
+    if (expr->isBuildingBlock())
+        callWarning(smError::CopyingBuildingBlock,
+                "Refresh(const Abstract* expr)", expr->printLaTeX(1));
     int type = expr->getType();
     Expr newAbstract = nullptr;
     vector<Expr > foo;
@@ -1287,7 +1309,8 @@ Expr Refresh(const Abstract* expr)
 
 Expr Refresh(const Expr& expr)
 {
-    if (!expr) return ZERO;
+    if (expr->isBuildingBlock())
+        return expr;
     int type = expr->getType();
     Expr newAbstract = nullptr;
     vector<Expr > foo;
@@ -1439,7 +1462,8 @@ Expr Refresh(const Expr& expr)
 
 Expr DeepRefresh(const Expr& expr)
 {
-    if (!expr) return ZERO;
+    if (expr->isBuildingBlock())
+        return expr;
     int type = expr->getType();
     Expr newAbstract = nullptr;
     vector<Expr > foo;

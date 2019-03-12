@@ -290,6 +290,11 @@ class Abstract{
      */
     virtual bool isBuildingBlock() const;
 
+    /*! \return \b True if the expression is indexed.
+     * \return \b False else.
+     */
+    virtual bool isIndexed() const;
+
                                                        
 
 
@@ -437,7 +442,7 @@ class Abstract{
      * to the parent object of type IndicialParent (not an expression).
      * \return \b parent for ITensor-type expression.
      */
-    virtual IndicialParent* getParent() const;
+    virtual const IndicialParent* getParent() const;
 
     /*! \brief Returns the number of contracted pairs of indices **in an Indicial
      * expression**.
@@ -747,7 +752,7 @@ class Abstract{
      * \param expr Expression wrt which we derive.
      * \return The derivative.
      */
-    virtual Expr derive(const Expr& expr) const; 
+    virtual Expr derive(const Expr& expr); 
 
     /*! \brief \b Factors the Abstract.
      * \details This function tries to factor the Abstract wrt any \b factor. 
@@ -1265,5 +1270,136 @@ Expr DeepRefresh(const Expr& expr);
 Expr Replace(const Expr& expr,
              const Expr& old_abstract,
              const Expr& new_abstract);
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Arithmetic operators                          //
+/*************************************************/
+///////////////////////////////////////////////////
+
+/*! \fn Expr operator+(double a,      const Expr& b)
+ * \brief Shortcut function that allows to use arithmetic 
+ * operator + with Expr (== shared_ptr<Abstract>). 
+ * \param a double. 
+ * \param b const Expr&. 
+ * \return The expression result of a+b.
+ */
+Expr operator+(double a,      const Expr& b);
+/*! \fn Expr operator+(const Expr& a, double b     )
+ * \brief Shortcut function that allows to use arithmetic 
+ * operator + with Expr (== shared_ptr<Abstract>). 
+ * \param a const Expr&. 
+ * \param b double.
+ * \return The expression result of a+b.
+ */
+Expr operator+(const Expr& a, double b     );
+/*! \fn Expr operator+(const Expr& a, const Expr& b)
+ * \brief Shortcut function that allows to use arithmetic 
+ * operator + with Expr (== shared_ptr<Abstract>). 
+ * \param a const Expr& .
+ * \param b const Expr&.
+ * \return The expression result of a+b.
+ */
+Expr operator+(const Expr& a, const Expr& b);
+
+/*! \fn Expr operator-(double a,      const Expr& b)
+ * \brief Shortcut function that allows to use arithmetic 
+ * operator - with Expr (== shared_ptr<Abstract>). 
+ * \param a double. 
+ * \param b const Expr&. 
+ * \return The expression result of a-b.
+ */
+Expr operator-(double a,      const Expr& b);
+/*! \fn Expr operator-(const Expr& a, double b     )
+ * \brief Shortcut function that allows to use arithmetic 
+ * operator - with Expr (== shared_ptr<Abstract>). 
+ * \param a const Expr& .
+ * \param b double.
+ * \return The expression result of a-b.
+ */
+Expr operator-(const Expr& a, double b     );
+/*! \fn Expr operator-(const Expr& a, const Expr& b)
+ * \brief Shortcut function that allows to use arithmetic 
+ * operator - with Expr (== shared_ptr<Abstract>). 
+ * \param a const Expr&. 
+ * \param b const Expr&.
+ * \return The expression result of a-b.
+ */
+Expr operator-(const Expr& a, const Expr& b);
+
+/*! \fn Expr operator*(double a,      const Expr& b)
+ * \brief Shortcut function that allows to use arithmetic 
+ * operator * with Expr (== shared_ptr<Abstract>). 
+ * \param a double. 
+ * \param b const Expr&. 
+ * \return The expression result of a*b.
+ */
+Expr operator*(double a,      const Expr& b);
+/*! \fn Expr operator*(const Expr& a, double b     )
+ * \brief Shortcut function that allows to use arithmetic 
+ * operator * with Expr (== shared_ptr<Abstract>). 
+ * \param a const Expr&.
+ * \param b double.
+ * \return The expression result of a*b.
+ */
+Expr operator*(const Expr& a, double b     );
+/*! \fn Expr operator*(const Expr& a, const Expr& b)
+ * \brief Shortcut function that allows to use arithmetic 
+ * operator * with Expr (== shared_ptr<Abstract>). 
+ * \param a const Expr&. 
+ * \param b const Expr&.
+ * \return The expression result of a*b.
+ */
+Expr operator*(const Expr& a, const Expr& b);
+
+/*! \fn Expr operator/(double a,      const Expr& b)
+ * \brief Shortcut function that allows to use arithmetic 
+ * operator / with Expr (== shared_ptr<Abstract>). 
+ * \param a double. 
+ * \param b const Expr&. 
+ * \return The expression result of a/b.
+ */
+Expr operator/(double a,      const Expr& b);
+/*! \fn Expr operator/(const Expr& a, double b     )
+ * \brief Shortcut function that allows to use arithmetic 
+ * operator / with Expr (== shared_ptr<Abstract>). 
+ * \param a const Expr&.
+ * \param b double.
+ * \return The expression result of a/b.
+ */
+Expr operator/(const Expr& a, double b     );
+/*! \fn Expr operator/(const Expr& a, const Expr& b)
+ * \brief Shortcut function that allows to use arithmetic 
+ * operator / with Expr (== shared_ptr<Abstract>). 
+ * \param a const Expr&. 
+ * \param b const Expr&.
+ * \return The expression result of a/b.
+ */
+Expr operator/(const Expr& a, const Expr& b);
+
+/*! \fn Expr operator^(double a,      const Expr& b)
+ * \brief Shortcut function that allows to use arithmetic 
+ * operator ^ with Expr (== shared_ptr<Abstract>). 
+ * \param a double. 
+ * \param b const Expr&. 
+ * \return The expression result of a^b.
+ */
+Expr operator^(double a,      const Expr& b);
+/*! \fn Expr operator^(const Expr& a, double b     )
+ * \brief Shortcut function that allows to use arithmetic 
+ * operator ^ with Expr (== shared_ptr<Abstract>). 
+ * \param a const Expr&.
+ * \param b double.
+ * \return The expression result of a^b.
+ */
+Expr operator^(const Expr& a, double b     );
+/*! \fn Expr operator^(const Expr& a, const Expr& b)
+ * \brief Shortcut function that allows to use arithmetic 
+ * operator ^ with Expr (== shared_ptr<Abstract>). 
+ * \param a const Expr&. 
+ * \param b const Expr&.
+ * \return The expression result of a^b.
+ */
+Expr operator^(const Expr& a, const Expr& b);
 
 #endif

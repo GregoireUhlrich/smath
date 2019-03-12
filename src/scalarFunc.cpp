@@ -1,4 +1,5 @@
 #include "scalarFunc.h"
+#include "indicial.h"
 
 using namespace std;
 
@@ -10,6 +11,17 @@ using namespace std;
 
 bool AbstractFunc::getCommutable() const {
     return (commutable and argument->getCommutable());
+}
+
+bool AbstractFunc::isIndexed() const {
+    return argument->isIndexed();
+}
+
+IndexStructure AbstractFunc::getIndexStructure() const
+{
+    if (isIndexed())
+        return argument->getIndexStructure();
+    return IndexStructure();
 }
 
 int AbstractFunc::getNArgs(int axis) const {
@@ -107,6 +119,18 @@ bool AbstractDuoFunc::getCommutable() const
             argument[1]->getCommutable());
 }
 
+bool AbstractDuoFunc::isIndexed() const {
+    return (argument[0]->isIndexed() or argument[1]->isIndexed());
+}
+
+IndexStructure AbstractDuoFunc::getIndexStructure() const
+{
+    if (isIndexed())
+        return (argument[0]->getIndexStructure() 
+            + argument[1]->getIndexStructure());
+    return IndexStructure();
+}
+
 Expr AbstractDuoFunc::getArgument(int iArg) const 
 {
     if (iArg != 1 and iArg != 0) {
@@ -192,6 +216,18 @@ bool AbstractMultiFunc::getCommutable() const
             return false;
 
     return true;
+}
+
+bool AbstractMultiFunc::isIndexed() const 
+{
+    // Indexed terms are in general closer to the end of the 
+    // expression because they are considered as complicated.
+    // We then go through the arguments in reverse order.
+    for (auto arg=argument.rbegin(); arg!=argument.rend(); ++arg)
+        if ((*arg)->isIndexed())
+            return true;
+
+    return false;
 }
 
 const vector<Expr >& AbstractMultiFunc::getVectorArgument() const {

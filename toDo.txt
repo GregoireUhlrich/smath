@@ -1,5 +1,3 @@
-Factorization of order 2 polynomial, roots
+Commutator(A,B)
 
-Dirac delta(Polynome(x))
-
-Integral and resolution with delta
+Then it will be way cleaner

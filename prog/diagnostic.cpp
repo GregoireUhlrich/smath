@@ -160,7 +160,7 @@ cout<<variable->evaluateScalar()<<" "<<developed->evaluateScalar()<<endl;
             cout<<perm[i][j]<<" ";
         cout<<endl;
     }
-
+/*
     Index i("i"), j("j"), k("k");
     Symbol eps_ijk = itensor_("eps", {i,j,k});
     Expr foo = eps_ijk.getAbstract();
@@ -169,8 +169,9 @@ cout<<variable->evaluateScalar()<<" "<<developed->evaluateScalar()<<endl;
     for (size_t i=0; i<vecExpr.size(); i++)
     {
         cout<<"Permutation "<<i+1<<": ";
-        vecExpr[i]->print();
-    }
+        vecExpr[i]->print()
+
+    }*/
 
     Permutation antiSym1(4,{0,1});
     Permutation antiSym2(4,{2,3});
@@ -211,6 +212,17 @@ cout<<variable->evaluateScalar()<<" "<<developed->evaluateScalar()<<endl;
     m.evaluate().print();
     Taylor(E,beta,10).evaluate().print();
     Taylor(p,beta,10).evaluate().print();
+
+
+    IndicialParent eps_("eps",{&Euclid_R3,&Euclid_R3,&Euclid_R3});
+    Index i("i", &Euclid_R3), j("j",&Euclid_R3), k("k",&Euclid_R3);
+    Index l("l", &Euclid_R3), n("n",&Euclid_R3);
+    eps_({i,j,k})->print();
+    eps_({i,i,j})->print();
+    eps_({i,i,i})->print();
+
+    (eps_({i,i,j})+eps_({i,i,j}))->print();
+    (eps_({i,j,k})*eps_({i,l,n}))->print();
 
     return 0;
     /*Symbol i("i"), j("j");

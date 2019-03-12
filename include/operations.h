@@ -52,6 +52,8 @@ class Plus: public AbstractMultiFunc{
 
     IndexStructure getIndexStructure() const override;
 
+    void selfCheckIndexStructure() const;
+
     void insert(const Expr& expr, bool side=0) override;
 
     void print(int mode=0) const override;
@@ -81,7 +83,7 @@ class Plus: public AbstractMultiFunc{
      * \param expr Argument of the derivation.
      * \return The sum of the derivatives of the arguments
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     /*! \brief Factors the expr if common factors are found.
      * \param full If \b true factors recursively all the arguments.
@@ -151,6 +153,10 @@ class Polynomial: public AbstractMultiFunc{
 
     Expr getVariable() const override;
 
+    bool isIndexed() const override;
+
+    IndexStructure getIndexStructure() const override;
+
     void print(int mode=0) const override;
 
     std::string printLaTeX(int mode=0) const override;
@@ -168,7 +174,7 @@ class Polynomial: public AbstractMultiFunc{
      * \param expr Argument of the derivation.
      * \return The polynomial of the derivatives of the arguments
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 
@@ -227,6 +233,10 @@ class Times: public AbstractMultiFunc{
     smType::Type getType() const override {
         return smType::Times;
     }
+
+    IndexStructure getIndexStructure() const override;
+
+    void selfCheckIndexStructure();
 
     Expr getRealPart() override;
 
@@ -300,7 +310,7 @@ class Times: public AbstractMultiFunc{
      * \param expr Argument of the derivation.
      * \return The derivative following the formula ...
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     /*! \brief \b Develops the product by expanding the sums inside.
      * \param full If true the development is \b recursive through all the Abstract.
@@ -401,7 +411,7 @@ class Fraction: public AbstractDuoFunc{
      * \param expr Argument of the derivation.
      * \return The derivative following the formula ...
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int isPolynomial(const Expr& expr) const override;
 
@@ -495,7 +505,7 @@ class Pow: public AbstractDuoFunc{
      * \param expr Argument of the derivation.
      * \return The derivative following the formula ...
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     /*! \brief \b Develops the exponentiation by expanding the sums inside.
      * \param full If true the development is \b recursive through all the Abstract.
@@ -593,7 +603,7 @@ class Derivative: public AbstractDuoFunc{
      * \param expr Argument of the derivation.
      * \return The derivative following the formula ...
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
     
@@ -617,6 +627,12 @@ inline Derivative::Derivative(): AbstractDuoFunc(), order(1){}
 inline Derivative::Derivative(const Expr& t_variable,
                               int t_order): AbstractDuoFunc(), order(t_order){
     argument[1] = t_variable;
+}
+inline Derivative::Derivative(const Expr& leftOperand,
+                              const Expr& rightOperand)
+                              : AbstractDuoFunc(), order(1){
+    argument[0] = leftOperand;
+    argument[1] = rightOperand;
 }
 inline Derivative::Derivative(const Expr& leftOperand,
                               const Expr& rightOperand,

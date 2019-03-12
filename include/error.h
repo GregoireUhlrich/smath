@@ -40,6 +40,9 @@ namespace smError{
         UnknownProperty, /*!<  Trying to get a property of Abstract that is not
                           defined..*/
         InvalidITensor, /*!<  Invalid creation of ITensor: bad indices. */
+        InvalidIndicialSum, /*!<  Summing to terms that have not the same index 
+                             structure */
+        BadDependency, /*!<  Setting a contradictory dependency for a variable. */
 
     };
 
@@ -53,6 +56,8 @@ namespace smError{
         FactorialFloat, /*!<   Evaluating a factorial of non-integer value.*/
         NotValued, /*!<  Evaluating a literal that is not valued. */
         Infinity, /*!<  Apparition of infinity or undefined value in calculation. */
+        CopyingBuildingBlock, /*!<  Copying building block (should not, they are 
+                                and should stay shared_from_this) */
 
     };
 
@@ -94,6 +99,10 @@ inline void callError(smError::Error error, const std::string& caller, T spec)
                std::cout<<"Unknown property in "<<caller<<": "<<spec<<std::endl; break;
         case InvalidITensor:
                std::cout<<"Bad set of indices in creation of ITensor in "<<caller<<std::endl; break;
+        case InvalidIndicialSum:
+               std::cout<<"Invalid sum of indicial objects in "<<caller<<std::endl; break;
+        case BadDependency:
+               std::cout<<"Bad dependy set for "<<spec<<" in "<<caller<<"\n"; break;
 
         default:
                std::cout<<"ScmType "<<(int)error<<" not recognized.\n";
@@ -137,6 +146,8 @@ inline void callWarning(smError::Warning warning, const std::string& caller, T s
                std::cout<<"Evaluating non valued in "<<caller<<". Replacing by 0.\n"; break;
         case Infinity:
                std::cout<<"Infinite result found in "<<caller<<".\n"; break;
+        case CopyingBuildingBlock:
+               std::cout<<"Copying building block in "<<caller<<": "<<spec<<"\n"; break;
 
         default:
                std::cout<<"ScmType "<<(int)warning<<" not recognized.\n";

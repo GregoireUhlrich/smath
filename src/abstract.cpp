@@ -61,8 +61,19 @@ Index Abstract::getIndex(int i) const
 
 IndexStructure Abstract::getIndexStructure() const
 {
+    print();
+    callError(smError::AbstractFuncCalled, "Abstract::getIndexStructure() const");
     return IndexStructure();
 }
+
+const IndicialParent* Abstract::getParent() const
+{
+    print();
+    callError(smError::AbstractFuncCalled,
+            "const IndicialParent* Abstract::getParent() const");
+    return nullptr;
+}
+
 
 void Abstract::setIndexStructure(const vector<Index>& index)
 {
@@ -207,6 +218,10 @@ bool Abstract::isBuildingBlock() const {
     return false;
 }
 
+bool Abstract::isIndexed() const {
+    return false;
+}
+
 bool Abstract::isInteger() const {
     return false;
 }
@@ -291,7 +306,7 @@ Expr Abstract::factor(const Expr& variable, bool full)
 {
     return Copy(this);
 }
-Expr Abstract::derive(const Expr& expr) const
+Expr Abstract::derive(const Expr& expr)
 {
     return ZERO;
 }
@@ -374,7 +389,7 @@ Expr Abstract::exponentiation_own(const Expr& expr) const
 
 bool Abstract::dependsOn(const Expr& expr) const
 {
-    return (name != "" and expr->getName() == name);
+    return false;
 }
 
 int Abstract::isPolynomial(const Expr& expr) const
@@ -711,4 +726,75 @@ ostream& operator<<(ostream& fout, smType::PrimaryType primaryType)
                  cout<< " not known in operator<<(PrimaryType).";
     }
     return fout;
+}
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Arithmetic operators                          //
+/*************************************************/
+///////////////////////////////////////////////////
+
+Expr operator+(double a, const Expr& b)
+{
+    return plus_(auto_number_(a), b);
+}
+Expr operator+(const Expr& a, double b)
+{
+    return plus_(a, auto_number_(b));
+}
+Expr operator+(const Expr& a, const Expr& b)
+{
+    return plus_(a,b);
+}
+
+Expr operator-(double a, const Expr& b)
+{
+    return minus_(auto_number_(a), b);
+}
+Expr operator-(const Expr& a, double b)
+{
+    return minus_(a, auto_number_(b));
+}
+Expr operator-(const Expr& a, const Expr& b)
+{
+    return minus_(a,b);
+}
+
+Expr operator*(double a, const Expr& b)
+{
+    return times_(auto_number_(a), b);
+}
+Expr operator*(const Expr& a, double b)
+{
+    return times_(a, auto_number_(b));
+}
+Expr operator*(const Expr& a, const Expr& b)
+{
+    return times_(a,b);
+}
+
+Expr operator/(double a, const Expr& b)
+{
+    return fraction_(auto_number_(a), b);
+}
+Expr operator/(const Expr& a, double b)
+{
+    return fraction_(a, auto_number_(b));
+}
+Expr operator/(const Expr& a, const Expr& b)
+{
+    return fraction_(a,b);
+}
+
+Expr operator^(double a, const Expr& b)
+{
+    return pow_(auto_number_(a), b);
+}
+Expr operator^(const Expr& a, double b)
+{
+    return pow_(a, auto_number_(b));
+}
+Expr operator^(const Expr& a, const Expr& b)
+{
+    return pow_(a,b);
 }

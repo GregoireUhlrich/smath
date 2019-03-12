@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['permut',['permut',['../classAbstract.html#ae9f5a37ad523ec663a61d07def420820',1,'Abstract::permut()'],['../classITensor.html#a083435ba5f565de3b5c96f3fa0cf11ad',1,'ITensor::permut()']]],
+  ['permut',['permut',['../classAbstract.html#ae9f5a37ad523ec663a61d07def420820',1,'Abstract']]],
   ['permutation',['Permutation',['../classPermutation.html',1,'']]],
   ['pgcd',['PGCD',['../support_8h.html#a15fe90ca93206f30725b080066b96a4f',1,'PGCD(double a, double b):&#160;support.cpp'],['../support_8h.html#a80e2684950a4f299b954b5876e80786a',1,'PGCD(int a, int b):&#160;support.cpp']]],
   ['pi_5f',['pi_',['../variable_8h.html#a6f2b21aee59caf9f647fd51fb2e52015',1,'variable.h']]],

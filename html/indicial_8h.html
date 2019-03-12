@@ -65,7 +65,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">indicial.h File Reference</div>  </div>
@@ -86,6 +85,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSpace.html">Space</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIndex.html">Index</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIndexStructure.html">IndexStructure</a></td></tr>
@@ -93,6 +94,8 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPermutation.html">Permutation</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSymmetry.html">Symmetry</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIndicialParent.html">IndicialParent</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstractIndicial.html">AbstractIndicial</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -103,14 +106,6 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classITimes.html">ITimes</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:a95c2fac4e066dbf5ffd4b855f1ae5249"><td class="memItemLeft" align="right" valign="top"><a id="a95c2fac4e066dbf5ffd4b855f1ae5249"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>VectorSpace</b> { <b>Default</b>, 
-<b>Lorentz</b>, 
-<b>Dirac</b>
- }</td></tr>
-<tr class="separator:a95c2fac4e066dbf5ffd4b855f1ae5249"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ad6c1125c323fe56bef8129f5b78575bb"><td class="memItemLeft" align="right" valign="top"><a id="ad6c1125c323fe56bef8129f5b78575bb"></a>
@@ -119,6 +114,21 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;</b> (std
 <tr class="memitem:a887139f37240d424689a7fd330147454"><td class="memItemLeft" align="right" valign="top"><a id="a887139f37240d424689a7fd330147454"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;</b> (std::pair&lt; int, int &gt; a, std::pair&lt; int, int &gt; b)</td></tr>
 <tr class="separator:a887139f37240d424689a7fd330147454"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adde1f28890ade902ff8c947d3144ed6d"><td class="memItemLeft" align="right" valign="top"><a id="adde1f28890ade902ff8c947d3144ed6d"></a>
+static const <a class="el" href="classSpace.html">Space</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Euclid_R</b> (&quot;R&quot;, 1)</td></tr>
+<tr class="separator:adde1f28890ade902ff8c947d3144ed6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ff8e5dedd9fdaa07dae63aa0cba0b46"><td class="memItemLeft" align="right" valign="top"><a id="a0ff8e5dedd9fdaa07dae63aa0cba0b46"></a>
+static const <a class="el" href="classSpace.html">Space</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Euclid_R2</b> (&quot;R2&quot;, 2)</td></tr>
+<tr class="separator:a0ff8e5dedd9fdaa07dae63aa0cba0b46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6f72f48481963ddfe23ba96c4aaa9e3"><td class="memItemLeft" align="right" valign="top"><a id="ad6f72f48481963ddfe23ba96c4aaa9e3"></a>
+static const <a class="el" href="classSpace.html">Space</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Euclid_R3</b> (&quot;R3&quot;, 3)</td></tr>
+<tr class="separator:ad6f72f48481963ddfe23ba96c4aaa9e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa07bc8d6b88d6c490c908a1c8263708"><td class="memItemLeft" align="right" valign="top"><a id="afa07bc8d6b88d6c490c908a1c8263708"></a>
+static const <a class="el" href="classSpace.html">Space</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Euclid_R4</b> (&quot;R4&quot;, 4)</td></tr>
+<tr class="separator:afa07bc8d6b88d6c490c908a1c8263708"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34f7eb799465af91ae4e57868f28087c"><td class="memItemLeft" align="right" valign="top"><a id="a34f7eb799465af91ae4e57868f28087c"></a>
+static const <a class="el" href="classSpace.html">Space</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Lorentz</b> (&quot;L&quot;, 4, true)</td></tr>
+<tr class="separator:a34f7eb799465af91ae4e57868f28087c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a374a22537cfd70f3df347f9f4d78f009"><td class="memItemLeft" align="right" valign="top"><a id="a374a22537cfd70f3df347f9f4d78f009"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>reducePermutation</b> (std::vector&lt; <a class="el" href="classPermutation.html">Permutation</a> &gt; &amp;permutation)</td></tr>
 <tr class="separator:a374a22537cfd70f3df347f9f4d78f009"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,12 +141,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>getSpan</b> (std::vec
 <tr class="memitem:a5ea1f4d159f7a99141252fa23e0c9dfe"><td class="memItemLeft" align="right" valign="top"><a id="a5ea1f4d159f7a99141252fa23e0c9dfe"></a>
 std::vector&lt; std::vector&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>permutations</b> (const std::vector&lt; int &gt; &amp;init)</td></tr>
 <tr class="separator:a5ea1f4d159f7a99141252fa23e0c9dfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01e6dfa257cd32a740177f1a2d89b432"><td class="memItemLeft" align="right" valign="top"><a id="a01e6dfa257cd32a740177f1a2d89b432"></a>
-<a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_itensor_</b> (const std::string &amp;name, <a class="el" href="classIndex.html">Index</a> index)</td></tr>
-<tr class="separator:a01e6dfa257cd32a740177f1a2d89b432"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41913345e8e03b8aeddb8988beca8546"><td class="memItemLeft" align="right" valign="top"><a id="a41913345e8e03b8aeddb8988beca8546"></a>
-<a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_itensor_</b> (const std::string &amp;name, const std::initializer_list&lt; <a class="el" href="classIndex.html">Index</a> &gt; &amp;indices)</td></tr>
-<tr class="separator:a41913345e8e03b8aeddb8988beca8546"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Objects handling indexed expressions in order to perform indicial tensor calculations. </p>

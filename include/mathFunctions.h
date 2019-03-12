@@ -54,7 +54,7 @@ class Abs: public AbstractFunc{
     /*! \brief \b Derives the abs function.
      * \return sign(argument)
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 };
@@ -118,7 +118,7 @@ class Exp: public AbstractFunc{
     /*! \brief \b Derives the exponential function.
      * \return (derivative of the \b argument)*\b exp(\b argument)
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 };
@@ -181,7 +181,7 @@ class Log: public AbstractFunc{
     /*! \brief \b Derives the logarithm function.
      * \return (derivative of the \b argument)*1/\b argument 
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 };
@@ -244,7 +244,7 @@ class Cos: public AbstractFunc{
     /*! \brief \b Derives the cos function.
      * \return (derivative of the \b argument)*-\b sin(\b argument)
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 
@@ -309,7 +309,7 @@ class Sin: public AbstractFunc{
     /*! \brief \b Derives the sin function.
      * \return (derivative of the \b argument)*\b cos(\b argument)
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 
@@ -374,7 +374,7 @@ class Tan: public AbstractFunc{
     /*! \brief \b Derives the tan function.
      * \return derivative(argument)*(1+tan^2(argument))
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 
@@ -439,7 +439,7 @@ class ACos: public AbstractFunc{
     /*! \brief \b Derives the acos function.
      * \return (derivative of the \b argument)*-\b asin(\b argument)
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 };
@@ -502,7 +502,7 @@ class ASin: public AbstractFunc{
     /*! \brief \b Derives the asin function.
      * \return (derivative of the \b argument)*\b acos(\b argument)
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 };
@@ -558,7 +558,7 @@ class ATan: public AbstractFunc{
     /*! \brief \b Derives the atan function.
      * \return derivative(argument)/(1+argument^2)
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 };
@@ -626,7 +626,7 @@ class Angle: public AbstractDuoFunc{
      * \param expr Argument of the derivation.
      * \return The derivative following the formula ...
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     bool operator==(const Expr& expr) const override;
 
@@ -684,7 +684,7 @@ class Cosh: public AbstractFunc{
     /*! \brief \b Derives the cosh function.
      * \return (derivative of the \b argument)*\b sinh(\b argument)
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 
@@ -749,7 +749,7 @@ class Sinh: public AbstractFunc{
     /*! \brief \b Derives the sinh function.
      * \return (derivative of the \b argument)*\b cosh(\b argument)
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 
@@ -814,7 +814,7 @@ class Tanh: public AbstractFunc{
     /*! \brief \b Derives the tanh function.
      * \return derivative(argument)*(1-tanh^2(argument))
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 
@@ -879,7 +879,7 @@ class ACosh: public AbstractFunc{
     /*! \brief \b Derives the acosh function.
      * \return (derivative of the \b argument)*\b asinh(\b argument)
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 };
@@ -942,7 +942,7 @@ class ASinh: public AbstractFunc{
     /*! \brief \b Derives the asinh function.
      * \return (derivative of the \b argument)*\b acosh(\b argument)
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 };
@@ -1005,7 +1005,7 @@ class ATanh: public AbstractFunc{
     /*! \brief \b Derives the atanh function.
      * \return derivative(argument)*(1-atanh^2(argument))
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 };
@@ -1069,7 +1069,7 @@ class Factorial: public AbstractFunc{
      * factorial cannot be derived.
      * \return \b 0
      */
-    Expr derive(const Expr& expr) const override;
+    Expr derive(const Expr& expr) override;
 
     int getParity(const Expr& t_variable) const override;
 };

@@ -53,7 +53,7 @@ double Abs::evaluateScalar() const
     return abs(argument->evaluateScalar());
 }
 
-Expr Abs::derive(const Expr& expr) const
+Expr Abs::derive(const Expr& expr)
 {
     double value = argument->evaluateScalar();
     if (value > 0) 
@@ -149,7 +149,7 @@ double Exp::evaluateScalar() const
     return exp(argument->evaluateScalar());
 }
 
-Expr Exp::derive(const Expr& expr) const
+Expr Exp::derive(const Expr& expr)
 {
     return times_(argument->derive(expr), exp_(argument));
 }
@@ -250,7 +250,7 @@ double Log::evaluateScalar() const
     return log(argument->evaluateScalar());
 }
 
-Expr Log::derive(const Expr& expr) const
+Expr Log::derive(const Expr& expr)
 {
     return times_(argument->derive(expr), pow_(argument,int_(-1)));
 }
@@ -346,7 +346,7 @@ double Cos::evaluateScalar() const
     return cos(argument->evaluateScalar());
 }
 
-Expr Cos::derive(const Expr& expr) const
+Expr Cos::derive(const Expr& expr)
 {
     return times_(argument->derive(expr),
                   times_(int_(-1),sin_(argument)));
@@ -466,7 +466,7 @@ double Sin::evaluateScalar() const
     return sin(argument->evaluateScalar());
 }
 
-Expr Sin::derive(const Expr& expr) const
+Expr Sin::derive(const Expr& expr)
 {
     return times_(argument->derive(expr), cos_(argument));
 }
@@ -608,7 +608,7 @@ double Tan::evaluateScalar() const
     return tan(argument->evaluateScalar());
 }
 
-Expr Tan::derive(const Expr& expr) const
+Expr Tan::derive(const Expr& expr)
 {
     return times_(argument->derive(expr), 
                   plus_(int_(1),pow_(tan_(argument),int_(2))));
@@ -730,7 +730,7 @@ double ACos::evaluateScalar() const
     return acos(argument->evaluateScalar());
 }
 
-Expr ACos::derive(const Expr& expr) const
+Expr ACos::derive(const Expr& expr)
 {
     return times_(argument->derive(expr), 
                   fraction_(int_(-1),
@@ -825,7 +825,7 @@ double ASin::evaluateScalar() const
     return asin(argument->evaluateScalar());
 }
 
-Expr ASin::derive(const Expr& expr) const
+Expr ASin::derive(const Expr& expr)
 {
     return times_(argument->derive(expr), 
                   fraction_(int_(1),
@@ -893,7 +893,7 @@ double ATan::evaluateScalar() const
     return atan(argument->evaluateScalar());
 }
 
-Expr ATan::derive(const Expr& expr) const
+Expr ATan::derive(const Expr& expr)
 {
     return fraction_(argument->derive(expr),
                      fraction_(int_(1),
@@ -989,7 +989,7 @@ double Cosh::evaluateScalar() const
     return cosh(argument->evaluateScalar());
 }
 
-Expr Cosh::derive(const Expr& expr) const
+Expr Cosh::derive(const Expr& expr)
 {
     return times_(argument->derive(expr), sinh_(argument));
 }
@@ -1082,7 +1082,7 @@ double Sinh::evaluateScalar() const
     return sinh(argument->evaluateScalar());
 }
 
-Expr Sinh::derive(const Expr& expr) const
+Expr Sinh::derive(const Expr& expr)
 {
     return times_(argument->derive(expr), cosh_(argument));
 }
@@ -1197,7 +1197,7 @@ double Tanh::evaluateScalar() const
     return tanh(argument->evaluateScalar());
 }
 
-Expr Tanh::derive(const Expr& expr) const
+Expr Tanh::derive(const Expr& expr)
 {
     return times_(argument->derive(expr), 
                   plus_(int_(1),
@@ -1288,7 +1288,7 @@ double ACosh::evaluateScalar() const
     return acosh(argument->evaluateScalar());
 }
 
-Expr ACosh::derive(const Expr& expr) const
+Expr ACosh::derive(const Expr& expr)
 {
     return times_(argument->derive(expr), 
                   fraction_(int_(1),
@@ -1378,7 +1378,7 @@ double ASinh::evaluateScalar() const
     return asinh(argument->evaluateScalar());
 }
 
-Expr ASinh::derive(const Expr& expr) const
+Expr ASinh::derive(const Expr& expr)
 {
     return times_(argument->derive(expr),
                   fraction_(int_(1),
@@ -1470,7 +1470,7 @@ double ATanh::evaluateScalar() const
     return atanh(argument->evaluateScalar());
 }
 
-Expr ATanh::derive(const Expr& expr) const
+Expr ATanh::derive(const Expr& expr)
 {
     return times_(argument->derive(expr),
                   fraction_(int_(1),
@@ -1585,7 +1585,7 @@ Expr Angle::evaluate()
     return INF; // Infinite result
 }
 
-Expr Angle::derive(const Expr& expr) const {
+Expr Angle::derive(const Expr& expr) {
     return evaluateAngle()->derive(expr);
 }
 
@@ -1653,7 +1653,7 @@ double Factorial::evaluateScalar() const
     return factorial(value);
 }
 
-Expr Factorial::derive(const Expr& expr) const {
+Expr Factorial::derive(const Expr& expr) {
     return ZERO;
 }
 

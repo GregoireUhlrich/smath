@@ -52,6 +52,16 @@ sout.str());
     }
 }
 
+Index IndexStructure::getIndex(int i) const
+{
+    if (i >= 0 and i<nIndices)
+        return index[i];
+    else 
+        callError(smError::OutOfBounds,
+                "IndexStructure::getIndex(int i) const", i);
+    return Index();
+}
+
 vector<Index> IndexStructure::getFreeIndex() const
 {
     vector<Index> rep(0);
@@ -88,6 +98,50 @@ permutation.size());
         newIndex.push_back(index[permutation[i]]);
 
     return IndexStructure(newIndex);
+}
+
+IndexStructure& IndexStructure::operator+=(const Index& newIndex)
+{
+    for (auto& i : index) {
+        if (i == newIndex) {
+            if (i.getFree()) {
+                // If the index is equal to an already existing index,
+                // Einstein convention: summation
+                i.setFree(false);
+                ++nIndices;
+                index.push_back(i);
+                return *this;
+            }
+            else // Index equal to a dummy index: Error
+                callError(smError::ContractDummy, 
+                        "IndexStructure::operator+=(const Index& newIndex)", 
+                        i.getName()+"<->"+newIndex.getName());
+        }
+    }
+    // New index (not already present: we add it simply)
+    ++nIndices;
+    index.push_back(newIndex);
+
+    return *this;
+}
+
+IndexStructure& IndexStructure::operator+=(const IndexStructure& structure)
+{
+    const int n = structure.getNIndices();
+    for (int i=0; i<n; ++i)
+        operator+=(structure.getIndex(i));
+
+    return *this;
+}
+
+IndexStructure IndexStructure::operator+(const IndexStructure& structure) const
+{
+    IndexStructure newStructure(*this);
+    const int n = structure.getNIndices();
+    for (int i=0; i<n; ++i)
+        newStructure += structure.getIndex(i);
+
+    return newStructure;
 }
 
 bool IndexStructure::operator==(const IndexStructure& structure) const
@@ -130,8 +184,9 @@ Index IndexStructure::operator[](int i) const
     if (i >= 0 and i < nIndices)
         return index[i];
     else
-        callError(OutOfBounds,
+        callError(smError::OutOfBounds,
                 "IndexStructure::operator[](int i)", i);
+    return Index();
 }
 
 ///////////////////////////////////////////////////
@@ -502,18 +557,7 @@ bool operator>(std::pair<int,int> a, std::pair<int,int> b)
             (a.first == b.first and
              a.second > b.second));
 }
-
-////////////////////////////////////////////////////
-///*************************************************/
-// Class AbstractIndicial                          //
-///*************************************************/
-/////////////////////////////////////////////////////
-
-AbstractIndicial::AbstractIndicial(): AbstractScalar() {}
-
-AbstractIndicial::AbstractIndicial(const string& t_name)
-    :AbstractScalar(t_name){}
-
+//
 ///////////////////////////////////////////////////
 /*************************************************/
 // Class IndicialParent                        //
@@ -595,16 +639,39 @@ void IndicialParent::addAntiSymmetry(int i1, int i2)
 Expr IndicialParent::operator()(const initializer_list<Index>& indices) const
 {
     if (indices.size() != (size_t)dim) {
-        callError(InvalidITensor, 
+        callError(smError::InvalidITensor, 
     "IndicialParent::operator()(const initializer_list<Index>& indices) const");
     }
     for (auto index=indices.begin(); index!=indices.end(); ++index)
         if (index->getSpace() != space[distance(indices.begin(), index)])
-            callError(InvalidITensor, 
+            callError(smError::InvalidITensor, 
     "IndicialParent::operator()(const initializer_list<Index>& indices) const");
 
     return make_shared<ITensor>(name, commutable, indices, this);
 }
+
+
+////////////////////////////////////////////////////
+///*************************************************/
+// Class AbstractIndicial                          //
+///*************************************************/
+/////////////////////////////////////////////////////
+
+AbstractIndicial::AbstractIndicial(): AbstractScalar() 
+{}
+
+AbstractIndicial::AbstractIndicial(const string& t_name)
+    :AbstractScalar(t_name)
+{}
+
+AbstractIndicial::AbstractIndicial(const IndexStructure& t_index)
+    :AbstractScalar(), index(t_index)
+{}
+
+AbstractIndicial::AbstractIndicial(const string& t_name,
+                                   const initializer_list<Index>& indices)
+    :AbstractScalar(t_name), nIndices(indices.size()), index(indices)
+{}
 
 ///////////////////////////////////////////////////
 /*************************************************/
@@ -615,32 +682,28 @@ Expr IndicialParent::operator()(const initializer_list<Index>& indices) const
 ITensor::ITensor(const string& t_name,
                  bool t_commutable,
                  const initializer_list<Index>& indices,
-                 IndicialParent* t_parent)
-    :AbstractIndicial(t_name), parent(t_parent), index(indices)
+                 const IndicialParent* t_parent)
+    :AbstractIndicial(t_name, indices), parent(t_parent)
 {
     commutable = t_commutable;
 }
 
-ITensor::ITensor(const Abstract*& expr)
+// Constructor crashes if expr is not an ITensor
+ITensor::ITensor(const Abstract*& expr): parent(expr->getParent())
 {
-    if (expr->getType() == smType::ITensor)
-    {
-        name = expr->getName();
-        commutable = expr->getCommutable();
-        parent = expr->getParent();
-        index = expr->getIndexStructure();
-    }
+    name = expr->getName();
+    commutable = expr->getCommutable();
+    nIndices = expr->getNIndices();
+    index = expr->getIndexStructure();
 }
 
-ITensor::ITensor(const Expr& expr)
+// Constructor crashes if expr is not an ITensor
+ITensor::ITensor(const Expr& expr): parent(expr->getParent())
 {
-    if (expr->getType() == smType::ITensor)
-    {
-        name = expr->getName();
-        commutable = expr->getCommutable();
-        parent = expr->getParent();
-        index = expr->getIndexStructure();
-    }
+    name = expr->getName();
+    commutable = expr->getCommutable();
+    nIndices = expr->getNIndices();
+    index = expr->getIndexStructure();
 }
 
 Index ITensor::getIndex(int i) const
@@ -651,12 +714,8 @@ Index ITensor::getIndex(int i) const
     return Index();
 }
 
-IndicialParent* ITensor::getParent() const {
+const IndicialParent* ITensor::getParent() const {
     return parent;
-}
-
-IndexStructure ITensor::getIndexStructure() const {
-    return index;
 }
 
 bool ITensor::checkIndexStructure(const vector<Index>& t_indices) const
@@ -745,7 +804,8 @@ Expr ITensor::applyPermutation(const vector<int>& permutations) const
 vector<Expr> ITensor::getPermutations() const
 {
     vector<Expr> res(1,Copy(this));
-    if (fullySymmetric or fullyAntiSymmetric) {
+    if (parent->getFullySymmetric() or parent->getFullyAntiSymmetric()) {
+        const int nIndices = index.getNIndices();
         vector<int> initPerm(nIndices);
         for (int i=0; i!=nIndices; ++i)
             initPerm[i] = i;
@@ -817,22 +877,7 @@ bool ITensor::operator==(const Expr& expr) const
     if (name != expr->getName() or nIndices != expr->getNIndices()) 
         return false;
 
-    for (int i=0; i<nIndices; i++)
-        if (index[i] != expr->getIndex(i))
-            return false;
-
-    return true;
-}
-
-Expr _itensor_(const std::string& name, Index index)
-{
-    vector<Index> indices(1,index);
-    return make_shared<ITensor>(name, indices);
-}
-
-Expr _itensor_(const std::string& name, const initializer_list<Index>& t_indices) {
-    return make_shared<ITensor>(name,vector<Index>(t_indices.begin(),
-                                                   t_indices.end()));
+    return index == expr->getIndexStructure();
 }
 
 ///////////////////////////////////////////////////
@@ -848,16 +893,18 @@ ITerm::ITerm(): AbstractIndicial()
 }
 
 ITerm::ITerm(const Expr& leftOperand, const Expr& rightOperand)
-    :AbstractIndicial()
+    :AbstractIndicial(leftOperand->getIndexStructure()
+            +rightOperand->getIndexStructure())
 {
+    if (leftOperand->getPrimaryType() != smType::Indicial
+            or rightOperand->getPrimaryType() != smType::Indicial)
+        callError(smError:: InvalidITensor, 
+            "ITerm::ITerm(const Expr& leftOperand, const Expr& rightOperand)");
+
     nArgs = 2;
     argument = vector<Expr >(2);
     argument[0] = leftOperand;
     argument[1] = rightOperand;
-
-    index = argument[0]->getIndexStructure();
-    vector<Index> foo = argument[1]->getIndexStructure();
-    index.insert(index.end(), foo.begin(), foo.end());
 
     mergeTerms();
 }
@@ -866,12 +913,15 @@ ITerm::ITerm(const std::vector<Expr >& operands)
 {
     argument = operands;
     nArgs = argument.size();
-    index = argument[0]->getIndexStructure();
-    vector<Index> foo;
-    for (int i=1; i<nArgs; i++) {
-        foo = argument[i]->getIndexStructure();
-        index.insert(index.end(), foo.begin(), foo.end());
+    index = IndexStructure();
+    for (const auto& operand : operands) {
+        if (operand->getPrimaryType() != smType::Indicial)
+            callError(smError::InvalidITensor,
+                    "ITerm::ITerm(const vector<Expr>& operands");
+        index += operand->getIndexStructure();
     }
+    nIndices = index.getNIndices();
+
     mergeTerms();
 }
 
@@ -991,19 +1041,3 @@ bool ITerm::operator==(const Expr& expr) const
 
     return true;
 }
-
-///////////////////////////////////////////////////
-/*************************************************/
-// Class ITimes                                  //
-/*************************************************/
-///////////////////////////////////////////////////
-
-ITimes::ITimes(): Times(){}
-
-ITimes::ITimes(const vector<Expr >& t_argument, bool explicitTimes)
-    :Times(t_argument, explicitTimes){}
-
-ITimes::ITimes(const Expr& leftOperand,
-               const Expr& rightOperand,
-               bool explicitTimes)
-    :Times(leftOperand, rightOperand, explicitTimes){}
