@@ -102,6 +102,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4dc5fc366b596dfae10eec764583e5ca"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDerivative.html#a4dc5fc366b596dfae10eec764583e5ca">getOrder</a> () const override</td></tr>
 <tr class="memdesc:a4dc5fc366b596dfae10eec764583e5ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accessor to the order (integer) that defines certain types of expressions.  <a href="#a4dc5fc366b596dfae10eec764583e5ca">More...</a><br /></td></tr>
 <tr class="separator:a4dc5fc366b596dfae10eec764583e5ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88bcd3a5f8928c4f55d26a417a0bb447"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDerivative.html#a88bcd3a5f8928c4f55d26a417a0bb447">isEmpty</a> () const override</td></tr>
+<tr class="memdesc:a88bcd3a5f8928c4f55d26a417a0bb447"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells for a <a class="el" href="classDerivative.html" title="Handles the exponentiation of one Abstract wrt another. ">Derivative</a> or an Integral if the argument is empty i.e. if the object must apply on the next argument encountered on the right.  <a href="#a88bcd3a5f8928c4f55d26a417a0bb447">More...</a><br /></td></tr>
+<tr class="separator:a88bcd3a5f8928c4f55d26a417a0bb447"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd9f12af3b52f041754d10bc7f106a96"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDerivative.html#abd9f12af3b52f041754d10bc7f106a96">print</a> (int mode=0) const override</td></tr>
 <tr class="memdesc:abd9f12af3b52f041754d10bc7f106a96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays the abstract in standard output.  <a href="#abd9f12af3b52f041754d10bc7f106a96">More...</a><br /></td></tr>
 <tr class="separator:abd9f12af3b52f041754d10bc7f106a96"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -114,9 +117,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9371625b49860dbbd2299b5de7043fe0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDerivative.html#a9371625b49860dbbd2299b5de7043fe0">evaluate</a> () override</td></tr>
 <tr class="memdesc:a9371625b49860dbbd2299b5de7043fe0"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>Evaluates</b> the <a class="el" href="classAbstract.html" title="Root class of the inheritance tree of abstracts. ">Abstract</a>.  <a href="#a9371625b49860dbbd2299b5de7043fe0">More...</a><br /></td></tr>
 <tr class="separator:a9371625b49860dbbd2299b5de7043fe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ab0f86191b05d660845c2f0ab25acea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDerivative.html#a9ab0f86191b05d660845c2f0ab25acea">derive</a> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;expr) const override</td></tr>
-<tr class="memdesc:a9ab0f86191b05d660845c2f0ab25acea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Derives the derivative.  <a href="#a9ab0f86191b05d660845c2f0ab25acea">More...</a><br /></td></tr>
-<tr class="separator:a9ab0f86191b05d660845c2f0ab25acea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a734e27903a01ed65bac0ed55cde728bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDerivative.html#a734e27903a01ed65bac0ed55cde728bc">derive</a> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;expr) override</td></tr>
+<tr class="memdesc:a734e27903a01ed65bac0ed55cde728bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Derives the derivative.  <a href="#a734e27903a01ed65bac0ed55cde728bc">More...</a><br /></td></tr>
+<tr class="separator:a734e27903a01ed65bac0ed55cde728bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa90ed274a34d81fdea756d81a74783dc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDerivative.html#aa90ed274a34d81fdea756d81a74783dc">getParity</a> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;t_variable) const override</td></tr>
 <tr class="memdesc:aa90ed274a34d81fdea756d81a74783dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the parity property of the expression with respect to <b>t_variable</b>.  <a href="#aa90ed274a34d81fdea756d81a74783dc">More...</a><br /></td></tr>
 <tr class="separator:aa90ed274a34d81fdea756d81a74783dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,6 +150,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2a2df4eea5a20c002f58e0d1f41550f0 inherit pub_methods_classAbstractDuoFunc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstractDuoFunc.html#a2a2df4eea5a20c002f58e0d1f41550f0">getCommutable</a> () const override</td></tr>
 <tr class="memdesc:a2a2df4eea5a20c002f58e0d1f41550f0 inherit pub_methods_classAbstractDuoFunc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells if the <a class="el" href="classAbstractDuoFunc.html" title="Handle functions of multiple arguments. In the case of the call of a simplification function...">AbstractDuoFunc</a> is commutable.  <a href="classAbstractDuoFunc.html#a2a2df4eea5a20c002f58e0d1f41550f0">More...</a><br /></td></tr>
 <tr class="separator:a2a2df4eea5a20c002f58e0d1f41550f0 inherit pub_methods_classAbstractDuoFunc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a190a9f0cd68215273e87b627c878baa2 inherit pub_methods_classAbstractDuoFunc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstractDuoFunc.html#a190a9f0cd68215273e87b627c878baa2">isIndexed</a> () const override</td></tr>
+<tr class="separator:a190a9f0cd68215273e87b627c878baa2 inherit pub_methods_classAbstractDuoFunc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25fe2ce3cbe7c2c91345085485089a5a inherit pub_methods_classAbstractDuoFunc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classIndexStructure.html">IndexStructure</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstractDuoFunc.html#a25fe2ce3cbe7c2c91345085485089a5a">getIndexStructure</a> () const override</td></tr>
+<tr class="separator:a25fe2ce3cbe7c2c91345085485089a5a inherit pub_methods_classAbstractDuoFunc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a543e3e72f78bf20e1d63630404566262 inherit pub_methods_classAbstractDuoFunc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstractDuoFunc.html#a543e3e72f78bf20e1d63630404566262">getNArgs</a> (int axis=0) const override</td></tr>
 <tr class="memdesc:a543e3e72f78bf20e1d63630404566262 inherit pub_methods_classAbstractDuoFunc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <b>number of arguments</b> of the <a class="el" href="classAbstractDuoFunc.html" title="Handle functions of multiple arguments. In the case of the call of a simplification function...">AbstractDuoFunc</a>.  <a href="classAbstractDuoFunc.html#a543e3e72f78bf20e1d63630404566262">More...</a><br /></td></tr>
 <tr class="separator:a543e3e72f78bf20e1d63630404566262 inherit pub_methods_classAbstractDuoFunc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -239,8 +246,6 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="separator:ac702310492abaed2dfef1ee4d988d7c2 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0d151ec6c57077235d5664cdc993827 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classIndex.html">Index</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#ad0d151ec6c57077235d5664cdc993827">getIndex</a> (int i=0) const</td></tr>
 <tr class="separator:ad0d151ec6c57077235d5664cdc993827 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6bd19eb640458e6e70ddaf35115aa2d2 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classIndexStructure.html">IndexStructure</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a6bd19eb640458e6e70ddaf35115aa2d2">getIndexStructure</a> () const</td></tr>
-<tr class="separator:a6bd19eb640458e6e70ddaf35115aa2d2 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7960d79b133f222a433de92b9562c7cc inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="classIndicialParent.html">IndicialParent</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a7960d79b133f222a433de92b9562c7cc">getParent</a> () const</td></tr>
 <tr class="memdesc:a7960d79b133f222a433de92b9562c7cc inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">For indicial expressions this function returns a pointer to the parent object of type <a class="el" href="classIndicialParent.html">IndicialParent</a> (not an expression).  <a href="classAbstract.html#a7960d79b133f222a433de92b9562c7cc">More...</a><br /></td></tr>
 <tr class="separator:a7960d79b133f222a433de92b9562c7cc inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -435,6 +440,9 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
+<tr class="memitem:a9625b002313a3fef67010c74415e5911"><td class="memItemLeft" align="right" valign="top"><a id="a9625b002313a3fef67010c74415e5911"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>empty</b></td></tr>
+<tr class="separator:a9625b002313a3fef67010c74415e5911"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac85d5511fdb8d162a7278bfb440ae420"><td class="memItemLeft" align="right" valign="top"><a id="ac85d5511fdb8d162a7278bfb440ae420"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>order</b></td></tr>
 <tr class="separator:ac85d5511fdb8d162a7278bfb440ae420"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -502,6 +510,9 @@ std::array&lt; <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classDerivative.html">Derivative</a> </td>
@@ -521,6 +532,11 @@ std::array&lt; <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Creates the derivative of &amp; leftOperand wrt <em>rightOperand</em>, to <b>order</b> 1. </p>
@@ -586,8 +602,8 @@ std::array&lt; <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a9ab0f86191b05d660845c2f0ab25acea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9ab0f86191b05d660845c2f0ab25acea">&#9670;&nbsp;</a></span>derive()</h2>
+<a id="a734e27903a01ed65bac0ed55cde728bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a734e27903a01ed65bac0ed55cde728bc">&#9670;&nbsp;</a></span>derive()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -600,7 +616,7 @@ std::array&lt; <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143
           <td>(</td>
           <td class="paramtype">const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;&#160;</td>
           <td class="paramname"><em>expr</em></td><td>)</td>
-          <td> const</td>
+          <td></td>
         </tr>
       </table>
   </td>
@@ -619,7 +635,7 @@ std::array&lt; <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The derivative following the formula ... </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classAbstract.html#aba95f4c8269decb7c98fb5fb3f88f9c4">Abstract</a>.</p>
+<p>Reimplemented from <a class="el" href="classAbstract.html#a0051bf527eff054316fb14511d10e155">Abstract</a>.</p>
 
 </div>
 </div>
@@ -782,6 +798,38 @@ std::array&lt; <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143
 <dl class="section return"><dt>Returns</dt><dd>29 </dd></dl>
 
 <p>Implements <a class="el" href="classAbstract.html#ac545afdeb8b1724b1e8aff98b059b52c">Abstract</a>.</p>
+
+</div>
+</div>
+<a id="a88bcd3a5f8928c4f55d26a417a0bb447"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88bcd3a5f8928c4f55d26a417a0bb447">&#9670;&nbsp;</a></span>isEmpty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool isEmpty </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tells for a <a class="el" href="classDerivative.html" title="Handles the exponentiation of one Abstract wrt another. ">Derivative</a> or an Integral if the argument is empty i.e. if the object must apply on the next argument encountered on the right. </p>
+<dl class="section return"><dt>Returns</dt><dd><b>True</b> if the <a class="el" href="classDerivative.html" title="Handles the exponentiation of one Abstract wrt another. ">Derivative</a> or Integral awaits an argument. </dd>
+<dd>
+<b>False</b> else. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classAbstract.html#acf82f9b2937375c7b1cf3dccb3df3312">Abstract</a>.</p>
 
 </div>
 </div>

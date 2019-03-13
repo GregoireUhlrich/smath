@@ -3,6 +3,7 @@
 #include "mathFunctions.h"
 #include "vector.h"
 #include "simplification.h"
+#include "commutation.h"
 using namespace std;
 
 ///////////////////////////////////////////////////
@@ -763,8 +764,7 @@ IndexStructure Times::getIndexStructure() const
 void Times::selfCheckIndexStructure()
 {
     IndexStructure structure;
-    int nIndices = 0;
-    for (auto arg=argument.rend(); arg!=argument.rbegin(); ++arg) {
+    for (auto arg=argument.rbegin(); arg!=argument.rend(); ++arg) {
         if ((*arg)->getPrimaryType() != smType::Indicial)
             break;
         // To complete
@@ -950,7 +950,8 @@ void Times::leftInsert(const Expr& expr)
     for (int i=0; i<nArgs; i++) {
         Expr term2, exponent2;
         getExponentStructure(argument[i], term2, exponent2);
-        if (commut or argument[i]->getCommutable()) {
+        if ((commut and argument[i]->getCommutable())
+               or Commutation(expr, argument[i])) {
             // If we found the right term, it's done
             if (*term == term2) {
                 argument[i] = pow_(term, exponent->addition_own(exponent2));
@@ -998,7 +999,8 @@ void Times::rightInsert(const Expr& expr)
     for (int i=nArgs-1; i>=0; --i) {
         Expr term2, exponent2;
         getExponentStructure(argument[i], term2, exponent2);
-        if (commut or argument[i]->getCommutable()) {
+        if ((commut and argument[i]->getCommutable())
+               or Commutation(expr, argument[i])) {
             // If we found the right term, it's done
             if (*term == term2) {
                 argument[i] = pow_(term, exponent->addition_own(exponent2));
@@ -1129,6 +1131,8 @@ bool Times::mergeTerms()
         }
         else term = argument[i];
         bool indicial = (argument[i]->getPrimaryType() == smType::Indicial);
+        ///// 
+        // Must merge the two conditions with new commutability !!
         if (argument[i]->getCommutable()) {
             if (indicial) {
                 for (int j=i+1; j<nArgs; j++) {
@@ -1166,7 +1170,8 @@ bool Times::mergeTerms()
         else {
             if (indicial) {
                 for (int j=i+1; j<nArgs; j++) {
-                    if(!argument[j]->getCommutable() and *argument[i]!=argument[j])
+                    if(!argument[j]->getCommutable()
+                            and Commutation(argument[i],argument[j]) != ZERO)
                         break;
                     if (argument[j]->getPrimaryType() == smType::Indicial) {
                         argument[i] = make_shared<ITerm>(argument[i], argument[j]);
@@ -1178,7 +1183,8 @@ bool Times::mergeTerms()
             }
             else {
                 for (int j=i+1; j<nArgs; j++) {
-                    if(!argument[j]->getCommutable() and *argument[i]!=argument[j])
+                    if(!argument[j]->getCommutable()
+                            and Commutation(argument[i], argument[j]) != ZERO)
                         break;
                     factor2 = ONE;
                     if (argument[j]->getType() == smType::Pow) {  //Pow
@@ -1383,9 +1389,9 @@ bool Times::operator==(const Expr& expr) const
 Expr times_(const Expr& leftOperand, const Expr& rightOperand, bool explicitTimes)
 {
     if (leftOperand->getType() == smType::Derivative and
-        leftOperand->getArgument() == ZERO)
-        return derivative_(rightOperand,leftOperand->getArgument(1),
-                           leftOperand->getOrder());
+        leftOperand->isEmpty())
+        return derivative_(leftOperand->getArgument(0)*rightOperand,
+                leftOperand->getArgument(1), leftOperand->getOrder());
     if (leftOperand->getPrimaryType() == smType::Vectorial)
         return leftOperand->multiplication_own(rightOperand);
     if (rightOperand->getPrimaryType() == smType::Vectorial)
@@ -1417,6 +1423,21 @@ Expr times_(const Expr& leftOperand, const Expr& rightOperand, bool explicitTime
 
 Expr times_(const vector<Expr >& operands, bool explicitTimes)
 {
+    for (auto op=operands.begin(); op!=operands.end(); ++op) {
+        // Checking if there is an Empty derivative in the arguments.
+        if ((*op)->getType() == smType::Derivative 
+                and (*op)->isEmpty()) {
+            Expr left = ONE;
+            if (op != operands.begin())
+                left = times_(vector<Expr>(operands.begin(),op));
+            Expr right = ONE;
+            if (op+1 != operands.end())
+                right = times_(vector<Expr>(op+1, operands.end()));
+            return left*derivative_((*op)->getArgument(0)*right,
+                    (*op)->getArgument(1), (*op)->getOrder());
+        }
+    }
+
     Expr result = make_shared<Times>(operands, explicitTimes);
     if (result->getNArgs() == 1)
         return result->getArgument();
@@ -2433,6 +2454,10 @@ int Derivative::getOrder() const {
     return order;
 }
 
+bool Derivative::isEmpty() const {
+    return empty;
+}
+
 void Derivative::print(int mode) const
 {
     if (mode == 0 and name != "")
@@ -2529,6 +2554,7 @@ Expr derivative_(const Expr& leftOperand, const Expr& rightOperand, int order)
     vector<Expr> foo;
     bool commut;
     int posDerivative=0;
+    int endDerivative=foo.size();
     switch(rightOperand->getType()) {
 
         case smType::Plus:
@@ -2541,26 +2567,59 @@ Expr derivative_(const Expr& leftOperand, const Expr& rightOperand, int order)
         break;
 
         case smType::Times:
-        // d/dx(a*f(x)*...) = a*df(x)/dx...
+        // d/dx(a*f(x)*...*b) = a*d(f(x)...)/dx*b
         foo = rightOperand->getVectorArgument();
-        commut = true;
-        for (size_t i=0; i!=foo.size(); ++i) {
-            bool selfCommut = true;
-            if (not foo[i]->getCommutable()) {
-                commut = false;
-                selfCommut = false;
-            }
-            if(not foo[i]->dependsOn(leftOperand)) {
-                if (posDerivative == (int)i)
+        for (int i=0; i!=endDerivative; ++i) {
+            if (not foo[i]->dependsOn(leftOperand)) {
+                bool constantPulled = false;
+                bool blocked = false;
+                for (int j=i-1; j>=posDerivative; --j)
+                    if (*Commutation(foo[j], foo[i]) != ZERO) {
+                        blocked = true;
+                        break;
+                    }
+                if (not blocked) {
+                    Expr foo2 = foo[i];
+                    foo.erase(foo.begin()+i);
+                    foo.insert(foo.begin()+posDerivative, foo2);
                     ++posDerivative;
-                else if (commut or selfCommut) {
-                    swap(foo[posDerivative],foo[i]);
-                    ++posDerivative;
+                    constantPulled = true;
+                }
+                if (not constantPulled) {
+                    for (int j=i+1; j<endDerivative; ++j)
+                        if (*Commutation(foo[i], foo[j]) != ZERO) {
+                            blocked = true;
+                            break;
+                        }
+                    if (not blocked) {
+                        Expr foo2 = foo[i];
+                        foo.erase(foo.begin()+i);
+                        foo.insert(foo.begin()+endDerivative-1, foo2);
+                        --endDerivative;
+                        --i;
+                    }
                 }
             }
         }
-        // making explicit times because we know it is already canonical.
-        return times_(foo, true);
+        if (posDerivative != 0 or endDerivative != (int)foo.size()) {
+            Expr leftConstants = ONE;
+            Expr rightConstants = ONE;
+            Expr argument = rightOperand;
+            if (posDerivative != 0)
+                leftConstants = times_(vector<Expr>(foo.begin(),
+                            foo.begin()+posDerivative));
+            if (endDerivative - posDerivative > 0)
+                argument = times_(vector<Expr>(foo.begin()+posDerivative, 
+                            foo.begin()+endDerivative));
+            if (endDerivative != (int)foo.size())
+                rightConstants = times_(vector<Expr>(foo.begin()+endDerivative,
+                            foo.end()));
+            return leftConstants 
+                * make_shared<Derivative>(leftOperand, argument, order)
+                * rightConstants;
+        }
+        else 
+            return make_shared<Derivative>(leftOperand, rightOperand, order);
         break;
 
         default:

@@ -544,6 +544,7 @@ class Derivative: public AbstractDuoFunc{
 
     protected:
 
+    bool empty;
     int order;
 
     public:
@@ -586,6 +587,8 @@ class Derivative: public AbstractDuoFunc{
 
     int getOrder() const override;
 
+    bool isEmpty() const override;
+
     void print(int mode=0) const override;
 
     std::string printLaTeX(int mode=0) const override;
@@ -623,20 +626,30 @@ inline Polynomial::Polynomial(): AbstractMultiFunc(), variable(ZERO){}
 inline Fraction::Fraction(): AbstractDuoFunc(){}
 inline Pow::Pow(): AbstractDuoFunc(){}
 
-inline Derivative::Derivative(): AbstractDuoFunc(), order(1){}
+inline Derivative::Derivative(): AbstractDuoFunc(), empty(true), order(1)
+{
+    argument[0] = ONE;
+    argument[1] = ZERO;
+}
 inline Derivative::Derivative(const Expr& t_variable,
-                              int t_order): AbstractDuoFunc(), order(t_order){
+                              int t_order)
+    :AbstractDuoFunc(), empty(true), order(t_order)
+{
+    argument[0] = ONE;
     argument[1] = t_variable;
 }
 inline Derivative::Derivative(const Expr& leftOperand,
                               const Expr& rightOperand)
-                              : AbstractDuoFunc(), order(1){
+                              : AbstractDuoFunc(), empty(false), order(1)
+{
     argument[0] = leftOperand;
     argument[1] = rightOperand;
 }
 inline Derivative::Derivative(const Expr& leftOperand,
                               const Expr& rightOperand,
-                              int t_order): AbstractDuoFunc(), order(t_order){
+                              int t_order)
+    :AbstractDuoFunc(), empty(false), order(t_order)
+{
     argument[0] = leftOperand;
     argument[1] = rightOperand;
 }

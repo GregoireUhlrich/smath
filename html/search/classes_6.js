@@ -7,6 +7,5 @@ var searchData=
   ['integer',['Integer',['../classInteger.html',1,'']]],
   ['interpreter',['Interpreter',['../classInterpreter.html',1,'']]],
   ['itensor',['ITensor',['../classITensor.html',1,'']]],
-  ['iterm',['ITerm',['../classITerm.html',1,'']]],
-  ['itimes',['ITimes',['../classITimes.html',1,'']]]
+  ['iterm',['ITerm',['../classITerm.html',1,'']]]
 ];

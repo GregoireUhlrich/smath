@@ -61,9 +61,10 @@ Index Abstract::getIndex(int i) const
 
 IndexStructure Abstract::getIndexStructure() const
 {
+    return IndexStructure();
+    // Determine if we raise an error or not
     print();
     callError(smError::AbstractFuncCalled, "Abstract::getIndexStructure() const");
-    return IndexStructure();
 }
 
 const IndicialParent* Abstract::getParent() const
@@ -254,6 +255,13 @@ Expr Abstract::getTerm()
 }
 
 int Abstract::getOrder() const { return 0;}
+
+bool Abstract::isEmpty() const
+{
+    print();
+    callError(smError::AbstractFuncCalled, "Abstract::isEmpty");
+    return false;
+}
 
 Expr Abstract::getRealPart()
 {

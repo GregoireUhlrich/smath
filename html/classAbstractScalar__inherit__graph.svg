@@ -661,21 +661,6 @@ var sectionId = 'dynsection-0';
 <path fill="none" stroke="#191970" d="M294.9569,-53.4818C312.6681,-46.1518 335.0014,-36.9842 355,-29 363.6432,-25.5493 373.1777,-21.8321 381.5212,-18.6085"/>
 <polygon fill="#191970" stroke="#191970" points="293.534,-50.2828 285.637,-57.3459 296.215,-56.7491 293.534,-50.2828"/>
 </g>
-<!-- Node41 -->
-<g id="node42" class="node">
-<title>Node41</title>
-<g id="a_node42"><a xlink:href="classITimes.html" target="_top" xlink:title="ITimes">
-<polygon fill="#ffffff" stroke="#000000" points="496.5,-.5 496.5,-19.5 543.5,-19.5 543.5,-.5 496.5,-.5"/>
-<text text-anchor="middle" x="520" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">ITimes</text>
-</a>
-</g>
-</g>
-<!-- Node40&#45;&gt;Node41 -->
-<g id="edge41" class="edge">
-<title>Node40&#45;&gt;Node41</title>
-<path fill="none" stroke="#191970" d="M436.1457,-10C455.2405,-10 479.0361,-10 496.3957,-10"/>
-<polygon fill="#191970" stroke="#191970" points="436.0918,-6.5001 426.0918,-10 436.0917,-13.5001 436.0918,-6.5001"/>
-</g>
 </g>
 </svg>
         <g id="navigator" transform="translate(0 0)" fill="#404254">

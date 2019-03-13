@@ -95,7 +95,8 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="error_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a8132eb12bb071bcdd2b801cbc515e9da">UnknownProperty</a>, 
 <a class="el" href="error_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5ac77c798871dbf3baea97b5ae8efc70bf">InvalidITensor</a>, 
-<a class="el" href="error_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5ad87247c66365be621184b87e0d6e36fb">InvalidIndicialSum</a>
+<a class="el" href="error_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5ad87247c66365be621184b87e0d6e36fb">InvalidIndicialSum</a>, 
+<a class="el" href="error_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5ab0236d72eb9a618ba817fe47d24c2372">BadDependency</a>
 <br />
  }<tr class="memdesc:a2c3e4bb40f36b262a5214e2da2bca9c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">List all error possible.  <a href="error_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5">More...</a><br /></td></tr>
 </td></tr>
@@ -106,7 +107,8 @@ Enumerations</h2></td></tr>
 <a class="el" href="error_8h.html#af6ea07812363481c623a23ea26fbf8eda6ec8a2cb57e649000afecc6f72a81d53">FactorialFloat</a>, 
 <a class="el" href="error_8h.html#af6ea07812363481c623a23ea26fbf8edac0f52b4e303a6e4bdcb4965e21a92328">NotValued</a>, 
 <br />
-&#160;&#160;<a class="el" href="error_8h.html#af6ea07812363481c623a23ea26fbf8edaa9b91d05d6780a67093e34598646f7e3">Infinity</a>
+&#160;&#160;<a class="el" href="error_8h.html#af6ea07812363481c623a23ea26fbf8edaa9b91d05d6780a67093e34598646f7e3">Infinity</a>, 
+<a class="el" href="error_8h.html#af6ea07812363481c623a23ea26fbf8eda488d209abebae3e0a56784449500d4f6">CopyingBuildingBlock</a>
 <br />
  }<tr class="memdesc:af6ea07812363481c623a23ea26fbf8ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of all warning possible.  <a href="error_8h.html#af6ea07812363481c623a23ea26fbf8ed">More...</a><br /></td></tr>
 </td></tr>
@@ -179,6 +181,8 @@ static const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 </td></tr>
 <tr><td class="fieldname"><a id="a2c3e4bb40f36b262a5214e2da2bca9c5ad87247c66365be621184b87e0d6e36fb"></a>InvalidIndicialSum&#160;</td><td class="fielddoc"><p>Summing to terms that have not the same index structure </p>
 </td></tr>
+<tr><td class="fieldname"><a id="a2c3e4bb40f36b262a5214e2da2bca9c5ab0236d72eb9a618ba817fe47d24c2372"></a>BadDependency&#160;</td><td class="fielddoc"><p>Setting a contradictory dependency for a variable. </p>
+</td></tr>
 </table>
 
 </div>
@@ -206,6 +210,8 @@ static const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <tr><td class="fieldname"><a id="af6ea07812363481c623a23ea26fbf8edac0f52b4e303a6e4bdcb4965e21a92328"></a>NotValued&#160;</td><td class="fielddoc"><p>Evaluating a literal that is not valued. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="af6ea07812363481c623a23ea26fbf8edaa9b91d05d6780a67093e34598646f7e3"></a>Infinity&#160;</td><td class="fielddoc"><p>Apparition of infinity or undefined value in calculation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="af6ea07812363481c623a23ea26fbf8eda488d209abebae3e0a56784449500d4f6"></a>CopyingBuildingBlock&#160;</td><td class="fielddoc"><p>Copying building block (should not, they are and should stay shared_from_this) </p>
 </td></tr>
 </table>
 

@@ -189,6 +189,9 @@ class Abstract{
     /*! Determines if the object \b commutes with all other objects.*/
     bool commutable;
 
+    /*! Tells if the Abstract is indexed (A_ij, A_ij + B_ji etc). */
+    bool indexed;
+
     public:
 
     /*************************************************/
@@ -410,6 +413,13 @@ class Abstract{
      * \return \b order.
      */
     virtual int getOrder() const;
+
+    /*! \brief Tells for a Derivative or an Integral if the argument is empty
+     * i.e. if the object must apply on the next argument encountered on the right.
+     * \return \b True if the Derivative or Integral awaits an argument.
+     * \return \b False else.
+     */
+    virtual bool isEmpty() const;
 
     ///////////////////////////////////////////////////
     // Vectorial-type expressions
@@ -1112,14 +1122,18 @@ class AbstractScalar: public Abstract{
 /*************************************************/
 ///////////////////////////////////////////////////
 
-inline Abstract::Abstract(): name(""), commutable(true){}
+inline Abstract::Abstract(): name(""), commutable(true), indexed(false){}
 inline Abstract::Abstract(const std::string& t_name): name(t_name),
-                                                      commutable(true){}
+                                                      commutable(true),
+                                                      indexed(false){}
 inline std::string Abstract::getName() const{
     return name;
 }
 inline bool Abstract::getCommutable() const {
     return commutable;
+}
+inline bool Abstract::getIndexed() const {
+    return indexed;
 }
 inline void Abstract::setName(const std::string& t_name) {
     name = t_name;

@@ -1,7 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
 <area shape="rect" id="node1" href="$classAbstract.html" title="Root class of the inheritance tree of abstracts. " alt="" coords="5,1475,76,1501"/>
 <area shape="rect" id="node2" href="$classAbstractScalar.html" title="Abstract class concerning all scalars (dim = 0). Allows to implement one time getDim() = 0 for all sc..." alt="" coords="131,1171,239,1197"/>
-<area shape="rect" id="node43" href="$classAbstractVectorial.html" title="AbstractVectorial" alt="" coords="124,1551,247,1577"/>
+<area shape="rect" id="node42" href="$classAbstractVectorial.html" title="AbstractVectorial" alt="" coords="124,1551,247,1577"/>
 <area shape="rect" id="node3" href="$classAbstractBuildingBlock.html" title="Abstract class from which derive all building blocks of exprs, i.e. objects not function of further e..." alt="" coords="295,284,445,311"/>
 <area shape="rect" id="node13" href="$classAbstractDuoFunc.html" title="Handle functions of multiple arguments. In the case of the call of a simplification function..." alt="" coords="308,461,432,488"/>
 <area shape="rect" id="node18" href="$classAbstractFunc.html" title="Base class for scalar functions of one argument. " alt="" coords="320,968,420,995"/>
@@ -41,8 +41,7 @@
 <area shape="rect" id="node39" href="$classPlus.html" title="Handles a sum, function of multiple arguments. " alt="" coords="535,1475,583,1501"/>
 <area shape="rect" id="node40" href="$classPolynomial.html" title="Handles a polynomial, function of multiple arguments. " alt="" coords="515,1525,602,1552"/>
 <area shape="rect" id="node41" href="$classTimes.html" title="Handles a product, function of multiple arguments. " alt="" coords="529,1576,588,1603"/>
-<area shape="rect" id="node42" href="$classITimes.html" title="ITimes" alt="" coords="724,1576,787,1603"/>
-<area shape="rect" id="node44" href="$classHighDTensor.html" title="HighDTensor" alt="" coords="321,1525,419,1552"/>
-<area shape="rect" id="node45" href="$classMatrix.html" title="Matrix" alt="" coords="341,1576,399,1603"/>
-<area shape="rect" id="node46" href="$classVector.html" title="Vector" alt="" coords="340,1627,400,1653"/>
+<area shape="rect" id="node43" href="$classHighDTensor.html" title="HighDTensor" alt="" coords="321,1525,419,1552"/>
+<area shape="rect" id="node44" href="$classMatrix.html" title="Matrix" alt="" coords="341,1576,399,1603"/>
+<area shape="rect" id="node45" href="$classVector.html" title="Vector" alt="" coords="340,1627,400,1653"/>
 </map>

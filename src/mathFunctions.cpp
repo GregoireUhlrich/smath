@@ -485,33 +485,30 @@ Expr sin_(const Expr& expr)
 {
     if (*expr == ZERO)
         return ZERO;
-    if (expr->dependsOn(pi_))
-    {
-        if (*expr == fraction_(pi_,int_(2)))
-            return int_(1);
-        if (*expr == fraction_(times_(int_(-3),pi_),int_(2)))
-            return int_(1);
-        if (*expr == pi_)
-            return ZERO;
-        if (*expr == times_(int_(-1),pi_))
-            return ZERO;
-        if (*expr == times_(int_(3),fraction_(pi_,int_(2))))
-            return int_(-1);
-        if (*expr == fraction_(times_(int_(-1),pi_),int_(2)))
-            return int_(-1);
-        if (*expr == fraction_(pi_,int_(3)))
-            return fraction_(sqrt_(int_(3)),int_(2));
-        if (*expr == times_(_cfraction_(2,3),pi_))
-            return fraction_(sqrt_(int_(3)),int_(2));
-        if (*expr == fraction_(pi_,int_(6)))
-            return _cfraction_(1,2);
-        if (*expr == times_(int_(5),fraction_(pi_,int_(6))))
-            return _cfraction_(1,2);
-        if (*expr == fraction_(pi_,int_(4)))
-            return fraction_(sqrt_(int_(2)),int_(2));
-        if (*expr == times_(int_(3),fraction_(pi_,int_(4))))
-            return fraction_(sqrt_(int_(2)),int_(2));
-    }
+    if (*expr == fraction_(pi_,int_(2)))
+        return int_(1);
+    if (*expr == fraction_(times_(int_(-3),pi_),int_(2)))
+        return int_(1);
+    if (*expr == pi_)
+        return ZERO;
+    if (*expr == times_(int_(-1),pi_))
+        return ZERO;
+    if (*expr == times_(int_(3),fraction_(pi_,int_(2))))
+        return int_(-1);
+    if (*expr == fraction_(times_(int_(-1),pi_),int_(2)))
+        return int_(-1);
+    if (*expr == fraction_(pi_,int_(3)))
+        return fraction_(sqrt_(int_(3)),int_(2));
+    if (*expr == times_(_cfraction_(2,3),pi_))
+        return fraction_(sqrt_(int_(3)),int_(2));
+    if (*expr == fraction_(pi_,int_(6)))
+        return _cfraction_(1,2);
+    if (*expr == times_(int_(5),fraction_(pi_,int_(6))))
+        return _cfraction_(1,2);
+    if (*expr == fraction_(pi_,int_(4)))
+        return fraction_(sqrt_(int_(2)),int_(2));
+    if (*expr == times_(int_(3),fraction_(pi_,int_(4))))
+        return fraction_(sqrt_(int_(2)),int_(2));
     Expr res = make_shared<Sin>(expr);
 
     return res;
@@ -628,33 +625,30 @@ Expr tan_(const Expr& expr)
 {
     if (*expr == ZERO)
         return ZERO;
-    if (expr->dependsOn(pi_))
-    {
-        if (*expr == fraction_(pi_,int_(2)))
-            return INF;
-        if (*expr == fraction_(times_(int_(-3),pi_),int_(2)))
-            return INF;
-        if (*expr == pi_)
-            return ZERO;
-        if (*expr == times_(int_(-1),pi_))
-            return ZERO;
-        if (*expr == times_(int_(3),fraction_(pi_,int_(2))))
-            return INF;
-        if (*expr == fraction_(times_(int_(-1),pi_),int_(2)))
-            return INF;
-        if (*expr == fraction_(pi_,int_(3)))
-            return sqrt_(int_(3));
-        if (*expr == times_(_cfraction_(2,3),pi_))
-            return times_(int_(-1),sqrt_(int_(3)));
-        if (*expr == fraction_(pi_,int_(6)))
-            return fraction_(int_(1),sqrt_(int_(3)));
-        if (*expr == times_(int_(5),fraction_(pi_,int_(6))))
-            return fraction_(int_(-1),sqrt_(int_(3)));
-        if (*expr == fraction_(pi_,int_(4)))
-            return int_(1);
-        if (*expr == times_(int_(3),fraction_(pi_,int_(4))))
-            return int_(1);
-    }
+    if (*expr == fraction_(pi_,int_(2)))
+        return INF;
+    if (*expr == fraction_(times_(int_(-3),pi_),int_(2)))
+        return INF;
+    if (*expr == pi_)
+        return ZERO;
+    if (*expr == times_(int_(-1),pi_))
+        return ZERO;
+    if (*expr == times_(int_(3),fraction_(pi_,int_(2))))
+        return INF;
+    if (*expr == fraction_(times_(int_(-1),pi_),int_(2)))
+        return INF;
+    if (*expr == fraction_(pi_,int_(3)))
+        return sqrt_(int_(3));
+    if (*expr == times_(_cfraction_(2,3),pi_))
+        return times_(int_(-1),sqrt_(int_(3)));
+    if (*expr == fraction_(pi_,int_(6)))
+        return fraction_(int_(1),sqrt_(int_(3)));
+    if (*expr == times_(int_(5),fraction_(pi_,int_(6))))
+        return fraction_(int_(-1),sqrt_(int_(3)));
+    if (*expr == fraction_(pi_,int_(4)))
+        return int_(1);
+    if (*expr == times_(int_(3),fraction_(pi_,int_(4))))
+        return int_(1);
     Expr res = make_shared<Tan>(expr);
 
     return res;

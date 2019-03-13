@@ -170,7 +170,7 @@ cout<<variable->evaluateScalar()<<" "<<developed->evaluateScalar()<<endl;
     {
         cout<<"Permutation "<<i+1<<": ";
         vecExpr[i]->print()
-
+ofojeogz
     }*/
 
     Permutation antiSym1(4,{0,1});

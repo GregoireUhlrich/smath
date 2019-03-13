@@ -18,8 +18,8 @@ int main(){
     xS = 3;
     cout<<"xS = "<<xS.evaluateScalar()<<endl;
     cout<<"xS = 3\n";
-    cout<<"yS = "<<yS.evaluateScalar()<<endl;
-    cout<<"yS = 523/21\n";
+    cout<<"yS = "<<yS.evaluate()<<endl;
+    cout<<"yS = 526/21\n";
     yS.clear();
 
     shared_ptr<Abstract> copy = xS.getAbstract();
