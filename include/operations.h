@@ -628,6 +628,7 @@ inline Pow::Pow(): AbstractDuoFunc(){}
 
 inline Derivative::Derivative(): AbstractDuoFunc(), empty(true), order(1)
 {
+    commutable = false;
     argument[0] = ONE;
     argument[1] = ZERO;
 }
@@ -635,6 +636,7 @@ inline Derivative::Derivative(const Expr& t_variable,
                               int t_order)
     :AbstractDuoFunc(), empty(true), order(t_order)
 {
+    commutable = false;
     argument[0] = ONE;
     argument[1] = t_variable;
 }
@@ -642,6 +644,7 @@ inline Derivative::Derivative(const Expr& leftOperand,
                               const Expr& rightOperand)
                               : AbstractDuoFunc(), empty(false), order(1)
 {
+    commutable = false;
     argument[0] = leftOperand;
     argument[1] = rightOperand;
 }
@@ -650,6 +653,7 @@ inline Derivative::Derivative(const Expr& leftOperand,
                               int t_order)
     :AbstractDuoFunc(), empty(false), order(t_order)
 {
+    commutable = false;
     argument[0] = leftOperand;
     argument[1] = rightOperand;
 }

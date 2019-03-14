@@ -21,9 +21,9 @@ string Index::printLaTeX() const {
 
 bool Index::operator==(const Index& t_index) const
 {
-    return (name == t_index.getName() and
-            free == t_index.getFree() and 
-            space == t_index.getSpace());
+    return (name == t_index.getName()
+            and free == t_index.getFree() 
+            and space == t_index.getSpace());
 }
 
 bool Index::operator!=(const Index& t_index) const {

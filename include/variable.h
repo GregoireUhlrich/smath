@@ -540,13 +540,13 @@ class Variable: public AbstractLiteral{
      */
     void setValue(double t_value) override;
 
-    void setElementary(bool t_elementary);
+    void setElementary(bool t_elementary) override;
 
-    void setAllDependencies(bool t_allDependencies);
+    void setAllDependencies(bool t_allDependencies) override;
 
-    void addDependency(const Expr& expr);
+    void addDependency(const Expr& expr) override;
 
-    void removeDependency(const Expr& expr);
+    void removeDependency(const Expr& expr) override;
 
     /*! \brief Displays the Variable on standard output.
      * \details If mode==0 prints the Variable alone with its \b value, else 
@@ -812,14 +812,22 @@ static const Expr e_ = std::make_shared<Constant>("e",M_E);
  * \bug Will not work for many cases, in particular log(0)!=\b INF. 
  * Not yet implemented.
  */
-static Expr INF = std::make_shared<Constant>("inf");
+static const Expr INF = std::make_shared<Constant>("inf");
+
+/*! \var UNDEFINED
+ * \brief Constant that is useful in return of non-defined calculations 
+ * as for example Commutator(): [A,B] returns UNDEFINED when it is not
+ * defined (more than AB-BA). It allows the program to avoid circular 
+ * calculations and seg fault.
+ */
+static const Expr UNDEFINED = std::make_shared<Constant>("Undefined");
 
 /*!
  * \var WHATEVER
  * Variable that returns true when compared to another expr.
  * (WHATEVER == X) = (X == WHATEVER) = \b true
  */
-static Expr WHATEVER = std::make_shared<Constant>("###");
+static const Expr WHATEVER = std::make_shared<Constant>("###");
 
 /*************************************************/
 // User-functions for the creation of            //

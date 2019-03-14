@@ -211,9 +211,10 @@ bool AbstractMultiFunc::getCommutable() const
     if (not commutable) 
         return false;
 
-    for (const auto& arg: argument)
+    for (const auto& arg: argument) {
         if (not arg->getCommutable())
             return false;
+    }
 
     return true;
 }

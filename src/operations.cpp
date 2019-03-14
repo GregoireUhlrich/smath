@@ -951,7 +951,7 @@ void Times::leftInsert(const Expr& expr)
         Expr term2, exponent2;
         getExponentStructure(argument[i], term2, exponent2);
         if ((commut and argument[i]->getCommutable())
-               or Commutation(expr, argument[i])) {
+               or *Commutation(expr, argument[i]) == ZERO) {
             // If we found the right term, it's done
             if (*term == term2) {
                 argument[i] = pow_(term, exponent->addition_own(exponent2));
@@ -1183,8 +1183,8 @@ bool Times::mergeTerms()
             }
             else {
                 for (int j=i+1; j<nArgs; j++) {
-                    if(!argument[j]->getCommutable()
-                            and Commutation(argument[i], argument[j]) != ZERO)
+                    if(not argument[j]->getCommutable()
+                            and (*Commutation(argument[i], argument[j]) != ZERO))
                         break;
                     factor2 = ONE;
                     if (argument[j]->getType() == smType::Pow) {  //Pow
@@ -2464,16 +2464,21 @@ void Derivative::print(int mode) const
         cout<<name<<" = ";
     cout<<"d";
     if (order > 1)
-        cout<<"^"<<order<<"(";
-    cout<<"(";
-    argument[0]->print(1);
-    cout<<")";
+        cout<<"^"<<order;
     cout<<"/d";
     cout<<"(";
     argument[1]->print(1);
     cout<<")";
     if (order > 1)
         cout<<"^"<<order;
+    cout<<"(";
+    if (empty) {
+        if (*argument[0] != ONE)
+            argument[0]->print(1);
+        return;
+    }
+    argument[0]->print(1);
+    cout<<")";
     if (mode == 0)
         cout<<endl;
 }
@@ -2486,7 +2491,12 @@ string Derivative::printLaTeX(int mode) const
     sout<<"\\dfrac{d^"<<order<<"}{d";
     sout<<argument[1]->printLaTeX(1);
     sout<<"^"<<order<<"}\\left(";
-    sout<<argument[1]->printLaTeX(1);
+    if (empty) {
+        if (*argument[0] != ONE)
+            sout<<argument[0]->printLaTeX(1);
+        return sout.str();
+    }
+    sout<<argument[0]->printLaTeX(1);
     sout<<"\\right)";
 
     return sout.str();

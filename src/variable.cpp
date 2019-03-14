@@ -730,10 +730,11 @@ int Variable::getParity(const Expr& t_variable) const
 void Variable::setElementary(bool t_elementary)
 {
     elementary = t_elementary;
-    if (elementary) {
+    if (elementary) 
         allDependencies = false;
-        dependencies.clear();
-    }
+    else
+        allDependencies = true;
+    dependencies.clear();
 }
 
 void Variable::setAllDependencies(bool t_allDependencies)

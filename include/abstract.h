@@ -507,6 +507,18 @@ class Abstract{
     virtual void setValue(double t_value);
 
     ///////////////////////////////////////////////////
+    // Variable
+    ///////////////////////////////////////////////////
+
+    virtual void setElementary(bool t_elementary);
+
+    virtual void setAllDependencies(bool t_allDependencies);
+
+    virtual void addDependency(const Expr& expr);
+
+    virtual void removeDependency(const Expr& expr);
+
+    ///////////////////////////////////////////////////
     // (Multi) argument(s) functions
     ///////////////////////////////////////////////////
 
@@ -1123,17 +1135,11 @@ class AbstractScalar: public Abstract{
 ///////////////////////////////////////////////////
 
 inline Abstract::Abstract(): name(""), commutable(true), indexed(false){}
-inline Abstract::Abstract(const std::string& t_name): name(t_name),
-                                                      commutable(true),
-                                                      indexed(false){}
+inline Abstract::Abstract(const std::string& t_name)
+    :name(t_name), commutable(true), indexed(false){}
+
 inline std::string Abstract::getName() const{
     return name;
-}
-inline bool Abstract::getCommutable() const {
-    return commutable;
-}
-inline bool Abstract::getIndexed() const {
-    return indexed;
 }
 inline void Abstract::setName(const std::string& t_name) {
     name = t_name;

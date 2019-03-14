@@ -224,6 +224,13 @@ ofojeogz
     (eps_({i,i,j})+eps_({i,i,j}))->print();
     (eps_({i,j,k})*eps_({i,l,n}))->print();
 
+    (derivative_(x,1)*y).print();
+    y.getAbstract()->setElementary(false);
+    (derivative_(x,1)*y).print();
+    (y*derivative_(x,1)).print();
+    (z.getAbstract())->setElementary(false);
+    ((y*derivative_(x,1))*z).print();
+
     return 0;
     /*Symbol i("i"), j("j");
     int N = 200;

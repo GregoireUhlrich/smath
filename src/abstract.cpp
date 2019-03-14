@@ -6,6 +6,10 @@
 #pragma GCC diagnostic ignored "-Wreturn-type"
 using namespace std;
 
+bool Abstract::getCommutable() const {
+    return commutable;
+}
+
 void Abstract::printExplicit(int mode) const
 {
     cout<<"type="<<getType()<<" : ";
@@ -220,7 +224,7 @@ bool Abstract::isBuildingBlock() const {
 }
 
 bool Abstract::isIndexed() const {
-    return false;
+    return indexed;
 }
 
 bool Abstract::isInteger() const {
@@ -328,6 +332,34 @@ void Abstract::setValue(double value)
 {
     print();
     callError(smError::AbstractFuncCalled, "Abstract::setValue(double value)");
+}
+
+void Abstract::setElementary(bool t_elementary)
+{
+    print();
+    callError(smError::AbstractFuncCalled,
+            "Abstract::setElementary(bool t_elementary)");
+}
+
+void Abstract::setAllDependencies(bool t_allDependencies)
+{
+    print();
+    callError(smError::AbstractFuncCalled,
+            "Abstract::setAllDependencies(bool t_allDependencies)");
+}
+
+void Abstract::addDependency(const Expr& expr)
+{
+    print();
+    callError(smError::AbstractFuncCalled,
+            "Abstract::addDependency(const Expr& expr)");
+}
+
+void Abstract::removeDependency(const Expr& expr)
+{
+    print();
+    callError(smError::AbstractFuncCalled,
+            "Abstract::removeDependency(const Expr& expr)");
 }
 
 void Abstract::setArgument(const Expr& expr, int iArg)

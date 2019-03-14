@@ -102,7 +102,7 @@ inline void callError(smError::Error error, const std::string& caller, T spec)
         case InvalidIndicialSum:
                std::cout<<"Invalid sum of indicial objects in "<<caller<<std::endl; break;
         case BadDependency:
-               std::cout<<"Bad dependy set for "<<spec<<" in "<<caller<<"\n"; break;
+               std::cout<<"Bad dependency set for "<<spec<<" in "<<caller<<"\n"; break;
 
         default:
                std::cout<<"ScmType "<<(int)error<<" not recognized.\n";

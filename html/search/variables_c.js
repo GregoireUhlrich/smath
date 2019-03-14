@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['zero',['ZERO',['../variable_8h.html#ab284bdf3b32e4fc5d5db7feb9fcfb8f0',1,'variable.h']]]
+  ['whatever',['WHATEVER',['../variable_8h.html#a56f85f49682bd27ec1b364f7036030ee',1,'variable.h']]]
 ];
