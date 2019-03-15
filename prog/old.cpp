@@ -660,6 +660,16 @@ int main(){
     cout<<"Simplify:  \n";
     eps = Simplify(dot(eps, eps.inverseMatrix()));
     eps.print();
+
+    eps = matrix_(2,2);
+    eps.setArgument(1,{0,0});
+    eps.setArgument(-3,{0,1});
+    eps.setArgument(1,{1,0});
+    eps.setArgument(-2,{1,1});
+    Symbol vecvec = vector_(2);
+    vecvec.setArgument(-20,0);
+    vecvec.setArgument(2,1);
+    (dot(eps.inverseMatrix(), vecvec)).print();
     
     tensor = tensor-lambda*eps;
 
@@ -761,11 +771,12 @@ int main(){
     d_mu = vector_(4);
     Symbol tS("t");
     yS.clear();
-    Symbol dx("dx"), dy("dy"), dz("dz"), dt("dt");
-    d_mu.setArgument(dt,0);
-    d_mu.setArgument(dx,1);
-    d_mu.setArgument(dy,2);
-    d_mu.setArgument(dz,3);
+    xS.clear();
+    zS.clear();
+    d_mu.setArgument(derivative_(tS),0);
+    d_mu.setArgument(derivative_(xS),1);
+    d_mu.setArgument(derivative_(yS),2);
+    d_mu.setArgument(derivative_(zS),3);
     tensor = tensor_dot(d_mu,F_munu);
     d_mu.print();
     tensor.print();

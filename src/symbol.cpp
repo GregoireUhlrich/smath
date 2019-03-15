@@ -19,6 +19,15 @@ Symbol::Symbol(std::string t_name)
     name = t_name;
 }
 
+Symbol::Symbol(std::string t_name, bool constant)
+{
+    if (constant)
+        abstract = constant_(t_name);
+    else
+        abstract = var_(t_name);
+    name = t_name;
+}
+
 Symbol::Symbol(int value)
 {
     name = "";

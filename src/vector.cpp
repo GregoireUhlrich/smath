@@ -427,38 +427,68 @@ Expr AbstractVectorial::addition_own(const Expr& expr) const
     return foo;
 }
 
-Expr AbstractVectorial::multiplication_own(const Expr& expr) const
+Expr AbstractVectorial::multiplication_own(const Expr& expr, bool side) const
 {
     if (!exactMatchShape(expr)) {
         cout<<"Warning: shapes do not match in multiplication_own.\n";
         return ZERO;
     }
     Expr foo = tensor_(getShape());
-    if (expr->getDim() == 0) {
-        if (dim == 1) {
+    if (side) {
+        if (expr->getDim() == 0) {
+            if (dim == 1) {
+                int i=0;
+                for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i) 
+                    *arg = times_(argument[i], expr);
+
+                return foo;
+            }
             int i=0;
             for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i)
-                *arg = times_(expr, argument[i]);
+                *arg = argument[i]->multiplication_own(expr);
 
             return foo;
         }
-        int i=0;
-        for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i)
-            *arg = argument[i]->multiplication_own(expr);
-
-        return foo;
-    }
-    if (dim == 1) {
-        int i=0;
-        iter arg2 = expr->begin();
-        for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++arg2, ++i)
-            *arg = times_(argument[i],*arg2);
+        if (dim == 1) {
+            int i=0;
+            iter arg2 = expr->begin();
+            for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++arg2, ++i)
+                *arg = times_(argument[i],*arg2);
+        }
+        else {
+            int i=0;
+            iter arg2 = expr->begin();
+            for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++arg2, ++i)
+                *arg = argument[i]->multiplication_own(*arg2);
+        }
     }
     else {
-        int i=0;
-        iter arg2 = expr->begin();
-        for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++arg2, ++i)
-            *arg = argument[i]->multiplication_own(*arg2);
+        if (expr->getDim() == 0) {
+            if (dim == 1) {
+                int i=0;
+                for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i) 
+                    *arg = times_(expr, argument[i]);
+
+                return foo;
+            }
+            int i=0;
+            for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i)
+                *arg = argument[i]->multiplication_own(expr, 0);
+
+            return foo;
+        }
+        if (dim == 1) {
+            int i=0;
+            iter arg2 = expr->begin();
+            for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++arg2, ++i)
+                *arg = times_(*arg2, argument[i]);
+        }
+        else {
+            int i=0;
+            iter arg2 = expr->begin();
+            for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++arg2, ++i)
+                *arg = argument[i]->multiplication_own(*arg2, 0);
+        }
     }
 
     return foo;
@@ -480,7 +510,7 @@ Expr AbstractVectorial::tensor_dot(const Expr& expr) const
     else  {
         int i=0;
         for (iter arg=foo->begin(); arg!=foo->end(); ++arg, ++i)
-            *arg = expr->multiplication_own(argument[i]);
+            *arg = expr->multiplication_own(argument[i],0);
     }
     
     return foo;

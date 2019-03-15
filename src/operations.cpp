@@ -937,21 +937,35 @@ void Times::insert(const Expr& expr, bool side)
         return;
     }
 
+    if (expr->getType() == smType::Derivative 
+            and expr->isEmpty()
+            and not side) {
+        if (*expr->getArgument(0) == ONE)
+            argument = vector<Expr>(1,derivative_(Copy(this),
+                        expr->getArgument(1),
+                        expr->getOrder()));
+        else 
+            argument =  vector<Expr>(1,derivative_(
+                        expr->getArgument(0)*Copy(this),
+                        expr->getArgument(1),
+                        expr->getOrder()));
+        nArgs = 1;
+        return;
+    }
+                
     if (side) rightInsert(expr);
     else      leftInsert (expr);
 }
 void Times::leftInsert(const Expr& expr)
 {
     // If not numerical, we search for a similar term
-    bool commut = expr->getCommutable();
     int max = nArgs;
     Expr term, exponent;
     getExponentStructure(expr, term, exponent);
     for (int i=0; i<nArgs; i++) {
         Expr term2, exponent2;
         getExponentStructure(argument[i], term2, exponent2);
-        if ((commut and argument[i]->getCommutable())
-               or *Commutation(expr, argument[i]) == ZERO) {
+        if (*Commutation(expr, argument[i]) == ZERO) {
             // If we found the right term, it's done
             if (*term == term2) {
                 argument[i] = pow_(term, exponent->addition_own(exponent2));
@@ -979,7 +993,7 @@ void Times::leftInsert(const Expr& expr)
 
     // No term corresponds, we order correctly the new term in the sum
     for (int i=0; i<max; i++) 
-        if (expr < argument[i]) {
+        if (expr < argument[i] or *Commutation(expr, argument[i]) != ZERO) {
             ++nArgs;
             argument.insert(argument.begin()+i, expr);
             return;
@@ -992,15 +1006,13 @@ void Times::leftInsert(const Expr& expr)
 void Times::rightInsert(const Expr& expr)
 {
     // If not numerical, we search for a similar term
-    bool commut = expr->getCommutable();
     int max = -1;
     Expr term, exponent;
     getExponentStructure(expr, term, exponent);
     for (int i=nArgs-1; i>=0; --i) {
         Expr term2, exponent2;
         getExponentStructure(argument[i], term2, exponent2);
-        if ((commut and argument[i]->getCommutable())
-               or Commutation(expr, argument[i])) {
+        if (*Commutation(expr, argument[i]) == ZERO) {
             // If we found the right term, it's done
             if (*term == term2) {
                 argument[i] = pow_(term, exponent->addition_own(exponent2));
@@ -1028,7 +1040,7 @@ void Times::rightInsert(const Expr& expr)
 
     // No term corresponds, we order correctly the new term in the sum
     for (int i=nArgs-1; i>max; --i)  {
-        if (expr > argument[i]) {
+        if (expr > argument[i] or *Commutation(expr, argument[i]) != ZERO) {
             ++nArgs;
             argument.insert(argument.begin()+i+1, expr);
             return;
@@ -1079,9 +1091,10 @@ bool Times::mergeTerms()
             vector<shared_ptr<Abstract> > t_argument =
                 argument[i]->getVectorArgument();
 
-            for (int j=0; j<nArgs; j++)
-                if (i != j)
-                    t_argument.push_back(argument[j]);
+            for (int j=i-1; j>=0; --j)
+                t_argument.insert(t_argument.begin(),argument[j]);
+            for (int j=i+1; j<nArgs; ++j)
+                t_argument.push_back(argument[j]);
             nArgs += argument[i]->getNArgs()-1;
             i += argument[i]->getNArgs()-1;
             argument = t_argument;
@@ -1130,10 +1143,11 @@ bool Times::mergeTerms()
                 term = argument[i];
         }
         else term = argument[i];
-        bool indicial = (argument[i]->getPrimaryType() == smType::Indicial);
+        //bool indicial = (argument[i]->getPrimaryType() == smType::Indicial);
+
         ///// 
         // Must merge the two conditions with new commutability !!
-        if (argument[i]->getCommutable()) {
+        /*if (false and argument[i]->getCommutable()) {
             if (indicial) {
                 for (int j=i+1; j<nArgs; j++) {
                     if (argument[j]->getPrimaryType() == smType::Indicial) {
@@ -1166,45 +1180,38 @@ bool Times::mergeTerms()
                     }
                 }
             }
-        }
-        else {
-            if (indicial) {
-                for (int j=i+1; j<nArgs; j++) {
-                    if(!argument[j]->getCommutable()
-                            and Commutation(argument[i],argument[j]) != ZERO)
-                        break;
-                    if (argument[j]->getPrimaryType() == smType::Indicial) {
-                        argument[i] = make_shared<ITerm>(argument[i], argument[j]);
-                        argument.erase(argument.begin()+j);
-                        j--;
-                        nArgs--;
-                    }
+        }*/
+        /*if (indicial) { for (int j=i+1; j<nArgs; j++) {
+                if(*Commutation(argument[i],argument[j]) != ZERO)
+                    break;
+                if (argument[j]->getPrimaryType() == smType::Indicial) {
+                    argument[i] = make_shared<ITerm>(argument[i], argument[j]);
+                    argument.erase(argument.begin()+j);
+                    j--;
+                    nArgs--;
                 }
             }
-            else {
-                for (int j=i+1; j<nArgs; j++) {
-                    if(not argument[j]->getCommutable()
-                            and (*Commutation(argument[i], argument[j]) != ZERO))
-                        break;
-                    factor2 = ONE;
-                    if (argument[j]->getType() == smType::Pow) {  //Pow
-                        term2 = argument[j]->getArgument(1);
-                        if (term2->getPrimaryType() == smType::Numerical) {
-                            factor2 = term2;
-                            term2 = argument[j]->getArgument();
-                        }
-                        else 
-                            term2 = argument[j];
-                    }
-                    else term2 = argument[j];
-                    if (*term==term2) {
-                        factor = factor->addition_own(factor2);
-                        matched = true;
-                        argument.erase(argument.begin()+j);
-                        j--;
-                        nArgs--;
-                    }
+        }*/
+        for (int j=i+1; j<nArgs; j++) {
+            if(*Commutation(argument[i], argument[j]) != ZERO)
+                break;
+            factor2 = ONE;
+            if (argument[j]->getType() == smType::Pow) {  //Pow
+                term2 = argument[j]->getArgument(1);
+                if (term2->getPrimaryType() == smType::Numerical) {
+                    factor2 = term2;
+                    term2 = argument[j]->getArgument();
                 }
+                else 
+                    term2 = argument[j];
+            }
+            else term2 = argument[j];
+            if (*term==term2) {
+                factor = factor->addition_own(factor2);
+                matched = true;
+                argument.erase(argument.begin()+j);
+                j--;
+                nArgs--;
             }
         }
         if (matched) {
@@ -1231,13 +1238,11 @@ void Times::orderTerms()
     Expr foo;
     for (int i=0; i<nArgs-1; i++) {
         int simpler = i;
-        bool allCommutable = argument[i]->getCommutable();
+        if (not argument[i]->getCommutable())
+            continue;
         for (int j=i+1; j<nArgs; j++) {
-            if (not argument[j]->getCommutable()) {
-                if (not allCommutable)
-                    break;
-                allCommutable = false;
-            }
+            if (not argument[j]->getCommutable()) 
+                break;
             if (*argument[j] < argument[simpler]) // argument[j] simpler
                 simpler = j;
         }
@@ -1386,16 +1391,45 @@ bool Times::operator==(const Expr& expr) const
     return true;
 }
 
+void applyDerivative(Expr& product)
+{
+    if (product->getType() != smType::Times)
+        callError(smError::BadType,
+                "applyDerivative(Expr& product)", smType::Times);
+
+    const vector<Expr>& argument = product->getVectorArgument();
+    for (const_iter arg=argument.begin(); arg!=argument.end(); ++arg) {
+        if ((*arg)->getType() == smType::Derivative
+                and (*arg)->isEmpty()) {
+            Expr left = ONE;
+            Expr derivativeArgument = ONE;
+            Expr right = ONE;
+            if (arg != argument.begin())
+                left = times_(vector<Expr>(argument.begin(),arg)); 
+            if (arg+1 != argument.end())
+                right = times_(vector<Expr>(arg+1, argument.end()));
+            if (left->getType() == smType::Times)
+                applyDerivative(left);
+            if (right->getType() == smType::Times)
+                applyDerivative(right);
+            if (*right != ONE)
+                product = left*(*arg*right);
+            break;
+        }
+    }
+}
+
 Expr times_(const Expr& leftOperand, const Expr& rightOperand, bool explicitTimes)
 {
     if (leftOperand->getType() == smType::Derivative and
-        leftOperand->isEmpty())
+        leftOperand->isEmpty()) {
         return derivative_(leftOperand->getArgument(0)*rightOperand,
                 leftOperand->getArgument(1), leftOperand->getOrder());
+    }
     if (leftOperand->getPrimaryType() == smType::Vectorial)
         return leftOperand->multiplication_own(rightOperand);
     if (rightOperand->getPrimaryType() == smType::Vectorial)
-        return rightOperand->multiplication_own(leftOperand);
+        return rightOperand->multiplication_own(leftOperand,0);
 
     if (leftOperand->getType() == smType::Polynomial) {
         if (rightOperand->getType() == smType::Polynomial and explicitTimes)
@@ -1405,7 +1439,7 @@ Expr times_(const Expr& leftOperand, const Expr& rightOperand, bool explicitTime
     if (rightOperand->getType() == smType::Polynomial) {
         if (leftOperand->getType() == smType::Polynomial and explicitTimes)
             return make_shared<Times>(leftOperand, rightOperand);
-        return rightOperand->multiplication_own(leftOperand);
+        return rightOperand->multiplication_own(leftOperand,0);
     }
 
     if (leftOperand->getPrimaryType() == smType::Numerical) 
@@ -1413,10 +1447,13 @@ Expr times_(const Expr& leftOperand, const Expr& rightOperand, bool explicitTime
             return leftOperand->multiplication_own(rightOperand);
 
     Expr foo = make_shared<Times>(leftOperand, rightOperand, explicitTimes);
-    if (foo->getNArgs() == 1)
+    applyDerivative(foo);
+    if (foo->getPrimaryType() == smType::MultiFunction
+            and foo->getNArgs() == 1)
         return foo->getArgument();
-    else if (foo->getNArgs() == 0)
-        return ZERO;
+    if (foo->getPrimaryType() == smType::MultiFunction
+            and foo->getNArgs() == 0)
+        return int_(1);
 
     return foo;
 }
@@ -1439,9 +1476,12 @@ Expr times_(const vector<Expr >& operands, bool explicitTimes)
     }
 
     Expr result = make_shared<Times>(operands, explicitTimes);
-    if (result->getNArgs() == 1)
+    applyDerivative(result);
+    if (result->getPrimaryType() == smType::MultiFunction
+            and result->getNArgs() == 1)
         return result->getArgument();
-    if (result->getNArgs() == 0)
+    if (result->getPrimaryType() == smType::MultiFunction
+            and result->getNArgs() == 0)
         return int_(1);
 
     return result;
@@ -2302,7 +2342,7 @@ Expr Polynomial::addition_own(const Expr& expr) const
     return plus_(getRegularExpression(),foo->getRegularExpression());
 }
 
-Expr Polynomial::multiplication_own(const Expr& expr) const
+Expr Polynomial::multiplication_own(const Expr& expr, bool side) const
 {
     Expr foo;
     if (expr->getType() != smType::Polynomial)
@@ -2313,15 +2353,25 @@ Expr Polynomial::multiplication_own(const Expr& expr) const
     if (*variable == foo->getVariable()) {
         vector<Expr > foo_argument(nArgs+foo->getNArgs()-1,ZERO);
         for (int i=0; i<foo->getNArgs(); i++)
-            for (int j=0; j<nArgs; j++)
-                foo_argument[i+j] = plus_(foo_argument[i+j],
-                                          times_(argument[j],
-                                                 foo->getArgument(i)));
+            for (int j=0; j<nArgs; j++) {
+                if (side)
+                    foo_argument[i+j] = plus_(foo_argument[i+j],
+                                              times_(argument[j],
+                                                     foo->getArgument(i)));
+                else
+                    foo_argument[i+j] = plus_(foo_argument[i+j],
+                                              times_(foo->getArgument(i),
+                                                     argument[j]));
+            }
+
 
         return make_shared<Polynomial>(foo_argument, variable);
     }
 
-    return times_(getRegularExpression(),foo->getRegularExpression());
+    if (side)
+        return times_(getRegularExpression(),foo->getRegularExpression());
+    else
+        return times_(foo->getRegularExpression(),getRegularExpression());
 }
 
 Expr Polynomial::division_own(const Expr& expr) const
@@ -2450,6 +2500,10 @@ Expr polynomial_(const vector<Expr >& operands, const Expr& t_variable)
 /*************************************************/
 ///////////////////////////////////////////////////
 
+Expr Derivative::getVariable() const {
+    return argument[1];
+}
+
 int Derivative::getOrder() const {
     return order;
 }
@@ -2475,6 +2529,8 @@ void Derivative::print(int mode) const
     if (empty) {
         if (*argument[0] != ONE)
             argument[0]->print(1);
+        if (mode == 0)
+            cout<<endl;
         return;
     }
     argument[0]->print(1);
@@ -2558,36 +2614,38 @@ Expr derivative_(const Expr& leftOperand, const Expr& rightOperand, int order)
     if (order <= 0)
         return rightOperand;
     //We calculate the derivative and if it is 0 (many cases) we return 0.
-    if (*leftOperand->derive(rightOperand) == ZERO)
+    if (not leftOperand->dependsOn(rightOperand)
+            and *leftOperand != ONE)
         return ZERO;
 
     vector<Expr> foo;
-    bool commut;
     int posDerivative=0;
-    int endDerivative=foo.size();
-    switch(rightOperand->getType()) {
+    int endDerivative;
+    switch(leftOperand->getType()) {
 
         case smType::Plus:
         // d/dx(a1+a2...) = da1/dx+da2/dx+...
-        foo = rightOperand->getVectorArgument();
-        for (auto& arg : foo)
-            arg = derivative_(leftOperand, arg, order);
+        foo = leftOperand->getVectorArgument();
+        for (auto& arg : foo) 
+            arg = derivative_(arg, rightOperand, order);
 
         return plus_(foo);
         break;
 
         case smType::Times:
         // d/dx(a*f(x)*...*b) = a*d(f(x)...)/dx*b
-        foo = rightOperand->getVectorArgument();
+        foo = leftOperand->getVectorArgument();
+        endDerivative = foo.size();
         for (int i=0; i!=endDerivative; ++i) {
-            if (not foo[i]->dependsOn(leftOperand)) {
+            if (not foo[i]->dependsOn(rightOperand)) {
                 bool constantPulled = false;
                 bool blocked = false;
-                for (int j=i-1; j>=posDerivative; --j)
+                for (int j=i-1; j>=posDerivative; --j) {
                     if (*Commutation(foo[j], foo[i]) != ZERO) {
                         blocked = true;
                         break;
                     }
+                }
                 if (not blocked) {
                     Expr foo2 = foo[i];
                     foo.erase(foo.begin()+i);
@@ -2596,11 +2654,13 @@ Expr derivative_(const Expr& leftOperand, const Expr& rightOperand, int order)
                     constantPulled = true;
                 }
                 if (not constantPulled) {
-                    for (int j=i+1; j<endDerivative; ++j)
+                    blocked = false;
+                    for (int j=i+1; j<endDerivative; ++j) {
                         if (*Commutation(foo[i], foo[j]) != ZERO) {
                             blocked = true;
                             break;
                         }
+                    }
                     if (not blocked) {
                         Expr foo2 = foo[i];
                         foo.erase(foo.begin()+i);
@@ -2614,7 +2674,7 @@ Expr derivative_(const Expr& leftOperand, const Expr& rightOperand, int order)
         if (posDerivative != 0 or endDerivative != (int)foo.size()) {
             Expr leftConstants = ONE;
             Expr rightConstants = ONE;
-            Expr argument = rightOperand;
+            Expr argument = ONE;
             if (posDerivative != 0)
                 leftConstants = times_(vector<Expr>(foo.begin(),
                             foo.begin()+posDerivative));
@@ -2624,9 +2684,12 @@ Expr derivative_(const Expr& leftOperand, const Expr& rightOperand, int order)
             if (endDerivative != (int)foo.size())
                 rightConstants = times_(vector<Expr>(foo.begin()+endDerivative,
                             foo.end()));
-            return leftConstants 
-                * make_shared<Derivative>(leftOperand, argument, order)
-                * rightConstants;
+            if (*argument != ONE)
+                return leftConstants 
+                    * make_shared<Derivative>(argument, rightOperand, order)
+                    * rightConstants;
+            else
+                return ZERO;
         }
         else 
             return make_shared<Derivative>(leftOperand, rightOperand, order);

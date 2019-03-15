@@ -34,6 +34,8 @@ class Symbol{
      */    
     explicit Symbol(std::string t_name);
 
+    explicit Symbol(std::string t_name, bool constant);
+
     /*! \brief Initialized the Abstract to Number(value).
      * \param value 
      */    

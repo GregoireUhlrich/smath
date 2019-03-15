@@ -43,6 +43,7 @@ namespace smError{
         InvalidIndicialSum, /*!<  Summing to terms that have not the same index 
                              structure */
         BadDependency, /*!<  Setting a contradictory dependency for a variable. */
+        BadType,  /*!<  Bad type of Abstract sent in a function. */
 
     };
 
@@ -103,6 +104,8 @@ inline void callError(smError::Error error, const std::string& caller, T spec)
                std::cout<<"Invalid sum of indicial objects in "<<caller<<std::endl; break;
         case BadDependency:
                std::cout<<"Bad dependency set for "<<spec<<" in "<<caller<<"\n"; break;
+        case BadType: 
+               std::cout<<"Bad type of expression sent in "<<caller<<": requires "<<spec<<".\n"; break;
 
         default:
                std::cout<<"ScmType "<<(int)error<<" not recognized.\n";

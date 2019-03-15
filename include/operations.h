@@ -54,7 +54,7 @@ class Plus: public AbstractMultiFunc{
 
     void selfCheckIndexStructure() const;
 
-    void insert(const Expr& expr, bool side=0) override;
+    void insert(const Expr& expr, bool side=1) override;
 
     void print(int mode=0) const override;
 
@@ -182,7 +182,7 @@ class Polynomial: public AbstractMultiFunc{
 
     Expr addition_own(const Expr& expr) const override;
 
-    Expr multiplication_own(const Expr& expr) const override;
+    Expr multiplication_own(const Expr& expr, bool side=1) const override;
     
     Expr division_own(const Expr& expr) const override;
 
@@ -279,7 +279,7 @@ class Times: public AbstractMultiFunc{
      */
     Expr suppressTerm(const Expr& expr) const override;
 
-    void insert(const Expr& expr, bool side=0) override;
+    void insert(const Expr& expr, bool side=1) override;
     void leftInsert(const Expr& expr);
     void rightInsert(const Expr& expr);
 
@@ -585,6 +585,8 @@ class Derivative: public AbstractDuoFunc{
         return smType::Derivative;
     }
 
+    Expr getVariable() const override;
+
     int getOrder() const override;
 
     bool isEmpty() const override;
@@ -617,6 +619,8 @@ class Derivative: public AbstractDuoFunc{
     bool operator<(const Expr& expr) const override;
 };
 
+void applyDerivative(Expr& product);
+
 /*************************************************/
 // Inline functions (non virtual and short)      //
 /*************************************************/
@@ -647,6 +651,8 @@ inline Derivative::Derivative(const Expr& leftOperand,
     commutable = false;
     argument[0] = leftOperand;
     argument[1] = rightOperand;
+    if (*argument[0] == ONE)
+        empty = true;
 }
 inline Derivative::Derivative(const Expr& leftOperand,
                               const Expr& rightOperand,
@@ -656,6 +662,8 @@ inline Derivative::Derivative(const Expr& leftOperand,
     commutable = false;
     argument[0] = leftOperand;
     argument[1] = rightOperand;
+    if (*argument[0] == ONE)
+        empty = true;
 }
 
 /*************************************************/

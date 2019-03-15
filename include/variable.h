@@ -135,7 +135,7 @@ class Integer: public AbstractNumerical{
      * \param expr Other Number for the multiplication.
      * \return **value*expr.evaluateScalar()**.
      */
-    Expr multiplication_own(const Expr& expr) const override;
+    Expr multiplication_own(const Expr& expr, bool side=1) const override;
 
     /*! \brief Adds two pure Numbers.
      * \details If \a expr is not a Number, returns 0. Else returns a 
@@ -221,7 +221,7 @@ class Double: public AbstractNumerical{
      * \param expr Other Number for the multiplication.
      * \return **value*expr.evaluateScalar()**.
      */
-    Expr multiplication_own(const Expr& expr) const override;
+    Expr multiplication_own(const Expr& expr, bool side=1) const override;
 
     /*! \brief Adds two pure Numbers.
      * \details If \a expr is not a Number, returns 0. Else returns a 
@@ -326,7 +326,7 @@ class CFraction: public AbstractNumerical{
      * \param expr Number or CFraction for the product.
      * \return The product.
      */
-    Expr multiplication_own(const Expr& expr) const override;
+    Expr multiplication_own(const Expr& expr, bool side=1) const override;
 
     /*! \brief \b Adds the CFraction with a Number or a CFraction.
      * \details This function is specialy designed for the multiplication of 
@@ -744,15 +744,15 @@ class Imaginary: public AbstractLiteral{
 /*************************************************/
 // Inline functions (non virtual and short)      //
 /*************************************************/
-inline Variable::Variable(): AbstractLiteral(), elementary(true), 
-    allDependencies(false), dependencies(std::vector<Expr>(0)), valued(false),
+inline Variable::Variable(): AbstractLiteral(), elementary(false), 
+    allDependencies(true), dependencies(std::vector<Expr>(0)), valued(false),
     value(0){}
 inline Variable::Variable(const std::string& t_name)
-    :AbstractLiteral(t_name),elementary(true), allDependencies(false), 
+    :AbstractLiteral(t_name),elementary(false), allDependencies(true), 
     dependencies(std::vector<Expr>(0)), valued(false), value(0){}
 
 inline Variable::Variable(const std::string& t_name, double t_value)
-    :AbstractLiteral(t_name),elementary(true), allDependencies(false),
+    :AbstractLiteral(t_name),elementary(false), allDependencies(true),
     dependencies(std::vector<Expr>(0)), valued(true), value(t_value){}
 
 inline Constant::Constant(): AbstractLiteral(), valued(false), value(0){}

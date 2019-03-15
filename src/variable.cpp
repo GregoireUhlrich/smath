@@ -94,7 +94,7 @@ bool Double::operator==(const Expr& expr) const
     return (value==expr->evaluateScalar());
 }
 
-Expr Double::multiplication_own(const Expr& expr) const
+Expr Double::multiplication_own(const Expr& expr, bool side) const
 {
     if (not expr or expr->getPrimaryType() != smType::Numerical)
         return ZERO;
@@ -264,7 +264,7 @@ bool Integer::operator==(const Expr& expr) const
     return (value==expr->evaluateScalar());
 }
 
-Expr Integer::multiplication_own(const Expr& expr) const
+Expr Integer::multiplication_own(const Expr& expr, bool side) const
 {
     if (expr == nullptr or expr->getPrimaryType() != smType::Numerical)
         return ZERO;
@@ -445,7 +445,7 @@ Expr CFraction::evaluate() {
     return shared_from_this();
 }
 
-Expr CFraction::multiplication_own(const Expr& expr) const
+Expr CFraction::multiplication_own(const Expr& expr, bool side) const
 {
     if (expr == nullptr or expr->getPrimaryType() != smType::Numerical) 
         return ZERO;
@@ -663,6 +663,10 @@ bool Variable::dependsOn(const Expr& expr) const
     // Elementary variable: depends only on itself
     if (elementary) 
         return operator==(expr);
+
+    // expr is a number: 0
+    if (expr->getPrimaryType() == smType::Numerical)
+        return false;
 
     // All dependencies: the Variable depends on everything by default
     if (allDependencies)

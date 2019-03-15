@@ -31,14 +31,14 @@ Expr WeakCommutation(const Expr& A, const Expr& B)
             else
                 return UNDEFINED;
         }
-        if (not B->dependsOn(A->getVariable())) {
+        if (not B->dependsOn(A->getArgument(1))) {
             if (*Commutation(A->getArgument(),B) == ZERO)
                 return ZERO;
             else
                 return UNDEFINED;
         }
         if (*Commutation(A->getArgument(), B) == ZERO and A->getOrder() == 1)
-            return derivative_(A->getArgument()*B,A->getVariable(), 1);
+            return derivative_(A->getArgument()*B,A->getArgument(1), 1);
         return UNDEFINED;
         break;
 

@@ -228,8 +228,18 @@ ofojeogz
     y.getAbstract()->setElementary(false);
     (derivative_(x,1)*y).print();
     (y*derivative_(x,1)).print();
+    ((y*derivative_(x,1))*z).print();
     (z.getAbstract())->setElementary(false);
     ((y*derivative_(x,1))*z).print();
+
+    Symbol alpha("alpha",true);
+
+    (derivative_(x,1)*(alpha*y*z+alpha*y*(z^2)*alpha + alpha)).print();
+    alpha.setCommutable(false);
+    (derivative_(x,1)*(alpha*y*z+alpha*y*(z^2)*alpha + alpha)).print();
+    y.setCommutable(false);
+    (derivative_(x,1)*(alpha*y*z+alpha*y*(z^2)*alpha + alpha)).print();
+    ((derivative_(x,1)*(alpha*y*z+alpha*y*(z^2)*alpha + alpha))*z).develop().print();
 
     return 0;
     /*Symbol i("i"), j("j");

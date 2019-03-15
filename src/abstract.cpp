@@ -403,7 +403,7 @@ Expr Abstract::addition_own(const Expr& expr) const
     return ZERO;
 }
 
-Expr Abstract::multiplication_own(const Expr& expr) const
+Expr Abstract::multiplication_own(const Expr& expr, bool side) const
 {
     print();
     callError(smError::AbstractFuncCalled,

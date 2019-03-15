@@ -564,7 +564,7 @@ class Abstract{
      * \param expr Expression to insert.
      * \param side Side of insertion for Times expressions.
      */
-     virtual void insert(const Expr& expr, bool side=0);
+     virtual void insert(const Expr& expr, bool side=1);
 
     ///////////////////////////////////////////////////
     // Indicial types
@@ -880,7 +880,7 @@ class Abstract{
      * \param expr Right operrand of the product.
      * \return The product of the two operands.
      */
-    virtual Expr multiplication_own(const Expr& expr) const;
+    virtual Expr multiplication_own(const Expr& expr, bool side=1) const;
 
     /*! \brief Contains implementation of special division for Numerical- and
      * Polynomial-types. For polynomial, the euclidean division of two polynomials

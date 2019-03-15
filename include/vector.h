@@ -88,7 +88,7 @@ class AbstractVectorial: public Abstract{
 
     Expr addition_own(const Expr& expr) const override;
 
-    Expr multiplication_own(const Expr& expr) const override;
+    Expr multiplication_own(const Expr& expr, bool side=1) const override;
 
     Expr tensor_dot(const Expr& expr) const override;
 
