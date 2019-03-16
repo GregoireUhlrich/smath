@@ -79,6 +79,11 @@ bool AbstractFunc::dependsOn(const Expr& expr) const {
             argument->dependsOn(expr));
 }
 
+bool AbstractFunc::dependsExplicitelyOn(const Expr& expr) const {
+    return ((name != "" and name == expr->getName()) or
+            argument->dependsExplicitelyOn(expr));
+}
+
 int AbstractFunc::isPolynomial(const Expr& expr) const {
     return (*this==expr);
 }
@@ -196,6 +201,13 @@ bool AbstractDuoFunc::dependsOn(const Expr& expr) const
             argument[1]->dependsOn(expr));
 }
 
+bool AbstractDuoFunc::dependsExplicitelyOn(const Expr& expr) const
+{
+    return ((name != "" and name == expr->getName()) or
+            argument[0]->dependsExplicitelyOn(expr) or
+            argument[1]->dependsExplicitelyOn(expr));
+}
+
 int AbstractDuoFunc::isPolynomial(const Expr& expr) const {
     return (this->operator==(expr));
 }
@@ -224,8 +236,8 @@ bool AbstractMultiFunc::isIndexed() const
     // Indexed terms are in general closer to the end of the 
     // expression because they are considered as complicated.
     // We then go through the arguments in reverse order.
-    for (auto arg=argument.rbegin(); arg!=argument.rend(); ++arg)
-        if ((*arg)->isIndexed())
+    for (const auto& arg : argument)
+        if (arg->isIndexed())
             return true;
 
     return false;
@@ -306,6 +318,18 @@ bool AbstractMultiFunc::dependsOn(const Expr& expr) const
 
     for (const auto& arg : argument)
         if (arg->dependsOn(expr)) 
+            return true;
+
+    return false;
+}
+
+bool AbstractMultiFunc::dependsExplicitelyOn(const Expr& expr) const
+{
+    if (name != "" and name == expr->getName()) 
+        return true;
+
+    for (const auto& arg : argument)
+        if (arg->dependsExplicitelyOn(expr)) 
             return true;
 
     return false;

@@ -763,11 +763,30 @@ IndexStructure Times::getIndexStructure() const
 
 void Times::selfCheckIndexStructure()
 {
-    IndexStructure structure;
-    for (auto arg=argument.rbegin(); arg!=argument.rend(); ++arg) {
-        if ((*arg)->getPrimaryType() != smType::Indicial)
-            break;
-        // To complete
+    vector<IndexStructure> structure(0);
+    for (iter arg=argument.begin(); arg!=argument.end(); ++arg) {
+        if ((*arg)->isIndexed()) {
+            IndexStructure fooStruct = (*arg)->getIndexStructure();
+            for (int k=0; k!=fooStruct.getNIndices(); ++k) {
+                for (size_t i=0; i!=structure.size(); ++i) {
+                    const int nIndices = structure[i].getNIndices();
+                    bool breakValue = false;
+                    for (int j=0; j!=nIndices; ++j) {
+                        if (structure[i][j] == fooStruct[k]
+                                and fooStruct[k].getFree()) {
+                            fooStruct[k].setFree(false);
+                            structure[i][j].setFree(false);
+                            argument[i]->setIndex(structure[i][j],j);
+                            (*arg)->setIndex(fooStruct[k],k);
+                            breakValue = true;
+                            break;
+                        }
+                    }
+                    if (breakValue)
+                        break;
+                }
+            }
+        }
     }
 }
 
@@ -1310,10 +1329,14 @@ int Times::isPolynomial(const Expr& expr) const
     bool dependencyFound = false;
     int order = 0;
     for (int i=0; i<nArgs; i++) {
-        if (argument[i]->dependsOn(expr)) {
+        if (argument[i]->dependsExplicitelyOn(expr)) {
             order = argument[i]->isPolynomial(expr);
-            if (order > 0)
+            if (order > 0) {
+                for (int j=i+1; j<nArgs; ++j)
+                    if (*Commutation(argument[j], expr) != ZERO) 
+                        return 0;
                 polynomialTermFound = true;
+            }
             else 
                 dependencyFound = true;
         }
@@ -1330,7 +1353,7 @@ Expr Times::getPolynomialTerm(const Expr& t_variable, int order)
     if (order == 0)
         return result;
     for (int i=0; i<nArgs; i++) {
-        if (argument[i]->dependsOn(t_variable)) {
+        if (argument[i]->dependsExplicitelyOn(t_variable)) {
             argument_order = argument[i]->isPolynomial(t_variable);
             if (order == argument_order) {
                 Expr foo = argument[i]->suppressTerm(pow_(t_variable,
@@ -2350,10 +2373,23 @@ Expr Polynomial::multiplication_own(const Expr& expr, bool side) const
     else 
         foo = expr;
 
+    //side = true;
     if (*variable == foo->getVariable()) {
         vector<Expr > foo_argument(nArgs+foo->getNArgs()-1,ZERO);
-        for (int i=0; i<foo->getNArgs(); i++)
+        for (int i=0; i<foo->getNArgs(); i++) {
+            if (*Commutation(variable,foo->getArgument(i)) != ZERO){
+                if (side)
+                    return times_(getRegularExpression(),foo->getRegularExpression());
+                else
+                    return times_(foo->getRegularExpression(),getRegularExpression());
+            }
             for (int j=0; j<nArgs; j++) {
+                if (*Commutation(variable,argument[j]) != ZERO){
+                    if (side)
+                        return times_(getRegularExpression(),foo->getRegularExpression());
+                    else
+                        return times_(foo->getRegularExpression(),getRegularExpression());
+                }
                 if (side)
                     foo_argument[i+j] = plus_(foo_argument[i+j],
                                               times_(argument[j],
@@ -2363,7 +2399,7 @@ Expr Polynomial::multiplication_own(const Expr& expr, bool side) const
                                               times_(foo->getArgument(i),
                                                      argument[j]));
             }
-
+        }
 
         return make_shared<Polynomial>(foo_argument, variable);
     }
@@ -2384,6 +2420,19 @@ Expr Polynomial::division_own(const Expr& expr) const
         foo = polynomial_(foo,variable);
     if (foo->getNArgs() > nArgs)
         return Copy(this);
+
+    // If the variable does not commute with one argument, we cannot 
+    // divide the polynomial
+    /*
+    for (int i=0; i<foo->getNArgs(); ++i)
+        if (*Commutation(foo->getArgument(i),variable) != ZERO)
+            return Copy(this);
+    for (int i=0; i<nArgs; ++i)
+        if (*Commutation(argument[i],variable) != ZERO)
+            return Copy(this);
+    */
+    //cout<<"Divinding "; print();
+    //cout<<"by : "; foo->print();
     
     Expr q = polynomial_(ZERO, variable);
     Expr r = polynomial_(argument, variable);
@@ -2391,6 +2440,8 @@ Expr Polynomial::division_own(const Expr& expr) const
     int iter = 0;
     int maxiter = 10;
     while(*r!=ZERO and r->getNArgs()>=foo->getNArgs() and iter < maxiter) {
+        //cout<<"q = "; q->print();
+        //cout<<"r = "; r->print();
         t = fraction_(r->getArgument(r->getNArgs()-1),
                       foo->getArgument(foo->getNArgs()-1));
         t = t->develop(true);
@@ -2398,10 +2449,13 @@ Expr Polynomial::division_own(const Expr& expr) const
         t = t->develop(true);
         q = plus_(q,t);
         r = plus_(r,times_(times_(int_(-1),t),foo));
+        //r = r+(1*foo*t);
         r = r->develop(true);
         q = q->develop(true);
         ++iter;
     }
+        //cout<<"q = "; q->print();
+        //cout<<"r = "; r->print();
     if (*r == ZERO)
         return q;
 
@@ -2486,12 +2540,14 @@ Expr polynomial_(const Expr& expr, const Expr& t_variable)
         return foo;
     }
 
-    return make_shared<Polynomial>(expr, t_variable);
+    Expr res = make_shared<Polynomial>(expr, t_variable);
+    return res;
 }
 
 Expr polynomial_(const vector<Expr >& operands, const Expr& t_variable)
 {
-    return make_shared<Polynomial>(operands, t_variable);
+    Expr res =  make_shared<Polynomial>(operands, t_variable);
+    return res;
 }
 
 ///////////////////////////////////////////////////

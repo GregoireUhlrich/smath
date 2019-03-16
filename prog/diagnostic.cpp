@@ -199,6 +199,18 @@ ofojeogz
     S.addSymmetry(antiSym1,-1);
     S.addSymmetry(antiSym2,-1);
     cout<<S<<endl;
+
+    IndicialParent Riemann("R",{&Lorentz, &Lorentz, &Lorentz, &Lorentz});
+    Riemann.setSymmetry(S);
+    Index mu("\\mu",&Lorentz), nu("\\nu",&Lorentz),
+          rho("\\rho",&Lorentz), sigma("\\sigma",&Lorentz);
+    Riemann({mu,nu,rho,sigma})->print();
+    vector<Expr> riemannPermutations = Riemann({mu,nu,rho,sigma})->getPermutations();
+    cout<<"Riemann Tensor: \n";
+    for (size_t i=0; i!= riemannPermutations.size(); ++i) {
+        cout<<"    Permutation "<<i+1<<": ";
+        riemannPermutations[i]->print();
+    }
     
     Symbol beta("beta"), m("m"), gamma("gamma"), E("E"), p("p");
     gamma = 1/sqrt_(1-beta*beta);
@@ -240,6 +252,7 @@ ofojeogz
     y.setCommutable(false);
     (derivative_(x,1)*(alpha*y*z+alpha*y*(z^2)*alpha + alpha)).print();
     ((derivative_(x,1)*(alpha*y*z+alpha*y*(z^2)*alpha + alpha))*z).develop().print();
+
 
     return 0;
     /*Symbol i("i"), j("j");

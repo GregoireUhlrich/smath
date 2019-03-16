@@ -114,11 +114,6 @@ int main(){
     std::shared_ptr<Abstract> testConstant = int_(3);
     std::shared_ptr<Abstract> deriveXX = testVariable->derive(testVariable);
     std::shared_ptr<Abstract> deriveXY = testVariable->derive(testVariable2);
-    if (*deriveXX != 1 or *deriveXY != 0 or *testVariable == testVariable2 or *testVariable != testVariable)
-    {
-        cout<<"Error in basic comparison or derivative of variables.\n";
-        everythingOK = false;
-    }
     if (*testConstant != 3 or *testVariable2 != 2 or *testNumber != 4./3)
     {
         cout<<"Error in basic comparison of scalars.\n";
@@ -159,14 +154,6 @@ int main(){
 
     testVariable = (times_(x,x))->derive(x);
     testVariable2 = (plus_(times_(x,x),times_(times_(times_(y,y),x),int_(2))))->derive(x);
-    if (*x->derive(x)!=int_(1) or *x->derive(y)!=int_(0) or *testVariable!=plus_(x,x) or *testVariable2!=plus_(plus_(times_(times_(int_(2),y),y),x),x))
-    {
-        cout<<"Problem with basic derivations.\n";
-        testVariable->print();
-        testVariable2->print();
-        everythingOK = false;
-    }
-
     Symbol toFactor = xS*cos_(xS*xS+xS) + 2*xS*xS*cos_(xS*xS+xS) + 3*xS*xS*xS*cos_(xS+xS*xS);
     toFactor = toFactor.factor(xS);
     toFactor.print();
@@ -428,6 +415,7 @@ int main(){
     yS.print();
 
     xS.clear();
+    F.clear();
     Symbol pol1("P1"), pol2("P2");
     pol2 = polynomial_(xS+pow_(F,Symbol(1)/2),xS);
     pol2.print();
@@ -654,8 +642,10 @@ int main(){
     eps.setArgument(t,{1,2});
     eps.setArgument(zS,{2,0});
     eps.setArgument(yS,{2,2});
+    eps.determinant().print();
     Simplify(eps.determinant()).print();
     eps.inverseMatrix().print();
+    Simplify(eps.inverseMatrix()).print();
     dot(eps, eps.inverseMatrix()).print();
     cout<<"Simplify:  \n";
     eps = Simplify(dot(eps, eps.inverseMatrix()));

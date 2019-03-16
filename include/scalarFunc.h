@@ -85,6 +85,8 @@ class AbstractFunc: public AbstractScalar{
 
     bool dependsOn(const Expr& expr) const override;
 
+    bool dependsExplicitelyOn(const Expr& expr) const override;
+
     int isPolynomial(const Expr& expr) const override;
 
     /*! \brief \b Evaluates the function after evaluating the \b argument.
@@ -175,6 +177,8 @@ class AbstractDuoFunc: public AbstractScalar{
 
     bool dependsOn(const Expr& expr) const override;
 
+    bool dependsExplicitelyOn(const Expr& expr) const override;
+
     int isPolynomial(const Expr& expr) const override;
 
     virtual bool operator==(const Expr& t_argument) const override {
@@ -261,6 +265,8 @@ class AbstractMultiFunc: public AbstractScalar{
     virtual Expr develop(bool full=false) override;
 
     bool dependsOn(const Expr& expr) const override;
+
+    bool dependsExplicitelyOn(const Expr& expr) const override;
 
     int isPolynomial(const Expr& expr) const override;
 

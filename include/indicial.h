@@ -151,6 +151,8 @@ class IndexStructure{
 
     IndexStructure();
 
+    explicit IndexStructure(int t_nIndices);
+
     IndexStructure(const IndexStructure& structure);
 
     explicit IndexStructure(const std::initializer_list<Index>& structure);
@@ -182,12 +184,16 @@ class IndexStructure{
     bool operator!=(const IndexStructure& structure) const;
 
     Index operator[](int i) const;
+
+    Index& operator[](int i);
 };
 
 /////
 // Inline functions
 
 inline IndexStructure::IndexStructure(): nIndices(0){}
+inline IndexStructure::IndexStructure(int t_nIndices)
+    :nIndices(t_nIndices), index(std::vector<Index>(t_nIndices,Index())){}
 inline IndexStructure::IndexStructure(const IndexStructure& t_index):
     nIndices(t_index.nIndices), index(t_index.index){}
 inline IndexStructure::IndexStructure(const std::initializer_list<Index>& t_index):
@@ -237,6 +243,7 @@ class Permutation{
     bool operator==(const Permutation& t_permutation) const;
     bool operator!=(const Permutation& t_permuation) const;
     int& operator[](int i);
+    int operator[](int i) const;
     friend std::ostream& operator<<(std::ostream& fout,
                                     const Permutation& permutation);
 };
@@ -318,6 +325,8 @@ class IndicialParent{
     bool getFullySymmetric() const;
 
     bool getFullyAntiSymmetric() const;
+    
+    std::vector<Permutation> getPermutation() const;
 
     void setName(const std::string& t_name);
 
@@ -330,6 +339,8 @@ class IndicialParent{
     void addSymmetry(int i1, int i2);
 
     void addAntiSymmetry(int i1, int i2);
+
+    void setSymmetry(const Symmetry& t_symetry);
 
     Expr operator()(const std::initializer_list<Index>& indices) const;
 
@@ -356,6 +367,10 @@ class AbstractIndicial: public AbstractScalar{
 
     smType::PrimaryType getPrimaryType() const override {
         return smType::Indicial;
+    }
+
+    bool isIndexed() const override {
+        return true;
     }
 
     int getNIndices() const override {
@@ -407,9 +422,12 @@ class ITensor: public AbstractIndicial{
 
     void contractIndices(int axis1, int axis2) override;
 
-    void setIndexStructure(const std::vector<Index>& t_index) override;
+    bool contractIndex(const Index& indexToContract,
+                       const Index& newIndex) override;
 
-    Expr applyPermutation(const std::vector<int>& permutations) const;
+    void setIndexStructure(const IndexStructure& t_index) override;
+
+    Expr applyPermutation(const Permutation& permutations) const;
 
     std::vector<Expr> getPermutations() const override;
 

@@ -44,6 +44,7 @@ namespace smError{
                              structure */
         BadDependency, /*!<  Setting a contradictory dependency for a variable. */
         BadType,  /*!<  Bad type of Abstract sent in a function. */
+        BadSymmetry, /*!<  Bad Symmetry sent in IndicialParent (wring dimension). */
 
     };
 
@@ -106,9 +107,11 @@ inline void callError(smError::Error error, const std::string& caller, T spec)
                std::cout<<"Bad dependency set for "<<spec<<" in "<<caller<<"\n"; break;
         case BadType: 
                std::cout<<"Bad type of expression sent in "<<caller<<": requires "<<spec<<".\n"; break;
+        case BadSymmetry :
+               std::cout<<"Bad symmetry set in IndicialParent (wrong dimension).\n"; break;
 
         default:
-               std::cout<<"ScmType "<<(int)error<<" not recognized.\n";
+               std::cout<<"SmError "<<(int)error<<" not recognized.\n";
     }
     if (not STOP_ERROR_DEBUG_MODE)
         exit((int)error);
@@ -153,7 +156,7 @@ inline void callWarning(smError::Warning warning, const std::string& caller, T s
                std::cout<<"Copying building block in "<<caller<<": "<<spec<<"\n"; break;
 
         default:
-               std::cout<<"ScmType "<<(int)warning<<" not recognized.\n";
+               std::cout<<"SmWarning "<<(int)warning<<" not recognized.\n";
     }
 }
 /*! \fn callWarning(smError::Warning warning, const std::string& caller)

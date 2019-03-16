@@ -79,8 +79,16 @@ const IndicialParent* Abstract::getParent() const
     return nullptr;
 }
 
+bool Abstract::contractIndex(const Index& indexToContract,
+                             const Index& newIndex)
+{
+    print();
+    callError(smError::AbstractFuncCalled,
+            (string)"Abstract::contractIndex(const Index& indexToContract"
+            +"const Index& newIndex)");
+}
 
-void Abstract::setIndexStructure(const vector<Index>& index)
+void Abstract::setIndexStructure(const IndexStructure& index)
 {
     print();
     callError(smError::AbstractFuncCalled,
@@ -224,7 +232,7 @@ bool Abstract::isBuildingBlock() const {
 }
 
 bool Abstract::isIndexed() const {
-    return indexed;
+    return false;
 }
 
 bool Abstract::isInteger() const {
@@ -432,9 +440,14 @@ bool Abstract::dependsOn(const Expr& expr) const
     return false;
 }
 
+bool Abstract::dependsExplicitelyOn(const Expr& expr) const
+{
+    return operator==(expr);
+}
+
 int Abstract::isPolynomial(const Expr& expr) const
 {
-    return dependsOn(expr);
+    return dependsExplicitelyOn(expr);
 }
 
 Expr Abstract::getVariable() const
@@ -503,7 +516,13 @@ bool Abstract::operator==(double t_value) const
     return 0;
 }*/
 
-Expr Abstract::operator[](int iArg)
+Expr Abstract::operator[](int iArg) const
+{
+    print();
+    callError(smError::AbstractFuncCalled,"Abstract::operator[]");
+    exit(smError::AbstractFuncCalled); // Not usefull line, only there t
+}
+Expr& Abstract::operator[](int iArg)
 {
     print();
     callError(smError::AbstractFuncCalled,"Abstract::operator[]");

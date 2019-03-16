@@ -605,7 +605,17 @@ bool AbstractVectorial::operator==(const Expr& expr) const
     return true;
 }
 
-Expr AbstractVectorial::operator[](int iArg)
+Expr AbstractVectorial::operator[](int iArg) const
+{
+    if (iArg < 0 or iArg >= nArgs) {
+        print();
+        callError(smError::OutOfBounds,
+                "AbstractVectorial::operator[](int iArg)", iArg);
+    }
+    return argument[iArg];
+}
+
+Expr& AbstractVectorial::operator[](int iArg)
 {
     if (iArg < 0 or iArg >= nArgs) {
         print();

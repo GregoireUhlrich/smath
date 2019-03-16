@@ -189,9 +189,6 @@ class Abstract{
     /*! Determines if the object \b commutes with all other objects.*/
     bool commutable;
 
-    /*! Tells if the Abstract is indexed (A_ij, A_ij + B_ji etc). */
-    bool indexed;
-
     public:
 
     /*************************************************/
@@ -570,12 +567,23 @@ class Abstract{
     // Indicial types
     ///////////////////////////////////////////////////
 
+     /*! \brief For indicial expressions, this function searches \b 
+      * indexToContract and replaces it with newIndex.
+      * \param indexToContract Index that is newly contracted. 
+      * \param newIndex Dummy new index that replaces \b indexToContract
+      * in the expression.
+      * \return \b True if the index has been found.
+      * \return \b False else.
+      */
+     virtual bool contractIndex(const Index& indexToContract,
+                                const Index& newIndex);
+
      /*! \brief Replaces the index structure of the object, that must be an 
       * \b Indicial expression.
       * \param t_index A std::vector of Index which takes the place of the 
       * structure index.
       */
-    virtual void setIndexStructure(const std::vector<Index>& t_index);
+    virtual void setIndexStructure(const IndexStructure& t_index);
 
     /*! \brief Sets an \b Indicial object fully symmetric. Allows to set quickly
      * a frequent property of tensors. This function then erases all properties
@@ -709,12 +717,19 @@ class Abstract{
      */
     virtual bool askTerm(const Expr& expr, bool exact=false) const;
 
+    /*! \brief Check recursively if the expression depends on \b expr.
+     * \param expr Expression to search.
+     * \return \b True if a dependency in \b expr is found.
+     * \return \b False else.
+     */
+    virtual bool dependsOn(const Expr& expr) const;
+
     /*! \brief Check recursively if \b expr is present in the expression.
      * \param expr Expression to search.
      * \return \b True if \b expr is found.
      * \return \b False else.
      */
-    virtual bool dependsOn(const Expr& expr) const;
+    virtual bool dependsExplicitelyOn(const Expr& expr) const;
 
     /*! \brief Determines if the expression is a mononomial term in \b expr, i.e.
      * a term of the form C*expr^n with C independent of expr, n integer.
@@ -1055,11 +1070,18 @@ class Abstract{
     virtual bool operator!=(const Expr& expr) const; 
 
     /*! \brief Access operator for multi-argument expressions, equivalent to 
-     * the function setArgument().
+     * the function getArgument().
      * \param iArg Index of the argument to get.
      * \return \b argument[iArg].
      */
-    virtual Expr operator[](int iArg);
+    virtual Expr operator[](int iArg) const;
+
+    /*! \brief Access operator for multi-argument expressions, returns
+     * a reference so this function is not const.
+     * \param iArg Index of the argument to get.
+     * \return A reference to \b argument[iArg].
+     */
+    virtual Expr& operator[](int iArg);
 
 
     ///////////////////////////////////////////////////

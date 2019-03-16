@@ -29,7 +29,7 @@ Expr AbstractBuildingBlock::getComplexModulus(){
     return shared_from_this(); 
 }
 Expr AbstractBuildingBlock::getPolynomialTerm(const Expr& expr, int order){
-    if (order == 1 and *this==expr)
+    if (order == 1 and operator==(expr))
         return ONE;
     else if (order == 0)
         return shared_from_this();

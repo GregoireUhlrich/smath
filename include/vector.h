@@ -102,7 +102,9 @@ class AbstractVectorial: public Abstract{
 
     bool operator==(const Expr& expr) const override;
 
-    Expr operator[](int iArg) override;
+    Expr& operator[](int iArg) override;
+
+    Expr operator[](int iArg) const override;
 };
 
 class Vector: public AbstractVectorial{
