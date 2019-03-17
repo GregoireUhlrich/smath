@@ -276,7 +276,7 @@ ofojeogz
     cout<<testAINT<<endl;
     cout<<factorial(aInt(12))<<endl;
     cout<<factorial(aInt(52))<<endl;
-
+    cout<<factorial(aInt(1996))<<endl;
 
     return 0;
     /*Symbol i("i"), j("j");
