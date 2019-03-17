@@ -217,12 +217,15 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>removeDepende
 <tr class="memitem:ab76aaf6a94588273e3f92cf1980cf7ec"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#ab76aaf6a94588273e3f92cf1980cf7ec">setVectorArgument</a> (const std::vector&lt; <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &gt; &amp;t_argument)</td></tr>
 <tr class="memdesc:ab76aaf6a94588273e3f92cf1980cf7ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replace the entire std::vector of argument.  <a href="#ab76aaf6a94588273e3f92cf1980cf7ec">More...</a><br /></td></tr>
 <tr class="separator:ab76aaf6a94588273e3f92cf1980cf7ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49620ec470e935ce2c770981e4f338dc"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a49620ec470e935ce2c770981e4f338dc">insert</a> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;expr, bool side=0)</td></tr>
-<tr class="memdesc:a49620ec470e935ce2c770981e4f338dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts an expression in a sum or a product.  <a href="#a49620ec470e935ce2c770981e4f338dc">More...</a><br /></td></tr>
-<tr class="separator:a49620ec470e935ce2c770981e4f338dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8bd2d23b77d3719cbe2db2f27c4ad9c9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a8bd2d23b77d3719cbe2db2f27c4ad9c9">setIndexStructure</a> (const std::vector&lt; <a class="el" href="classIndex.html">Index</a> &gt; &amp;t_index)</td></tr>
-<tr class="memdesc:a8bd2d23b77d3719cbe2db2f27c4ad9c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces the index structure of the object, that must be an <b>Indicial</b> expression.  <a href="#a8bd2d23b77d3719cbe2db2f27c4ad9c9">More...</a><br /></td></tr>
-<tr class="separator:a8bd2d23b77d3719cbe2db2f27c4ad9c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3137c0d5e3ebd67e695ce21732dc26ef"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a3137c0d5e3ebd67e695ce21732dc26ef">insert</a> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;expr, bool side=1)</td></tr>
+<tr class="memdesc:a3137c0d5e3ebd67e695ce21732dc26ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts an expression in a sum or a product.  <a href="#a3137c0d5e3ebd67e695ce21732dc26ef">More...</a><br /></td></tr>
+<tr class="separator:a3137c0d5e3ebd67e695ce21732dc26ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9734921096d214468627f58d619f0fce"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a9734921096d214468627f58d619f0fce">contractIndex</a> (const <a class="el" href="classIndex.html">Index</a> &amp;indexToContract, const <a class="el" href="classIndex.html">Index</a> &amp;newIndex)</td></tr>
+<tr class="memdesc:a9734921096d214468627f58d619f0fce"><td class="mdescLeft">&#160;</td><td class="mdescRight">For indicial expressions, this function searches <b>indexToContract</b> and replaces it with newIndex.  <a href="#a9734921096d214468627f58d619f0fce">More...</a><br /></td></tr>
+<tr class="separator:a9734921096d214468627f58d619f0fce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a852436229babbdf96dd5aafb15660cd6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a852436229babbdf96dd5aafb15660cd6">setIndexStructure</a> (const <a class="el" href="classIndexStructure.html">IndexStructure</a> &amp;t_index)</td></tr>
+<tr class="memdesc:a852436229babbdf96dd5aafb15660cd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces the index structure of the object, that must be an <b>Indicial</b> expression.  <a href="#a852436229babbdf96dd5aafb15660cd6">More...</a><br /></td></tr>
+<tr class="separator:a852436229babbdf96dd5aafb15660cd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac102096971b80a7510a4cb9da4ab6b03"><td class="memItemLeft" align="right" valign="top"><a id="ac102096971b80a7510a4cb9da4ab6b03"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#ac102096971b80a7510a4cb9da4ab6b03">setFullySymmetric</a> ()</td></tr>
 <tr class="memdesc:ac102096971b80a7510a4cb9da4ab6b03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an <b>Indicial</b> object fully symmetric. Allows to set quickly a frequent property of tensors. This function then erases all properties of symmetry / antisymmetry and sets <b>fullySymmetric</b> to <b>True</b>. <br /></td></tr>
@@ -240,9 +243,6 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:ae9f5a37ad523ec663a61d07def420820"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#ae9f5a37ad523ec663a61d07def420820">permut</a> (int i1, int i2)</td></tr>
 <tr class="memdesc:ae9f5a37ad523ec663a61d07def420820"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to permut indices at place <b>i1</b> and <b>i2</b>. If those two indices have a symmetry property, indices are swaped and the symmetry is returned. Else the fnuction does nothing and returns 0.  <a href="#ae9f5a37ad523ec663a61d07def420820">More...</a><br /></td></tr>
 <tr class="separator:ae9f5a37ad523ec663a61d07def420820"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f0cb1177644e0851aa6721c5be5880a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a6f0cb1177644e0851aa6721c5be5880a">contractIndices</a> (int axis1, int axis2)</td></tr>
-<tr class="memdesc:a6f0cb1177644e0851aa6721c5be5880a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contracts the indices at position <b>axis1</b> and <b>axis2</b>. The indices then become dummy indices.  <a href="#a6f0cb1177644e0851aa6721c5be5880a">More...</a><br /></td></tr>
-<tr class="separator:a6f0cb1177644e0851aa6721c5be5880a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a839372b7667ea0a28a9e3b72112366ff"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a839372b7667ea0a28a9e3b72112366ff">getNumericalFactor</a> () const</td></tr>
 <tr class="memdesc:a839372b7667ea0a28a9e3b72112366ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the numerical factor of the expression, i.e. returns <b>C</b> if the expression if of the form <b>C*x</b> (<b>x</b> having a numerical factor equal to 1), and return 1 else.  <a href="#a839372b7667ea0a28a9e3b72112366ff">More...</a><br /></td></tr>
 <tr class="separator:a839372b7667ea0a28a9e3b72112366ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -267,8 +267,11 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memdesc:a50c858cbdb891b94ed1d2166f3b8392d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if <b>expr</b> can factor <b>*this</b>.  <a href="#a50c858cbdb891b94ed1d2166f3b8392d">More...</a><br /></td></tr>
 <tr class="separator:a50c858cbdb891b94ed1d2166f3b8392d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e6750df27f71d1c2e35d7a7f75c16d5"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a6e6750df27f71d1c2e35d7a7f75c16d5">dependsOn</a> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;expr) const</td></tr>
-<tr class="memdesc:a6e6750df27f71d1c2e35d7a7f75c16d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check recursively if <b>expr</b> is present in the expression.  <a href="#a6e6750df27f71d1c2e35d7a7f75c16d5">More...</a><br /></td></tr>
+<tr class="memdesc:a6e6750df27f71d1c2e35d7a7f75c16d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check recursively if the expression depends on <b>expr</b>.  <a href="#a6e6750df27f71d1c2e35d7a7f75c16d5">More...</a><br /></td></tr>
 <tr class="separator:a6e6750df27f71d1c2e35d7a7f75c16d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e6c14ad785fb921be36997bfa749e59"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a7e6c14ad785fb921be36997bfa749e59">dependsExplicitelyOn</a> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;expr) const</td></tr>
+<tr class="memdesc:a7e6c14ad785fb921be36997bfa749e59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check recursively if <b>expr</b> is present in the expression.  <a href="#a7e6c14ad785fb921be36997bfa749e59">More...</a><br /></td></tr>
+<tr class="separator:a7e6c14ad785fb921be36997bfa749e59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5fb27a847c4aceb353cce8183df51be"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#af5fb27a847c4aceb353cce8183df51be">isPolynomial</a> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;expr) const</td></tr>
 <tr class="memdesc:af5fb27a847c4aceb353cce8183df51be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if the expression is a mononomial term in <b>expr</b>, i.e. a term of the form C*expr^n with C independent of expr, n integer.  <a href="#af5fb27a847c4aceb353cce8183df51be">More...</a><br /></td></tr>
 <tr class="separator:af5fb27a847c4aceb353cce8183df51be"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -320,9 +323,9 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:a0cf1d8170b6d7ec53b265462f8e1a552"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a0cf1d8170b6d7ec53b265462f8e1a552">addition_own</a> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;expr) const</td></tr>
 <tr class="memdesc:a0cf1d8170b6d7ec53b265462f8e1a552"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains implementation of special addition for Numerical- and Vectorial-types.  <a href="#a0cf1d8170b6d7ec53b265462f8e1a552">More...</a><br /></td></tr>
 <tr class="separator:a0cf1d8170b6d7ec53b265462f8e1a552"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4bc5594d9ea621809a36f8f71cfbcc8a"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a4bc5594d9ea621809a36f8f71cfbcc8a">multiplication_own</a> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;expr) const</td></tr>
-<tr class="memdesc:a4bc5594d9ea621809a36f8f71cfbcc8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains implementation of special multiplication for Numerical- and Vectorial-types.  <a href="#a4bc5594d9ea621809a36f8f71cfbcc8a">More...</a><br /></td></tr>
-<tr class="separator:a4bc5594d9ea621809a36f8f71cfbcc8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57a0d8a83933471cc769445a83d21e03"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a57a0d8a83933471cc769445a83d21e03">multiplication_own</a> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;expr, bool side=1) const</td></tr>
+<tr class="memdesc:a57a0d8a83933471cc769445a83d21e03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains implementation of special multiplication for Numerical- and Vectorial-types.  <a href="#a57a0d8a83933471cc769445a83d21e03">More...</a><br /></td></tr>
+<tr class="separator:a57a0d8a83933471cc769445a83d21e03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab218b3bc5d3930191ded81b2d689ab2d"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#ab218b3bc5d3930191ded81b2d689ab2d">division_own</a> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;expr) const</td></tr>
 <tr class="memdesc:ab218b3bc5d3930191ded81b2d689ab2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains implementation of special division for Numerical- and Polynomial-types. For polynomial, the euclidean division of two polynomials is implemented.  <a href="#ab218b3bc5d3930191ded81b2d689ab2d">More...</a><br /></td></tr>
 <tr class="separator:ab218b3bc5d3930191ded81b2d689ab2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -393,9 +396,12 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:abd82f421ad221566224e1ddf22978b04"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#abd82f421ad221566224e1ddf22978b04">operator!=</a> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;expr) const</td></tr>
 <tr class="memdesc:abd82f421ad221566224e1ddf22978b04"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>Compares</b> the <a class="el" href="classAbstract.html" title="Root class of the inheritance tree of abstracts. ">Abstract</a> with another.  <a href="#abd82f421ad221566224e1ddf22978b04">More...</a><br /></td></tr>
 <tr class="separator:abd82f421ad221566224e1ddf22978b04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cdf1c2cd531cc0385c5879a83ee15f6"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a0cdf1c2cd531cc0385c5879a83ee15f6">operator[]</a> (int iArg)</td></tr>
-<tr class="memdesc:a0cdf1c2cd531cc0385c5879a83ee15f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access operator for multi-argument expressions, equivalent to the function <a class="el" href="classAbstract.html#a75c8c199caec4d49c81b330954228b72" title="Sets the argument at position iArg (default=0). ">setArgument()</a>.  <a href="#a0cdf1c2cd531cc0385c5879a83ee15f6">More...</a><br /></td></tr>
-<tr class="separator:a0cdf1c2cd531cc0385c5879a83ee15f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad414919cfc04dd363e211473110559c2"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#ad414919cfc04dd363e211473110559c2">operator[]</a> (int iArg) const</td></tr>
+<tr class="memdesc:ad414919cfc04dd363e211473110559c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access operator for multi-argument expressions, equivalent to the function <a class="el" href="classAbstract.html#aa3dab23c4d96c188bd24d38ad69eba20">getArgument()</a>.  <a href="#ad414919cfc04dd363e211473110559c2">More...</a><br /></td></tr>
+<tr class="separator:ad414919cfc04dd363e211473110559c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae14918d3e72b9ce4cd6c873400c1fadc"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#ae14918d3e72b9ce4cd6c873400c1fadc">operator[]</a> (int iArg)</td></tr>
+<tr class="memdesc:ae14918d3e72b9ce4cd6c873400c1fadc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access operator for multi-argument expressions, returns a reference so this function is not const.  <a href="#ae14918d3e72b9ce4cd6c873400c1fadc">More...</a><br /></td></tr>
+<tr class="separator:ae14918d3e72b9ce4cd6c873400c1fadc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13cfb786cf54b23696ccdb0a9dd9d6ad"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a13cfb786cf54b23696ccdb0a9dd9d6ad">operator|=</a> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;expr) const</td></tr>
 <tr class="memdesc:a13cfb786cf54b23696ccdb0a9dd9d6ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares the simplicity of the expression to another.  <a href="#a13cfb786cf54b23696ccdb0a9dd9d6ad">More...</a><br /></td></tr>
 <tr class="separator:a13cfb786cf54b23696ccdb0a9dd9d6ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -421,8 +427,6 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a9b45b3e13bd9167aab02e17e08916231"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98b736117ed72bc3d8bc6813c97ca850"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a98b736117ed72bc3d8bc6813c97ca850">commutable</a></td></tr>
 <tr class="separator:a98b736117ed72bc3d8bc6813c97ca850"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5526f40b4ddcf23b599388283b318a13"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a5526f40b4ddcf23b599388283b318a13">indexed</a></td></tr>
-<tr class="separator:a5526f40b4ddcf23b599388283b318a13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><b>Root</b> class of the inheritance tree of abstracts. </p>
@@ -797,8 +801,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a6f0cb1177644e0851aa6721c5be5880a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f0cb1177644e0851aa6721c5be5880a">&#9670;&nbsp;</a></span>contractIndices()</h2>
+<a id="a9734921096d214468627f58d619f0fce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9734921096d214468627f58d619f0fce">&#9670;&nbsp;</a></span>contractIndex()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -807,16 +811,16 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void contractIndices </td>
+          <td class="memname">bool contractIndex </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>axis1</em>, </td>
+          <td class="paramtype">const <a class="el" href="classIndex.html">Index</a> &amp;&#160;</td>
+          <td class="paramname"><em>indexToContract</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>axis2</em>&#160;</td>
+          <td class="paramtype">const <a class="el" href="classIndex.html">Index</a> &amp;&#160;</td>
+          <td class="paramname"><em>newIndex</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -831,16 +835,58 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Contracts the indices at position <b>axis1</b> and <b>axis2</b>. The indices then become dummy indices. </p>
+<p>For indicial expressions, this function searches <b>indexToContract</b> and replaces it with newIndex. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">axis1</td><td>Position of the first index to contract. </td></tr>
-    <tr><td class="paramname">axis2</td><td>Position of the second index to contract. </td></tr>
+    <tr><td class="paramname">indexToContract</td><td><a class="el" href="classIndex.html">Index</a> that is newly contracted. </td></tr>
+    <tr><td class="paramname">newIndex</td><td>Dummy new index that replaces <b>indexToContract</b> in the expression. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd><b>True</b> if the index has been found. </dd>
+<dd>
+<b>False</b> else. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classITensor.html#a8b921f94de91262698dca76542876cd0">ITensor</a>.</p>
+<p>Reimplemented in <a class="el" href="classITensor.html#aaba154e80df3cd6a67acb34e02430959">ITensor</a>, <a class="el" href="classAbstractMultiFunc.html#aaba154e80df3cd6a67acb34e02430959">AbstractMultiFunc</a>, <a class="el" href="classAbstractDuoFunc.html#aaba154e80df3cd6a67acb34e02430959">AbstractDuoFunc</a>, <a class="el" href="classAbstractFunc.html#aaba154e80df3cd6a67acb34e02430959">AbstractFunc</a>, and <a class="el" href="classPlus.html#a5b887783ac8ce3be32439f13b3076701">Plus</a>.</p>
+
+</div>
+</div>
+<a id="a7e6c14ad785fb921be36997bfa749e59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e6c14ad785fb921be36997bfa749e59">&#9670;&nbsp;</a></span>dependsExplicitelyOn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool dependsExplicitelyOn </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;&#160;</td>
+          <td class="paramname"><em>expr</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Check recursively if <b>expr</b> is present in the expression. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">expr</td><td>Expression to search. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><b>True</b> if <b>expr</b> is found. </dd>
+<dd>
+<b>False</b> else. </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classAbstractMultiFunc.html#afbef62e6930fda7067f96ea38fd88c25">AbstractMultiFunc</a>, <a class="el" href="classAbstractDuoFunc.html#afbef62e6930fda7067f96ea38fd88c25">AbstractDuoFunc</a>, and <a class="el" href="classAbstractFunc.html#afbef62e6930fda7067f96ea38fd88c25">AbstractFunc</a>.</p>
 
 </div>
 </div>
@@ -868,14 +914,14 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Check recursively if <b>expr</b> is present in the expression. </p>
+<p>Check recursively if the expression depends on <b>expr</b>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">expr</td><td>Expression to search. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><b>True</b> if <b>expr</b> is found. </dd>
+<dl class="section return"><dt>Returns</dt><dd><b>True</b> if a dependency in <b>expr</b> is found. </dd>
 <dd>
 <b>False</b> else. </dd></dl>
 
@@ -1145,7 +1191,7 @@ Protected Attributes</h2></td></tr>
 <p><b>Evaluates</b> the <a class="el" href="classAbstract.html" title="Root class of the inheritance tree of abstracts. ">Abstract</a>. </p>
 <p>Replaces all variables by their value and evaluating. This function must be used instead of <a class="el" href="classAbstract.html#abd473f3a4f62f338f5b0ee3b10453f39" title="Evaluates the value of the Abstract. ">evaluateScalar()</a> when treating not only real scalars.* In particular (x=2, y=3) x+iy evaluates to 3+ 3i whereas <a class="el" href="classAbstract.html#abd473f3a4f62f338f5b0ee3b10453f39" title="Evaluates the value of the Abstract. ">evaluateScalar()</a> would return 3. </p><dl class="section return"><dt>Returns</dt><dd>The abstract result of the evaluation. </dd></dl>
 
-<p>Implemented in <a class="el" href="classFactorial.html#a9371625b49860dbbd2299b5de7043fe0">Factorial</a>, <a class="el" href="classImaginary.html#a9371625b49860dbbd2299b5de7043fe0">Imaginary</a>, <a class="el" href="classCFactorial.html#a9371625b49860dbbd2299b5de7043fe0">CFactorial</a>, <a class="el" href="classAngle.html#a9371625b49860dbbd2299b5de7043fe0">Angle</a>, <a class="el" href="classDerivative.html#a9371625b49860dbbd2299b5de7043fe0">Derivative</a>, <a class="el" href="classVariable.html#a9371625b49860dbbd2299b5de7043fe0">Variable</a>, <a class="el" href="classPow.html#a9371625b49860dbbd2299b5de7043fe0">Pow</a>, <a class="el" href="classITerm.html#a9371625b49860dbbd2299b5de7043fe0">ITerm</a>, <a class="el" href="classConstant.html#a9371625b49860dbbd2299b5de7043fe0">Constant</a>, <a class="el" href="classITensor.html#a9371625b49860dbbd2299b5de7043fe0">ITensor</a>, <a class="el" href="classFraction.html#a9371625b49860dbbd2299b5de7043fe0">Fraction</a>, <a class="el" href="classCFraction.html#a9371625b49860dbbd2299b5de7043fe0">CFraction</a>, <a class="el" href="classTimes.html#a9371625b49860dbbd2299b5de7043fe0">Times</a>, <a class="el" href="classDouble.html#a9371625b49860dbbd2299b5de7043fe0">Double</a>, <a class="el" href="classPolynomial.html#a9371625b49860dbbd2299b5de7043fe0">Polynomial</a>, <a class="el" href="classInteger.html#a9371625b49860dbbd2299b5de7043fe0">Integer</a>, <a class="el" href="classAbstractFunc.html#a9371625b49860dbbd2299b5de7043fe0">AbstractFunc</a>, <a class="el" href="classPlus.html#a9371625b49860dbbd2299b5de7043fe0">Plus</a>, <a class="el" href="classAbs.html#a9371625b49860dbbd2299b5de7043fe0">Abs</a>, and <a class="el" href="classAbstractVectorial.html#a9371625b49860dbbd2299b5de7043fe0">AbstractVectorial</a>.</p>
+<p>Implemented in <a class="el" href="classFactorial.html#a9371625b49860dbbd2299b5de7043fe0">Factorial</a>, <a class="el" href="classImaginary.html#a9371625b49860dbbd2299b5de7043fe0">Imaginary</a>, <a class="el" href="classCFactorial.html#a9371625b49860dbbd2299b5de7043fe0">CFactorial</a>, <a class="el" href="classAngle.html#a9371625b49860dbbd2299b5de7043fe0">Angle</a>, <a class="el" href="classDerivative.html#a9371625b49860dbbd2299b5de7043fe0">Derivative</a>, <a class="el" href="classVariable.html#a9371625b49860dbbd2299b5de7043fe0">Variable</a>, <a class="el" href="classITerm.html#a9371625b49860dbbd2299b5de7043fe0">ITerm</a>, <a class="el" href="classPow.html#a9371625b49860dbbd2299b5de7043fe0">Pow</a>, <a class="el" href="classITensor.html#a9371625b49860dbbd2299b5de7043fe0">ITensor</a>, <a class="el" href="classConstant.html#a9371625b49860dbbd2299b5de7043fe0">Constant</a>, <a class="el" href="classFraction.html#a9371625b49860dbbd2299b5de7043fe0">Fraction</a>, <a class="el" href="classCFraction.html#a9371625b49860dbbd2299b5de7043fe0">CFraction</a>, <a class="el" href="classTimes.html#a9371625b49860dbbd2299b5de7043fe0">Times</a>, <a class="el" href="classDouble.html#a9371625b49860dbbd2299b5de7043fe0">Double</a>, <a class="el" href="classPolynomial.html#a9371625b49860dbbd2299b5de7043fe0">Polynomial</a>, <a class="el" href="classInteger.html#a9371625b49860dbbd2299b5de7043fe0">Integer</a>, <a class="el" href="classAbstractFunc.html#a9371625b49860dbbd2299b5de7043fe0">AbstractFunc</a>, <a class="el" href="classPlus.html#a9371625b49860dbbd2299b5de7043fe0">Plus</a>, <a class="el" href="classAbs.html#a9371625b49860dbbd2299b5de7043fe0">Abs</a>, and <a class="el" href="classAbstractVectorial.html#a9371625b49860dbbd2299b5de7043fe0">AbstractVectorial</a>.</p>
 
 </div>
 </div>
@@ -2489,7 +2535,7 @@ Protected Attributes</h2></td></tr>
 <p>Gives the <b>type</b> of <a class="el" href="classAbstract.html" title="Root class of the inheritance tree of abstracts. ">Abstract</a>. </p>
 <p>In the program this function is very often called. It allows different functions to know what type of expr they are manipulating (cos, product, number, etc) in order to do special treatments or simplifications. </p><dl class="section return"><dt>Returns</dt><dd>type (a non memorized integer corresponding to the type of abstract) </dd></dl>
 
-<p>Implemented in <a class="el" href="classFactorial.html#a7e3d0659d118ba83932b71540239d0b5">Factorial</a>, <a class="el" href="classATanh.html#a7e3d0659d118ba83932b71540239d0b5">ATanh</a>, <a class="el" href="classASinh.html#a7e3d0659d118ba83932b71540239d0b5">ASinh</a>, <a class="el" href="classACosh.html#a7e3d0659d118ba83932b71540239d0b5">ACosh</a>, <a class="el" href="classTanh.html#a7e3d0659d118ba83932b71540239d0b5">Tanh</a>, <a class="el" href="classSinh.html#a7e3d0659d118ba83932b71540239d0b5">Sinh</a>, <a class="el" href="classImaginary.html#a7e3d0659d118ba83932b71540239d0b5">Imaginary</a>, <a class="el" href="classCosh.html#a7e3d0659d118ba83932b71540239d0b5">Cosh</a>, <a class="el" href="classCFactorial.html#a7e3d0659d118ba83932b71540239d0b5">CFactorial</a>, <a class="el" href="classAngle.html#a7e3d0659d118ba83932b71540239d0b5">Angle</a>, <a class="el" href="classDerivative.html#a7e3d0659d118ba83932b71540239d0b5">Derivative</a>, <a class="el" href="classATan.html#a7e3d0659d118ba83932b71540239d0b5">ATan</a>, <a class="el" href="classVariable.html#a7e3d0659d118ba83932b71540239d0b5">Variable</a>, <a class="el" href="classASin.html#a7e3d0659d118ba83932b71540239d0b5">ASin</a>, <a class="el" href="classPow.html#a7e3d0659d118ba83932b71540239d0b5">Pow</a>, <a class="el" href="classITerm.html#a7e3d0659d118ba83932b71540239d0b5">ITerm</a>, <a class="el" href="classConstant.html#a7e3d0659d118ba83932b71540239d0b5">Constant</a>, <a class="el" href="classACos.html#a7e3d0659d118ba83932b71540239d0b5">ACos</a>, <a class="el" href="classITensor.html#a7e3d0659d118ba83932b71540239d0b5">ITensor</a>, <a class="el" href="classFraction.html#a7e3d0659d118ba83932b71540239d0b5">Fraction</a>, <a class="el" href="classTan.html#a7e3d0659d118ba83932b71540239d0b5">Tan</a>, <a class="el" href="classCFraction.html#a7e3d0659d118ba83932b71540239d0b5">CFraction</a>, <a class="el" href="classSin.html#a7e3d0659d118ba83932b71540239d0b5">Sin</a>, <a class="el" href="classTimes.html#a7e3d0659d118ba83932b71540239d0b5">Times</a>, <a class="el" href="classCos.html#a7e3d0659d118ba83932b71540239d0b5">Cos</a>, <a class="el" href="classHighDTensor.html#a7e3d0659d118ba83932b71540239d0b5">HighDTensor</a>, <a class="el" href="classDouble.html#a7e3d0659d118ba83932b71540239d0b5">Double</a>, <a class="el" href="classLog.html#a7e3d0659d118ba83932b71540239d0b5">Log</a>, <a class="el" href="classMatrix.html#a7e3d0659d118ba83932b71540239d0b5">Matrix</a>, <a class="el" href="classPolynomial.html#a7e3d0659d118ba83932b71540239d0b5">Polynomial</a>, <a class="el" href="classVector.html#a7e3d0659d118ba83932b71540239d0b5">Vector</a>, <a class="el" href="classInteger.html#a7e3d0659d118ba83932b71540239d0b5">Integer</a>, <a class="el" href="classExp.html#a7e3d0659d118ba83932b71540239d0b5">Exp</a>, <a class="el" href="classPlus.html#a7e3d0659d118ba83932b71540239d0b5">Plus</a>, and <a class="el" href="classAbs.html#a7e3d0659d118ba83932b71540239d0b5">Abs</a>.</p>
+<p>Implemented in <a class="el" href="classFactorial.html#a7e3d0659d118ba83932b71540239d0b5">Factorial</a>, <a class="el" href="classATanh.html#a7e3d0659d118ba83932b71540239d0b5">ATanh</a>, <a class="el" href="classASinh.html#a7e3d0659d118ba83932b71540239d0b5">ASinh</a>, <a class="el" href="classACosh.html#a7e3d0659d118ba83932b71540239d0b5">ACosh</a>, <a class="el" href="classTanh.html#a7e3d0659d118ba83932b71540239d0b5">Tanh</a>, <a class="el" href="classSinh.html#a7e3d0659d118ba83932b71540239d0b5">Sinh</a>, <a class="el" href="classImaginary.html#a7e3d0659d118ba83932b71540239d0b5">Imaginary</a>, <a class="el" href="classCosh.html#a7e3d0659d118ba83932b71540239d0b5">Cosh</a>, <a class="el" href="classCFactorial.html#a7e3d0659d118ba83932b71540239d0b5">CFactorial</a>, <a class="el" href="classAngle.html#a7e3d0659d118ba83932b71540239d0b5">Angle</a>, <a class="el" href="classDerivative.html#a7e3d0659d118ba83932b71540239d0b5">Derivative</a>, <a class="el" href="classATan.html#a7e3d0659d118ba83932b71540239d0b5">ATan</a>, <a class="el" href="classVariable.html#a7e3d0659d118ba83932b71540239d0b5">Variable</a>, <a class="el" href="classITerm.html#a7e3d0659d118ba83932b71540239d0b5">ITerm</a>, <a class="el" href="classASin.html#a7e3d0659d118ba83932b71540239d0b5">ASin</a>, <a class="el" href="classITensor.html#a7e3d0659d118ba83932b71540239d0b5">ITensor</a>, <a class="el" href="classPow.html#a7e3d0659d118ba83932b71540239d0b5">Pow</a>, <a class="el" href="classConstant.html#a7e3d0659d118ba83932b71540239d0b5">Constant</a>, <a class="el" href="classACos.html#a7e3d0659d118ba83932b71540239d0b5">ACos</a>, <a class="el" href="classFraction.html#a7e3d0659d118ba83932b71540239d0b5">Fraction</a>, <a class="el" href="classTan.html#a7e3d0659d118ba83932b71540239d0b5">Tan</a>, <a class="el" href="classCFraction.html#a7e3d0659d118ba83932b71540239d0b5">CFraction</a>, <a class="el" href="classSin.html#a7e3d0659d118ba83932b71540239d0b5">Sin</a>, <a class="el" href="classTimes.html#a7e3d0659d118ba83932b71540239d0b5">Times</a>, <a class="el" href="classCos.html#a7e3d0659d118ba83932b71540239d0b5">Cos</a>, <a class="el" href="classHighDTensor.html#a7e3d0659d118ba83932b71540239d0b5">HighDTensor</a>, <a class="el" href="classDouble.html#a7e3d0659d118ba83932b71540239d0b5">Double</a>, <a class="el" href="classLog.html#a7e3d0659d118ba83932b71540239d0b5">Log</a>, <a class="el" href="classMatrix.html#a7e3d0659d118ba83932b71540239d0b5">Matrix</a>, <a class="el" href="classPolynomial.html#a7e3d0659d118ba83932b71540239d0b5">Polynomial</a>, <a class="el" href="classVector.html#a7e3d0659d118ba83932b71540239d0b5">Vector</a>, <a class="el" href="classInteger.html#a7e3d0659d118ba83932b71540239d0b5">Integer</a>, <a class="el" href="classExp.html#a7e3d0659d118ba83932b71540239d0b5">Exp</a>, <a class="el" href="classPlus.html#a7e3d0659d118ba83932b71540239d0b5">Plus</a>, and <a class="el" href="classAbs.html#a7e3d0659d118ba83932b71540239d0b5">Abs</a>.</p>
 
 </div>
 </div>
@@ -2581,7 +2627,7 @@ Protected Attributes</h2></td></tr>
 <p>Accessor to the variable that defines certain types of expressions. </p>
 <dl class="section return"><dt>Returns</dt><dd><b>variable</b>. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classPolynomial.html#ad1dc7c48eedf94ffe156fd0e0624bb35">Polynomial</a>.</p>
+<p>Reimplemented in <a class="el" href="classDerivative.html#ad1dc7c48eedf94ffe156fd0e0624bb35">Derivative</a>, and <a class="el" href="classPolynomial.html#ad1dc7c48eedf94ffe156fd0e0624bb35">Polynomial</a>.</p>
 
 </div>
 </div>
@@ -2646,8 +2692,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a49620ec470e935ce2c770981e4f338dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a49620ec470e935ce2c770981e4f338dc">&#9670;&nbsp;</a></span>insert()</h2>
+<a id="a3137c0d5e3ebd67e695ce21732dc26ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3137c0d5e3ebd67e695ce21732dc26ef">&#9670;&nbsp;</a></span>insert()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2665,7 +2711,7 @@ Protected Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>side</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>side</em> = <code>1</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -2689,7 +2735,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="classTimes.html#aa32280c01018eba348c41392e23a089f">Times</a>, and <a class="el" href="classPlus.html#aa32280c01018eba348c41392e23a089f">Plus</a>.</p>
+<p>Reimplemented in <a class="el" href="classTimes.html#a50635b2ca667cf7290713e6650ed8a95">Times</a>, and <a class="el" href="classPlus.html#a50635b2ca667cf7290713e6650ed8a95">Plus</a>.</p>
 
 </div>
 </div>
@@ -2815,7 +2861,7 @@ Protected Attributes</h2></td></tr>
 <dd>
 <b>False</b> else. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classAbstractMultiFunc.html#a190a9f0cd68215273e87b627c878baa2">AbstractMultiFunc</a>, <a class="el" href="classPolynomial.html#a190a9f0cd68215273e87b627c878baa2">Polynomial</a>, <a class="el" href="classAbstractDuoFunc.html#a190a9f0cd68215273e87b627c878baa2">AbstractDuoFunc</a>, and <a class="el" href="classAbstractFunc.html#a190a9f0cd68215273e87b627c878baa2">AbstractFunc</a>.</p>
+<p>Reimplemented in <a class="el" href="classAbstractIndicial.html#a190a9f0cd68215273e87b627c878baa2">AbstractIndicial</a>, <a class="el" href="classAbstractMultiFunc.html#a190a9f0cd68215273e87b627c878baa2">AbstractMultiFunc</a>, <a class="el" href="classPolynomial.html#a190a9f0cd68215273e87b627c878baa2">Polynomial</a>, <a class="el" href="classAbstractDuoFunc.html#a190a9f0cd68215273e87b627c878baa2">AbstractDuoFunc</a>, and <a class="el" href="classAbstractFunc.html#a190a9f0cd68215273e87b627c878baa2">AbstractFunc</a>.</p>
 
 </div>
 </div>
@@ -2940,8 +2986,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a4bc5594d9ea621809a36f8f71cfbcc8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4bc5594d9ea621809a36f8f71cfbcc8a">&#9670;&nbsp;</a></span>multiplication_own()</h2>
+<a id="a57a0d8a83933471cc769445a83d21e03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57a0d8a83933471cc769445a83d21e03">&#9670;&nbsp;</a></span>multiplication_own()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2953,8 +2999,18 @@ Protected Attributes</h2></td></tr>
           <td class="memname"><a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> multiplication_own </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;&#160;</td>
-          <td class="paramname"><em>expr</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramname"><em>expr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>side</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
         </tr>
       </table>
   </td>
@@ -2973,7 +3029,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The product of the two operands. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classCFraction.html#a417cab565d5c641e28ac86785eee7463">CFraction</a>, <a class="el" href="classDouble.html#a417cab565d5c641e28ac86785eee7463">Double</a>, <a class="el" href="classPolynomial.html#a417cab565d5c641e28ac86785eee7463">Polynomial</a>, <a class="el" href="classInteger.html#a417cab565d5c641e28ac86785eee7463">Integer</a>, and <a class="el" href="classAbstractVectorial.html#a417cab565d5c641e28ac86785eee7463">AbstractVectorial</a>.</p>
+<p>Reimplemented in <a class="el" href="classCFraction.html#a3ab648a7f5b3c4bea99303a80e1cb231">CFraction</a>, <a class="el" href="classDouble.html#a3ab648a7f5b3c4bea99303a80e1cb231">Double</a>, <a class="el" href="classPolynomial.html#a3ab648a7f5b3c4bea99303a80e1cb231">Polynomial</a>, <a class="el" href="classInteger.html#a3ab648a7f5b3c4bea99303a80e1cb231">Integer</a>, and <a class="el" href="classAbstractVectorial.html#a3ab648a7f5b3c4bea99303a80e1cb231">AbstractVectorial</a>.</p>
 
 </div>
 </div>
@@ -3144,7 +3200,7 @@ True else. </dd></dl>
 <dd>
 <b>True</b> else. </dd></dl>
 
-<p>Implemented in <a class="el" href="classImaginary.html#a26d388751fbd94c687b09811dd552a65">Imaginary</a>, <a class="el" href="classCFactorial.html#a26d388751fbd94c687b09811dd552a65">CFactorial</a>, <a class="el" href="classAngle.html#a26d388751fbd94c687b09811dd552a65">Angle</a>, <a class="el" href="classDerivative.html#a26d388751fbd94c687b09811dd552a65">Derivative</a>, <a class="el" href="classVariable.html#a26d388751fbd94c687b09811dd552a65">Variable</a>, <a class="el" href="classPow.html#a26d388751fbd94c687b09811dd552a65">Pow</a>, <a class="el" href="classConstant.html#a26d388751fbd94c687b09811dd552a65">Constant</a>, <a class="el" href="classITerm.html#a26d388751fbd94c687b09811dd552a65">ITerm</a>, <a class="el" href="classITensor.html#a26d388751fbd94c687b09811dd552a65">ITensor</a>, <a class="el" href="classFraction.html#a26d388751fbd94c687b09811dd552a65">Fraction</a>, <a class="el" href="classCFraction.html#a26d388751fbd94c687b09811dd552a65">CFraction</a>, <a class="el" href="classTimes.html#a26d388751fbd94c687b09811dd552a65">Times</a>, <a class="el" href="classDouble.html#a26d388751fbd94c687b09811dd552a65">Double</a>, <a class="el" href="classHighDTensor.html#a26d388751fbd94c687b09811dd552a65">HighDTensor</a>, <a class="el" href="classPolynomial.html#a26d388751fbd94c687b09811dd552a65">Polynomial</a>, <a class="el" href="classMatrix.html#a26d388751fbd94c687b09811dd552a65">Matrix</a>, <a class="el" href="classInteger.html#a26d388751fbd94c687b09811dd552a65">Integer</a>, <a class="el" href="classVector.html#a26d388751fbd94c687b09811dd552a65">Vector</a>, <a class="el" href="classPlus.html#a26d388751fbd94c687b09811dd552a65">Plus</a>, and <a class="el" href="classAbstractFunc.html#a26d388751fbd94c687b09811dd552a65">AbstractFunc</a>.</p>
+<p>Implemented in <a class="el" href="classImaginary.html#a26d388751fbd94c687b09811dd552a65">Imaginary</a>, <a class="el" href="classCFactorial.html#a26d388751fbd94c687b09811dd552a65">CFactorial</a>, <a class="el" href="classAngle.html#a26d388751fbd94c687b09811dd552a65">Angle</a>, <a class="el" href="classDerivative.html#a26d388751fbd94c687b09811dd552a65">Derivative</a>, <a class="el" href="classVariable.html#a26d388751fbd94c687b09811dd552a65">Variable</a>, <a class="el" href="classPow.html#a26d388751fbd94c687b09811dd552a65">Pow</a>, <a class="el" href="classITerm.html#a26d388751fbd94c687b09811dd552a65">ITerm</a>, <a class="el" href="classITensor.html#a26d388751fbd94c687b09811dd552a65">ITensor</a>, <a class="el" href="classConstant.html#a26d388751fbd94c687b09811dd552a65">Constant</a>, <a class="el" href="classFraction.html#a26d388751fbd94c687b09811dd552a65">Fraction</a>, <a class="el" href="classCFraction.html#a26d388751fbd94c687b09811dd552a65">CFraction</a>, <a class="el" href="classTimes.html#a26d388751fbd94c687b09811dd552a65">Times</a>, <a class="el" href="classDouble.html#a26d388751fbd94c687b09811dd552a65">Double</a>, <a class="el" href="classHighDTensor.html#a26d388751fbd94c687b09811dd552a65">HighDTensor</a>, <a class="el" href="classPolynomial.html#a26d388751fbd94c687b09811dd552a65">Polynomial</a>, <a class="el" href="classMatrix.html#a26d388751fbd94c687b09811dd552a65">Matrix</a>, <a class="el" href="classInteger.html#a26d388751fbd94c687b09811dd552a65">Integer</a>, <a class="el" href="classVector.html#a26d388751fbd94c687b09811dd552a65">Vector</a>, <a class="el" href="classPlus.html#a26d388751fbd94c687b09811dd552a65">Plus</a>, and <a class="el" href="classAbstractFunc.html#a26d388751fbd94c687b09811dd552a65">AbstractFunc</a>.</p>
 
 </div>
 </div>
@@ -3306,7 +3362,7 @@ True else. </dd></dl>
 <dd>
 <b>False</b> else. </dd></dl>
 
-<p>Implemented in <a class="el" href="classImaginary.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Imaginary</a>, <a class="el" href="classCFactorial.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">CFactorial</a>, <a class="el" href="classAngle.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Angle</a>, <a class="el" href="classDerivative.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Derivative</a>, <a class="el" href="classVariable.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Variable</a>, <a class="el" href="classPow.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Pow</a>, <a class="el" href="classConstant.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Constant</a>, <a class="el" href="classITerm.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">ITerm</a>, <a class="el" href="classITensor.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">ITensor</a>, <a class="el" href="classFraction.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Fraction</a>, <a class="el" href="classCFraction.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">CFraction</a>, <a class="el" href="classTimes.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Times</a>, <a class="el" href="classAbstractMultiFunc.html#a9a2b25eb515b6b4e005efe840e145f2c">AbstractMultiFunc</a>, <a class="el" href="classDouble.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Double</a>, <a class="el" href="classPolynomial.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Polynomial</a>, <a class="el" href="classAbstractDuoFunc.html#a9a2b25eb515b6b4e005efe840e145f2c">AbstractDuoFunc</a>, <a class="el" href="classInteger.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Integer</a>, <a class="el" href="classAbstractVectorial.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">AbstractVectorial</a>, <a class="el" href="classPlus.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Plus</a>, and <a class="el" href="classAbstractFunc.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">AbstractFunc</a>.</p>
+<p>Implemented in <a class="el" href="classImaginary.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Imaginary</a>, <a class="el" href="classCFactorial.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">CFactorial</a>, <a class="el" href="classAngle.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Angle</a>, <a class="el" href="classDerivative.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Derivative</a>, <a class="el" href="classVariable.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Variable</a>, <a class="el" href="classITerm.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">ITerm</a>, <a class="el" href="classPow.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Pow</a>, <a class="el" href="classITensor.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">ITensor</a>, <a class="el" href="classConstant.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Constant</a>, <a class="el" href="classFraction.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Fraction</a>, <a class="el" href="classCFraction.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">CFraction</a>, <a class="el" href="classTimes.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Times</a>, <a class="el" href="classAbstractMultiFunc.html#a9a2b25eb515b6b4e005efe840e145f2c">AbstractMultiFunc</a>, <a class="el" href="classDouble.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Double</a>, <a class="el" href="classPolynomial.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Polynomial</a>, <a class="el" href="classAbstractDuoFunc.html#a9a2b25eb515b6b4e005efe840e145f2c">AbstractDuoFunc</a>, <a class="el" href="classInteger.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Integer</a>, <a class="el" href="classPlus.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">Plus</a>, <a class="el" href="classAbstractVectorial.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">AbstractVectorial</a>, and <a class="el" href="classAbstractFunc.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">AbstractFunc</a>.</p>
 
 </div>
 </div>
@@ -3345,7 +3401,7 @@ True else. </dd></dl>
 <dd>
 <b>False</b> else. </dd></dl>
 
-<p>Implemented in <a class="el" href="classImaginary.html#a54ab0ab35f14438145a16f887b060de8">Imaginary</a>, <a class="el" href="classCFactorial.html#a54ab0ab35f14438145a16f887b060de8">CFactorial</a>, <a class="el" href="classAngle.html#a54ab0ab35f14438145a16f887b060de8">Angle</a>, <a class="el" href="classDerivative.html#a54ab0ab35f14438145a16f887b060de8">Derivative</a>, <a class="el" href="classVariable.html#a54ab0ab35f14438145a16f887b060de8">Variable</a>, <a class="el" href="classPow.html#a54ab0ab35f14438145a16f887b060de8">Pow</a>, <a class="el" href="classConstant.html#a54ab0ab35f14438145a16f887b060de8">Constant</a>, <a class="el" href="classITerm.html#a54ab0ab35f14438145a16f887b060de8">ITerm</a>, <a class="el" href="classITensor.html#a54ab0ab35f14438145a16f887b060de8">ITensor</a>, <a class="el" href="classFraction.html#a54ab0ab35f14438145a16f887b060de8">Fraction</a>, <a class="el" href="classCFraction.html#a54ab0ab35f14438145a16f887b060de8">CFraction</a>, <a class="el" href="classTimes.html#a54ab0ab35f14438145a16f887b060de8">Times</a>, <a class="el" href="classDouble.html#a54ab0ab35f14438145a16f887b060de8">Double</a>, <a class="el" href="classHighDTensor.html#a54ab0ab35f14438145a16f887b060de8">HighDTensor</a>, <a class="el" href="classPolynomial.html#a54ab0ab35f14438145a16f887b060de8">Polynomial</a>, <a class="el" href="classMatrix.html#a54ab0ab35f14438145a16f887b060de8">Matrix</a>, <a class="el" href="classInteger.html#a54ab0ab35f14438145a16f887b060de8">Integer</a>, <a class="el" href="classVector.html#a54ab0ab35f14438145a16f887b060de8">Vector</a>, <a class="el" href="classPlus.html#a54ab0ab35f14438145a16f887b060de8">Plus</a>, and <a class="el" href="classAbstractFunc.html#a54ab0ab35f14438145a16f887b060de8">AbstractFunc</a>.</p>
+<p>Implemented in <a class="el" href="classImaginary.html#a54ab0ab35f14438145a16f887b060de8">Imaginary</a>, <a class="el" href="classCFactorial.html#a54ab0ab35f14438145a16f887b060de8">CFactorial</a>, <a class="el" href="classAngle.html#a54ab0ab35f14438145a16f887b060de8">Angle</a>, <a class="el" href="classDerivative.html#a54ab0ab35f14438145a16f887b060de8">Derivative</a>, <a class="el" href="classVariable.html#a54ab0ab35f14438145a16f887b060de8">Variable</a>, <a class="el" href="classPow.html#a54ab0ab35f14438145a16f887b060de8">Pow</a>, <a class="el" href="classITerm.html#a54ab0ab35f14438145a16f887b060de8">ITerm</a>, <a class="el" href="classITensor.html#a54ab0ab35f14438145a16f887b060de8">ITensor</a>, <a class="el" href="classConstant.html#a54ab0ab35f14438145a16f887b060de8">Constant</a>, <a class="el" href="classFraction.html#a54ab0ab35f14438145a16f887b060de8">Fraction</a>, <a class="el" href="classCFraction.html#a54ab0ab35f14438145a16f887b060de8">CFraction</a>, <a class="el" href="classTimes.html#a54ab0ab35f14438145a16f887b060de8">Times</a>, <a class="el" href="classDouble.html#a54ab0ab35f14438145a16f887b060de8">Double</a>, <a class="el" href="classHighDTensor.html#a54ab0ab35f14438145a16f887b060de8">HighDTensor</a>, <a class="el" href="classPolynomial.html#a54ab0ab35f14438145a16f887b060de8">Polynomial</a>, <a class="el" href="classMatrix.html#a54ab0ab35f14438145a16f887b060de8">Matrix</a>, <a class="el" href="classInteger.html#a54ab0ab35f14438145a16f887b060de8">Integer</a>, <a class="el" href="classVector.html#a54ab0ab35f14438145a16f887b060de8">Vector</a>, <a class="el" href="classPlus.html#a54ab0ab35f14438145a16f887b060de8">Plus</a>, and <a class="el" href="classAbstractFunc.html#a54ab0ab35f14438145a16f887b060de8">AbstractFunc</a>.</p>
 
 </div>
 </div>
@@ -3378,8 +3434,8 @@ True else. </dd></dl>
 
 </div>
 </div>
-<a id="a0cdf1c2cd531cc0385c5879a83ee15f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0cdf1c2cd531cc0385c5879a83ee15f6">&#9670;&nbsp;</a></span>operator[]()</h2>
+<a id="ad414919cfc04dd363e211473110559c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad414919cfc04dd363e211473110559c2">&#9670;&nbsp;</a></span>operator[]() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3389,6 +3445,43 @@ True else. </dd></dl>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> operator[] </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>iArg</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Access operator for multi-argument expressions, equivalent to the function <a class="el" href="classAbstract.html#aa3dab23c4d96c188bd24d38ad69eba20">getArgument()</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">iArg</td><td><a class="el" href="classIndex.html">Index</a> of the argument to get. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><b>argument</b>[iArg]. </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classAbstractVectorial.html#afa3940fec5665747f69e980bb670a338">AbstractVectorial</a>.</p>
+
+</div>
+</div>
+<a id="ae14918d3e72b9ce4cd6c873400c1fadc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae14918d3e72b9ce4cd6c873400c1fadc">&#9670;&nbsp;</a></span>operator[]() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp; operator[] </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>iArg</em></td><td>)</td>
@@ -3402,16 +3495,16 @@ True else. </dd></dl>
 </table>
 </div><div class="memdoc">
 
-<p>Access operator for multi-argument expressions, equivalent to the function <a class="el" href="classAbstract.html#a75c8c199caec4d49c81b330954228b72" title="Sets the argument at position iArg (default=0). ">setArgument()</a>. </p>
+<p>Access operator for multi-argument expressions, returns a reference so this function is not const. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">iArg</td><td><a class="el" href="classIndex.html">Index</a> of the argument to get. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><b>argument</b>[iArg]. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A reference to <b>argument</b>[iArg]. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classAbstractVectorial.html#ac5b51c602067e2b2e1db0c6b797e96d6">AbstractVectorial</a>.</p>
+<p>Reimplemented in <a class="el" href="classAbstractVectorial.html#a72b1c4cd3597712bc6250fc1b08d6d00">AbstractVectorial</a>.</p>
 
 </div>
 </div>
@@ -3534,7 +3627,7 @@ True else. </dd></dl>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classFactorial.html#abd9f12af3b52f041754d10bc7f106a96">Factorial</a>, <a class="el" href="classATanh.html#abd9f12af3b52f041754d10bc7f106a96">ATanh</a>, <a class="el" href="classASinh.html#abd9f12af3b52f041754d10bc7f106a96">ASinh</a>, <a class="el" href="classACosh.html#abd9f12af3b52f041754d10bc7f106a96">ACosh</a>, <a class="el" href="classTanh.html#abd9f12af3b52f041754d10bc7f106a96">Tanh</a>, <a class="el" href="classSinh.html#abd9f12af3b52f041754d10bc7f106a96">Sinh</a>, <a class="el" href="classImaginary.html#abd9f12af3b52f041754d10bc7f106a96">Imaginary</a>, <a class="el" href="classCosh.html#abd9f12af3b52f041754d10bc7f106a96">Cosh</a>, <a class="el" href="classCFactorial.html#abd9f12af3b52f041754d10bc7f106a96">CFactorial</a>, <a class="el" href="classAngle.html#abd9f12af3b52f041754d10bc7f106a96">Angle</a>, <a class="el" href="classDerivative.html#abd9f12af3b52f041754d10bc7f106a96">Derivative</a>, <a class="el" href="classVariable.html#abd9f12af3b52f041754d10bc7f106a96">Variable</a>, <a class="el" href="classATan.html#abd9f12af3b52f041754d10bc7f106a96">ATan</a>, <a class="el" href="classASin.html#abd9f12af3b52f041754d10bc7f106a96">ASin</a>, <a class="el" href="classPow.html#abd9f12af3b52f041754d10bc7f106a96">Pow</a>, <a class="el" href="classITerm.html#abd9f12af3b52f041754d10bc7f106a96">ITerm</a>, <a class="el" href="classConstant.html#abd9f12af3b52f041754d10bc7f106a96">Constant</a>, <a class="el" href="classACos.html#abd9f12af3b52f041754d10bc7f106a96">ACos</a>, <a class="el" href="classITensor.html#abd9f12af3b52f041754d10bc7f106a96">ITensor</a>, <a class="el" href="classFraction.html#abd9f12af3b52f041754d10bc7f106a96">Fraction</a>, <a class="el" href="classTan.html#abd9f12af3b52f041754d10bc7f106a96">Tan</a>, <a class="el" href="classCFraction.html#abd9f12af3b52f041754d10bc7f106a96">CFraction</a>, <a class="el" href="classSin.html#abd9f12af3b52f041754d10bc7f106a96">Sin</a>, <a class="el" href="classTimes.html#abd9f12af3b52f041754d10bc7f106a96">Times</a>, <a class="el" href="classCos.html#abd9f12af3b52f041754d10bc7f106a96">Cos</a>, <a class="el" href="classDouble.html#abd9f12af3b52f041754d10bc7f106a96">Double</a>, <a class="el" href="classLog.html#abd9f12af3b52f041754d10bc7f106a96">Log</a>, <a class="el" href="classPolynomial.html#abd9f12af3b52f041754d10bc7f106a96">Polynomial</a>, <a class="el" href="classInteger.html#abd9f12af3b52f041754d10bc7f106a96">Integer</a>, <a class="el" href="classExp.html#abd9f12af3b52f041754d10bc7f106a96">Exp</a>, <a class="el" href="classPlus.html#abd9f12af3b52f041754d10bc7f106a96">Plus</a>, <a class="el" href="classAbs.html#abd9f12af3b52f041754d10bc7f106a96">Abs</a>, and <a class="el" href="classAbstractVectorial.html#abd9f12af3b52f041754d10bc7f106a96">AbstractVectorial</a>.</p>
+<p>Implemented in <a class="el" href="classFactorial.html#abd9f12af3b52f041754d10bc7f106a96">Factorial</a>, <a class="el" href="classATanh.html#abd9f12af3b52f041754d10bc7f106a96">ATanh</a>, <a class="el" href="classASinh.html#abd9f12af3b52f041754d10bc7f106a96">ASinh</a>, <a class="el" href="classACosh.html#abd9f12af3b52f041754d10bc7f106a96">ACosh</a>, <a class="el" href="classTanh.html#abd9f12af3b52f041754d10bc7f106a96">Tanh</a>, <a class="el" href="classSinh.html#abd9f12af3b52f041754d10bc7f106a96">Sinh</a>, <a class="el" href="classImaginary.html#abd9f12af3b52f041754d10bc7f106a96">Imaginary</a>, <a class="el" href="classCosh.html#abd9f12af3b52f041754d10bc7f106a96">Cosh</a>, <a class="el" href="classCFactorial.html#abd9f12af3b52f041754d10bc7f106a96">CFactorial</a>, <a class="el" href="classAngle.html#abd9f12af3b52f041754d10bc7f106a96">Angle</a>, <a class="el" href="classDerivative.html#abd9f12af3b52f041754d10bc7f106a96">Derivative</a>, <a class="el" href="classVariable.html#abd9f12af3b52f041754d10bc7f106a96">Variable</a>, <a class="el" href="classATan.html#abd9f12af3b52f041754d10bc7f106a96">ATan</a>, <a class="el" href="classITerm.html#abd9f12af3b52f041754d10bc7f106a96">ITerm</a>, <a class="el" href="classASin.html#abd9f12af3b52f041754d10bc7f106a96">ASin</a>, <a class="el" href="classPow.html#abd9f12af3b52f041754d10bc7f106a96">Pow</a>, <a class="el" href="classITensor.html#abd9f12af3b52f041754d10bc7f106a96">ITensor</a>, <a class="el" href="classConstant.html#abd9f12af3b52f041754d10bc7f106a96">Constant</a>, <a class="el" href="classACos.html#abd9f12af3b52f041754d10bc7f106a96">ACos</a>, <a class="el" href="classFraction.html#abd9f12af3b52f041754d10bc7f106a96">Fraction</a>, <a class="el" href="classTan.html#abd9f12af3b52f041754d10bc7f106a96">Tan</a>, <a class="el" href="classCFraction.html#abd9f12af3b52f041754d10bc7f106a96">CFraction</a>, <a class="el" href="classSin.html#abd9f12af3b52f041754d10bc7f106a96">Sin</a>, <a class="el" href="classTimes.html#abd9f12af3b52f041754d10bc7f106a96">Times</a>, <a class="el" href="classCos.html#abd9f12af3b52f041754d10bc7f106a96">Cos</a>, <a class="el" href="classDouble.html#abd9f12af3b52f041754d10bc7f106a96">Double</a>, <a class="el" href="classLog.html#abd9f12af3b52f041754d10bc7f106a96">Log</a>, <a class="el" href="classPolynomial.html#abd9f12af3b52f041754d10bc7f106a96">Polynomial</a>, <a class="el" href="classInteger.html#abd9f12af3b52f041754d10bc7f106a96">Integer</a>, <a class="el" href="classExp.html#abd9f12af3b52f041754d10bc7f106a96">Exp</a>, <a class="el" href="classPlus.html#abd9f12af3b52f041754d10bc7f106a96">Plus</a>, <a class="el" href="classAbs.html#abd9f12af3b52f041754d10bc7f106a96">Abs</a>, and <a class="el" href="classAbstractVectorial.html#abd9f12af3b52f041754d10bc7f106a96">AbstractVectorial</a>.</p>
 
 </div>
 </div>
@@ -3597,7 +3690,7 @@ True else. </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The string corresponding to the LaTeX output. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classFactorial.html#a8086e83f45a0d609ebe40a6f0a269e88">Factorial</a>, <a class="el" href="classATanh.html#a8086e83f45a0d609ebe40a6f0a269e88">ATanh</a>, <a class="el" href="classASinh.html#a8086e83f45a0d609ebe40a6f0a269e88">ASinh</a>, <a class="el" href="classACosh.html#a8086e83f45a0d609ebe40a6f0a269e88">ACosh</a>, <a class="el" href="classTanh.html#a8086e83f45a0d609ebe40a6f0a269e88">Tanh</a>, <a class="el" href="classSinh.html#a8086e83f45a0d609ebe40a6f0a269e88">Sinh</a>, <a class="el" href="classImaginary.html#a8086e83f45a0d609ebe40a6f0a269e88">Imaginary</a>, <a class="el" href="classCosh.html#a8086e83f45a0d609ebe40a6f0a269e88">Cosh</a>, <a class="el" href="classCFactorial.html#a8086e83f45a0d609ebe40a6f0a269e88">CFactorial</a>, <a class="el" href="classAngle.html#a8086e83f45a0d609ebe40a6f0a269e88">Angle</a>, <a class="el" href="classDerivative.html#a8086e83f45a0d609ebe40a6f0a269e88">Derivative</a>, <a class="el" href="classVariable.html#a8086e83f45a0d609ebe40a6f0a269e88">Variable</a>, <a class="el" href="classATan.html#a8086e83f45a0d609ebe40a6f0a269e88">ATan</a>, <a class="el" href="classASin.html#a8086e83f45a0d609ebe40a6f0a269e88">ASin</a>, <a class="el" href="classPow.html#a8086e83f45a0d609ebe40a6f0a269e88">Pow</a>, <a class="el" href="classITerm.html#a8086e83f45a0d609ebe40a6f0a269e88">ITerm</a>, <a class="el" href="classConstant.html#a8086e83f45a0d609ebe40a6f0a269e88">Constant</a>, <a class="el" href="classACos.html#a8086e83f45a0d609ebe40a6f0a269e88">ACos</a>, <a class="el" href="classITensor.html#a8086e83f45a0d609ebe40a6f0a269e88">ITensor</a>, <a class="el" href="classFraction.html#a8086e83f45a0d609ebe40a6f0a269e88">Fraction</a>, <a class="el" href="classTan.html#a8086e83f45a0d609ebe40a6f0a269e88">Tan</a>, <a class="el" href="classCFraction.html#a8086e83f45a0d609ebe40a6f0a269e88">CFraction</a>, <a class="el" href="classSin.html#a8086e83f45a0d609ebe40a6f0a269e88">Sin</a>, <a class="el" href="classTimes.html#a8086e83f45a0d609ebe40a6f0a269e88">Times</a>, <a class="el" href="classCos.html#a8086e83f45a0d609ebe40a6f0a269e88">Cos</a>, <a class="el" href="classDouble.html#a8086e83f45a0d609ebe40a6f0a269e88">Double</a>, <a class="el" href="classLog.html#a8086e83f45a0d609ebe40a6f0a269e88">Log</a>, <a class="el" href="classPolynomial.html#a8086e83f45a0d609ebe40a6f0a269e88">Polynomial</a>, <a class="el" href="classInteger.html#a8086e83f45a0d609ebe40a6f0a269e88">Integer</a>, <a class="el" href="classExp.html#a8086e83f45a0d609ebe40a6f0a269e88">Exp</a>, <a class="el" href="classPlus.html#a8086e83f45a0d609ebe40a6f0a269e88">Plus</a>, <a class="el" href="classAbs.html#a8086e83f45a0d609ebe40a6f0a269e88">Abs</a>, and <a class="el" href="classAbstractVectorial.html#a8086e83f45a0d609ebe40a6f0a269e88">AbstractVectorial</a>.</p>
+<p>Reimplemented in <a class="el" href="classFactorial.html#a8086e83f45a0d609ebe40a6f0a269e88">Factorial</a>, <a class="el" href="classATanh.html#a8086e83f45a0d609ebe40a6f0a269e88">ATanh</a>, <a class="el" href="classASinh.html#a8086e83f45a0d609ebe40a6f0a269e88">ASinh</a>, <a class="el" href="classACosh.html#a8086e83f45a0d609ebe40a6f0a269e88">ACosh</a>, <a class="el" href="classTanh.html#a8086e83f45a0d609ebe40a6f0a269e88">Tanh</a>, <a class="el" href="classSinh.html#a8086e83f45a0d609ebe40a6f0a269e88">Sinh</a>, <a class="el" href="classImaginary.html#a8086e83f45a0d609ebe40a6f0a269e88">Imaginary</a>, <a class="el" href="classCosh.html#a8086e83f45a0d609ebe40a6f0a269e88">Cosh</a>, <a class="el" href="classCFactorial.html#a8086e83f45a0d609ebe40a6f0a269e88">CFactorial</a>, <a class="el" href="classAngle.html#a8086e83f45a0d609ebe40a6f0a269e88">Angle</a>, <a class="el" href="classDerivative.html#a8086e83f45a0d609ebe40a6f0a269e88">Derivative</a>, <a class="el" href="classVariable.html#a8086e83f45a0d609ebe40a6f0a269e88">Variable</a>, <a class="el" href="classATan.html#a8086e83f45a0d609ebe40a6f0a269e88">ATan</a>, <a class="el" href="classITerm.html#a8086e83f45a0d609ebe40a6f0a269e88">ITerm</a>, <a class="el" href="classASin.html#a8086e83f45a0d609ebe40a6f0a269e88">ASin</a>, <a class="el" href="classPow.html#a8086e83f45a0d609ebe40a6f0a269e88">Pow</a>, <a class="el" href="classITensor.html#a8086e83f45a0d609ebe40a6f0a269e88">ITensor</a>, <a class="el" href="classConstant.html#a8086e83f45a0d609ebe40a6f0a269e88">Constant</a>, <a class="el" href="classACos.html#a8086e83f45a0d609ebe40a6f0a269e88">ACos</a>, <a class="el" href="classFraction.html#a8086e83f45a0d609ebe40a6f0a269e88">Fraction</a>, <a class="el" href="classTan.html#a8086e83f45a0d609ebe40a6f0a269e88">Tan</a>, <a class="el" href="classCFraction.html#a8086e83f45a0d609ebe40a6f0a269e88">CFraction</a>, <a class="el" href="classSin.html#a8086e83f45a0d609ebe40a6f0a269e88">Sin</a>, <a class="el" href="classTimes.html#a8086e83f45a0d609ebe40a6f0a269e88">Times</a>, <a class="el" href="classCos.html#a8086e83f45a0d609ebe40a6f0a269e88">Cos</a>, <a class="el" href="classDouble.html#a8086e83f45a0d609ebe40a6f0a269e88">Double</a>, <a class="el" href="classLog.html#a8086e83f45a0d609ebe40a6f0a269e88">Log</a>, <a class="el" href="classPolynomial.html#a8086e83f45a0d609ebe40a6f0a269e88">Polynomial</a>, <a class="el" href="classInteger.html#a8086e83f45a0d609ebe40a6f0a269e88">Integer</a>, <a class="el" href="classExp.html#a8086e83f45a0d609ebe40a6f0a269e88">Exp</a>, <a class="el" href="classPlus.html#a8086e83f45a0d609ebe40a6f0a269e88">Plus</a>, <a class="el" href="classAbs.html#a8086e83f45a0d609ebe40a6f0a269e88">Abs</a>, and <a class="el" href="classAbstractVectorial.html#a8086e83f45a0d609ebe40a6f0a269e88">AbstractVectorial</a>.</p>
 
 </div>
 </div>
@@ -3776,8 +3869,8 @@ True else. </dd></dl>
 
 </div>
 </div>
-<a id="a8bd2d23b77d3719cbe2db2f27c4ad9c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8bd2d23b77d3719cbe2db2f27c4ad9c9">&#9670;&nbsp;</a></span>setIndexStructure()</h2>
+<a id="a852436229babbdf96dd5aafb15660cd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a852436229babbdf96dd5aafb15660cd6">&#9670;&nbsp;</a></span>setIndexStructure()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3788,7 +3881,7 @@ True else. </dd></dl>
         <tr>
           <td class="memname">void setIndexStructure </td>
           <td>(</td>
-          <td class="paramtype">const std::vector&lt; <a class="el" href="classIndex.html">Index</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classIndexStructure.html">IndexStructure</a> &amp;&#160;</td>
           <td class="paramname"><em>t_index</em></td><td>)</td>
           <td></td>
         </tr>
@@ -3808,7 +3901,7 @@ True else. </dd></dl>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="classITensor.html#a301106d98a953a2cffe69c774d6933e3">ITensor</a>.</p>
+<p>Reimplemented in <a class="el" href="classITensor.html#ae6ebd053953f5285c4167b7b0cb35d10">ITensor</a>.</p>
 
 </div>
 </div>
@@ -4117,29 +4210,6 @@ A for a scalar A. </dd>
 </table>
 </div><div class="memdoc">
 <p>Determines if the object <b>commutes</b> with all other objects. </p>
-
-</div>
-</div>
-<a id="a5526f40b4ddcf23b599388283b318a13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5526f40b4ddcf23b599388283b318a13">&#9670;&nbsp;</a></span>indexed</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool indexed</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Tells if the <a class="el" href="classAbstract.html" title="Root class of the inheritance tree of abstracts. ">Abstract</a> is indexed (A_ij, A_ij + B_ji etc). </p>
 
 </div>
 </div>
