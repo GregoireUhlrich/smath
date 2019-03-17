@@ -263,6 +263,20 @@ ofojeogz
     (derivative_(x,1)*(alpha*y*z+alpha*y*(z^2)*alpha + alpha)).print();
     ((derivative_(x,1)*(alpha*y*z+alpha*y*(z^2)*alpha + alpha))*z).develop().print();
 
+    cout<<aInt(13403190123342438)<<"  "<<aInt(2095)<<endl;
+    cout<<(aInt(111)+aInt(999))<<endl;
+    cout<<(aInt(5392852)+352529)<<endl;
+    cout<<(0+aInt(234))<<endl;
+    cout<<(aInt(23452)*23059320)<<endl;
+    aInt testAINT = aInt(4);
+    cout<<testAINT<<endl;
+    testAINT = aInt(5);
+    cout<<testAINT<<endl;
+    testAINT = aInt(6);
+    cout<<testAINT<<endl;
+    cout<<factorial(aInt(12))<<endl;
+    cout<<factorial(aInt(52))<<endl;
+
 
     return 0;
     /*Symbol i("i"), j("j");

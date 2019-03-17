@@ -2,7 +2,7 @@ var searchData=
 [
   ['abs',['Abs',['../classAbs.html',1,'Abs'],['../classAbs.html#a7a23f728a089ddb8788a74acf354ff76',1,'Abs::Abs()'],['../classAbs.html#a98ff72b587ca15b93c1c08963b89563a',1,'Abs::Abs(const Expr &amp;t_argument)'],['../abstract_8h.html#a1d1cfd8ffb84e947f82999c682b666a7aad667f6862341ffe4b68628dfcf54caf',1,'smType::Abs()']]],
   ['abs_5f',['abs_',['../mathFunctions_8h.html#a632943406917a5cb63375ead317af135',1,'mathFunctions.cpp']]],
-  ['abstract',['Abstract',['../classAbstract.html',1,'Abstract'],['../classSymbol.html#a07612f9c4d1d16232998cb76c3365516',1,'Symbol::abstract()'],['../classAbstract.html#acc6e3314f7cec8a356e1ee6a9dde1d18',1,'Abstract::Abstract()'],['../classAbstract.html#a738cc29f2abe8567c3f132198014e753',1,'Abstract::Abstract(const std::string &amp;t_name)']]],
+  ['abstract',['Abstract',['../classAbstract.html',1,'Abstract'],['../classAbstract.html#acc6e3314f7cec8a356e1ee6a9dde1d18',1,'Abstract::Abstract()'],['../classAbstract.html#a738cc29f2abe8567c3f132198014e753',1,'Abstract::Abstract(const std::string &amp;t_name)'],['../classSymbol.html#a07612f9c4d1d16232998cb76c3365516',1,'Symbol::abstract()']]],
   ['abstract_2eh',['abstract.h',['../abstract_8h.html',1,'']]],
   ['abstractbuildingblock',['AbstractBuildingBlock',['../classAbstractBuildingBlock.html',1,'']]],
   ['abstractduofunc',['AbstractDuoFunc',['../classAbstractDuoFunc.html',1,'AbstractDuoFunc'],['../classAbstractDuoFunc.html#ac6bc6b9f8d163c8e3ee2861470cbfb55',1,'AbstractDuoFunc::AbstractDuoFunc()'],['../classAbstractDuoFunc.html#a4054226baedf170addc60ef25bf0f1d5',1,'AbstractDuoFunc::AbstractDuoFunc(const std::string &amp;t_name)']]],
@@ -22,6 +22,7 @@ var searchData=
   ['addantisymmetry',['addAntiSymmetry',['../classAbstract.html#a1fccaaa8870d764767ea291b351dc694',1,'Abstract']]],
   ['addition_5fown',['addition_own',['../classAbstract.html#a0cf1d8170b6d7ec53b265462f8e1a552',1,'Abstract::addition_own()'],['../classPolynomial.html#a86e9b3d2f9ab4d020ca63082e78978b4',1,'Polynomial::addition_own()'],['../classInteger.html#a86e9b3d2f9ab4d020ca63082e78978b4',1,'Integer::addition_own()'],['../classDouble.html#a86e9b3d2f9ab4d020ca63082e78978b4',1,'Double::addition_own()'],['../classCFraction.html#a86e9b3d2f9ab4d020ca63082e78978b4',1,'CFraction::addition_own()'],['../classAbstractVectorial.html#a86e9b3d2f9ab4d020ca63082e78978b4',1,'AbstractVectorial::addition_own()']]],
   ['addsymmetry',['addSymmetry',['../classAbstract.html#a0e7ae515cba43be48adbca7f6a8b6106',1,'Abstract']]],
+  ['aint',['aInt',['../classaInt.html',1,'']]],
   ['all',['All',['../abstract_8h.html#a1a6b6fb557d8d37d59700faf4e4c9167a54991d225c58ce0af43461d4e9a82312',1,'smEval']]],
   ['angle',['Angle',['../classAngle.html',1,'Angle'],['../classAngle.html#a0af0d74d31117fa70953cf0a7ec6e4ae',1,'Angle::Angle()'],['../classAngle.html#ac2479457a4c02d3119e36bc0a59e2139',1,'Angle::Angle(const Expr &amp;leftOperand, const Expr &amp;rightOperand)'],['../abstract_8h.html#a1d1cfd8ffb84e947f82999c682b666a7a501a99846e15f9e28e3150f19a8a85fa',1,'smType::Angle()']]],
   ['antisymmetrise',['antisymmetrise',['../classAbstract.html#a457f5c71cab762a8a8565479a732d7bd',1,'Abstract::antisymmetrise()'],['../classMatrix.html#a06407aec82eb2970dab13eaec0896cf1',1,'Matrix::antisymmetrise()']]],

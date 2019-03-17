@@ -3,7 +3,7 @@
  * \version 1.0
  * \brief Some useful functions.
  */
-#ifndef SUUPORT_H_INCLUDED
+#ifndef SUPPORT_H_INCLUDED
 #define SUPPORT_H_INCLUDED
 
 #include <cmath>
@@ -81,12 +81,86 @@ long long int internal_factorial(long long int n);
 
 int compare(std::string a, std::string b);
 
-bool operator>(std::string a, std::string b);
+bool operator>(const std::string& a, const std::string& b);
 
-bool operator<(std::string a, std::string b);
+bool operator<(const std::string& a, const std::string& b);
 
-bool operator>=(std::string a, std::string b);
+bool operator>=(const std::string& a, const std::string& b);
 
-bool operator<=(std::string a, std::string b);
+bool operator<=(const std::string& a, const std::string& b);
+
+class aInt{
+
+    private:
+
+    std::vector<int> digits;
+
+    public:
+
+    aInt();
+
+    explicit aInt(long long int value);
+
+    explicit aInt(const std::vector<int>& t_digits);
+
+    ~aInt(){};
+
+    aInt& operator=(long long int value);
+
+    aInt& operator=(const aInt& value);
+
+    friend std::ostream& operator<<(std::ostream& fout, const aInt& integer);
+
+    friend aInt operator+(long long int a, const aInt& b);
+
+    friend aInt operator+(const aInt& a, long long int b);
+
+    friend aInt operator+(const aInt& a, const aInt& b);
+
+    friend aInt operator*(long long int a, const aInt& b);
+
+    friend aInt operator*(const aInt& a, long long int b);
+
+    friend aInt operator*(const aInt& a, const aInt& b);
+
+    friend bool operator==(long long int a, const aInt& b);
+
+    friend bool operator==(const aInt& a, long long int b);
+
+    friend bool operator==(const aInt& a, const aInt& b);
+
+    friend bool operator!=(long long int a, const aInt& b);
+
+    friend bool operator!=(const aInt& a, long long int b);
+
+    friend bool operator!=(const aInt& a, const aInt& b);
+
+    friend bool operator<(long long int a, const aInt& b);
+
+    friend bool operator<(const aInt& a, long long int b);
+
+    friend bool operator<(const aInt& a, const aInt& b);
+
+    friend bool operator<=(long long int a, const aInt& b);
+    
+    friend bool operator<=(const aInt& a, long long int b);
+
+    friend bool operator<=(const aInt& a, const aInt& b);
+
+    friend bool operator>(long long int a, const aInt& b);
+
+    friend bool operator>(const aInt& a, long long int b);
+
+    friend bool operator>(const aInt& a, const aInt& b);
+
+    friend bool operator>=(long long int a, const aInt& b);
+
+    friend bool operator>=(const aInt& a, long long int b);
+
+    friend bool operator>=(const aInt& a, const aInt& b);
+
+    friend aInt factorial(const aInt& number);
+};
+
 
 #endif

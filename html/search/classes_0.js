@@ -13,6 +13,7 @@ var searchData=
   ['abstractvectorial',['AbstractVectorial',['../classAbstractVectorial.html',1,'']]],
   ['acos',['ACos',['../classACos.html',1,'']]],
   ['acosh',['ACosh',['../classACosh.html',1,'']]],
+  ['aint',['aInt',['../classaInt.html',1,'']]],
   ['angle',['Angle',['../classAngle.html',1,'']]],
   ['asin',['ASin',['../classASin.html',1,'']]],
   ['asinh',['ASinh',['../classASinh.html',1,'']]],
