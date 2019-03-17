@@ -45,6 +45,7 @@ namespace smError{
         BadDependency, /*!<  Setting a contradictory dependency for a variable. */
         BadType,  /*!<  Bad type of Abstract sent in a function. */
         BadSymmetry, /*!<  Bad Symmetry sent in IndicialParent (wring dimension). */
+        BadContraction,  /*!<  Bad contraction of indices in expression. */
 
     };
 
@@ -108,7 +109,9 @@ inline void callError(smError::Error error, const std::string& caller, T spec)
         case BadType: 
                std::cout<<"Bad type of expression sent in "<<caller<<": requires "<<spec<<".\n"; break;
         case BadSymmetry :
-               std::cout<<"Bad symmetry set in IndicialParent (wrong dimension).\n"; break;
+               std::cout<<"Bad symmetry set in IndicialParent (wrong dimension) in "<<caller<<".\n"; break;
+        case BadContraction:
+               std::cout<<"Bad contraction of indices in "<<caller<<": "<<spec<<".\n"; break;
 
         default:
                std::cout<<"SmError "<<(int)error<<" not recognized.\n";

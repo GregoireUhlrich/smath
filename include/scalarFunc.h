@@ -77,6 +77,9 @@ class AbstractFunc: public AbstractScalar{
      */
     void setArgument(const Expr& t_argument, int iArg=0) override;
 
+    virtual bool contractIndex(const Index& indexToContract,
+                               const Index& newIndex) override;
+
     virtual Expr factor(bool full=false) override;
 
     virtual Expr factor(const Expr& expr, bool full=false) override;
@@ -169,6 +172,9 @@ class AbstractDuoFunc: public AbstractScalar{
      */
     void setArgument(const Expr& t_argument, int iArg=0) override;
 
+    virtual bool contractIndex(const Index& indexToContract,
+                               const Index& newIndex) override;
+
     virtual Expr factor(bool full=false) override;
 
     virtual Expr factor(const Expr& expr, bool full=false) override;
@@ -257,6 +263,9 @@ class AbstractMultiFunc: public AbstractScalar{
     void setArgument(const Expr& t_argument, int iArg=0) override;
 
     void setVectorArgument(const std::vector<Expr >& t_argument) override;
+
+    virtual bool contractIndex(const Index& indexToContract,
+                               const Index& newIndex) override;
 
     virtual Expr factor(bool full=false) override;
 

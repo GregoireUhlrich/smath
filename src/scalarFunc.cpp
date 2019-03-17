@@ -44,6 +44,12 @@ void AbstractFunc::setArgument(const Expr& t_argument, int iArg) {
     argument = t_argument;
 }
 
+bool AbstractFunc::contractIndex(const Index& indexToContract,
+                                 const Index& newIndex)
+{
+    return argument->contractIndex(indexToContract, newIndex);
+}
+
 Expr AbstractFunc::factor(bool full)
 {
     if (full) {
@@ -156,6 +162,13 @@ void AbstractDuoFunc::setArgument(const Expr& t_argument, int iArg)
     }
 
     argument[iArg] = t_argument;
+}
+
+bool AbstractDuoFunc::contractIndex(const Index& indexToContract,
+                                    const Index& newIndex)
+{
+    return (argument[0]->contractIndex(indexToContract, newIndex)
+         or argument[1]->contractIndex(indexToContract, newIndex));
 }
 
 Expr AbstractDuoFunc::factor(bool full) 
@@ -273,6 +286,16 @@ void AbstractMultiFunc::setVectorArgument(const vector<Expr >& t_argument)
 {
     argument = t_argument;
     nArgs = argument.size();
+}
+
+bool AbstractMultiFunc::contractIndex(const Index& indexToContract,
+                                      const Index& newIndex)
+{
+    for (auto& arg : argument)
+        if (arg->contractIndex(indexToContract, newIndex))
+            return true;
+
+    return false;
 }
 
 Expr AbstractMultiFunc::factor(bool full)

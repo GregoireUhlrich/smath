@@ -623,13 +623,6 @@ class Abstract{
      */
     virtual int permut(int i1, int i2);
 
-    /*! \brief Contracts the indices at position \b axis1 and \b axis2. The 
-     * indices then become dummy indices.
-     * \param axis1 Position of the first index to contract.
-     * \param axis2 Position of the second index to contract.
-     */
-    virtual void contractIndices(int axis1, int axis2);
-
                                                        
                                                        
 
@@ -1156,9 +1149,9 @@ class AbstractScalar: public Abstract{
 /*************************************************/
 ///////////////////////////////////////////////////
 
-inline Abstract::Abstract(): name(""), commutable(true), indexed(false){}
+inline Abstract::Abstract(): name(""), commutable(true){}
 inline Abstract::Abstract(const std::string& t_name)
-    :name(t_name), commutable(true), indexed(false){}
+    :name(t_name), commutable(true){}
 
 inline std::string Abstract::getName() const{
     return name;

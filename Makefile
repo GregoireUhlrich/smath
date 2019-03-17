@@ -1,4 +1,4 @@
-CC=gcc -Wall -Wextra -std=c++11 -O2 -g
+CC=gcc -Wall -Wextra -Wno-return-type -std=c++11 -O2 -g
  
 # Les différents répertoires contenant respectivement les fichiers : Sources *.c, Headers *.h, Objets *.o, l'exécutable
 SRCDIR=src

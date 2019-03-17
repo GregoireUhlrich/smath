@@ -158,13 +158,6 @@ set<pair<int,int> > Abstract::getContractedPair() const
     return set<pair<int,int> >();
 }
 
-void Abstract::contractIndices(int axis1, int axis2)
-{
-    print();
-    callError(smError::AbstractFuncCalled,
-            "Abstract::contractIndices(int axis1, int axis2)");
-}
-
 vector<int> Abstract::getShape() const
 {
     return vector<int>(1,1);

@@ -235,6 +235,16 @@ ofojeogz
 
     (eps_({i,i,j})+eps_({i,i,j}))->print();
     (eps_({i,j,k})*eps_({i,l,n}))->print();
+    
+    IndicialParent A_("A",{&Euclid_R3});
+    IndicialParent B_("B",{&Euclid_R3});
+    IndicialParent C_("C",{&Euclid_R4});
+    (eps_({i,j,k})*A_(j)*B_(k) + eps_({i,j,k})*B_(k)*A_(j))->print();
+    A_.setCommutable(false);
+    B_.setCommutable(false);
+    (eps_({i,j,k})*A_(j)*B_(k) + eps_({i,j,k})*B_(k)*A_(j))->print();
+    //(eps_({i,j,k})*C_(j)*B_(k))->print();
+    //(eps_({i,j})*A_(i)*B_(j))->print();
 
     (derivative_(x,1)*y).print();
     y.getAbstract()->setElementary(false);

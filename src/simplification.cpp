@@ -3888,7 +3888,11 @@ bool ITensor::operator<(const Expr& expr) const
 
         case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
-            return getIndexStructure().getNIndices() < expr->getIndexStructure().getNIndices();
+            if (index < expr->getIndexStructure())
+                return true;
+            if (not (index > expr->getIndexStructure()))
+                return name < expr->getName();
+            return false;
         }
         break;
 
@@ -4008,7 +4012,11 @@ bool ITensor::operator>(const Expr& expr) const
 
         case smType::ITensor:
         if (SIMPLIFICATION_METHOD == 1) {
-            return getIndexStructure().getNIndices() > expr->getIndexStructure().getNIndices();
+            if (index > expr->getIndexStructure())
+                return true;
+            if (not (index < expr->getIndexStructure()))
+                return name > expr->getName();
+            return false;
         }
         break;
 

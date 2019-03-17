@@ -218,6 +218,24 @@ double Plus::evaluateScalar() const
     return sum;
 }
 
+bool Plus::contractIndex(const Index& indexToContract,
+                         const Index& newIndices)
+{
+    bool contracted = false;
+    for (auto& arg : argument) {
+        if (not arg->contractIndex(indexToContract, newIndices)) {
+            if (not contracted)
+                return false;
+            else
+                callError(smError::BadContraction,
+                        "Plus::contractIndex(const Index&, const Index&)",
+                        indexToContract);
+        }
+        else 
+            contracted = true;
+    }
+}
+
 Expr Plus::evaluate()
     // Evaluates the expression replacing valued Variables and constants by
     // their values
@@ -763,21 +781,49 @@ IndexStructure Times::getIndexStructure() const
 
 void Times::selfCheckIndexStructure()
 {
+    // Check the indexStructure of a product and apply Einstein's convention
+    // in the case of a repeated index. This algorithm is O(N^2) with N the
+    // total number of indices in the product (check for each index if it is
+    // present elsewhere.
+
+    //Structure of each argument in a vector
     vector<IndexStructure> structure(0);
+    //For each argument
     for (iter arg=argument.begin(); arg!=argument.end(); ++arg) {
         if ((*arg)->isIndexed()) {
+            // We get its structure in fooStruct
             IndexStructure fooStruct = (*arg)->getIndexStructure();
+            // Now we check for each new index if it is present before in
+            // the structure, in which case we contract it
+            // (Einstein's convention).
+            // For each new index: 
             for (int k=0; k!=fooStruct.getNIndices(); ++k) {
+                //For each former structure (former arguments)
                 for (size_t i=0; i!=structure.size(); ++i) {
                     const int nIndices = structure[i].getNIndices();
                     bool breakValue = false;
+                    // For each index in the structure
                     for (int j=0; j!=nIndices; ++j) {
+                        // If the index is already present
                         if (structure[i][j] == fooStruct[k]
                                 and fooStruct[k].getFree()) {
-                            fooStruct[k].setFree(false);
                             structure[i][j].setFree(false);
-                            argument[i]->setIndex(structure[i][j],j);
-                            (*arg)->setIndex(fooStruct[k],k);
+                            // We replace fooStruct[k] (not contracted)
+                            // by structure[i][j] (contracted).
+                            // If the contraction is not valid, we raise an 
+                            // error.
+                            if (not argument[i]->contractIndex(fooStruct[k],
+                                                               structure[i][j]))
+                                callError(smError::BadContraction,
+                                        "Times::selfCheckIndexStructure()",
+                                        fooStruct[k]);
+                            if (not (*arg)->contractIndex(fooStruct[k],
+                                                          structure[i][j]))
+                                callError(smError::BadContraction,
+                                        "Times::selfCheckIndexStructure()",
+                                        fooStruct[k]);
+
+                            fooStruct[k].setFree(false);
                             breakValue = true;
                             break;
                         }
@@ -786,6 +832,8 @@ void Times::selfCheckIndexStructure()
                         break;
                 }
             }
+            // We add fooStruct to the vector of structures
+            structure.push_back(fooStruct);
         }
     }
 }

@@ -120,6 +120,20 @@ class Index{
     bool operator==(const Index& t_index) const;
 
     bool operator!=(const Index& t_index) const;
+
+    bool operator|=(const Index& index) const;
+
+    bool operator&=(const Index& index) const;
+
+    bool operator<(const Index& index) const;
+
+    bool operator>(const Index& index) const;
+
+    bool operator<=(const Index& index) const;
+
+    bool operator>=(const Index& index) const;
+
+    friend std::ostream& operator<<(std::ostream& fout, const Index& index);
 };
 
 /////
@@ -176,12 +190,26 @@ class IndexStructure{
     IndexStructure& operator=(const IndexStructure& structure) = default;
 
     IndexStructure& operator+=(const Index& newIndex);
+
     IndexStructure& operator+=(const IndexStructure& structure);
+
     IndexStructure operator+(const IndexStructure& structure) const;
 
     bool operator==(const IndexStructure& structure) const;
 
     bool operator!=(const IndexStructure& structure) const;
+
+    bool operator|=(const IndexStructure& structure) const;
+
+    bool operator&=(const IndexStructure& structure) const;
+
+    bool operator<(const IndexStructure& structure) const;
+
+    bool operator>(const IndexStructure& structure) const;
+
+    bool operator<=(const IndexStructure& structure) const;
+
+    bool operator>=(const IndexStructure& structure) const;
 
     Index operator[](int i) const;
 
@@ -220,30 +248,46 @@ class Permutation{
     public:
 
     Permutation();
+
     explicit Permutation(int n);
+
     explicit Permutation(const std::vector<int>& t_permutation);
+
     Permutation(int n, const std::initializer_list<int>& list);
+
     Permutation(int n,
                 const std::initializer_list<std::initializer_list<int> >& list);
+
     Permutation(const Permutation& permutation);
 
     ~Permutation(){}
 
     size_t getSize() const;
+
     int getElement(int i) const;
+
     int getOrder();
+
     int getSign();
+
     int getSymmetry() const;
+
     std::vector<int> getPermutation() const;
 
     void setSymmetry(int t_symmetry);
 
     Permutation& operator=(const Permutation& t_permutation);
+
     Permutation operator*(const Permutation& t_permutation) const;
+
     bool operator==(const Permutation& t_permutation) const;
+
     bool operator!=(const Permutation& t_permuation) const;
+
     int& operator[](int i);
+
     int operator[](int i) const;
+
     friend std::ostream& operator<<(std::ostream& fout,
                                     const Permutation& permutation);
 };
@@ -342,6 +386,8 @@ class IndicialParent{
 
     void setSymmetry(const Symmetry& t_symetry);
 
+    Expr operator()(const Index& index) const;
+
     Expr operator()(const std::initializer_list<Index>& indices) const;
 
 };
@@ -361,6 +407,8 @@ class AbstractIndicial: public AbstractScalar{
     AbstractIndicial();
     explicit AbstractIndicial(const std::string& t_name);
     explicit AbstractIndicial(const IndexStructure& t_index);
+    AbstractIndicial(const std::string& t_name,
+                     const Index& t_index);
     AbstractIndicial(const std::string& t_name,
                      const std::initializer_list<Index>& indices);
     ~AbstractIndicial(){};
@@ -399,6 +447,11 @@ class ITensor: public AbstractIndicial{
 
     ITensor(const std::string& t_name,
             bool t_commutable, 
+            const Index& t_index,
+            const IndicialParent* t_parent);
+
+    ITensor(const std::string& t_name,
+            bool t_commutable, 
             const std::initializer_list<Index>& indices, 
             const IndicialParent* t_parent);
 
@@ -419,8 +472,6 @@ class ITensor: public AbstractIndicial{
     bool checkIndexStructure(const std::vector<Index>& t_index) const override;
 
     bool checkIndexStructure(const std::initializer_list<Index>& index) const override;
-
-    void contractIndices(int axis1, int axis2) override;
 
     bool contractIndex(const Index& indexToContract,
                        const Index& newIndex) override;

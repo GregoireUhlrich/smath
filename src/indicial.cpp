@@ -30,6 +30,51 @@ bool Index::operator!=(const Index& t_index) const {
     return !(*this==t_index);
 }
 
+bool Index::operator|=(const Index& t_index) const
+{
+    return operator==(t_index);
+}
+
+bool Index::operator&=(const Index& t_index) const
+{
+    return not operator|=(t_index);
+}
+
+bool Index::operator<(const Index& t_index) const
+{
+    return ((free and not t_index.free)
+            or (not(not free and t_index.free)
+                and name < t_index.name));
+}
+
+bool Index::operator>(const Index& t_index) const
+{
+    return ((not free and t_index.free)
+            or (not(free and not t_index.free)
+                and name < t_index.name));
+}
+
+bool Index::operator<=(const Index& t_index) const
+{
+    return (operator<(t_index)
+            or operator|=(t_index));
+}
+
+bool Index::operator>=(const Index& t_index) const
+{
+    return (operator>(t_index)
+            or operator|=(t_index));
+}
+
+ostream& operator<<(ostream& fout, const Index& index)
+{
+    if (not index.free)
+        fout<<"%";
+    fout<<index.name;
+
+    return fout;
+}
+
 IndexStructure::IndexStructure(const vector<Index>& t_index): 
     nIndices(t_index.size()), index(t_index)
 {
@@ -102,6 +147,7 @@ permutation.size());
 
 IndexStructure& IndexStructure::operator+=(const Index& newIndex)
 {
+    bool contracted = false;
     for (auto& i : index) {
         if (i == newIndex) {
             if (i.getFree()) {
@@ -112,6 +158,8 @@ IndexStructure& IndexStructure::operator+=(const Index& newIndex)
                 index.push_back(i);
                 return *this;
             }
+            else if (not contracted)
+                contracted = true;
             else // Index equal to a dummy index: Error
                 callError(smError::ContractDummy, 
                         "IndexStructure::operator+=(const Index& newIndex)", 
@@ -177,6 +225,46 @@ bool IndexStructure::operator==(const IndexStructure& structure) const
 bool IndexStructure::operator!=(const IndexStructure& structure) const
 {
     return (not operator==(structure));
+}
+
+bool IndexStructure::operator|=(const IndexStructure& structure) const
+{
+    return (not operator<(structure) and not operator>(structure));
+}
+
+bool IndexStructure::operator&=(const IndexStructure& structure) const
+{
+    return not operator|=(structure);
+}
+
+bool IndexStructure::operator<(const IndexStructure& structure) const
+{
+    const int n = min(nIndices, structure.nIndices);
+    for (int i=0; i!=n; ++i) 
+        if (index[i] < structure.index[i])
+            return true;
+    return nIndices < structure.nIndices;
+}
+
+bool IndexStructure::operator>(const IndexStructure& structure) const
+{
+    const int n = min(nIndices, structure.nIndices);
+    for (int i=0; i!=n; ++i) 
+        if (index[i] > structure.index[i])
+            return true;
+    return nIndices > structure.nIndices;
+}
+
+bool IndexStructure::operator<=(const IndexStructure& structure) const
+{
+    return (operator<(structure)
+            or operator|=(structure));
+}
+
+bool IndexStructure::operator>=(const IndexStructure& structure) const
+{
+    return (operator>(structure)
+            or operator|=(structure));
 }
 
 Index IndexStructure::operator[](int i) const
@@ -681,6 +769,18 @@ void IndicialParent::setSymmetry(const Symmetry& t_symmetry)
     fullyAntiSymmetric = false;
 }
 
+Expr IndicialParent::operator()(const Index& index) const
+{
+    if (dim != 1)
+        callError(smError::InvalidITensor, 
+    "IndicialParent::operator()(const initializer_list<Index>& indices) const");
+    if (index.getSpace() != space[0])
+            callError(smError::InvalidITensor, 
+    "IndicialParent::operator()(const initializer_list<Index>& indices) const");
+
+    return make_shared<ITensor>(name, commutable, index, this);
+}
+
 Expr IndicialParent::operator()(const initializer_list<Index>& indices) const
 {
     if (indices.size() != (size_t)dim) {
@@ -714,6 +814,11 @@ AbstractIndicial::AbstractIndicial(const IndexStructure& t_index)
 {}
 
 AbstractIndicial::AbstractIndicial(const string& t_name,
+                                   const Index& t_index)
+    :AbstractScalar(t_name), nIndices(1), index(vector<Index>(1,t_index))
+{}
+
+AbstractIndicial::AbstractIndicial(const string& t_name,
                                    const initializer_list<Index>& indices)
     :AbstractScalar(t_name), nIndices(indices.size()), index(indices)
 {}
@@ -723,6 +828,15 @@ AbstractIndicial::AbstractIndicial(const string& t_name,
 // Class ITensor                                 //
 /*************************************************/
 ///////////////////////////////////////////////////
+
+ITensor::ITensor(const string& t_name,
+                 bool t_commutable,
+                 const Index& t_index,
+                 const IndicialParent* t_parent)
+    :AbstractIndicial(t_name, t_index), parent(t_parent)
+{
+    commutable = t_commutable;
+}
 
 ITensor::ITensor(const string& t_name,
                  bool t_commutable,
@@ -794,26 +908,6 @@ bool ITensor::checkIndexStructure(
         const initializer_list<Index>& t_indices) const 
 {
     return checkIndexStructure(vector<Index>(t_indices.begin(), t_indices.end()));
-}
-
-void ITensor::contractIndices(int axis1, int axis2)
-{
-    const int nIndices = index.getNIndices();
-    if (axis1 < nIndices and axis2 < nIndices and
-        axis1 >= 0 and axis2 >= 0) {
-        if (index[axis1].getFree() and index[axis2].getFree()) {
-            index[axis1].setFree(false);
-            index[axis2] = index[axis1];
-        }
-        else
-            callError(smError::ContractDummy,
-                    "ITensor::contractIndices(int axis1, int axis2)",
-                    index[axis1].getName()+"<->"+index[axis2].getName());
-    }
-    else 
-        callError(smError::OutOfBounds,
-                "ITensor::contractIndices(int axis1, int axis2)",
-                ((axis1<0 or axis1>=nIndices) ? axis1 : axis2));
 }
 
 bool ITensor::contractIndex(const Index& indexToContract,

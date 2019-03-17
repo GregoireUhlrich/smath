@@ -67,6 +67,9 @@ class Plus: public AbstractMultiFunc{
      */
     double evaluateScalar() const override;
 
+    bool contractIndex(const Index& indexToContract,
+                       const Index& newIndices) override;
+
     Expr evaluate() override;
 
     /*! \brief Merge identical terms.
