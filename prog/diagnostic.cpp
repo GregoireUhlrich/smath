@@ -6,6 +6,7 @@
 #include "support.h"
 #include <chrono>
 #include <cmath>
+#include <fstream>
 #pragma GCC diagnostic ignored "-Wunused-result"
 using namespace std;
 
@@ -243,6 +244,7 @@ ofojeogz
     A_.setCommutable(false);
     B_.setCommutable(false);
     (eps_({i,j,k})*A_(j)*B_(k) + eps_({i,j,k})*B_(k)*A_(j))->print();
+    (A_(i)*(eps_({i,j,k}) + B_(i)*A_(j)*A_(k)))->print();
     //(eps_({i,j,k})*C_(j)*B_(k))->print();
     //(eps_({i,j})*A_(i)*B_(j))->print();
 
@@ -276,7 +278,7 @@ ofojeogz
     cout<<testAINT<<endl;
     cout<<factorial(aInt(12))<<endl;
     cout<<factorial(aInt(52))<<endl;
-    cout<<factorial(aInt(1996))<<endl;
+    cout<<factorial(aInt(8000))<<endl;
 
     return 0;
     /*Symbol i("i"), j("j");

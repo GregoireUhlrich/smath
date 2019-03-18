@@ -96,7 +96,7 @@ IndexStructure Plus::getIndexStructure() const
     // If the expression has a non trivial index structure, we suppose 
     // (the program should maintain that property) that all arguments have the 
     // same structure, in particular the first
-    if (nArgs > 0 and argument[0]->getPrimaryType() == smType::Indicial)
+    if (nArgs > 0)
         return argument[0]->getIndexStructure();
 
     return IndexStructure();

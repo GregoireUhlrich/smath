@@ -755,7 +755,6 @@ ostream& operator<<(ostream& fout, smType::Type type)
         case smType::Matrix:      fout<<"Matrix";      break;
         case smType::HighDTensor: fout<<"HighDTensor"; break;
         case smType::ITensor:     fout<<"ITensor";     break;
-        case smType::ITerm:       fout<<"ITerm";       break;
 
         default: cout<<"Type "<<type<<" not known in operator<<(Type)."; 
     }

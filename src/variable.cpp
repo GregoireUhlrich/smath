@@ -668,16 +668,15 @@ bool Variable::dependsOn(const Expr& expr) const
     if (expr->getPrimaryType() == smType::Numerical)
         return false;
 
+    auto pos = find(dependencies.begin(), dependencies.end(), expr);
     // All dependencies: the Variable depends on everything by default
+    // except expressions in the vector dependencies
     if (allDependencies)
-        return true;
-
-    // We check the explicit dependencies of the variable
-    for (const auto& dep : dependencies)
-        if (operator==(dep))
-            return true;
-
-    return false;
+        return (pos == dependencies.end());
+    // else the expression depends on nothing except expressions in 
+    // the vector dependencies
+    else 
+        return (not (pos == dependencies.end()));
 }
 
 void Variable::setValue(double t_value)
@@ -758,17 +757,24 @@ void Variable::addDependency(const Expr& expr)
     if (elementary)
         callError(smError::BadDependency,
                 "Variable::addDependency(const Expr& expr)",name);
-    if (not allDependencies)
+    auto pos = find(dependencies.begin(), dependencies.end(), expr);
+    if (pos != dependencies.end()) {
+        if (allDependencies)
+            dependencies.erase(pos);
+    }
+    else if (not allDependencies)
         dependencies.push_back(expr);
 }
 
 void Variable::removeDependency(const Expr& expr)
 {
-    if (allDependencies) {
-        auto pos = find(dependencies.begin(), dependencies.end(), expr);
-        if (pos != dependencies.end())
+    auto pos = find(dependencies.begin(), dependencies.end(), expr);
+    if (pos != dependencies.end()) {
+        if (not allDependencies)
             dependencies.erase(pos);
     }
+    else if (allDependencies)
+        dependencies.push_back(expr);
 }
 
 void Variable::operator=(double t_value) {

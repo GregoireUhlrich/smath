@@ -795,40 +795,6 @@ Expr Copy(const Abstract* expr)
     bool commutable = expr->getCommutable();
     switch(type)
     {
-        case smType::Double:
-        newAbstract = double_(expr->evaluateScalar());
-        break;
-
-        case smType::Integer:
-        newAbstract = int_(expr->evaluateScalar());
-        break;
-
-        case smType::Constant:
-        if (expr->getValued())
-            newAbstract = constant_(expr->getName(), expr->getValue());
-        else
-            newAbstract = constant_(expr->getName());
-        break;
-
-        case smType::Variable:
-        if (expr->getValued())
-            newAbstract = var_(expr->getName(), expr->getValue());
-        else
-            newAbstract = var_(expr->getName());
-        break;
-
-        case smType::CFraction:
-        newAbstract = _cfraction_(expr->getNum(), expr->getDenom());
-        break;
-
-        case smType::CFactorial:
-        newAbstract = make_shared<CFactorial>(expr->getValue());
-        break;
-
-        case smType::Imaginary:
-        newAbstract = make_shared<Imaginary>();
-        break;
-
         case smType::Plus:
         newAbstract = make_shared<Plus>(expr->getVectorArgument(), true);
         break;
@@ -937,10 +903,6 @@ Expr Copy(const Abstract* expr)
         newAbstract = make_shared<ITensor>(expr);
         break;
         
-        case smType::ITerm:
-        newAbstract = make_shared<ITerm>(expr->getVectorArgument());
-        break;
-    
         default:
         cout<<"Warning: type "<<type<<" not recognize in copy function.\n";
     }
@@ -968,40 +930,6 @@ Expr DeepCopy(const Abstract* expr)
     vector<Expr > foo(0), foo2(0);
     switch(type)
     {
-        case smType::Double:
-        return double_(expr->evaluateScalar());
-        break;
-
-        case smType::Integer:
-        return int_(expr->evaluateScalar());
-        break;
-
-        case smType::Variable:
-        if (expr->getValued())
-            return var_(expr->getName(), expr->getValue());
-        else 
-            return var_(expr->getName());
-        break;
-
-        case smType::Constant:
-        if (expr->getValued())
-            return constant_(expr->getName(), expr->getValue());
-        else 
-            return constant_(expr->getName());
-        break;
-
-        case smType::CFraction:
-        return _cfraction_(expr->getNum(), expr->getDenom());
-        break;
-
-        case smType::CFactorial:
-        return make_shared<CFactorial>(expr->getValue());
-        break;
-
-        case smType::Imaginary:
-        return make_shared<Imaginary>();
-        break;
-
         case smType::Plus:
         foo = expr->getVectorArgument();
         for (size_t i=0; i<foo.size(); i++)
@@ -1127,13 +1055,6 @@ Expr DeepCopy(const Abstract* expr)
         return make_shared<ITensor>(expr);
         break;
         
-        case smType::ITerm:
-        foo = expr->getVectorArgument();
-        for (Expr i_abstract: foo)
-            i_abstract = DeepCopy(i_abstract);
-        return make_shared<ITerm>(foo);
-        break;
-
         default: 
         cout<<"Warning: type "<<type<<" not recognized in DeepCopy function.\n";
         return ZERO;
@@ -1160,37 +1081,6 @@ Expr Refresh(const Abstract* expr)
     vector<Expr > newArgument(0);
     switch(type)
     {
-        case smType::Double:
-        newAbstract = double_(expr->evaluateScalar());
-        break;
-
-        case smType::Integer:
-        newAbstract = int_(expr->evaluateScalar());
-        break;
-
-        case smType::Variable:
-        newAbstract = var_(expr->getName(), expr->getValue());
-        break;
-
-        case smType::Constant:
-        newAbstract = make_shared<Constant>(expr->getName(), expr->getValue());
-        break;
-
-        case smType::CFraction:
-        newAbstract = _cfraction_(expr->getNum(), expr->getDenom());
-        if (newAbstract->getNum() == 0 and newAbstract->getDenom() != 0) newAbstract = ZERO;
-        else if (newAbstract->getDenom() == 1) newAbstract = int_(newAbstract->getNum());
-        break;
-
-        case smType::CFactorial:
-        newAbstract = cfactorial_(expr->getValue());
-        newAbstract->setName(expr->getName());
-        break;
-
-        case smType::Imaginary:
-        newAbstract = make_shared<Imaginary>();
-        break;
-
         case smType::Plus:
         newAbstract = plus_(expr->getVectorArgument());
         break;
@@ -1304,10 +1194,6 @@ Expr Refresh(const Abstract* expr)
         newAbstract = make_shared<ITensor>(expr);
         break;
         
-        case smType::ITerm:
-        newAbstract = make_shared<ITerm>(expr->getVectorArgument());
-        break;
-
         default:
         cout<<"Warning type "<<type<<" not known by Refresh function in symbol.cpp.\n";
     }
@@ -1328,21 +1214,6 @@ Expr Refresh(const Expr& expr)
     vector<Expr > newArgument(0);
     switch(type)
     {
-        case smType::Double:
-        case smType::Integer:
-        case smType::Variable:
-        case smType::Constant:
-        case smType::CFactorial:
-        case smType::Imaginary:
-        newAbstract = expr;
-        break;
-
-        case smType::CFraction:
-        newAbstract = _cfraction_(expr->getNum(), expr->getDenom());
-        if (newAbstract->getNum() == 0 and newAbstract->getDenom() != 0) newAbstract = ZERO;
-        else if (newAbstract->getDenom() == 1) newAbstract = int_(newAbstract->getNum());
-        break;
-
         case smType::Plus:
         newAbstract = plus_(expr->getVectorArgument());
         break;
@@ -1456,11 +1327,6 @@ Expr Refresh(const Expr& expr)
         newAbstract = make_shared<ITensor>(expr);
         break;
         
-        case smType::ITerm:
-        cout<<"Warning: Type ITerm not correctly implemented in Refresh.\n";
-        newAbstract = make_shared<ITerm>(expr->getVectorArgument());
-        break;
-
         default:
         cout<<"Warning type "<<type<<" not known by Refresh function in symbol.cpp.\n";
     }
@@ -1482,37 +1348,6 @@ Expr DeepRefresh(const Expr& expr)
     vector<Expr > newArgument(0);
     switch(type)
     {
-        case smType::Double:
-        newAbstract = double_(expr->evaluateScalar());
-        break;
-
-        case smType::Integer:
-        newAbstract = int_(expr->evaluateScalar());
-        break;
-
-        case smType::Variable:
-        newAbstract = var_(expr->getName(), expr->getValue());
-        break;
-
-        case smType::Constant:
-        newAbstract = make_shared<Constant>(expr->getName(), expr->getValue());
-        break;
-
-        case smType::CFraction:
-        newAbstract = _cfraction_(expr->getNum(), expr->getDenom());
-        if (newAbstract->getNum() == 0 and newAbstract->getDenom() != 0) newAbstract = ZERO;
-        else if (newAbstract->getDenom() == 1) newAbstract = int_(newAbstract->getNum());
-        break;
-
-        case smType::CFactorial:
-        newAbstract = cfactorial_(expr->getValue());
-        newAbstract->setName(expr->getName());
-        break;
-
-        case smType::Imaginary:
-        newAbstract = make_shared<Imaginary>();
-        break;
-
         case smType::Plus:
         nArgs = expr->getNArgs();
         newArgument = vector<Expr >(nArgs);
@@ -1586,7 +1421,7 @@ Expr DeepRefresh(const Expr& expr)
         break;
 
         case smType::Derivative:
-        newAbstract = make_shared<Derivative>(DeepRefresh(expr->getArgument(0)), DeepRefresh(expr->getArgument(1)), expr->getOrder());
+        newAbstract = derivative_(DeepRefresh(expr->getArgument(0)), DeepRefresh(expr->getArgument(1)), expr->getOrder());
         break;
     
         case smType::Cosh:
@@ -1621,8 +1456,8 @@ Expr DeepRefresh(const Expr& expr)
         nArgs = expr->getNArgs();
         newAbstract = ZERO;
         foo = expr->getVectorArgument();
-        for (int i=0; i<nArgs; i++)
-            foo[i] = DeepRefresh(foo[i]);
+        for (auto& arg : foo)
+            arg = DeepRefresh(arg);
         newAbstract = vector_(foo);
         break;
 
@@ -1630,8 +1465,8 @@ Expr DeepRefresh(const Expr& expr)
         nArgs = expr->getNArgs();
         newAbstract = ZERO;
         foo = expr->getVectorArgument();
-        for (int i=0; i<nArgs; i++)
-            foo[i] = DeepRefresh(foo[i]);
+        for (auto& arg : foo)
+            arg = DeepRefresh(arg);
         newAbstract = matrix_(foo);
         break;
 
@@ -1639,8 +1474,8 @@ Expr DeepRefresh(const Expr& expr)
         nArgs = expr->getNArgs();
         newAbstract = ZERO;
         foo = expr->getVectorArgument();
-        for (int i=0; i<nArgs; i++)
-            foo[i] = DeepRefresh(foo[i]);
+        for (auto& arg : foo)
+            arg = DeepRefresh(arg);
         newAbstract = highDTensor_(foo);
         break;
 
@@ -1648,16 +1483,6 @@ Expr DeepRefresh(const Expr& expr)
         newAbstract = make_shared<ITensor>(expr);
         break;
         
-        case smType::ITerm:
-        cout<<"Warning: Type ITerm not correctly implemented in Refresh.\n";
-        nArgs = expr->getNArgs();
-        newAbstract = ZERO;
-        foo = expr->getVectorArgument();
-        for (int i=0; i<nArgs; i++)
-            foo[i] = DeepRefresh(foo[i]);
-        newAbstract = make_shared<ITerm>(foo);
-        break;
-
         default:
         cout<<"Warning type "<<type<<" not known by Refresh function in symbol.cpp.\n";
     }
@@ -1740,7 +1565,6 @@ Expr Empty(smType::Type type)
         case smType::HighDTensor: return make_shared<HighDTensor>(); break;
         // case ITensor not allowed!
         //case smType::ITensor:     return make_shared<ITensor>();     break;
-        case smType::ITerm:       return make_shared<ITerm>();       break;
 
         default: callWarning<smType::Type>(smError::UnknownType, "Empty(Type)", type); return ZERO;
     }

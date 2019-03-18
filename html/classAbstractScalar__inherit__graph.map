@@ -34,8 +34,8 @@
 <area shape="rect" id="node32" href="$classSinh.html" title="Final specialization of AbstractFunc, the sinh function. " alt="" coords="520,1145,568,1172"/>
 <area shape="rect" id="node33" href="$classTan.html" title="Final specialization of AbstractFunc, the tan function. " alt="" coords="522,1196,566,1223"/>
 <area shape="rect" id="node34" href="$classTanh.html" title="Final specialization of AbstractFunc, the tanh function. " alt="" coords="519,1247,569,1273"/>
-<area shape="rect" id="node36" href="$classITensor.html" title="ITensor" alt="" coords="511,1297,577,1324"/>
-<area shape="rect" id="node37" href="$classITerm.html" title="ITerm" alt="" coords="516,1348,572,1375"/>
+<area shape="rect" id="node36" href="$classIndexed.html" title="Indexed" alt="" coords="510,1297,578,1324"/>
+<area shape="rect" id="node37" href="$classITensor.html" title="ITensor" alt="" coords="511,1348,577,1375"/>
 <area shape="rect" id="node39" href="$classPlus.html" title="Handles a sum, function of multiple arguments. " alt="" coords="520,1399,568,1425"/>
 <area shape="rect" id="node40" href="$classPolynomial.html" title="Handles a polynomial, function of multiple arguments. " alt="" coords="501,1449,587,1476"/>
 <area shape="rect" id="node41" href="$classTimes.html" title="Handles a product, function of multiple arguments. " alt="" coords="515,1500,573,1527"/>

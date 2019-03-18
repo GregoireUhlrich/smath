@@ -820,7 +820,16 @@ int main(){
     tensor = tensor.trace(1,3);
     tensor = tensor.trace(1,2);
     tensor.print();
-    (tensor/2).develop().print();
+    tensor = (tensor/2).develop();
+    tensor.print();
+    Bx.getAbstract()->removeDependency(t.getAbstract());
+    Ex.getAbstract()->setAllDependencies(false);
+    Ex.getAbstract()->addDependency(xS.getAbstract());
+    Ey.getAbstract()->setAllDependencies(false);
+    Ey.getAbstract()->addDependency(xS.getAbstract());
+    Ez.getAbstract()->setAllDependencies(false);
+    Ez.getAbstract()->addDependency(xS.getAbstract());
+    DeepRefresh(tensor).print();
 
     /*Index i("i"), j("j"), k("k");
     itensor_("A",{i,j}).print();

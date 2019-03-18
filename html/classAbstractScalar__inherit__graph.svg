@@ -589,31 +589,31 @@ var sectionId = 'dynsection-0';
 <!-- Node35 -->
 <g id="node36" class="node">
 <title>Node35</title>
-<g id="a_node36"><a xlink:href="classITensor.html" target="_top" xlink:title="ITensor">
-<polygon fill="#ffffff" stroke="#000000" points="379,-152.5 379,-171.5 429,-171.5 429,-152.5 379,-152.5"/>
-<text text-anchor="middle" x="404" y="-159.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">ITensor</text>
+<g id="a_node36"><a xlink:href="classIndexed.html" target="_top" xlink:title="Indexed">
+<polygon fill="#ffffff" stroke="#000000" points="378.5,-152.5 378.5,-171.5 429.5,-171.5 429.5,-152.5 378.5,-152.5"/>
+<text text-anchor="middle" x="404" y="-159.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">Indexed</text>
 </a>
 </g>
 </g>
 <!-- Node34&#45;&gt;Node35 -->
 <g id="edge35" class="edge">
 <title>Node34&#45;&gt;Node35</title>
-<path fill="none" stroke="#191970" d="M314.7256,-162C336.5756,-162 360.9615,-162 378.7179,-162"/>
+<path fill="none" stroke="#191970" d="M314.6555,-162C336.3525,-162 360.5608,-162 378.2998,-162"/>
 <polygon fill="#191970" stroke="#191970" points="314.5716,-158.5001 304.5716,-162 314.5715,-165.5001 314.5716,-158.5001"/>
 </g>
 <!-- Node36 -->
 <g id="node37" class="node">
 <title>Node36</title>
-<g id="a_node37"><a xlink:href="classITerm.html" target="_top" xlink:title="ITerm">
-<polygon fill="#ffffff" stroke="#000000" points="383,-114.5 383,-133.5 425,-133.5 425,-114.5 383,-114.5"/>
-<text text-anchor="middle" x="404" y="-121.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">ITerm</text>
+<g id="a_node37"><a xlink:href="classITensor.html" target="_top" xlink:title="ITensor">
+<polygon fill="#ffffff" stroke="#000000" points="379,-114.5 379,-133.5 429,-133.5 429,-114.5 379,-114.5"/>
+<text text-anchor="middle" x="404" y="-121.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">ITensor</text>
 </a>
 </g>
 </g>
 <!-- Node34&#45;&gt;Node36 -->
 <g id="edge36" class="edge">
 <title>Node34&#45;&gt;Node36</title>
-<path fill="none" stroke="#191970" d="M307.9207,-149.8022C333.0563,-143.052 363.106,-134.9821 382.8256,-129.6864"/>
+<path fill="none" stroke="#191970" d="M307.933,-149.7989C331.3193,-143.5185 358.9566,-136.0965 378.5699,-130.8293"/>
 <polygon fill="#191970" stroke="#191970" points="306.9564,-146.4371 298.2064,-152.411 308.772,-153.1975 306.9564,-146.4371"/>
 </g>
 <!-- Node38 -->

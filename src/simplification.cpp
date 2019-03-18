@@ -88,10 +88,6 @@ bool Double::operator<(const Expr& expr) const
         return true;
         break;
 
-        case smType::ITerm:
-        return true;
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -179,10 +175,6 @@ bool Double::operator>(const Expr& expr) const
         break;
 
         case smType::ITensor:
-        return false;
-        break;
-
-        case smType::ITerm:
         return false;
         break;
 
@@ -276,10 +268,6 @@ bool Integer::operator<(const Expr& expr) const
         return true;
         break;
 
-        case smType::ITerm:
-        return true;
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -367,10 +355,6 @@ bool Integer::operator>(const Expr& expr) const
         break;
 
         case smType::ITensor:
-        return false;
-        break;
-
-        case smType::ITerm:
         return false;
         break;
 
@@ -464,10 +448,6 @@ bool Variable::operator<(const Expr& expr) const
         return true;
         break;
 
-        case smType::ITerm:
-        return true;
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -555,10 +535,6 @@ bool Variable::operator>(const Expr& expr) const
         break;
 
         case smType::ITensor:
-        return false;
-        break;
-
-        case smType::ITerm:
         return false;
         break;
 
@@ -652,10 +628,6 @@ bool Constant::operator<(const Expr& expr) const
         return true;
         break;
 
-        case smType::ITerm:
-        return true;
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -743,10 +715,6 @@ bool Constant::operator>(const Expr& expr) const
         break;
 
         case smType::ITensor:
-        return false;
-        break;
-
-        case smType::ITerm:
         return false;
         break;
 
@@ -840,10 +808,6 @@ bool CFraction::operator<(const Expr& expr) const
         return true;
         break;
 
-        case smType::ITerm:
-        return true;
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -931,10 +895,6 @@ bool CFraction::operator>(const Expr& expr) const
         break;
 
         case smType::ITensor:
-        return false;
-        break;
-
-        case smType::ITerm:
         return false;
         break;
 
@@ -1028,10 +988,6 @@ bool CFactorial::operator<(const Expr& expr) const
         return true;
         break;
 
-        case smType::ITerm:
-        return true;
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -1119,10 +1075,6 @@ bool CFactorial::operator>(const Expr& expr) const
         break;
 
         case smType::ITensor:
-        return false;
-        break;
-
-        case smType::ITerm:
         return false;
         break;
 
@@ -1216,10 +1168,6 @@ bool Imaginary::operator<(const Expr& expr) const
         return true;
         break;
 
-        case smType::ITerm:
-        return true;
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -1307,10 +1255,6 @@ bool Imaginary::operator>(const Expr& expr) const
         break;
 
         case smType::ITensor:
-        return false;
-        break;
-
-        case smType::ITerm:
         return false;
         break;
 
@@ -1432,12 +1376,6 @@ bool Plus::operator<(const Expr& expr) const
         break;
 
         case smType::ITensor:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
-        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
@@ -1566,12 +1504,6 @@ bool Plus::operator>(const Expr& expr) const
         }
         break;
 
-        case smType::ITerm:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -1690,12 +1622,6 @@ bool Times::operator<(const Expr& expr) const
         break;
 
         case smType::ITensor:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
-        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
@@ -1824,12 +1750,6 @@ bool Times::operator>(const Expr& expr) const
         }
         break;
 
-        case smType::ITerm:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -1944,12 +1864,6 @@ bool Fraction::operator<(const Expr& expr) const
         }
         break;
 
-        case smType::ITerm:
-        if (SIMPLIFICATION_METHOD == 1) {
-           cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
-        }
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -2059,12 +1973,6 @@ bool Fraction::operator>(const Expr& expr) const
         break;
 
         case smType::ITensor:
-        if (SIMPLIFICATION_METHOD == 1) {
-           cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
-        }
-        break;
-
-        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
            cout<<"Warning: using method 1 for Simplification but not yet implemented.\n"; 
         }
@@ -2187,12 +2095,6 @@ bool Pow::operator<(const Expr& expr) const
         }
         break;
 
-        case smType::ITerm:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -2305,12 +2207,6 @@ bool Pow::operator>(const Expr& expr) const
         break;
 
         case smType::ITensor:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
-        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
@@ -2442,12 +2338,6 @@ bool Derivative::operator<(const Expr& expr) const
         }
         break;
 
-        case smType::ITerm:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -2559,12 +2449,6 @@ bool Derivative::operator>(const Expr& expr) const
         break;
 
         case smType::ITensor:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
-        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
@@ -2686,12 +2570,6 @@ bool Angle::operator<(const Expr& expr) const
         }
         break;
 
-        case smType::ITerm:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -2803,12 +2681,6 @@ bool Angle::operator>(const Expr& expr) const
         break;
 
         case smType::ITensor:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
-        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
@@ -2930,12 +2802,6 @@ bool AbstractFunc::operator<(const Expr& expr) const
         }
         break;
 
-        case smType::ITerm:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -3047,12 +2913,6 @@ bool AbstractFunc::operator>(const Expr& expr) const
         break;
 
         case smType::ITensor:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
-        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return false;
         }
@@ -3172,12 +3032,6 @@ bool Vector::operator<(const Expr& expr) const
         }
         break;
 
-        case smType::ITerm:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -3287,12 +3141,6 @@ bool Vector::operator>(const Expr& expr) const
         break;
 
         case smType::ITensor:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
-        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
@@ -3412,12 +3260,6 @@ bool Matrix::operator<(const Expr& expr) const
         }
         break;
 
-        case smType::ITerm:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -3527,12 +3369,6 @@ bool Matrix::operator>(const Expr& expr) const
         break;
 
         case smType::ITensor:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
-        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
@@ -3652,12 +3488,6 @@ bool HighDTensor::operator<(const Expr& expr) const
         }
         break;
 
-        case smType::ITerm:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -3767,12 +3597,6 @@ bool HighDTensor::operator>(const Expr& expr) const
         break;
 
         case smType::ITensor:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
-        case smType::ITerm:
         if (SIMPLIFICATION_METHOD == 1) {
             return true;
         }
@@ -3896,12 +3720,6 @@ bool ITensor::operator<(const Expr& expr) const
         }
         break;
 
-        case smType::ITerm:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -4020,12 +3838,6 @@ bool ITensor::operator>(const Expr& expr) const
         }
         break;
 
-        case smType::ITerm:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
         default:
         cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
     }
@@ -4033,263 +3845,6 @@ bool ITensor::operator>(const Expr& expr) const
     return false;
 }
 
-bool ITerm::operator<(const Expr& expr) const
-{
-    int type = expr->getType();
-    int nMax, t_nArgs;
-    Expr foo;
-    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
-        type = smType::ScalarFunction;
-    switch(type)
-    {
-        case smType::Double:
-        return false;
-        break;
-
-        case smType::Integer:
-        return false;
-        break;
-
-        case smType::Variable:
-        return false;
-        break;
-
-        case smType::Constant:
-        return false;
-        break;
-
-        case smType::CFraction:
-        return false;
-        break;
-
-        case smType::CFactorial:
-        return false;
-        break;
-
-        case smType::Imaginary:
-        return false;
-        break;
-
-        case smType::Plus:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
-        case smType::Times:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
-        case smType::Fraction:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
-        case smType::Pow:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
-        case smType::Polynomial:
-        return this->operator<(expr->getRegularExpression());
-        break;
-
-        case smType::Derivative:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
-        case smType::Angle:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
-        case smType::ScalarFunction:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
-        case smType::Vector:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
-        case smType::Matrix:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
-        case smType::HighDTensor:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
-        case smType::ITensor:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
-        case smType::ITerm:
-        if (SIMPLIFICATION_METHOD == 1) {
-            nMax = getIndexStructure().getNIndices();
-            t_nArgs = expr->getIndexStructure().getNIndices();
-            if (nMax != t_nArgs)
-                return nMax < t_nArgs;
-            nMax = min(nArgs, expr->getNArgs());
-            t_nArgs = expr->getNArgs();
-            for (int i=0; i<nMax; i++)
-                if (*argument[nArgs-1-i] < expr->getArgument(t_nArgs-1-i))
-                    return true;
-            return nArgs < t_nArgs;
-        }
-        break;
-
-        default:
-        cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
-    }
-    cout<<"Warning: comparison >,< of \"ITerm\" and \""<<type<<"\" not yet implemented.\n";
-    return false;
-}
-
-bool ITerm::operator>(const Expr& expr) const
-{
-    int type = expr->getType();
-    int nMax, t_nArgs;
-    Expr foo;
-    if (expr->getPrimaryType() == smType::ScalarFunction) // Danger if type == ScalarFunction, here it is Exp so no problem
-        type = smType::ScalarFunction;
-    switch(type)
-    {
-        case smType::Double:
-        return true;
-        break;
-
-        case smType::Integer:
-        return true;
-        break;
-
-        case smType::Variable:
-        return true;
-        break;
-
-        case smType::Constant:
-        return true;
-        break;
-
-        case smType::CFraction:
-        return true;
-        break;
-
-        case smType::CFactorial:
-        return true;
-        break;
-
-        case smType::Imaginary:
-        return true;
-        break;
-
-        case smType::Plus:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
-        case smType::Times:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
-        case smType::Fraction:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
-        case smType::Pow:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
-        case smType::Polynomial:
-        return this->operator>(expr->getRegularExpression());
-        break;
-
-        case smType::Derivative:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
-        case smType::Angle:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
-        case smType::ScalarFunction:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
-        case smType::Vector:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
-        case smType::Matrix:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
-        case smType::HighDTensor:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return false;
-        }
-        break;
-
-        case smType::ITensor:
-        if (SIMPLIFICATION_METHOD == 1) {
-            return true;
-        }
-        break;
-
-        case smType::ITerm:
-        if (SIMPLIFICATION_METHOD == 1) {
-            nMax = getIndexStructure().getNIndices();
-            t_nArgs = expr->getIndexStructure().getNIndices();
-            if (nMax != t_nArgs)
-                return nMax > t_nArgs;
-            nMax = min(nArgs, expr->getNArgs());
-            t_nArgs = expr->getNArgs();
-            for (int i=0; i<nMax; i++)
-                if (*argument[nArgs-1-i] > expr->getArgument(t_nArgs-1-i))
-                    return true;
-            return nArgs > t_nArgs;
-        }
-        break;
-
-        default:
-        cout<<"Warning: type \""<<type<<"\" not recognized in >,< comparisons.\n";
-    }
-    cout<<"Warning: comparison >,< of \"ITerm\" and \""<<type<<"\" not yet implemented.\n";
-    return false;
-}
 
 /* TypeS IN COMPARISON
 Double

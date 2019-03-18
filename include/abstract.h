@@ -101,7 +101,7 @@ namespace smType{
         HighDTensor, /*!<  = 52. Abstract specialized in HighDTensor */
 
         ITensor=60, /*!<  = 60. Abstract specialized in ITensor */
-        ITerm, /*!<  = 61. Abstract specialized in ITerm */
+        Indexed,  /*!<  = 61. Abstract specialized in Indexed */
     };
 
 }; // End of namespace smType
