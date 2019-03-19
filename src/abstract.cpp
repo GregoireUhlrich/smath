@@ -12,14 +12,16 @@ bool Abstract::getCommutable() const {
 
 void Abstract::printExplicit(int mode) const
 {
+    cout<<"EXPLICIT PRINT OF "; print(mode);
     cout<<"type="<<getType()<<" : ";
     print(1);
-    cout<<" ; ";
+    cout<<" ;\n";
     if (getNArgs() > 0)
         for (int i=0; i<getNArgs(); i++)
             getArgument(i)->printExplicit(mode);
 
     cout<<endl;
+    cout<<"END OF EXPLICIT PRINT OF "; print(mode);
 }
 
 string Abstract::printLaTeX(int mode) const {

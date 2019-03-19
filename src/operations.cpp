@@ -2023,7 +2023,9 @@ Expr Pow::develop(bool full)
     if (full) {
         Expr foo1 = argument[0]->develop(true);
         Expr foo2 = argument[1]->develop(true);
-        if (foo2->isInteger() and foo1->getType() == smType::Plus) {
+        if (foo2->isInteger() 
+                and foo2->evaluateScalar() > 0 
+                and foo1->getType() == smType::Plus) {
             double value = argument[1]->evaluateScalar();
             if (value == floor(value)) {
                 int iMax = round(abs(value));
@@ -2675,11 +2677,30 @@ double Derivative::evaluateScalar() const
 
 Expr Derivative::evaluate()
 {
-    Expr df = argument[0];
-    for (int i=0; i<order; i++)
-        df = df->derive(argument[1]);
+    if (argument[0]->getType() == smType::Times) {
+        vector<Expr> t_argument(argument[0]->getNArgs());
+        for (size_t i=0; i!=t_argument.size(); ++i) {
+            t_argument[i] = Copy(argument[0]);
+            t_argument[i]->setArgument(
+                    derivative_(argument[0]->getArgument(i), argument[1],
+                        1), i);
+        }
+        if (order > 1)
+            return derivative_(
+                    plus_(t_argument),argument[1],order-1)->evaluate();
+        else 
+            return plus_(t_argument)->evaluate();
+    }
+    if (argument[0]->dependsExplicitelyOn(argument[1])) {
+        Expr df = argument[0]->evaluate();
+        for (int i=0; i<order; i++)
+            df = df->derive(argument[1]);
 
-    return df->evaluate();
+        return df;
+    }
+
+    return derivative_(argument[0]->evaluate(), 
+                       argument[1]->evaluate(), order);
 }
 
 Expr Derivative::derive(const Expr& expr)
@@ -2715,9 +2736,36 @@ bool Derivative::operator==(const Expr& expr) const
 
 Expr derivative_(const Expr& leftOperand, const Expr& rightOperand, int order)
 {
+    return derivative_(leftOperand, rightOperand, order, false);
+}
+
+Expr derivative_(const Expr& leftOperand, const Expr& rightOperand, int order,
+     bool empty) 
+{
     if (order <= 0)
         return rightOperand;
     //We calculate the derivative and if it is 0 (many cases) we return 0.
+    if (leftOperand->getPrimaryType() == smType::Vectorial) {
+        Expr res = tensor_(leftOperand->getShape());
+        for (int i=0; i!=res->getNArgs(); ++i)
+            res->setArgument(
+                    derivative_(leftOperand->getArgument(i),rightOperand,order,
+                        empty)
+                    ,i);
+
+        return res;
+    }
+    if (rightOperand->getPrimaryType() == smType::Vectorial) {
+        Expr res = tensor_(rightOperand->getShape());
+        for (int i=0; i!=res->getNArgs(); ++i)
+            res->setArgument(
+                    derivative_(leftOperand,rightOperand->getArgument(i),
+                        order, empty)
+                    ,i);
+
+        return res;
+    }
+
     if (not leftOperand->dependsOn(rightOperand)
             and *leftOperand != ONE)
         return ZERO;
@@ -2731,7 +2779,7 @@ Expr derivative_(const Expr& leftOperand, const Expr& rightOperand, int order)
         // d/dx(a1+a2...) = da1/dx+da2/dx+...
         foo = leftOperand->getVectorArgument();
         for (auto& arg : foo) 
-            arg = derivative_(arg, rightOperand, order);
+            arg = derivative_(arg, rightOperand, order, empty);
 
         return plus_(foo);
         break;
@@ -2790,17 +2838,20 @@ Expr derivative_(const Expr& leftOperand, const Expr& rightOperand, int order)
                             foo.end()));
             if (*argument != ONE)
                 return leftConstants 
-                    * make_shared<Derivative>(argument, rightOperand, order)
+                    * make_shared<Derivative>(argument, rightOperand,
+                            order,empty)
                     * rightConstants;
             else
                 return ZERO;
         }
         else 
-            return make_shared<Derivative>(leftOperand, rightOperand, order);
+            return make_shared<Derivative>(leftOperand, rightOperand,
+                    order, empty);
         break;
 
         default:
-        return make_shared<Derivative>(leftOperand, rightOperand, order);
+        return make_shared<Derivative>(leftOperand, rightOperand, 
+                order, empty);
     }
 }
 

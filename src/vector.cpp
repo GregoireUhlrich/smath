@@ -35,6 +35,8 @@ void AbstractVectorial::print(int mode) const
         argument[i]->print(1);
         if (i < nArgs-1) {
             cout<<" , ";
+            if (mode == 0 and dim == 1)
+                cout<<"\n    ";
             if (mode == 0 and dim == 2) 
                 cout<<"\n    ";
             if (mode == 0 and dim == 3) 
@@ -712,6 +714,12 @@ Expr vector_(const vector<Expr >& t_argument)
     return make_shared<Vector>(t_argument);
 }
 
+Expr vector_(const std::initializer_list<Expr>& t_argument)
+{
+    return make_shared<Vector>(vector<Expr>(t_argument.begin(),
+                t_argument.end()));
+}
+
 ///////////////////////////////////////////////////
 /*************************************************/
 // Class Matrix                                  //
@@ -727,7 +735,9 @@ Matrix::Matrix(): AbstractVectorial()
 Matrix::Matrix(int t_nArgs): Matrix()
 {
     nArgs = t_nArgs;
-    argument = vector<Expr >(nArgs, make_shared<Vector>(nArgs));
+    argument = vector<Expr >(nArgs);
+    for (auto& arg : argument)
+        arg = _vector_(nArgs);
     shape = vector<int>(2,nArgs);
 }
 

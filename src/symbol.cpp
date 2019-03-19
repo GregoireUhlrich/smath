@@ -19,6 +19,14 @@ Symbol::Symbol(std::string t_name)
     name = t_name;
 }
 
+Symbol::Symbol(std::string t_name, const Symbol& symbol)
+{
+    name = t_name;
+    abstract = symbol.getAbstract();
+    if (abstract->getName() == "")
+        abstract->setName(name);
+}
+
 Symbol::Symbol(std::string t_name, bool constant)
 {
     if (constant)
@@ -147,6 +155,8 @@ void Symbol::setCommutable(bool t_commutable)
 void Symbol::setAbstract(const Expr& expr)
 {
     abstract = expr;
+    if (abstract->getName() == "")
+        abstract->setName(name);
 }
 
 void Symbol::print() const
@@ -226,6 +236,31 @@ Symbol Symbol::polynomialDivision(const Symbol& t_symbol) const
     if (abstract->getType() == smType::Polynomial)
         return Symbol(abstract->division_own(t_symbol.getAbstract()));
     return *this;
+}
+
+void Symbol::setElementary(bool t_elementary)
+{
+    abstract->setElementary(t_elementary);
+}
+
+void Symbol::setAllDependencies(bool t_allDependencies)
+{
+    abstract->setAllDependencies(t_allDependencies);
+}
+
+void Symbol::addDependency(const Symbol& symbol)
+{
+    abstract->addDependency(symbol.getAbstract());
+}
+
+void Symbol::removeDependency(const Symbol& symbol)
+{
+    abstract->removeDependency(symbol.getAbstract());
+}
+
+Symbol Symbol::getVectorialModulus() const
+{
+    return Symbol(abstract->getVectorialModulus());
 }
 
 Symbol Symbol::sum() const
@@ -331,6 +366,8 @@ bool Symbol::operator!=(const Symbol& t_symbol)
 Symbol& Symbol::operator=(const Symbol& t_symbol)
 {
     abstract = t_symbol.getAbstract();
+    if (abstract->getName() == "")
+        abstract->setName(name);
 
     return *this;
 }
@@ -519,6 +556,11 @@ Symbol derivative_(const Symbol& t_symbol, const Symbol& t_variable, int order)
     return Symbol(derivative_(t_symbol.getAbstract(), t_variable.getAbstract(), order));
 }
 
+Symbol derivative_(const Symbol& t_symbol, const Symbol& t_variable, int order, bool empty)
+{
+    return Symbol(derivative_(t_symbol.getAbstract(), t_variable.getAbstract(), order, empty));
+}
+
 Symbol polynomial_(const Symbol& t_symbol, const Symbol& t_variable)
 {
     return Symbol(polynomial_(t_symbol.getAbstract(), t_variable.getAbstract()));
@@ -570,6 +612,14 @@ Symbol matrix_(const vector<vector<Symbol> >& t_argument)
         result.push_back(make_shared<Vector>(fooVec));
     }
     return Symbol(make_shared<Matrix>(result));
+}
+
+Symbol Id_(int dim)
+{
+    Symbol M = matrix_(dim);
+    for (int i=0; i<dim; ++i)
+        M.setArgument(1,i,i);
+    return M;
 }
 
 Symbol tensor_dot(const Symbol& t_symbol1, const Symbol& t_symbol2)

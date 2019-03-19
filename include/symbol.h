@@ -34,7 +34,9 @@ class Symbol{
      */    
     explicit Symbol(std::string t_name);
 
-    explicit Symbol(std::string t_name, bool constant);
+    Symbol(std::string t_name, const Symbol& symbol);
+
+    Symbol(std::string t_name, bool constant);
 
     /*! \brief Initialized the Abstract to Number(value).
      * \param value 
@@ -219,7 +221,17 @@ class Symbol{
 
     Symbol polynomialFactorization() const;
 
+    void setElementary(bool t_elementary);
+
+    void setAllDependencies(bool t_allDependencies);
+
+    void addDependency(const Symbol& expr);
+
+    void removeDependency(const Symbol& expr);
+
     Symbol sum() const;
+
+    Symbol getVectorialModulus() const;
 
     Symbol product() const;
 
@@ -468,6 +480,8 @@ Symbol derivative_(const Symbol& t_variable, int order=1);
 
 Symbol derivative_(const Symbol& t_symbol, const Symbol& t_variable, int order=1);
 
+Symbol derivative_(const Symbol& t_symbol, const Symbol& t_variable, int order, bool empty);
+
 Symbol polynomial_(const Symbol& t_symbol, const Symbol& t_variable);
 
 Symbol vector_(int t_nElements);
@@ -483,6 +497,8 @@ Symbol matrix_(int t_x_nArgs, int t_y_nArgs);
 Symbol matrix_(int t_x_nArgs, int t_y_nArgs, const Symbol& t_symbol, const Symbol& index_x, const Symbol& index_y);
 
 Symbol matrix_(const std::vector<std::vector<Symbol> >& t_argument);
+
+Symbol Id_(int dim);
 
 Symbol scalarDot(const Symbol& t_symbol1, const Symbol& t_symbol2);
 

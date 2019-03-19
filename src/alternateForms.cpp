@@ -248,8 +248,18 @@ vector<Expr > Plus::getAlternateForms() const
 
     //Plus-specific alternate forms
     int nArgs2;
+    vector<Expr> factors(0);
     for (int i=0; i<nArgs; i++)
     {
+        if (argument[i]->getType() == smType::Times) // Searching fraction => same denominator
+        {
+            nArgs2 = argument[i]->getNArgs();
+            for (int j=0; j<nArgs2; j++)
+                factors.push_back(argument[i]->getArgument(j));
+        }
+        else
+            factors.push_back(argument[i]);
+
         if (argument[i]->getType() == smType::Times) // Searching fraction => same denominator
         {
             nArgs2 = argument[i]->getNArgs();
@@ -331,6 +341,13 @@ vector<Expr > Plus::getAlternateForms() const
     }
     foo = Copy(this);
 
+    for (size_t i=0; i!=factors.size(); ++i) {
+        if (factors[i]->getPrimaryType() == smType::Numerical)
+            continue;
+        Expr factored = foo->factor(factors[i]);
+        if (*factored != foo)
+            alternateForms.push_back(factored);
+    }
     size = alternateForms.size();
     for (int i=0; i<size; i++)
     {

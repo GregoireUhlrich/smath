@@ -384,3 +384,38 @@ Indexed::Indexed(const Expr& t_expression)
         cout<<"nothing\n";
     }
 }
+
+smType::PrimaryType Indexed::getPrimaryType() const
+{
+    return expression->getPrimaryType();
+}
+
+smType::Type Indexed::getType() const
+{
+    return expression->getType();
+}
+
+void Indexed::print(int mode) const
+{
+    expression->print();
+}
+
+string Indexed::printLaTeX(int mode) const
+{
+    return expression->printLaTeX(mode);
+}
+
+Expr Indexed::evaluate() 
+{
+    return expression->evaluate();
+}
+
+Expr Indexed::getArgument(int iArg) const
+{
+    return expression->getArgument();
+}
+
+void Indexed::setArgument(const Expr& t_argument, int iArg)
+{
+    expression->setArgument(t_argument, iArg);
+}

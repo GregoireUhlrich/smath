@@ -137,6 +137,8 @@ Expr vector_(int t_nElements,const Expr& expr, const Expr& index);
 
 Expr vector_(const std::vector<Expr >& t_argument);
 
+Expr vector_(const std::initializer_list<Expr>& t_argument);
+
 class Matrix: public AbstractVectorial{
 
     public:

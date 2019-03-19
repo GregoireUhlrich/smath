@@ -21,8 +21,9 @@ SRC= $(wildcard $(SRCDIR)/*.cpp)
 PROG= $(wildcard $(PROGDIR)/*.cpp)
 OBJ= $(SRC:$(SRCDIR)/%.cpp=$(LIBDIR)/%.o) 
 	
-BIN=diagnostic.x pi.x old.x
+BIN=diagnostic.x pi.x old.x 
 all: $(BIN)
+tuto: tuto_pendulum.x tuto_vectorial.x
  
 # Création des différents *.o à partir des *.cpp
 $(LIBDIR)/%.o: $(SRCDIR)/%.cpp
@@ -36,6 +37,10 @@ diagnostic.x: $(OBJ) $(PROGLIBDIR)/diagnostic.o
 old.x: $(OBJ) $(PROGLIBDIR)/old.o
 	$(CC) -o $(BINDIR)/$@ $^ $(CFLAGS)
 pi.x: $(OBJ) $(PROGLIBDIR)/pi.o
+	$(CC) -o $(BINDIR)/$@ $^ $(CFLAGS)
+tuto_pendulum.x: $(OBJ) $(PROGLIBDIR)/tuto_pendulum.o
+	$(CC) -o $(BINDIR)/$@ $^ $(CFLAGS)
+tuto_vectorial.x: $(OBJ) $(PROGLIBDIR)/tuto_vectorial.o
 	$(CC) -o $(BINDIR)/$@ $^ $(CFLAGS)
 
 app: $(OBJ) appli.cpp

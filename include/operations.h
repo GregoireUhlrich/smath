@@ -577,6 +577,9 @@ class Derivative: public AbstractDuoFunc{
      */
     Derivative(const Expr& leftOperand, const Expr& rightOperand, int t_order);
 
+    Derivative(const Expr& leftOperand, const Expr& rightOperand, 
+               int t_order, bool t_empty);
+
     /*! \brief Destructor.
      */
     ~Derivative(){};
@@ -667,6 +670,14 @@ inline Derivative::Derivative(const Expr& leftOperand,
     argument[1] = rightOperand;
     if (*argument[0] == ONE)
         empty = true;
+}
+inline Derivative::Derivative(const Expr& leftOperand, const Expr& rightOperand, 
+               int t_order, bool t_empty)
+    :AbstractDuoFunc(), empty(t_empty), order(t_order)
+{
+    commutable = false;
+    argument[0] = leftOperand;
+    argument[1] = rightOperand;
 }
 
 /*************************************************/
@@ -771,6 +782,7 @@ Expr sqrt_(const Expr& operand);
   * \return The derivative of \b leftOperand wrt \b rightOperand at the order \b order.
   */
 Expr derivative_(const Expr& leftOperand, const Expr& rightOperand, int order=1);
+Expr derivative_(const Expr& leftOperand, const Expr& rightOperand, int order, bool empty);
 
 Expr derivative_(const Expr& variable, int order=1);
 

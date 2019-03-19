@@ -661,8 +661,10 @@ double Variable::getValue() const {
 bool Variable::dependsOn(const Expr& expr) const
 {
     // Elementary variable: depends only on itself
+    if (operator==(expr))
+        return true;
     if (elementary) 
-        return operator==(expr);
+        return false;
 
     // expr is a number: 0
     if (expr->getPrimaryType() == smType::Numerical)
@@ -742,21 +744,23 @@ void Variable::setElementary(bool t_elementary)
 
 void Variable::setAllDependencies(bool t_allDependencies)
 {
+    dependencies.clear();
     if (allDependencies == t_allDependencies)
         return;
     allDependencies = t_allDependencies;
     //We change of dependance mode
     dependencies.clear();
     if (allDependencies and elementary)
-        callError(smError::BadDependency,
-                "Variable::setAllDependencies(bool t_allDependencies)",name);
+        elementary = false;
 }
 
 void Variable::addDependency(const Expr& expr)
 {
-    if (elementary)
-        callError(smError::BadDependency,
-                "Variable::addDependency(const Expr& expr)",name);
+    if (elementary) {
+        elementary = false;
+        allDependencies = false;
+        dependencies.clear();
+    }
     auto pos = find(dependencies.begin(), dependencies.end(), expr);
     if (pos != dependencies.end()) {
         if (allDependencies)

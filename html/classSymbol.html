@@ -82,6 +82,9 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSymbol.html#acc9ca57dbc1a97438c0de66d8aa5dbd5">Symbol</a> (std::string t_name)</td></tr>
 <tr class="memdesc:acc9ca57dbc1a97438c0de66d8aa5dbd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes <b>name</b> and the <a class="el" href="classAbstract.html" title="Root class of the inheritance tree of abstracts. ">Abstract</a> to 0. <br /></td></tr>
 <tr class="separator:acc9ca57dbc1a97438c0de66d8aa5dbd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cc112369c2405a8a168c15bad4d4190"><td class="memItemLeft" align="right" valign="top"><a id="a6cc112369c2405a8a168c15bad4d4190"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Symbol</b> (std::string t_name, const <a class="el" href="classSymbol.html">Symbol</a> &amp;symbol)</td></tr>
+<tr class="separator:a6cc112369c2405a8a168c15bad4d4190"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ff636448d6f4e86e3141a90d274a3c9"><td class="memItemLeft" align="right" valign="top"><a id="a0ff636448d6f4e86e3141a90d274a3c9"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Symbol</b> (std::string t_name, bool constant)</td></tr>
 <tr class="separator:a0ff636448d6f4e86e3141a90d274a3c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -204,9 +207,24 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>getParity</b> (const <
 <tr class="memitem:af2fdf48adfa8c9977fbcfaf1f4530411"><td class="memItemLeft" align="right" valign="top"><a id="af2fdf48adfa8c9977fbcfaf1f4530411"></a>
 <a class="el" href="classSymbol.html">Symbol</a>&#160;</td><td class="memItemRight" valign="bottom"><b>polynomialFactorization</b> () const</td></tr>
 <tr class="separator:af2fdf48adfa8c9977fbcfaf1f4530411"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0237c2d597fd1628b888f55c67b03578"><td class="memItemLeft" align="right" valign="top"><a id="a0237c2d597fd1628b888f55c67b03578"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setElementary</b> (bool t_elementary)</td></tr>
+<tr class="separator:a0237c2d597fd1628b888f55c67b03578"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a959865229b8270687bbe0c749ac2e9b1"><td class="memItemLeft" align="right" valign="top"><a id="a959865229b8270687bbe0c749ac2e9b1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setAllDependencies</b> (bool t_allDependencies)</td></tr>
+<tr class="separator:a959865229b8270687bbe0c749ac2e9b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0188352c6baa3831a70b2af1530bf6b7"><td class="memItemLeft" align="right" valign="top"><a id="a0188352c6baa3831a70b2af1530bf6b7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>addDependency</b> (const <a class="el" href="classSymbol.html">Symbol</a> &amp;expr)</td></tr>
+<tr class="separator:a0188352c6baa3831a70b2af1530bf6b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebd3c39ed97fb3c901ff5fd5de6c8259"><td class="memItemLeft" align="right" valign="top"><a id="aebd3c39ed97fb3c901ff5fd5de6c8259"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>removeDependency</b> (const <a class="el" href="classSymbol.html">Symbol</a> &amp;expr)</td></tr>
+<tr class="separator:aebd3c39ed97fb3c901ff5fd5de6c8259"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ea7c8eaea943938f613fd06495ccfd1"><td class="memItemLeft" align="right" valign="top"><a id="a6ea7c8eaea943938f613fd06495ccfd1"></a>
 <a class="el" href="classSymbol.html">Symbol</a>&#160;</td><td class="memItemRight" valign="bottom"><b>sum</b> () const</td></tr>
 <tr class="separator:a6ea7c8eaea943938f613fd06495ccfd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48dcbe75f671c468182dea1e87ce5457"><td class="memItemLeft" align="right" valign="top"><a id="a48dcbe75f671c468182dea1e87ce5457"></a>
+<a class="el" href="classSymbol.html">Symbol</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getVectorialModulus</b> () const</td></tr>
+<tr class="separator:a48dcbe75f671c468182dea1e87ce5457"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a691993fdbaae2e0a310a20444b4bead6"><td class="memItemLeft" align="right" valign="top"><a id="a691993fdbaae2e0a310a20444b4bead6"></a>
 <a class="el" href="classSymbol.html">Symbol</a>&#160;</td><td class="memItemRight" valign="bottom"><b>product</b> () const</td></tr>
 <tr class="separator:a691993fdbaae2e0a310a20444b4bead6"><td class="memSeparator" colspan="2">&#160;</td></tr>
