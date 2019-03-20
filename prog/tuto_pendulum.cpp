@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
 
-    cout<<"Simple pendulum: \n\n:";
+    cout<<"Simple pendulum: \n\n";
 
     // Creating constants (the true argument says that it is not a
     // variable but a constant)

@@ -180,6 +180,7 @@ class IndexStructure{
 
     IndexStructure operator+(const IndexStructure& structure) const;
 
+    bool compareWithDummy(const IndexStructure& structure) const;
     bool compareWithDummy(const IndexStructure& structure,
                           std::map<Index,Index>& constraints) const;
 
@@ -202,6 +203,8 @@ class IndexStructure{
     Index operator[](int i) const;
 
     Index& operator[](int i);
+
+    friend std::ostream& operator<<(std::ostream& fout, const IndexStructure& structure);
 };
 
 /////

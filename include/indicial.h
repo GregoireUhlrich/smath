@@ -166,6 +166,8 @@ class ITensor: public AbstractIndicial{
 
     std::vector<Expr> getPermutations() const override;
 
+    std::vector<Expr> getAlternateForms() const override;
+
     void print(int mode=0) const override;
 
     std::string printLaTeX(int mode=0) const override;

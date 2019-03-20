@@ -46,6 +46,9 @@ class AbstractNumerical: public AbstractBuildingBlock{
     virtual ~AbstractNumerical(){}
 
     smType::PrimaryType getPrimaryType() const override { return smType::Numerical;}
+
+    Expr getNumericalFactor() const override;
+    Expr getTerm() override;
 };
 
 /*! \class AbstractLiteral
@@ -307,6 +310,10 @@ class CFraction: public AbstractNumerical{
      * \return \b denom
      */
     int getDenom() const override;
+
+    Expr getNumericalFactor() const override;
+
+    Expr getTerm() override;
 
     void print(int mode=0) const override;
 

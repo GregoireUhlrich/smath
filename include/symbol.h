@@ -221,6 +221,8 @@ class Symbol{
 
     Symbol polynomialFactorization() const;
 
+    Symbol getRegularExpression() const;
+
     void setElementary(bool t_elementary);
 
     void setAllDependencies(bool t_allDependencies);
@@ -721,6 +723,38 @@ Symbol operator^(double t_value, const Symbol& t_symbol);
  * \return The division of the two operands.
  */
 Symbol operator^(const Symbol& t_symbol1, const Symbol& t_symbol2);
+
+/*
+bool operator<(const Symbol& s1, const Symbol& s2)
+{
+    return s1.getAbstract() < s2.getAbstract();
+}
+
+bool operator>(const Symbol& s1, const Symbol& s2)
+{
+    return s1.getAbstract() > s2.getAbstract();
+}
+
+bool operator<=(const Symbol& s1, const Symbol& s2)
+{
+    return s1.getAbstract() <= s2.getAbstract();
+}
+
+bool operator>=(const Symbol& s1, const Symbol& s2)
+{
+    return s1.getAbstract() >= s2.getAbstract();
+}
+
+bool operator|=(const Symbol& s1, const Symbol& s2)
+{
+    return s1.getAbstract() |= s2.getAbstract();
+}
+
+bool operator&=(const Symbol& s1, const Symbol& s2)
+{
+    return s1.getAbstract() &= s2.getAbstract();
+}
+*/
 
 /*! \fn std::ostream& operator<<(std::ostream& fout, const Symbol& t_symbol)
  * \brief Prints \b abstract in standard output.

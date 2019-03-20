@@ -205,6 +205,7 @@ ofojeogz
     Riemann.setSymmetry(S);
     Index mu("\\mu",&Lorentz), nu("\\nu",&Lorentz),
           rho("\\rho",&Lorentz), sigma("\\sigma",&Lorentz);
+    mu.setFree(false);
     Riemann({mu,nu,rho,sigma})->print();
     vector<Expr> riemannPermutations = Riemann({mu,nu,rho,sigma})->getPermutations();
     cout<<"Riemann Tensor: \n";
@@ -228,6 +229,11 @@ ofojeogz
 
 
     IndicialParent eps_("eps",{&Euclid_R3,&Euclid_R3,&Euclid_R3});
+    S = Symmetry();
+    S.addSymmetry(Permutation(3,{0,1}),-1);
+    S.addSymmetry(Permutation(3,{1,2}),-1);
+    S.addSymmetry(Permutation(3,{0,2}),-1);
+    eps_.setSymmetry(S);
     Index i("i", &Euclid_R3), j("j",&Euclid_R3), k("k",&Euclid_R3);
     Index l("l", &Euclid_R3), n("n",&Euclid_R3);
     eps_({i,j,k})->print();
@@ -244,6 +250,12 @@ ofojeogz
     A_.setCommutable(false);
     B_.setCommutable(false);
     (eps_({i,j,k})*A_(j)*B_(k) + eps_({i,j,k})*B_(k)*A_(j))->print();
+    (eps_({i,j,k})*A_(j)*A_(k) + eps_({i,j,k})*B_(k)*A_(j))->print();
+
+    cout<<"eps_ijk + eps_jik = ";
+    Simplify(eps_({i,j,k}) + eps_({j,i,k}))->print();
+    cout<<"eps_ijk.Aj.Ak + eps_jik.Bk.Aj = ";
+    Simplify(eps_({i,j,k})*A_(j)*A_(k) + eps_({i,j,k})*B_(k)*A_(j))->print();
     (A_(i)*(eps_({i,j,k}) + B_(i)*A_(j)*A_(k)))->print();
     //(eps_({i,j,k})*C_(j)*B_(k))->print();
     //(eps_({i,j})*A_(i)*B_(j))->print();
@@ -278,7 +290,10 @@ ofojeogz
     cout<<testAINT<<endl;
     cout<<factorial(aInt(12))<<endl;
     cout<<factorial(aInt(52))<<endl;
-    cout<<factorial(aInt(8000))<<endl;
+    //cout<<factorial(aInt(10000))<<endl;
+    
+
+    cout<<(eps_({i,j,k}) == eps_({j,i,k}))<<endl;
 
     return 0;
     /*Symbol i("i"), j("j");

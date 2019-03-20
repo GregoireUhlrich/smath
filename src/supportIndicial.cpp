@@ -171,10 +171,10 @@ IndexStructure& IndexStructure::operator+=(const Index& newIndex)
             }
             else if (not contracted)
                 contracted = true;
-            else // Index equal to a dummy index: Error
-                callError(smError::ContractDummy, 
-                        "IndexStructure::operator+=(const Index& newIndex)", 
-                        i.getName()+"<->"+newIndex.getName());
+            //else // Index equal to a dummy index: Error
+            //    callError(smError::ContractDummy, 
+            //            "IndexStructure::operator+=(const Index& newIndex)", 
+            //            i.getName()+"<->"+newIndex.getName());
         }
     }
     // New index (not already present: we add it simply)
@@ -201,6 +201,12 @@ IndexStructure IndexStructure::operator+(const IndexStructure& structure) const
         newStructure += structure.getIndex(i);
 
     return newStructure;
+}
+
+bool IndexStructure::compareWithDummy(const IndexStructure& structure) const
+{
+    map<Index,Index> constraints;
+    return compareWithDummy(structure, constraints);
 }
 
 bool IndexStructure::compareWithDummy(const IndexStructure& structure,
@@ -348,6 +354,14 @@ Index& IndexStructure::operator[](int i)
     else
         callError(smError::OutOfBounds,
                 "IndexStructure::operator[](int i)", i);
+}
+
+ostream& operator<<(ostream& fout, const IndexStructure& structure)
+{
+    for (const auto& i : structure.index)
+        cout<<i<<"  ";
+
+    return fout;
 }
 
 ///////////////////////////////////////////////////

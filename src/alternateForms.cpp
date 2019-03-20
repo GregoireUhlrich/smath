@@ -54,7 +54,7 @@ vector<Expr > getRecursiveAlternateForms(const Expr& expr, int depth)
     //taking alternateForms a first time
     vector<Expr > toReturn = internalRecursiveAlternateForms(expr,depth-1);
     if (toReturn.size() == 0) // no alternate form for expr
-        return vector<Expr >(0);
+        return expr->getAlternateForms();
     vector<Expr > fooVec = toReturn;
     //We take alternate of alternate MAX_RECURSION_ALTERNATE-1 times
     for (int i=1; i<MAX_RECURSION_ALTERNATE; i++)
@@ -83,7 +83,7 @@ vector<Expr > internalRecursiveAlternateForms(const Expr& expr, int depth)
     int nArgs = expr->getNArgs();
     vector<Expr > alternateForms(0);
     // if no Argument, no alternate form (for now)
-    if (nArgs == 0) return alternateForms;
+    if (nArgs == 0) return expr->getAlternateForms();
     if (depth != 0)
     {
         vector<Expr> argument(0);
@@ -207,6 +207,12 @@ Expr Simplify(const Expr& expr, int depth)
 
         trials = getRecursiveAlternateForms(simplifiedAbstract, depth);
         for (size_t i=0; i<trials.size(); i++)
+            if (*trials[i] == -1*simplifiedAbstract)
+            {cout<<"HAHAHAHAHAHAHA:\n";
+                simplifiedAbstract->print();
+                trials[i]->print();
+            }
+        for (size_t i=0; i<trials.size(); i++)
         {
             trials[i] = DeepRefresh(trials[i]);
             if (*trials[i] < simplifiedAbstract)
@@ -251,7 +257,8 @@ vector<Expr > Plus::getAlternateForms() const
     vector<Expr> factors(0);
     for (int i=0; i<nArgs; i++)
     {
-        if (argument[i]->getType() == smType::Times) // Searching fraction => same denominator
+        foo = Copy(this);
+        if (argument[i]->getType() == smType::Times) 
         {
             nArgs2 = argument[i]->getNArgs();
             for (int j=0; j<nArgs2; j++)
@@ -344,6 +351,7 @@ vector<Expr > Plus::getAlternateForms() const
     for (size_t i=0; i!=factors.size(); ++i) {
         if (factors[i]->getPrimaryType() == smType::Numerical)
             continue;
+        //cout<<"Simplifying with factor "; factors[i]->print();
         Expr factored = foo->factor(factors[i]);
         if (*factored != foo)
             alternateForms.push_back(factored);
@@ -660,4 +668,9 @@ vector<Expr > Tanh::getAlternateForms() const
     }
 
     return foo;
+}
+
+vector<Expr> ITensor::getAlternateForms() const
+{
+    return getPermutations();
 }

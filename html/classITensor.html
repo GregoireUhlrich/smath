@@ -112,6 +112,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a292bbda4c1fb9df300ff8baf3798d781"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classITensor.html#a292bbda4c1fb9df300ff8baf3798d781">getPermutations</a> () const override</td></tr>
 <tr class="memdesc:a292bbda4c1fb9df300ff8baf3798d781"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a std::vector of all possible permutations of an <b>Indicial</b> expression. The possible permutations are determined from the posible symmetries and anti-symmetries of the object.  <a href="#a292bbda4c1fb9df300ff8baf3798d781">More...</a><br /></td></tr>
 <tr class="separator:a292bbda4c1fb9df300ff8baf3798d781"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ec4272e14880906aaebc6d2aa15cac6"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classITensor.html#a9ec4272e14880906aaebc6d2aa15cac6">getAlternateForms</a> () const override</td></tr>
+<tr class="memdesc:a9ec4272e14880906aaebc6d2aa15cac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates and returns all possible alternate forms of the expression in terms of simplifications. For example 1-sin^2(x) is one of the alternate forms of cos^2(x).  <a href="#a9ec4272e14880906aaebc6d2aa15cac6">More...</a><br /></td></tr>
+<tr class="separator:a9ec4272e14880906aaebc6d2aa15cac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd9f12af3b52f041754d10bc7f106a96"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classITensor.html#abd9f12af3b52f041754d10bc7f106a96">print</a> (int mode=0) const override</td></tr>
 <tr class="memdesc:abd9f12af3b52f041754d10bc7f106a96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays the abstract in standard output.  <a href="#abd9f12af3b52f041754d10bc7f106a96">More...</a><br /></td></tr>
 <tr class="separator:abd9f12af3b52f041754d10bc7f106a96"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -357,9 +360,6 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:a69fa7ef6049a03bb02382ee6f6cde2f9 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a69fa7ef6049a03bb02382ee6f6cde2f9">getPolynomialTerm</a> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;t_variable, int order)</td></tr>
 <tr class="memdesc:a69fa7ef6049a03bb02382ee6f6cde2f9 inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates and returns the polynomial term corresponding to <b>*this</b> with the variable <b>t_variable</b> at order <b>order</b>. In particular, this function assumes that the checks have already been made with the function <a class="el" href="classAbstract.html#af5fb27a847c4aceb353cce8183df51be" title="Determines if the expression is a mononomial term in expr, i.e. a term of the form C*expr^n with C in...">isPolynomial()</a>.  <a href="classAbstract.html#a69fa7ef6049a03bb02382ee6f6cde2f9">More...</a><br /></td></tr>
 <tr class="separator:a69fa7ef6049a03bb02382ee6f6cde2f9 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6979d84d75c4d4057d961ad84043dbd9 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a6979d84d75c4d4057d961ad84043dbd9">getAlternateForms</a> () const</td></tr>
-<tr class="memdesc:a6979d84d75c4d4057d961ad84043dbd9 inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates and returns all possible alternate forms of the expression in terms of simplifications. For example 1-sin^2(x) is one of the alternate forms of cos^2(x).  <a href="classAbstract.html#a6979d84d75c4d4057d961ad84043dbd9">More...</a><br /></td></tr>
-<tr class="separator:a6979d84d75c4d4057d961ad84043dbd9 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0cf1d8170b6d7ec53b265462f8e1a552 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a0cf1d8170b6d7ec53b265462f8e1a552">addition_own</a> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;expr) const</td></tr>
 <tr class="memdesc:a0cf1d8170b6d7ec53b265462f8e1a552 inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains implementation of special addition for Numerical- and Vectorial-types.  <a href="classAbstract.html#a0cf1d8170b6d7ec53b265462f8e1a552">More...</a><br /></td></tr>
 <tr class="separator:a0cf1d8170b6d7ec53b265462f8e1a552 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -626,6 +626,36 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>nIndices</b></td></tr>
 <p>Replaces all variables by their value and evaluating. This function must be used instead of <a class="el" href="classAbstract.html#abd473f3a4f62f338f5b0ee3b10453f39" title="Evaluates the value of the Abstract. ">evaluateScalar()</a> when treating not only real scalars.* In particular (x=2, y=3) x+iy evaluates to 3+ 3i whereas <a class="el" href="classAbstract.html#abd473f3a4f62f338f5b0ee3b10453f39" title="Evaluates the value of the Abstract. ">evaluateScalar()</a> would return 3. </p><dl class="section return"><dt>Returns</dt><dd>The abstract result of the evaluation. </dd></dl>
 
 <p>Implements <a class="el" href="classAbstract.html#a02f313e9690045d548592ce82f9c365c">Abstract</a>.</p>
+
+</div>
+</div>
+<a id="a9ec4272e14880906aaebc6d2aa15cac6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ec4272e14880906aaebc6d2aa15cac6">&#9670;&nbsp;</a></span>getAlternateForms()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &gt; getAlternateForms </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculates and returns all possible alternate forms of the expression in terms of simplifications. For example 1-sin^2(x) is one of the alternate forms of cos^2(x). </p>
+<p>Those alternate forms are then compared in terms of simplicity, this allows automatic simplification. Alternates are tried to simplify, and the bests are chosed. More details and algorithms in file alternateForms.cpp. </p><dl class="section return"><dt>Returns</dt><dd>A std::vector containing the alternate forms of the expression. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classAbstract.html#a6979d84d75c4d4057d961ad84043dbd9">Abstract</a>.</p>
 
 </div>
 </div>
@@ -982,6 +1012,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>nIndices</b></td></tr>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/<a class="el" href="indicial_8h_source.html">indicial.h</a></li>
+<li>src/alternateForms.cpp</li>
 <li>src/indicial.cpp</li>
 <li>src/simplification.cpp</li>
 </ul>

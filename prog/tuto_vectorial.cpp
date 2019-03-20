@@ -40,7 +40,8 @@ int main(){
 
     // Cartesian derivative in 3D
     Symbol Nabla("D");
-    Nabla = vector_({derivative_(x),
+    // Only one arg: it is the variable, the derivative is empty (will apply on arguments on the right)
+    Nabla = vector_({derivative_(x), 
                      derivative_(y),
                      derivative_(z)});
 
@@ -77,26 +78,120 @@ int main(){
     cout<<"\n\nRotationnal in spherical coordinates:\n";
     scalarDot(Nabla,A).print();
 
+
+    // Diagonalisation of 2x2 matrix [[a,b],[c,d]]
+    // Very pedestrian way: no function is dedicated to this task, so we just do 
+    // all steps "by hand". It then needs (and shows) a few useful manipulations.
+    cout<<"\n\nDiagonalisation of 2*2 general matrix:\n";
     Symbol a("a"), b("b"), c("c"), d("d");
+    a.setAllDependencies(false);
+    b.setAllDependencies(false);
+    c.setAllDependencies(false);
+    d.setAllDependencies(false);
+
     Symbol lambda("lambda");
     Symbol M = matrix_({{a,b},
                         {c,d}});
-
     M.print();
-    Id_(2).print();
-    (M-lambda*Id_(2)).print();
-    (M-lambda*Id_(2)).determinant().print();
+
+    cout<<"Polynomial:\n";
     Simplify((M-lambda*Id_(2)).determinant()).print();
-    polynomial_(Simplify((M-lambda*Id_(2)).determinant()), lambda).print();
+
+    cout<<"Factored polynomial:\n";
     Symbol poly = polynomial_(Simplify((M-lambda*Id_(2)).determinant()), lambda);
     poly = poly.factor();
     poly.print();
-    poly.setArgument(Simplify(poly[0]),0);
-    poly.setArgument(Simplify(poly[1]),1);
-    poly.print();
 
-    Simplify(a*c/(a+b)+b*c/(a+b)).print();
+    // We take regular expressions (to manipulate sums and not polynomials)
+    Symbol root1 = -(poly[0]-lambda).getRegularExpression();
+    Symbol root2 = -(poly[1]-lambda).getRegularExpression();
 
+    cout<<"Roots:\n";
+    root1.print();
+    root2.print();
+    cout<<endl;
+
+    // Eigen vectors s.t. M.u = lambda.u
+    cout<<"Searching eigen vectors:\n";
+    cout<<"\nRoot 1:\n";
+    Symbol u = vector_({x,y});
+    leftHandSide = dot(M,u);
+    rightHandSide = root1*u;
+
+    Symbol eq1 = (leftHandSide - rightHandSide)[0];
+    Symbol eq2 = (leftHandSide - rightHandSide)[1];
+
+    cout<<"Equations to solve:\n";
+    eq1.print();
+    eq2.print();
+
+    // Seeing the above result, we manually isolate x and y in the equations
+    eq1 = Simplify(eq1).full_develop().factor(x)/b;
+    eq2 = Simplify(eq2).full_develop().factor(y)/c;
+
+    cout<<"Isolating x and y:\n";
+    eq1.develop().print();
+    eq2.develop().print();
+
+    // We inject the expression y(x) of eq1 in eq2 and check that we found 0=0.
+    cout<<"Checking that the two equations are equivalent (should give 0):\n";
+    eq2.replace(y,-eq1.derive(x)).print();
+    cout<<"Not zero but with simplification:\n";
+    Simplify(eq2.replace(y,-x*eq1.derive(x))).print();
+
+    // Expression of the eigenvector
+    Symbol eigenVector1 = vector_({1,-eq1.derive(x)});
+
+    // Same thing for root 2.
+    cout<<"\nRoot 2:\n";
+    leftHandSide = dot(M,u);
+    rightHandSide = root2*u;
+
+    eq1 = (leftHandSide - rightHandSide)[0];
+    eq2 = (leftHandSide - rightHandSide)[1];
+
+    cout<<"Equations to solve:\n";
+    eq1.print();
+    eq2.print();
+
+    eq1 = Simplify(eq1).full_develop().factor(x)/b;
+    eq2 = Simplify(eq2).full_develop().factor(y)/c;
+
+    cout<<"Isolating x and y:\n";
+    eq1.develop().print();
+    eq2.develop().print();
+
+    cout<<"Checking that the two equations are equivalent (should give 0):\n";
+    eq2.replace(y,-eq1.derive(x)).print();
+    cout<<"Not zero but with simplification:\n";
+    Simplify(eq2.replace(y,-x*eq1.derive(x))).print();
+
+    Symbol eigenVector2 = vector_({1,-eq1.derive(x)});
+
+    cout<<"Found eigenvectors:\n";
+    eigenVector1.print();
+    eigenVector2.print();
+
+    Symbol transfert_matrix = Simplify(matrix_({{eigenVector1[0],eigenVector2[0]},
+                                               {eigenVector1[1],eigenVector2[1]}}));
+    // Diagnoal matrix
+    Symbol D = matrix_({{root1,0},
+                        {0,root2}});
+
+    // We check that P.D.P^{-1} = M
+    Symbol M_prime = dot(dot(transfert_matrix,D),transfert_matrix.inverseMatrix());
+    M_prime = M_prime.full_develop();
+    cout<<"M = P*D*P^{-1}:\n";
+    Simplify(M_prime).print();
+
+    // We check that P^{-1}.M.P = D
+    D = dot(dot(transfert_matrix.inverseMatrix(),M_prime),transfert_matrix);
+    cout<<"\n  Diagnoal matrix D = P^{-1}*M*P:\n\n";
+    D.print();
+    // D is in a complicated form: we simply have to develop it.
+    D = D.full_develop();
+    cout<<"\n\n  Diagonal matrix D = P^{-1}*M*P, developped:\n\n";
+    D.print();
 
     return 0;
 };

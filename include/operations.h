@@ -42,6 +42,14 @@ class Plus: public AbstractMultiFunc{
         return smType::Plus;
     }
 
+    /*! \return The numerical factor of the sum.
+     */
+    Expr getNumericalFactor() const override;
+
+    /*! \return The sum divided by its factor.
+     */
+    Expr getTerm() override;
+
     Expr getRealPart() override;
 
     Expr getImaginaryPart() const override;

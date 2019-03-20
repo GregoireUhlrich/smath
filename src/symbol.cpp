@@ -632,6 +632,11 @@ Symbol Symbol::polynomialFactorization() const
     return Symbol(abstract->factor());
 }
 
+Symbol Symbol::getRegularExpression() const
+{
+    return Symbol(abstract->getRegularExpression());
+}
+
 Symbol scalarDot(const Symbol& t_symbol1, const Symbol& t_symbol2)
 {
     if (t_symbol1.getType() != smType::Vector or t_symbol2.getType() != smType::Vector)

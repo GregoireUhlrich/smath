@@ -20,6 +20,7 @@ Plus::Plus(const vector<Expr >& operands, bool explicitPlus)
     if (not explicitPlus and nArgs > 0)
         mergeTerms();
     selfCheckIndexStructure();
+    nArgs = argument.size();
 }
 
 Plus::Plus(const Expr& leftOperand, const Expr& rightOperand)
@@ -50,6 +51,7 @@ Plus::Plus(const Expr& leftOperand, const Expr& rightOperand)
         mergeTerms();
     }
     selfCheckIndexStructure();
+    nArgs = argument.size();
 }
 
 Expr Plus::getRealPart()
@@ -364,6 +366,19 @@ Expr Plus::derive(const Expr& expr)
     return rep;
 }
 
+Expr Plus::getNumericalFactor() const
+{
+    return argument[0]->getNumericalFactor();
+}
+
+Expr Plus::getTerm()
+{
+    Expr num = argument[0]->getNumericalFactor();
+    if (*num != ONE)
+        return times_(1/num,Copy(this))->develop();
+    return Copy(this);
+}
+
 Expr Plus::factor(bool full)
     // We try to factor the sum without knowing a specific factor
 {
@@ -647,8 +662,9 @@ Times::Times(const Expr& leftOperand,
              const Expr& rightOperand,
              bool explicitTimes): AbstractMultiFunc()
 {
-    if (leftOperand->getType() == smType::Times and
-        rightOperand->getType() != smType::Times) 
+    if (not explicitTimes 
+        and leftOperand->getType() == smType::Times 
+        and rightOperand->getType() != smType::Times) 
     {
         argument = leftOperand->getVectorArgument();
         nArgs = argument.size();
@@ -657,8 +673,9 @@ Times::Times(const Expr& leftOperand,
         if (rightOperand->getPrimaryType() == smType::Indicial)
             selfCheckIndexStructure();
     }
-    else if (rightOperand->getType() == smType::Times and
-             leftOperand->getType() != smType::Times)    
+    else if (not explicitTimes 
+             and rightOperand->getType() == smType::Times 
+             and leftOperand->getType() != smType::Times)    
     {
         argument = rightOperand->getVectorArgument();
         nArgs = argument.size();
@@ -678,6 +695,7 @@ Times::Times(const Expr& leftOperand,
             orderTerms();
         selfCheckIndexStructure();
     }
+    nArgs = argument.size();
 }
 
 Expr Times::getNumericalFactor() const
@@ -764,9 +782,11 @@ Expr Times::suppressTerm(const Expr& expr) const
 
 IndexStructure Times::getIndexStructure() const
 {
+    //print();
     if (isIndexed()) {
         IndexStructure structure;
         for (auto arg=argument.rbegin(); arg!=argument.rend(); ++arg) {
+            //cout<<structure<<endl;
             if ((**arg).isIndexed())
                 structure += (**arg).getIndexStructure();
             else 
@@ -2026,18 +2046,16 @@ Expr Pow::develop(bool full)
         if (foo2->isInteger() 
                 and foo2->evaluateScalar() > 0 
                 and foo1->getType() == smType::Plus) {
-            double value = argument[1]->evaluateScalar();
-            if (value == floor(value)) {
-                int iMax = round(abs(value));
-                Expr result = int_(1);
-                for (int i=0; i<iMax; i++)
-                    result = times_(result, foo1,true);
-                result = result->develop(true);
-                if (value < 0)
-                    pow_(result, int_(-1));
+            double value = foo2->evaluateScalar();
+            int iMax = round(abs(value));
+            Expr result = int_(1);
+            for (int i=0; i<iMax; i++)
+                result = times_(result, foo1,true);
+            result = result->develop(true);
+            if (value < 0)
+                pow_(result, int_(-1));
 
-                return result;
-            }
+            return result;
         }
         Expr result = pow_(foo1,foo2);
 

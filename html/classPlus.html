@@ -95,6 +95,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7e3d0659d118ba83932b71540239d0b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="abstract_8h.html#a1d1cfd8ffb84e947f82999c682b666a7">smType::Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPlus.html#a7e3d0659d118ba83932b71540239d0b5">getType</a> () const override</td></tr>
 <tr class="memdesc:a7e3d0659d118ba83932b71540239d0b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives the <b>type</b> of a <a class="el" href="classPlus.html" title="Handles a sum, function of multiple arguments. ">Plus</a> object.  <a href="#a7e3d0659d118ba83932b71540239d0b5">More...</a><br /></td></tr>
 <tr class="separator:a7e3d0659d118ba83932b71540239d0b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0678331620669f2ad08c32a88615fe8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPlus.html#a0678331620669f2ad08c32a88615fe8c">getNumericalFactor</a> () const override</td></tr>
+<tr class="separator:a0678331620669f2ad08c32a88615fe8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfb9626259e3fb5e719f638cff60b316"><td class="memItemLeft" align="right" valign="top"><a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPlus.html#abfb9626259e3fb5e719f638cff60b316">getTerm</a> () override</td></tr>
+<tr class="separator:abfb9626259e3fb5e719f638cff60b316"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3796711e63a2d5a048d44475e9c78f01"><td class="memItemLeft" align="right" valign="top"><a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPlus.html#a3796711e63a2d5a048d44475e9c78f01">getRealPart</a> () override</td></tr>
 <tr class="memdesc:a3796711e63a2d5a048d44475e9c78f01"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>Evaluates</b> the <b>real part</b> of the <a class="el" href="classAbstract.html" title="Root class of the inheritance tree of abstracts. ">Abstract</a> and returns it.  <a href="#a3796711e63a2d5a048d44475e9c78f01">More...</a><br /></td></tr>
 <tr class="separator:a3796711e63a2d5a048d44475e9c78f01"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -337,17 +341,11 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:ae9f5a37ad523ec663a61d07def420820 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#ae9f5a37ad523ec663a61d07def420820">permut</a> (int i1, int i2)</td></tr>
 <tr class="memdesc:ae9f5a37ad523ec663a61d07def420820 inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to permut indices at place <b>i1</b> and <b>i2</b>. If those two indices have a symmetry property, indices are swaped and the symmetry is returned. Else the fnuction does nothing and returns 0.  <a href="classAbstract.html#ae9f5a37ad523ec663a61d07def420820">More...</a><br /></td></tr>
 <tr class="separator:ae9f5a37ad523ec663a61d07def420820 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a839372b7667ea0a28a9e3b72112366ff inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a839372b7667ea0a28a9e3b72112366ff">getNumericalFactor</a> () const</td></tr>
-<tr class="memdesc:a839372b7667ea0a28a9e3b72112366ff inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the numerical factor of the expression, i.e. returns <b>C</b> if the expression if of the form <b>C*x</b> (<b>x</b> having a numerical factor equal to 1), and return 1 else.  <a href="classAbstract.html#a839372b7667ea0a28a9e3b72112366ff">More...</a><br /></td></tr>
-<tr class="separator:a839372b7667ea0a28a9e3b72112366ff inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a594a570f0139f92f284f31e91c0c6dd8 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a594a570f0139f92f284f31e91c0c6dd8">getNFactor</a> () const</td></tr>
 <tr class="separator:a594a570f0139f92f284f31e91c0c6dd8 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5fdf2d5371e8c8ead87ef2b5d6fe43c0 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a5fdf2d5371e8c8ead87ef2b5d6fe43c0">getFactors</a> () const</td></tr>
 <tr class="memdesc:a5fdf2d5371e8c8ead87ef2b5d6fe43c0 inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to get a std::vector of all terms than could factor the expression.  <a href="classAbstract.html#a5fdf2d5371e8c8ead87ef2b5d6fe43c0">More...</a><br /></td></tr>
 <tr class="separator:a5fdf2d5371e8c8ead87ef2b5d6fe43c0 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4eab0d3915f47bc492ecaaf508afca4 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#ad4eab0d3915f47bc492ecaaf508afca4">getTerm</a> ()</td></tr>
-<tr class="memdesc:ad4eab0d3915f47bc492ecaaf508afca4 inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns the same expression as *this but amputated of its numerical factor. Example: (4*cos(x) -&gt; cos(x)).  <a href="classAbstract.html#ad4eab0d3915f47bc492ecaaf508afca4">More...</a><br /></td></tr>
-<tr class="separator:ad4eab0d3915f47bc492ecaaf508afca4 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aade7a4e3912241b00acd22b78d419fae inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#aade7a4e3912241b00acd22b78d419fae">checkIndexStructure</a> (const std::vector&lt; <a class="el" href="classIndex.html">Index</a> &gt; &amp;t_index) const</td></tr>
 <tr class="memdesc:aade7a4e3912241b00acd22b78d419fae inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks the compatibility of the index structure of an <b>Indicial</b> expression with another. In a sum, two terms must have exaclty the same index structure.  <a href="classAbstract.html#aade7a4e3912241b00acd22b78d419fae">More...</a><br /></td></tr>
 <tr class="separator:aade7a4e3912241b00acd22b78d419fae inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -934,6 +932,34 @@ std::vector&lt; <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec14
 
 </div>
 </div>
+<a id="a0678331620669f2ad08c32a88615fe8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0678331620669f2ad08c32a88615fe8c">&#9670;&nbsp;</a></span>getNumericalFactor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> getNumericalFactor </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>The numerical factor of the sum. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classAbstract.html#a839372b7667ea0a28a9e3b72112366ff">Abstract</a>.</p>
+
+</div>
+</div>
 <a id="aa90ed274a34d81fdea756d81a74783dc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa90ed274a34d81fdea756d81a74783dc">&#9670;&nbsp;</a></span>getParity()</h2>
 
@@ -1002,6 +1028,34 @@ std::vector&lt; <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec14
 <dl class="section return"><dt>Returns</dt><dd>The real part of the <a class="el" href="classAbstract.html" title="Root class of the inheritance tree of abstracts. ">Abstract</a>. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classAbstract.html#afc3cdd2b7bf7c6a6df773b68c9af5153">Abstract</a>.</p>
+
+</div>
+</div>
+<a id="abfb9626259e3fb5e719f638cff60b316"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfb9626259e3fb5e719f638cff60b316">&#9670;&nbsp;</a></span>getTerm()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> getTerm </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>The sum divided by its factor. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classAbstract.html#ad4eab0d3915f47bc492ecaaf508afca4">Abstract</a>.</p>
 
 </div>
 </div>

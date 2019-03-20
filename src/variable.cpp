@@ -39,6 +39,22 @@ Expr AbstractBuildingBlock::getPolynomialTerm(const Expr& expr, int order){
 
 ///////////////////////////////////////////////////
 /*************************************************/
+// Class AbstractNumerical                       //
+/*************************************************/
+///////////////////////////////////////////////////
+
+Expr AbstractNumerical::getNumericalFactor() const
+{
+    return auto_number_(evaluateScalar());
+}
+
+Expr AbstractNumerical::getTerm()
+{
+    return ONE;
+}
+
+///////////////////////////////////////////////////
+/*************************************************/
 // Class Double                                  //
 /*************************************************/
 ///////////////////////////////////////////////////
@@ -414,6 +430,16 @@ int CFraction::getDenom() const {
     return denom;
 }
 
+Expr CFraction::getNumericalFactor() const
+{
+    return _cfraction_(num,denom);
+}
+
+Expr CFraction::getTerm()
+{
+    return ONE;
+}
+
 void CFraction::print(int mode) const
 {
     if (mode == 0) 
@@ -511,7 +537,7 @@ Expr CFraction::exponentiation_own(const Expr& expr) const
     else if (expr->getType() == smType::Double) 
         return double_(pow(evaluateScalar(),value));
 
-    return make_shared<Pow>(Copy(this), expr);
+    return make_shared<Pow>(_cfraction_(num,denom), expr);
 }
 
 Expr CFraction::derive(const Expr& expr) {
