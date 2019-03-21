@@ -59,6 +59,7 @@ vector<Expr > getRecursiveAlternateForms(const Expr& expr, int depth)
     //We take alternate of alternate MAX_RECURSION_ALTERNATE-1 times
     for (int i=1; i<MAX_RECURSION_ALTERNATE; i++)
     {
+        reduceAlternate(toReturn);
         alternateForms = toReturn;
         toReturn = vector<Expr >(0);
         Expr foo;
@@ -199,19 +200,18 @@ Expr Simplify(const Expr& expr, int depth)
     }
 
     int iter = 0;
-    int maxIter = 3;
+    int maxIter = 50;
     bool simplified = true;
+    bool checkIndexExpressions = expr->isIndexed();
     while(simplified and iter < maxIter)
     {
         simplified = false;
 
         trials = getRecursiveAlternateForms(simplifiedAbstract, depth);
-        for (size_t i=0; i<trials.size(); i++)
-            if (*trials[i] == -1*simplifiedAbstract)
-            {cout<<"HAHAHAHAHAHAHA:\n";
-                simplifiedAbstract->print();
-                trials[i]->print();
-            }
+        if (checkIndexExpressions)
+            for (size_t i=0; i<trials.size(); i++)
+                if (*trials[i] == -1*simplifiedAbstract)
+                    return ZERO;
         for (size_t i=0; i<trials.size(); i++)
         {
             trials[i] = DeepRefresh(trials[i]);

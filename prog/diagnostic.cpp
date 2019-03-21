@@ -4,10 +4,13 @@
 #include "symbol.h"
 #include "simplification.h"
 #include "support.h"
+#include "equation.h"
 #include <chrono>
 #include <cmath>
 #include <fstream>
 #pragma GCC diagnostic ignored "-Wunused-result"
+#pragma GCC diagnostic ignored "-Wsign-compare"
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 using namespace std;
 
 string convertTime(chrono::duration<double> dur)
@@ -251,14 +254,31 @@ ofojeogz
     B_.setCommutable(false);
     (eps_({i,j,k})*A_(j)*B_(k) + eps_({i,j,k})*B_(k)*A_(j))->print();
     (eps_({i,j,k})*A_(j)*A_(k) + eps_({i,j,k})*B_(k)*A_(j))->print();
+    (A_(i)*(eps_({i,j,k}) + B_(i)*A_(j)*A_(k)))->print();
 
     cout<<"eps_ijk + eps_jik = ";
     Simplify(eps_({i,j,k}) + eps_({j,i,k}))->print();
     cout<<"eps_ijk.Aj.Ak + eps_jik.Bk.Aj = ";
     Simplify(eps_({i,j,k})*A_(j)*A_(k) + eps_({i,j,k})*B_(k)*A_(j))->print();
-    (A_(i)*(eps_({i,j,k}) + B_(i)*A_(j)*A_(k)))->print();
     //(eps_({i,j,k})*C_(j)*B_(k))->print();
     //(eps_({i,j})*A_(i)*B_(j))->print();
+    cout<<((x.getAbstract()*A_(i)*A_(i)) == (A_(j)*x.getAbstract()*A_(j)))<<"1"<<endl;
+    cout<<((x.getAbstract()*A_(i)*A_(j)) == (A_(j)*x.getAbstract()*A_(k)))<<"0"<<endl;
+    cout<<(2*x.getAbstract()*eps_({i,j,j}) == eps_({j,i,j})*x.getAbstract()*2)<<"0"<<endl;
+    cout<<(2*x.getAbstract()*eps_({i,j,j}) == eps_({i,k,k})*x.getAbstract()*2)<<"1"<<endl;
+    cout<<(2*x.getAbstract()*eps_({i,j,j}) == eps_({i,j,j})*x.getAbstract()*2)<<"1"<<endl;
+    j.setFree(false);
+    k.setFree(false);
+    cout<<(eps_({i,j,k}) == eps_({i,k,j}))<<"0"<<endl;
+    j.setFree(true);
+    k.setFree(true);
+    cout<<(eps_({i,j,k}) == eps_({i,k,j}))<<"0"<<endl;
+    cout<<(eps_({i,j,k})*A_(j)*B_(k) == eps_({i,k,j})*B_(j)*A_(k))<<"0"<<endl;
+    cout<<(eps_({i,j,k})*A_(j)*B_(k) == eps_({i,k,j})*A_(k)*B_(j))<<"1"<<endl;
+    cout<<(eps_({i,j,k})*A_(j)*B_(k) == eps_({i,k,j})*A_(j)*B_(k))<<"0"<<endl;
+    B_.setCommutable(true);
+    A_.setCommutable(true);
+    cout<<(eps_({i,j,k})*A_(j)*B_(k) == eps_({i,k,j})*B_(j)*A_(k))<<"1"<<endl;
 
     (derivative_(x,1)*y).print();
     y.getAbstract()->setElementary(false);
@@ -292,8 +312,10 @@ ofojeogz
     cout<<factorial(aInt(52))<<endl;
     //cout<<factorial(aInt(10000))<<endl;
     
-
-    cout<<(eps_({i,j,k}) == eps_({j,i,k}))<<endl;
+    Equation eq(3*x + y*x*4*cos_(t) + 5, 3*sin_(y)*x - 1);
+    cout<<eq<<endl;
+    eq.isolate(x);
+    cout<<eq<<endl;
 
     return 0;
     /*Symbol i("i"), j("j");

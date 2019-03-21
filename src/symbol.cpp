@@ -842,7 +842,7 @@ std::ostream& operator<<(std::ostream& fout, const Symbol& t_symbol)
 
 Expr Copy(const Abstract* expr)
 {    
-    if (expr->isBuildingBlock())
+    if (expr->isBuildingBlock() and expr->getType() != smType::ITensor)
         callWarning(smError::CopyingBuildingBlock,
                 "Copy(const Abstract* expr)", expr->printLaTeX(1));
     int type = expr->getType();
@@ -967,7 +967,7 @@ Expr Copy(const Abstract* expr)
 
 Expr Copy(const Expr& expr)
 {
-    if (expr->isBuildingBlock())
+    if (expr->isBuildingBlock() and expr->getType() != smType::ITensor)
         // If building block we do not copy
         return expr;
     return Copy(expr.get());
@@ -978,7 +978,7 @@ Expr DeepCopy(const Abstract* expr)
     //////
     ////// copy of commutable to add in this function
     //////
-    if (expr->isBuildingBlock())
+    if (expr->isBuildingBlock() and expr->getType() != smType::ITensor)
         callWarning(smError::CopyingBuildingBlock,
                 "DeepCopy(const Abstract* expr)", expr->printLaTeX(1));
     int type = expr->getType();
@@ -1117,7 +1117,7 @@ Expr DeepCopy(const Abstract* expr)
 }
 Expr DeepCopy(const Expr& expr)
 {
-    if (expr->isBuildingBlock())
+    if (expr->isBuildingBlock() and expr->getType() != smType::ITensor)
         //If building block we do not copy
         return expr;
     return DeepCopy(expr.get());
@@ -1125,7 +1125,7 @@ Expr DeepCopy(const Expr& expr)
 
 Expr Refresh(const Abstract* expr)
 {
-    if (expr->isBuildingBlock())
+    if (expr->isBuildingBlock() and expr->getType() != smType::ITensor)
         callWarning(smError::CopyingBuildingBlock,
                 "Refresh(const Abstract* expr)", expr->printLaTeX(1));
     int type = expr->getType();
@@ -1259,7 +1259,7 @@ Expr Refresh(const Abstract* expr)
 
 Expr Refresh(const Expr& expr)
 {
-    if (expr->isBuildingBlock())
+    if (expr->isBuildingBlock() and expr->getType() != smType::ITensor)
         return expr;
     int type = expr->getType();
     Expr newAbstract = nullptr;
@@ -1392,7 +1392,7 @@ Expr Refresh(const Expr& expr)
 
 Expr DeepRefresh(const Expr& expr)
 {
-    if (expr->isBuildingBlock())
+    if (expr->isBuildingBlock() and expr->getType() != smType::ITensor)
         return expr;
     int type = expr->getType();
     Expr newAbstract = nullptr;

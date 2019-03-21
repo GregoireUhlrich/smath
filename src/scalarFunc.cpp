@@ -19,9 +19,7 @@ bool AbstractFunc::isIndexed() const {
 
 IndexStructure AbstractFunc::getIndexStructure() const
 {
-    if (isIndexed())
-        return argument->getIndexStructure();
-    return IndexStructure();
+    return argument->getIndexStructure();
 }
 
 int AbstractFunc::getNArgs(int axis) const {
@@ -45,9 +43,10 @@ void AbstractFunc::setArgument(const Expr& t_argument, int iArg) {
 }
 
 bool AbstractFunc::contractIndex(const Index& indexToContract,
-                                 const Index& newIndex)
+                                 const Index& newIndex,
+                                 Abstract* contracted)
 {
-    return argument->contractIndex(indexToContract, newIndex);
+    return argument->contractIndex(indexToContract, newIndex, contracted);
 }
 
 Expr AbstractFunc::factor(bool full)
@@ -165,10 +164,11 @@ void AbstractDuoFunc::setArgument(const Expr& t_argument, int iArg)
 }
 
 bool AbstractDuoFunc::contractIndex(const Index& indexToContract,
-                                    const Index& newIndex)
+                                    const Index& newIndex,
+                                    Abstract* contracted)
 {
-    return (argument[0]->contractIndex(indexToContract, newIndex)
-         or argument[1]->contractIndex(indexToContract, newIndex));
+    return (argument[0]->contractIndex(indexToContract, newIndex, contracted)
+         or argument[1]->contractIndex(indexToContract, newIndex, contracted));
 }
 
 Expr AbstractDuoFunc::factor(bool full) 
@@ -271,6 +271,26 @@ Expr AbstractMultiFunc::getArgument(int iArg) const
     return argument[iArg];
 }
 
+iter AbstractMultiFunc::begin()
+{
+    return argument.begin();
+}
+
+iter AbstractMultiFunc::end()
+{
+    return argument.end();
+}
+
+const_iter AbstractMultiFunc::begin() const
+{
+    return argument.begin();
+}
+
+const_iter AbstractMultiFunc::end() const
+{
+    return argument.end();
+}
+
 void AbstractMultiFunc::setArgument(const Expr& t_argument, int iArg) 
 {
     if (iArg < 0 or iArg >= nArgs) {
@@ -289,10 +309,11 @@ void AbstractMultiFunc::setVectorArgument(const vector<Expr >& t_argument)
 }
 
 bool AbstractMultiFunc::contractIndex(const Index& indexToContract,
-                                      const Index& newIndex)
+                                      const Index& newIndex,
+                                      Abstract* contracted)
 {
     for (auto& arg : argument)
-        if (arg->contractIndex(indexToContract, newIndex))
+        if (arg->contractIndex(indexToContract, newIndex, contracted))
             return true;
 
     return false;

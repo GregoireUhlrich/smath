@@ -78,7 +78,8 @@ class AbstractFunc: public AbstractScalar{
     void setArgument(const Expr& t_argument, int iArg=0) override;
 
     virtual bool contractIndex(const Index& indexToContract,
-                               const Index& newIndex) override;
+                               const Index& newIndex,
+                               Abstract* contracted) override;
 
     virtual Expr factor(bool full=false) override;
 
@@ -173,7 +174,8 @@ class AbstractDuoFunc: public AbstractScalar{
     void setArgument(const Expr& t_argument, int iArg=0) override;
 
     virtual bool contractIndex(const Index& indexToContract,
-                               const Index& newIndex) override;
+                               const Index& newIndex,
+                               Abstract* contracted) override;
 
     virtual Expr factor(bool full=false) override;
 
@@ -256,6 +258,26 @@ class AbstractMultiFunc: public AbstractScalar{
      */
     Expr getArgument(int iArg=0) const override;
 
+    /*! \return A std::vector<Expr>::iterator at the beginning of argument
+     * for multi-argument expressions.
+     */    
+    iter begin() override;
+
+    /*! \return A std::vector<Expr>::iterator at the end of argument
+     * for multi-argument expressions.
+     */    
+    iter end() override;
+
+    /*! \return A std::vector<Expr>::iterator at the beginning of argument
+     * for multi-argument expressions.
+     */    
+    const_iter begin() const override;
+
+    /*! \return A std::vector<Expr>::iterator at the end of argument
+     * for multi-argument expressions.
+     */    
+    const_iter end() const override;
+
     /*! \brief Replaces one particular \b argument.
      * \param t_argument      New argument.
      * \param iArg(default=0) Index of the argument to replace with t_argument.
@@ -265,7 +287,8 @@ class AbstractMultiFunc: public AbstractScalar{
     void setVectorArgument(const std::vector<Expr >& t_argument) override;
 
     virtual bool contractIndex(const Index& indexToContract,
-                               const Index& newIndex) override;
+                               const Index& newIndex,
+                               Abstract* contracted) override;
 
     virtual Expr factor(bool full=false) override;
 

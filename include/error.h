@@ -46,6 +46,7 @@ namespace smError{
         BadType,  /*!<  Bad type of Abstract sent in a function. */
         BadSymmetry, /*!<  Bad Symmetry sent in IndicialParent (wring dimension). */
         BadContraction,  /*!<  Bad contraction of indices in expression. */
+        UnknownEquation, /*!<  Unknown type of equation used */
 
     };
 
@@ -112,6 +113,8 @@ inline void callError(smError::Error error, const std::string& caller, T spec)
                std::cout<<"Bad symmetry set in IndicialParent (wrong dimension) in "<<caller<<".\n"; break;
         case BadContraction:
                std::cout<<"Bad contraction of indices in "<<caller<<": "<<spec<<".\n"; break;
+        case UnknownEquation:
+               std::cout<<"Unknown type of equation in "<<caller<<": "<<spec<<".\n"; break;
 
         default:
                std::cout<<"SmError "<<(int)error<<" not recognized.\n";

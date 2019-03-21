@@ -79,7 +79,7 @@ class IndicialParent{
 
 };
 
-class AbstractIndicial: public AbstractScalar{
+class AbstractIndicial: public AbstractBuildingBlock{
 
     protected:
 
@@ -112,12 +112,16 @@ class AbstractIndicial: public AbstractScalar{
     IndexStructure getIndexStructure() const override {
         return index;
     }
+
+    bool compareWithDummy(const Expr& expr,
+            std::map<Index,Index>& constraints) const override;
 };
 
 class ITensor: public AbstractIndicial{
 
     protected:
 
+    std::vector<Abstract*> contractions;
     const IndicialParent* parent;
 
     public:
@@ -158,7 +162,8 @@ class ITensor: public AbstractIndicial{
     bool checkIndexStructure(const std::initializer_list<Index>& index) const override;
 
     bool contractIndex(const Index& indexToContract,
-                       const Index& newIndex) override;
+                       const Index& newIndex,
+                       Abstract* conctracted) override;
 
     void setIndexStructure(const IndexStructure& t_index) override;
 
@@ -179,35 +184,6 @@ class ITensor: public AbstractIndicial{
     bool operator>(const Expr& expr) const override;
 
     bool operator<(const Expr& expr) const override;
-};
-
-class Indexed: public AbstractIndicial{
-
-    protected:
-
-    Expr expression;
-
-    public:
-
-    Indexed();
-
-    explicit Indexed(const Expr& t_expression);
-
-    ~Indexed(){};
-
-    smType::PrimaryType getPrimaryType() const override;
-
-    smType::Type getType() const override;
-
-    void print(int mode=0) const override;
-
-    std::string printLaTeX(int mode=0) const override;
-
-    Expr evaluate() override;
-
-    Expr getArgument(int iArg=0) const override;
-
-    void setArgument(const Expr& argument, int iArg=0) override;
 };
 
 #endif

@@ -110,7 +110,8 @@ void Plus::selfCheckIndexStructure() const
     if (nArgs == 0) return;
     IndexStructure structure = argument[0]->getIndexStructure();
     for (const_iter arg=1+argument.begin(); arg!=argument.end(); ++arg)
-        if (structure != (**arg).getIndexStructure())
+        if (structure.getFreeStructure()
+                != (**arg).getFreeIndexStructure())
             callError(smError::InvalidIndicialSum,
                     "Plus::selfCheckIndexStructure() const");
 }
@@ -221,12 +222,13 @@ double Plus::evaluateScalar() const
 }
 
 bool Plus::contractIndex(const Index& indexToContract,
-                         const Index& newIndices)
+                         const Index& newIndices,
+                         Abstract* contracted)
 {
-    bool contracted = false;
+    bool contraction = false;
     for (auto& arg : argument) {
-        if (not arg->contractIndex(indexToContract, newIndices)) {
-            if (not contracted)
+        if (not arg->contractIndex(indexToContract, newIndices, contracted)) {
+            if (not contraction)
                 return false;
             else
                 callError(smError::BadContraction,
@@ -234,8 +236,9 @@ bool Plus::contractIndex(const Index& indexToContract,
                         indexToContract);
         }
         else 
-            contracted = true;
+            contraction = true;
     }
+    return true;
 }
 
 Expr Plus::evaluate()
@@ -576,18 +579,35 @@ bool Plus::operator==(const Expr& expr) const
     for (int i=0; i<nArgs;i++) 
         indicesLeft[i] = i;
 
+    map<Index,Index> constraints;
+    bool checkIndexExpressions = false;
+    if (isIndexed())
+        checkIndexExpressions = true;
     for (int i=0; i<nArgs; i++) {
-        bool matched = 0;
+        bool matched = false;
         for (size_t j=0; j<indicesLeft.size(); j++) {
-            if (*argument[i] == expr->getArgument(indicesLeft[j])) {
+            Expr foo = expr->getArgument(indicesLeft[j]);    
+            if ((not checkIndexExpressions
+                        or not (argument[i]->getType() == smType::ITensor))) {
                 indicesLeft.erase(indicesLeft.begin()+j);
-                matched = 1;
+                matched = true;
                 break;
             }
+            else if (checkIndexExpressions 
+                and argument[i]->getType() == smType::ITensor
+                and foo->getType() == smType::ITensor) {
+                if (argument[i]->compareWithDummy(foo, constraints)) {
+                    indicesLeft.erase(indicesLeft.begin()+j);
+                    matched = true;
+                    break;
+                }
+            }
         }
-        if (!matched)
+        if (not matched)
             return false;
     }
+    if (checkIndexExpressions and not constraints.empty())
+        return false;
 
     return true;
 }
@@ -810,9 +830,9 @@ void Times::selfCheckIndexStructure()
     vector<IndexStructure> structure(0);
     //For each argument
     for (iter arg=argument.begin(); arg!=argument.end(); ++arg) {
+        // We get its structure in fooStruct
+        IndexStructure fooStruct = (*arg)->getIndexStructure();
         if ((*arg)->isIndexed()) {
-            // We get its structure in fooStruct
-            IndexStructure fooStruct = (*arg)->getIndexStructure();
             // Now we check for each new index if it is present before in
             // the structure, in which case we contract it
             // (Einstein's convention).
@@ -833,12 +853,14 @@ void Times::selfCheckIndexStructure()
                             // If the contraction is not valid, we raise an 
                             // error.
                             if (not argument[i]->contractIndex(fooStruct[k],
-                                                               structure[i][j]))
+                                                               structure[i][j],
+                                                               (*arg).get()))
                                 callError(smError::BadContraction,
                                         "Times::selfCheckIndexStructure()",
                                         fooStruct[k]);
                             if (not (*arg)->contractIndex(fooStruct[k],
-                                                          structure[i][j]))
+                                                          structure[i][j],
+                                                          argument[i].get()))
                                 callError(smError::BadContraction,
                                         "Times::selfCheckIndexStructure()",
                                         fooStruct[k]);
@@ -853,8 +875,8 @@ void Times::selfCheckIndexStructure()
                 }
             }
             // We add fooStruct to the vector of structures
-            structure.push_back(fooStruct);
         }
+        structure.push_back(fooStruct);
     }
 }
 
@@ -1050,6 +1072,10 @@ void Times::leftInsert(const Expr& expr)
     Expr term, exponent;
     getExponentStructure(expr, term, exponent);
     for (int i=0; i<nArgs; i++) {
+        // We do not merge indicial expressions
+        // Ai.Ai does not give (Ai)^2
+        if (argument[i]->isIndexed())
+            continue;
         Expr term2, exponent2;
         getExponentStructure(argument[i], term2, exponent2);
         if (*Commutation(expr, argument[i]) == ZERO) {
@@ -1097,6 +1123,10 @@ void Times::rightInsert(const Expr& expr)
     Expr term, exponent;
     getExponentStructure(expr, term, exponent);
     for (int i=nArgs-1; i>=0; --i) {
+        // We do not merge indicial expressions
+        // Ai.Ai does not give (Ai)^2
+        if (argument[i]->isIndexed())
+            continue;
         Expr term2, exponent2;
         getExponentStructure(argument[i], term2, exponent2);
         if (*Commutation(expr, argument[i]) == ZERO) {
@@ -1219,6 +1249,10 @@ bool Times::mergeTerms()
     shared_ptr<Abstract> factor, factor2;
     bool matched;
     for (int i=numericalFactor; i<nArgs-1; i++) {
+        // We do not merge indicial expressions
+        // Ai.Ai does not give (Ai)^2
+        if (argument[i]->isIndexed())
+            continue;
         factor = ONE;
         if (argument[i]->getType() == smType::Pow) { //Pow 
             term = argument[i]->getArgument(1);
@@ -1456,29 +1490,68 @@ bool Times::operator==(const Expr& expr) const
         return false;
     if (nArgs != expr->getNArgs())
         return false;
+    //cout<<"Comparing :\n";
+    //print();
+    //expr->print();
 
     vector<int> indicesLeft(nArgs);
     for (int i=0; i<nArgs;i++)
         indicesLeft[i] = i;
 
     Expr foo;
+    map<Index,Index> constraints;
+    bool checkIndexExpressions = false;
+    if (isIndexed()) 
+        checkIndexExpressions = true;
     for (int i=0; i<nArgs; i++) {
-        bool matched = 0;
+        //cout<<"Treating arg ";
+        //argument[i]->print();
+        //for (auto i=constraints.begin(); i!=constraints.end(); ++i)
+        //    cout<<i->first<<"  "<<i->second<<endl;
+        bool matched = false;
         for (size_t j=0; j<indicesLeft.size(); j++) {
             foo = expr->getArgument(indicesLeft[j]);
             if (!argument[i]-> getCommutable() and
                 !foo->getCommutable() and
                 *argument[i]!=foo)
-                break;
-            if (*argument[i] == foo) {
+                if (argument[i]->getType() != smType::ITensor 
+                        or foo->getType() != smType::ITensor
+                        or foo->getName() != argument[i]->getName())
+                    break;
+            if ((not checkIndexExpressions
+                        or not (argument[i]->getType() == smType::ITensor))
+                    and *argument[i] == foo) {
                 indicesLeft.erase(indicesLeft.begin()+j);
-                matched = 1;
+                matched = true;
                 break;
             }
-        }
-        if (!matched) return false;
-    }
+            else if (checkIndexExpressions 
+                and argument[i]->getType() == smType::ITensor
+                and foo->getType() == smType::ITensor)  {
 
+         //       cout<<"Equal to argument :";
+         //       foo->print();
+        //for (auto i=constraints.begin(); i!=constraints.end(); ++i)
+        //    cout<<i->first<<"  "<<i->second<<endl;
+                if (argument[i]->compareWithDummy(foo, constraints)) {
+                    //cout<<"Really equal ! \n";
+        //for (auto i=constraints.begin(); i!=constraints.end(); ++i)
+        //    cout<<i->first<<"  "<<i->second<<endl;
+                    indicesLeft.erase(indicesLeft.begin()+j);
+                    matched = true;
+                    break;
+                }
+            }
+            
+        }
+        if (not matched) return false;
+    }
+     //   for (auto i=constraints.begin(); i!=constraints.end(); ++i)
+     //       cout<<i->first<<"  "<<i->second<<endl;
+    if (checkIndexExpressions and not constraints.empty())
+        return false;
+
+    //cout<<"Equal ! \n";
     return true;
 }
 

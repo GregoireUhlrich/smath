@@ -54,15 +54,15 @@ bool Index::operator&=(const Index& t_index) const
 bool Index::operator<(const Index& t_index) const
 {
     return ((free and not t_index.free)
-            or (not(not free and t_index.free)
+            or (free == t_index.free
                 and name < t_index.name));
 }
 
 bool Index::operator>(const Index& t_index) const
 {
     return ((not free and t_index.free)
-            or (not(free and not t_index.free)
-                and name < t_index.name));
+            or (free == t_index.free
+                and name > t_index.name));
 }
 
 bool Index::operator<=(const Index& t_index) const
@@ -126,6 +126,15 @@ vector<Index> IndexStructure::getFreeIndex() const
             rep.push_back(i);
 
     return rep;
+}
+
+IndexStructure IndexStructure::getFreeStructure() const
+{
+    IndexStructure structure;
+    for (const auto& i : index)
+        if (i.getFree())
+            structure += i;
+    return structure;
 }
 
 IndexStructure IndexStructure::getSinglePermutation(int i1, int i2) const
@@ -203,6 +212,18 @@ IndexStructure IndexStructure::operator+(const IndexStructure& structure) const
     return newStructure;
 }
 
+bool IndexStructure::exactMatch(const IndexStructure& structure) const
+{
+    if (nIndices != structure.getNIndices()) 
+        return false;
+
+    for (int i=0; i!=nIndices; ++i)
+        if (index[i] != structure.index[i])
+            return false;
+
+    return true;
+}
+
 bool IndexStructure::compareWithDummy(const IndexStructure& structure) const
 {
     map<Index,Index> constraints;
@@ -213,9 +234,9 @@ bool IndexStructure::compareWithDummy(const IndexStructure& structure,
                                       map<Index,Index>& constraints) const
 {
     // Here we search an exact match of the two structures, to a 
-    // renaming of dummy indices. The possible already found renaming
+    // renaming of dummy indices. The possible already found renamings
     // are in constraints (we must satisfy them) and we can add constraints
-    // if we have the liberty
+    // if we have the liberty to do so.
     // Ex: E_{ijk} A_j B_k == E_{iln} A_l B_n --> Comparison of E's adds 
     // the constraints j=l and k=n. Then A_j==A_l and B_k==B_n: Ok.
     // Same argument: E_{ijk} A_j B_k != E_{iln} A_n B_l: constraint found
@@ -233,7 +254,7 @@ bool IndexStructure::compareWithDummy(const IndexStructure& structure,
         // Else we check if the dummie are already constrained, if the 
         // constraint is respected, or add a new constraint
         else {
-            // t_index[i] must also be dummy here and must correpond (to a 
+            // t_index[i] must also be dummy here and must correspond (to a 
             // renaming) to index[i]
             if (not index[i].compareWithDummy(t_index[i]))
                 return false;
@@ -242,22 +263,31 @@ bool IndexStructure::compareWithDummy(const IndexStructure& structure,
                     // Here the dummies are not constrained: comparison
                     // is ok, and we add the new correspondance
                     constraints[index[i]] = t_index[i];
-                    // If the two indices are different, we add the 
-                    // correspondance in both directions
-                    if (index[i] != t_index[i])
-                        constraints[t_index[i]] = index[i];
                 }
-                else 
-                    return false;
+                else {
+                    if (constraints[t_index[i]] != index[i])
+                        return false;
+                    constraints[index[i]] = t_index[i];
+                }
             }
-            else if (not (constraints[index[i]] == t_index[i]))
-                return false;
+            else {
+                if (constraints.find(t_index[i]) == constraints.end()) {
+                    if (not (constraints[index[i]] == t_index[i]))
+                        return false;
+                }
+                else if (constraints[index[i]] != t_index[i]
+                        or constraints[t_index[i]] != index[i])
+                    return false;
+                constraints.erase(index[i]);
+            }
         }
     }
 
     return true;
 }
 
+// Checks if two structures are equal, only regarding free-indices
+// {ijj} == {i}, {ij} != {ik} for example.
 bool IndexStructure::operator==(const IndexStructure& structure) const
 {
     // Compare only free index Structure,

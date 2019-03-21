@@ -76,7 +76,8 @@ class Plus: public AbstractMultiFunc{
     double evaluateScalar() const override;
 
     bool contractIndex(const Index& indexToContract,
-                       const Index& newIndices) override;
+                       const Index& newIndices,
+                       Abstract* contracted) override;
 
     Expr evaluate() override;
 

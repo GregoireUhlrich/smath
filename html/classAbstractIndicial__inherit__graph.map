@@ -1,6 +1,6 @@
 <map id="AbstractIndicial" name="AbstractIndicial">
-<area shape="rect" id="node4" href="$classIndexed.html" title="Indexed" alt="" coords="5,229,73,256"/>
-<area shape="rect" id="node5" href="$classITensor.html" title="ITensor" alt="" coords="98,229,165,256"/>
-<area shape="rect" id="node2" href="$classAbstractScalar.html" title="Abstract class concerning all scalars (dim = 0). Allows to implement one time getDim() = 0 for all sc..." alt="" coords="31,80,139,107"/>
-<area shape="rect" id="node3" href="$classAbstract.html" title="Root class of the inheritance tree of abstracts. " alt="" coords="49,5,120,32"/>
+<area shape="rect" id="node6" href="$classITensor.html" title="ITensor" alt="" coords="99,319,166,345"/>
+<area shape="rect" id="node2" href="$classAbstractBuildingBlock.html" title="Abstract class from which derive all building blocks of exprs, i.e. objects not function of further e..." alt="" coords="57,169,208,196"/>
+<area shape="rect" id="node3" href="$classAbstractScalar.html" title="Abstract class concerning all scalars (dim = 0). Allows to implement one time getDim() = 0 for all sc..." alt="" coords="5,87,113,114"/>
+<area shape="rect" id="node4" href="$classAbstract.html" title="Root class of the inheritance tree of abstracts. " alt="" coords="24,5,95,32"/>
 </map>

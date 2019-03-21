@@ -73,6 +73,11 @@ IndexStructure Abstract::getIndexStructure() const
     callError(smError::AbstractFuncCalled, "Abstract::getIndexStructure() const");
 }
 
+IndexStructure Abstract::getFreeIndexStructure() const
+{
+    return getIndexStructure().getFreeStructure();
+}
+
 const IndicialParent* Abstract::getParent() const
 {
     print();
@@ -82,12 +87,10 @@ const IndicialParent* Abstract::getParent() const
 }
 
 bool Abstract::contractIndex(const Index& indexToContract,
-                             const Index& newIndex)
+                             const Index& newIndex,
+                             Abstract* contracted)
 {
-    print();
-    callError(smError::AbstractFuncCalled,
-            (string)"Abstract::contractIndex(const Index& indexToContract"
-            +"const Index& newIndex)");
+    return false;
 }
 
 void Abstract::setIndexStructure(const IndexStructure& index)
@@ -111,6 +114,14 @@ bool Abstract::checkIndexStructure(const initializer_list<Index>& index) const
     callError(smError::AbstractFuncCalled,
             "Abstract::checkIndexStructure(initializer_list<Index> index) const");
     return (index.size()==0);
+}
+
+bool Abstract::compareWithDummy(const Expr& expr, 
+        map<Index,Index>& constraints) const
+{
+    print();
+    callError(smError::AbstractFuncCalled,
+            "map<Index,Index>& constraints) const");
 }
 
 void Abstract::setFullySymmetric()

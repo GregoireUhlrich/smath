@@ -168,6 +168,8 @@ class IndexStructure{
 
     std::vector<Index> getFreeIndex() const;
 
+    IndexStructure getFreeStructure() const;
+
     IndexStructure getSinglePermutation(int i1, int i2) const;
 
     IndexStructure getPermutation(const std::vector<int>& permutation) const;
@@ -180,6 +182,7 @@ class IndexStructure{
 
     IndexStructure operator+(const IndexStructure& structure) const;
 
+    bool exactMatch(const IndexStructure& structure) const;
     bool compareWithDummy(const IndexStructure& structure) const;
     bool compareWithDummy(const IndexStructure& structure,
                           std::map<Index,Index>& constraints) const;

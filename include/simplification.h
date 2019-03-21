@@ -25,7 +25,7 @@ static const int SIMPLIFICATION_METHOD=1;
  * When getting alternate forms of an expression, we keep only the 
  * MAX_ALTERNATE_FORMS simpler.
  */
-static const int MAX_ALTERNATE_FORMS=5;
+static const int MAX_ALTERNATE_FORMS=10;
 
 /*! \var MAX_RECURSION_ALTERNATE
  * \brief When getting alternateForms, we iterate MAX_RECURSION_ALTERNATE times

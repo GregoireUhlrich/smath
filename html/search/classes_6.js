@@ -2,7 +2,6 @@ var searchData=
 [
   ['imaginary',['Imaginary',['../classImaginary.html',1,'']]],
   ['index',['Index',['../classIndex.html',1,'']]],
-  ['indexed',['Indexed',['../classIndexed.html',1,'']]],
   ['indexstructure',['IndexStructure',['../classIndexStructure.html',1,'']]],
   ['indicialparent',['IndicialParent',['../classIndicialParent.html',1,'']]],
   ['integer',['Integer',['../classInteger.html',1,'']]],

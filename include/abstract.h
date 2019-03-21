@@ -28,6 +28,12 @@ class Abstract;
  */
 typedef std::shared_ptr<Abstract> Expr;
 
+/*! \typedef refExpr
+ * \brief Replaces std::weak_ptr<Abstract> everywhere in order to improve
+ * readability.
+ */
+typedef std::weak_ptr<Abstract> refExpr;
+
 /*! \typedef constExpr
  * \brief Replaces std::shared_ptr<const Abstract> everywhere in order to improve
  * readability (less used than Expr).
@@ -445,6 +451,10 @@ class Abstract{
      */
     virtual IndexStructure getIndexStructure() const;
 
+    /*! \return The free index structure of the \b Indicial expression
+     */
+    virtual IndexStructure getFreeIndexStructure() const;
+
     /*! \brief For indicial expressions this function returns a pointer 
      * to the parent object of type IndicialParent (not an expression).
      * \return \b parent for ITensor-type expression.
@@ -576,7 +586,8 @@ class Abstract{
       * \return \b False else.
       */
      virtual bool contractIndex(const Index& indexToContract,
-                                const Index& newIndex);
+                                const Index& newIndex,
+                                Abstract* contracted);
 
      /*! \brief Replaces the index structure of the object, that must be an 
       * \b Indicial expression.
@@ -683,6 +694,9 @@ class Abstract{
      * \return \b False else.
      */
     virtual bool checkIndexStructure(const std::initializer_list<Index>& index) const;
+
+    virtual bool compareWithDummy(const Expr& expr,
+            std::map<Index,Index>& constraints) const;
 
                                                        
                                                        

@@ -128,26 +128,34 @@ Expr IndicialParent::operator()(const initializer_list<Index>& indices) const
 ///*************************************************/
 /////////////////////////////////////////////////////
 
-AbstractIndicial::AbstractIndicial(): AbstractScalar() 
+AbstractIndicial::AbstractIndicial(): AbstractBuildingBlock() 
 {}
 
 AbstractIndicial::AbstractIndicial(const string& t_name)
-    :AbstractScalar(t_name)
+    :AbstractBuildingBlock(t_name)
 {}
 
 AbstractIndicial::AbstractIndicial(const IndexStructure& t_index)
-    :AbstractScalar(), index(t_index)
+    :AbstractBuildingBlock(), index(t_index)
 {}
 
 AbstractIndicial::AbstractIndicial(const string& t_name,
                                    const Index& t_index)
-    :AbstractScalar(t_name), nIndices(1), index(vector<Index>(1,t_index))
+    :AbstractBuildingBlock(t_name), nIndices(1), index(vector<Index>(1,t_index))
 {}
 
 AbstractIndicial::AbstractIndicial(const string& t_name,
                                    const initializer_list<Index>& indices)
-    :AbstractScalar(t_name), nIndices(indices.size()), index(indices)
+    :AbstractBuildingBlock(t_name), nIndices(indices.size()), index(indices)
 {}
+
+bool AbstractIndicial::compareWithDummy(const Expr& expr,
+        map<Index,Index>& constraints) const
+{
+    if (name != expr->getName())
+        return false;
+    return index.compareWithDummy(expr->getIndexStructure(), constraints);
+}
 
 ///////////////////////////////////////////////////
 /*************************************************/
@@ -159,7 +167,8 @@ ITensor::ITensor(const string& t_name,
                  bool t_commutable,
                  const Index& t_index,
                  const IndicialParent* t_parent)
-    :AbstractIndicial(t_name, t_index), parent(t_parent)
+    :AbstractIndicial(t_name, t_index), contractions(vector<Abstract*>(1)),
+    parent(t_parent)
 {
     commutable = t_commutable;
 }
@@ -168,13 +177,16 @@ ITensor::ITensor(const string& t_name,
                  bool t_commutable,
                  const initializer_list<Index>& indices,
                  const IndicialParent* t_parent)
-    :AbstractIndicial(t_name, indices), parent(t_parent)
+    :AbstractIndicial(t_name, indices), 
+    contractions(vector<Abstract*>(indices.size())),
+    parent(t_parent)
 {
     commutable = t_commutable;
 }
 
 // Constructor crashes if expr is not an ITensor
-ITensor::ITensor(const Abstract*& expr): parent(expr->getParent())
+ITensor::ITensor(const Abstract*& expr)
+    :contractions(vector<Abstract*>(expr->getNIndices())), parent(expr->getParent())
 {
     name = expr->getName();
     commutable = expr->getCommutable();
@@ -237,11 +249,13 @@ bool ITensor::checkIndexStructure(
 }
 
 bool ITensor::contractIndex(const Index& indexToContract,
-                            const Index& newIndex)
+                            const Index& newIndex,
+                            Abstract* contracted)
 {
     for (int i=0; i!=nIndices; ++i)
         if (index[i] == indexToContract) {
             index[i] = newIndex;
+            contractions[i] = contracted;
             return true;
         }
 
@@ -357,134 +371,8 @@ bool ITensor::operator==(const Expr& expr) const
     if (expr->getType() != smType::ITensor) 
         return false;
 
-    const int nIndices = index.getNIndices();
-    if (name != expr->getName() or nIndices != expr->getNIndices()) 
+    if (name != expr->getName()) 
         return false;
 
-    return index.compareWithDummy(expr->getIndexStructure());
-}
-
-Indexed::Indexed(): AbstractIndicial(), expression(ZERO){}
-
-Indexed::Indexed(const Expr& t_expression)
-    :AbstractIndicial(t_expression->getName()), expression(t_expression)
-{
-    IndexStructure structure;
-    vector<IndexStructure> structureVec(0);
-    switch(expression->getType()) {
-
-        case smType::Plus:
-        structure = expression->getArgument()
-            ->getIndexStructure();
-        for (const_iter arg = t_expression->begin()+1;
-                arg!=t_expression->end(); ++arg)
-            if (structure != (*arg)->getIndexStructure())
-                callError(smError::InvalidIndicialSum,
-                        "Indexed::Indexed(const Expr& t_expression)");
-        nIndices = structure.getNIndices();
-        index = structure;
-
-        break;
-
-        case smType::Times:
-
-        // Check the indexStructure of a product and apply Einstein's convention
-        // in the case of a repeated index. This algorithm is O(N^2) with N the
-        // total number of indices in the product (check for each index if it is
-        // present elsewhere.
-
-        //Structure of each argument in a vector
-        //For each argument
-        for (iter arg=t_expression->begin();
-                arg!=t_expression->end(); ++arg) {
-            if ((*arg)->isIndexed()) {
-                // We get its structure in fooStruct
-                IndexStructure fooStruct = (*arg)->getIndexStructure();
-                // Now we check for each new index if it is present before in
-                // the structure, in which case we contract it
-                // (Einstein's convention).
-                // For each new index: 
-                for (int k=0; k!=fooStruct.getNIndices(); ++k) {
-                    //For each former structureVec (former arguments)
-                    for (size_t i=0; i!=structureVec.size(); ++i) {
-                        const int nIndices = structureVec[i].getNIndices();
-                        bool breakValue = false;
-                        // For each index in the structureVec
-                        for (int j=0; j!=nIndices; ++j) {
-                            // If the index is already present
-                            if (structureVec[i][j] == fooStruct[k]
-                                    and fooStruct[k].getFree()) {
-                                structureVec[i][j].setFree(false);
-                                // We replace fooStruct[k] (not contracted)
-                                // by structureVec[i][j] (contracted).
-                                // If the contraction is not valid, we raise an 
-                                // error.
-                                if (not t_expression->getArgument(i)
-                                        ->contractIndex(fooStruct[k],
-                                                        structureVec[i][j]))
-                                    callError(smError::BadContraction,
-                                            "Times::selfCheckIndexStructure()",
-                                            fooStruct[k]);
-                                if (not (*arg)->contractIndex(fooStruct[k],
-                                                              structureVec[i][j]))
-                                    callError(smError::BadContraction,
-                                            "Times::selfCheckIndexStructure()",
-                                            fooStruct[k]);
-
-                                fooStruct[k].setFree(false);
-                                breakValue = true;
-                                break;
-                            }
-                        }
-                        if (breakValue)
-                            break;
-                    }
-                }
-                // We add fooStruct to the vector of structureVecs
-                structureVec.push_back(fooStruct);
-            }
-        }
-        for (const auto& struc : structureVec)
-            index = index+struc;
-        nIndices = index.getNIndices();
-        break;
-
-        default:
-        cout<<"nothing\n";
-    }
-}
-
-smType::PrimaryType Indexed::getPrimaryType() const
-{
-    return expression->getPrimaryType();
-}
-
-smType::Type Indexed::getType() const
-{
-    return expression->getType();
-}
-
-void Indexed::print(int mode) const
-{
-    expression->print();
-}
-
-string Indexed::printLaTeX(int mode) const
-{
-    return expression->printLaTeX(mode);
-}
-
-Expr Indexed::evaluate() 
-{
-    return expression->evaluate();
-}
-
-Expr Indexed::getArgument(int iArg) const
-{
-    return expression->getArgument();
-}
-
-void Indexed::setArgument(const Expr& t_argument, int iArg)
-{
-    expression->setArgument(t_argument, iArg);
+    return index.exactMatch(expr->getIndexStructure());
 }
