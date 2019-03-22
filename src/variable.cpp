@@ -55,6 +55,32 @@ Expr AbstractNumerical::getTerm()
 
 ///////////////////////////////////////////////////
 /*************************************************/
+// Class AbstractLiteral                         //
+/*************************************************/
+///////////////////////////////////////////////////
+
+const vector<Property*>& AbstractLiteral::getProperties() const
+{
+    return props;
+}
+
+void AbstractLiteral::addProperty(Property* property)
+{
+    for (const auto& p : props)
+        if (p == property)
+            return;
+    props.push_back(property);
+}
+
+void AbstractLiteral::removeProperty(Property* property)
+{
+    auto p = find(props.begin(), props.end(), property);
+    if (p != props.end())
+        props.erase(p);
+}
+
+///////////////////////////////////////////////////
+/*************************************************/
 // Class Double                                  //
 /*************************************************/
 ///////////////////////////////////////////////////

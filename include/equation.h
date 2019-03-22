@@ -48,6 +48,8 @@ class Equation{
              const Symbol& rightHandSide, smEquation::Type=smEquation::Equal);
     ~Equation(){};
 
+    smEquation::Type getType() const;
+
     void replace(const Expr& oldE, const Expr& newE);
     void replace(const Symbol& oldS, const Symbol& newS);
     void simplify();

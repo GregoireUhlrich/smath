@@ -21,6 +21,7 @@ var searchData=
   ['addalternateform',['addAlternateForm',['../simplification_8h.html#a857b8d4954375eb2e9ab5ca69bec9dca',1,'simplification.h']]],
   ['addantisymmetry',['addAntiSymmetry',['../classAbstract.html#a1fccaaa8870d764767ea291b351dc694',1,'Abstract']]],
   ['addition_5fown',['addition_own',['../classAbstract.html#a0cf1d8170b6d7ec53b265462f8e1a552',1,'Abstract::addition_own()'],['../classPolynomial.html#a86e9b3d2f9ab4d020ca63082e78978b4',1,'Polynomial::addition_own()'],['../classInteger.html#a86e9b3d2f9ab4d020ca63082e78978b4',1,'Integer::addition_own()'],['../classDouble.html#a86e9b3d2f9ab4d020ca63082e78978b4',1,'Double::addition_own()'],['../classCFraction.html#a86e9b3d2f9ab4d020ca63082e78978b4',1,'CFraction::addition_own()'],['../classAbstractVectorial.html#a86e9b3d2f9ab4d020ca63082e78978b4',1,'AbstractVectorial::addition_own()']]],
+  ['addproperty',['addProperty',['../classAbstract.html#a04156a34ae37f57a1e50382290d40c31',1,'Abstract::addProperty()'],['../classAbstractLiteral.html#a85be51d37beb240311ea9c3b57a45e22',1,'AbstractLiteral::addProperty()']]],
   ['addsymmetry',['addSymmetry',['../classAbstract.html#a0e7ae515cba43be48adbca7f6a8b6106',1,'Abstract']]],
   ['aint',['aInt',['../classaInt.html',1,'']]],
   ['all',['All',['../abstract_8h.html#a1a6b6fb557d8d37d59700faf4e4c9167a54991d225c58ce0af43461d4e9a82312',1,'smEval']]],

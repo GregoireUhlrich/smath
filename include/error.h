@@ -46,7 +46,8 @@ namespace smError{
         BadType,  /*!<  Bad type of Abstract sent in a function. */
         BadSymmetry, /*!<  Bad Symmetry sent in IndicialParent (wring dimension). */
         BadContraction,  /*!<  Bad contraction of indices in expression. */
-        UnknownEquation, /*!<  Unknown type of equation used */
+        UnknownEquation, /*!<  Unknown type of equation used. */
+        BadPropertySetting,  /*!<  Setting a property that is not an equality. */
 
     };
 
@@ -115,6 +116,8 @@ inline void callError(smError::Error error, const std::string& caller, T spec)
                std::cout<<"Bad contraction of indices in "<<caller<<": "<<spec<<".\n"; break;
         case UnknownEquation:
                std::cout<<"Unknown type of equation in "<<caller<<": "<<spec<<".\n"; break;
+        case BadPropertySetting:
+               std::cout<<"Setting a property with something else than an equality in "<<caller<<": "<<spec<<".\n"; break;
 
         default:
                std::cout<<"SmError "<<(int)error<<" not recognized.\n";

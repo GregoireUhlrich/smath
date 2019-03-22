@@ -48,6 +48,11 @@ Equation::Equation(const Symbol& LHS, const Symbol& RHS, smEquation::Type t_type
     searchBuildingBlocks();
 }
 
+smEquation::Type Equation::getType() const
+{
+    return type;
+}
+
 
 void Equation::searchBuildingBlocks()
 {

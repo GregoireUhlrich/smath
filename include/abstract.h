@@ -176,6 +176,7 @@ Expr Empty(smType::Type type); // source in symbol.cpp
 class Index;
 class IndexStructure;
 class IndicialParent;
+class Property;
 
 
 /*! \class Abstract
@@ -301,6 +302,9 @@ class Abstract{
      */
     virtual bool isIndexed() const;
 
+    /*! \return The properties of the object.
+     */
+    virtual const std::vector<Property*>& getProperties() const;
                                                        
 
 
@@ -497,6 +501,16 @@ class Abstract{
      * \param t_commutable Must be \b true if the abstract can commute.
      */
     void setCommutable(bool t_commutable); 
+
+    /*! \brief Adds a property to the object.
+     * \param property The new property to add in \b props.
+     */
+    virtual void addProperty(Property* property);
+
+    /*! \brief Removes a property to the object.
+     * \param property Property to remove from \b props.
+     */
+    virtual void removeProperty(Property* property);
 
                                                        
                                                        

@@ -10,6 +10,13 @@ bool Abstract::getCommutable() const {
     return commutable;
 }
 
+const vector<Property*>& Abstract::getProperties() const
+{
+    print();
+    callError(smError::AbstractFuncCalled,
+            "vector<Property*>& Abstract::getProperties() const");
+}
+
 void Abstract::printExplicit(int mode) const
 {
     cout<<"EXPLICIT PRINT OF "; print(mode);
@@ -122,6 +129,20 @@ bool Abstract::compareWithDummy(const Expr& expr,
     print();
     callError(smError::AbstractFuncCalled,
             "map<Index,Index>& constraints) const");
+}
+
+void Abstract::addProperty(Property* property)
+{
+    print();
+    callError(smError::AbstractFuncCalled,
+            "Abstract::addProperty(Property* property)");
+}
+
+void Abstract::removeProperty(Property* property)
+{
+    print();
+    callError(smError::AbstractFuncCalled,
+            "Abstract::removeProperty(Property* property)");
 }
 
 void Abstract::setFullySymmetric()

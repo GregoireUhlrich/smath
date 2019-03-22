@@ -2,3 +2,7 @@ BIG REVIEW OF ALTERNATEFORMS.CPP
   ---> SUPRESS REDUNDANCIES !!!!
   ---> HANDLE COMMUTATION   !!!!
 
+Properties:
+
+ --> Dynamic creation:: new Property()...
+ --> Simplification with Properties.
