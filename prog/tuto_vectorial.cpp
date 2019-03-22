@@ -1,4 +1,5 @@
 #include "symbol.h"
+#include "equation.h"
 #include <iostream>
 
 using namespace std;
@@ -93,6 +94,9 @@ int main(){
     Symbol M = matrix_({{a,b},
                         {c,d}});
     M.print();
+    (M-lambda*Id_(2)).print();
+    (M-lambda*Id_(2)).determinant().print();
+    
 
     cout<<"Polynomial:\n";
     Simplify((M-lambda*Id_(2)).determinant()).print();
@@ -132,6 +136,18 @@ int main(){
     cout<<"Isolating x and y:\n";
     eq1.develop().print();
     eq2.develop().print();
+
+    // Example of automatic isolation of x and y:
+    cout<<"Automatic transformation of equation:\n";
+    Equation auto_eq1(leftHandSide[0], rightHandSide[0]);
+    Equation auto_eq2(leftHandSide[1], rightHandSide[1]);
+    auto_eq1.isolate(y);
+    auto_eq1.simplify();
+    auto_eq2.isolate(x);
+    auto_eq2.simplify();
+    cout<<auto_eq1<<endl;
+    cout<<auto_eq2<<endl;
+    cout<<endl;
 
     // We inject the expression y(x) of eq1 in eq2 and check that we found 0=0.
     cout<<"Checking that the two equations are equivalent (should give 0):\n";

@@ -1563,7 +1563,7 @@ Expr Replace(const Expr& expr, const Expr& old_abstract, const Expr& new_abstrac
     {
         Expr foo = Copy(expr);
         foo->setArgument(Replace(expr->getArgument(), old_abstract, new_abstract),0);
-        foo = Refresh(foo);
+        foo = DeepRefresh(foo);
         return foo;
     }
     if (type < 100)
@@ -1573,7 +1573,7 @@ Expr Replace(const Expr& expr, const Expr& old_abstract, const Expr& new_abstrac
             foo = foo->getRegularExpression();
         for (int i=0; i<foo->getNArgs(); i++)
             foo->setArgument(Replace(expr->getArgument(i), old_abstract, new_abstract),i);
-        foo = Refresh(foo);
+        foo = DeepRefresh(foo);
         return foo;
     }
     cout<<"Warning: type "<<type<<" not taken into account in \"Replace\".\n";

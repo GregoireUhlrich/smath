@@ -588,7 +588,8 @@ bool Plus::operator==(const Expr& expr) const
         for (size_t j=0; j<indicesLeft.size(); j++) {
             Expr foo = expr->getArgument(indicesLeft[j]);    
             if ((not checkIndexExpressions
-                        or not (argument[i]->getType() == smType::ITensor))) {
+                or not (argument[i]->getType() == smType::ITensor))
+                and *argument[i] == foo) {
                 indicesLeft.erase(indicesLeft.begin()+j);
                 matched = true;
                 break;
@@ -2938,6 +2939,16 @@ Expr derivative_(const Expr& leftOperand, const Expr& rightOperand, int order,
         else 
             return make_shared<Derivative>(leftOperand, rightOperand,
                     order, empty);
+        break;
+
+        case smType::Derivative:
+        if (rightOperand == leftOperand->getVariable()) 
+            return derivative_(leftOperand->getArgument(), 
+                    rightOperand,
+                    order + leftOperand->getOrder());
+        else
+            return make_shared<Derivative>(leftOperand, rightOperand, 
+                order, empty);
         break;
 
         default:

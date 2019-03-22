@@ -32,7 +32,7 @@ namespace smError{
         OutOfBounds, /*!<  Index out of bounds for Expression with mutiple
                       arguments. */
         EvalNotValued, /*!<  Evaluating an expression that cannot have a value. */
-        UndefiniedBehaviour, /*!<  Apparition of a case that has not been defined.*/
+        UndefinedBehaviour, /*!<  Apparition of a case that has not been defined.*/
         ContractDummy, /*!<  Trying to contract an index that is already contracted. */
         ContractionMismatch, /*!<  Trying to contract indices that do not match. */
         SymmetryMismatch, /*!<  Incompatibility between symmetries in the 
@@ -91,7 +91,7 @@ inline void callError(smError::Error error, const std::string& caller, T spec)
                std::cout<<"Initializing a vector element with a sequence in "<<caller<<".\n"; break;
         case EvalNotValued:
                std::cout<<"Evaluating the value of non valued Abstract in "<<caller<<".\n"; break;
-        case UndefiniedBehaviour:
+        case UndefinedBehaviour:
                std::cout<<"Undefined behaviour in "<<caller<<"\n."; break;
         case ContractDummy:
                std::cout<<"Contracting dummy index in "<<caller<<": "<<spec<<std::endl; break;

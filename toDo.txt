@@ -1,3 +1,4 @@
-Commutator(A,B)
+BIG REVIEW OF ALTERNATEFORMS.CPP
+  ---> SUPRESS REDUNDANCIES !!!!
+  ---> HANDLE COMMUTATION   !!!!
 
-Then it will be way cleaner

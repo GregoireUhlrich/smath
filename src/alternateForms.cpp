@@ -104,7 +104,7 @@ vector<Expr > internalRecursiveAlternateForms(const Expr& expr, int depth)
             argument[1] = expr->getArgument(1);
         }
         else 
-            callError(smError::UndefiniedBehaviour,
+            callError(smError::UndefinedBehaviour,
                     "internalRecursiveAlternateForms(const Expr& expr, int depth)");
 
         vector<Expr > fooVec;

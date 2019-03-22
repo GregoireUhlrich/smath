@@ -45,12 +45,12 @@ Expr AbstractBuildingBlock::getPolynomialTerm(const Expr& expr, int order){
 
 Expr AbstractNumerical::getNumericalFactor() const
 {
-    return auto_number_(evaluateScalar());
+    return ONE;
 }
 
 Expr AbstractNumerical::getTerm()
 {
-    return ONE;
+    return shared_from_this();
 }
 
 ///////////////////////////////////////////////////
@@ -432,12 +432,12 @@ int CFraction::getDenom() const {
 
 Expr CFraction::getNumericalFactor() const
 {
-    return _cfraction_(num,denom);
+    return ONE;
 }
 
 Expr CFraction::getTerm()
 {
-    return ONE;
+    return shared_from_this();
 }
 
 void CFraction::print(int mode) const

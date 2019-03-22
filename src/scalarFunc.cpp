@@ -85,8 +85,7 @@ bool AbstractFunc::dependsOn(const Expr& expr) const {
 }
 
 bool AbstractFunc::dependsExplicitelyOn(const Expr& expr) const {
-    return ((name != "" and name == expr->getName()) or
-            argument->dependsExplicitelyOn(expr));
+    return (operator==(expr) or argument->dependsExplicitelyOn(expr));
 }
 
 int AbstractFunc::isPolynomial(const Expr& expr) const {
@@ -216,7 +215,7 @@ bool AbstractDuoFunc::dependsOn(const Expr& expr) const
 
 bool AbstractDuoFunc::dependsExplicitelyOn(const Expr& expr) const
 {
-    return ((name != "" and name == expr->getName()) or
+    return (operator==(expr) or
             argument[0]->dependsExplicitelyOn(expr) or
             argument[1]->dependsExplicitelyOn(expr));
 }
@@ -369,7 +368,7 @@ bool AbstractMultiFunc::dependsOn(const Expr& expr) const
 
 bool AbstractMultiFunc::dependsExplicitelyOn(const Expr& expr) const
 {
-    if (name != "" and name == expr->getName()) 
+    if (operator==(expr))
         return true;
 
     for (const auto& arg : argument)

@@ -1,7 +1,7 @@
 #ifndef EQUATION_H_INCLUDED
 #define EQUATION_H_INCLUDED
 
-#include "symbol.h"
+#include "simplification.h"
 
 namespace smEquation{
 
@@ -35,6 +35,7 @@ class Equation{
     protected:
 
     void searchBuildingBlocks();
+    void isolationStep(const Expr& expr);
 
     public:
 
@@ -47,6 +48,9 @@ class Equation{
              const Symbol& rightHandSide, smEquation::Type=smEquation::Equal);
     ~Equation(){};
 
+    void replace(const Expr& oldE, const Expr& newE);
+    void replace(const Symbol& oldS, const Symbol& newS);
+    void simplify();
     void isolate(const Expr& expr);
     void isolate(const Symbol& expr);
 

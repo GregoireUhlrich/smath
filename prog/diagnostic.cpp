@@ -317,6 +317,26 @@ ofojeogz
     eq.isolate(x);
     cout<<eq<<endl;
 
+    Symbol a("a"), b("b"), c("c"), d("d");
+    eq = Equation(exp_(x*(a+1/(1+x)))+b,c);
+    cout<<eq<<endl;
+    eq.isolate(x);
+    eq.replace(c,d+b);
+    cout<<eq<<endl;
+    eq = Equation(x/(1+x), a);
+    cout<<eq<<endl;
+    eq.isolate(x);
+    cout<<eq<<endl;
+    eq = Equation(1/(x^3), a);
+    cout<<eq<<endl;
+    eq.isolate(x);
+    cout<<eq<<endl;
+
+    cout<<Simplify(((x^100)/(100^x)).derive(x))<<endl;
+    derivative_(a*b,x,3).evaluate().print();
+    derivative_(derivative_(a*b,x,2),x,3).print();
+    derivative_(derivative_(a*b,x,2),x,3).evaluate().print();
+
     return 0;
     /*Symbol i("i"), j("j");
     int N = 200;

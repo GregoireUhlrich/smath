@@ -1,4 +1,5 @@
 #include <iostream>
+#include "equation.h"
 #include "symbol.h"
 
 using namespace std;
@@ -65,6 +66,7 @@ int main() {
     Euler_Lagrange.print();
     
     // Different steps of calculation
+    cout<<"Evaluate derivetives:\n";
     Euler_Lagrange = Euler_Lagrange.evaluate(); // evaluates derivatives (and derivatives of products)
     Euler_Lagrange.print();
 
@@ -72,11 +74,13 @@ int main() {
     Euler_Lagrange.print();
 
     // Recover the expression of velocities as derivatives of positions
+    cout<<"Recover dr/dt and dtheta/dt:\n";
     Euler_Lagrange = Euler_Lagrange.replace(rp, derivative_(r,t)); 
     Euler_Lagrange = Euler_Lagrange.replace(thetap, derivative_(theta,t));
     Euler_Lagrange.print();
 
     // With the condition r = l, we can replace r by l in Euler_Lagrange
+    cout<<"Replacing r by l with the constraint equation:\n";
     Euler_Lagrange = Euler_Lagrange.replace(r,l);
     // We refresh the expression (r is replaced be we have to reevaluate
     // the expression, in particular derivatives)
