@@ -1,5 +1,6 @@
 #include "indicial.h"
 #include "error.h"
+#include "space.h"
 
 using namespace std;
 
@@ -11,19 +12,40 @@ using namespace std;
 
 IndicialParent::IndicialParent(): name(""), commutable(true), dim(0), 
     space(vector<const Space*>(0)), symmetry(), fullySymmetric(false),
-    fullyAntiSymmetric(false)
+    fullyAntiSymmetric(false), valued(false)
 {}
 
 IndicialParent::IndicialParent(const string& t_name): name(t_name),
     commutable(true), dim(0), space(vector<const Space*>(0)), symmetry(),
-    fullySymmetric(false), fullyAntiSymmetric(false)
+    fullySymmetric(false), fullyAntiSymmetric(false), valued(false)
+{}
+
+IndicialParent::IndicialParent(const string& t_name,
+                               const Space* t_space)
+    :name(t_name), commutable(true), dim(1), space(vector<const Space*>(1,t_space)),
+    symmetry(), fullySymmetric(false), fullyAntiSymmetric(false), valued(false)
 {}
 
 IndicialParent::IndicialParent(const string& t_name,
                                const std::initializer_list<const Space*> t_space)
     :name(t_name), commutable(true), dim(t_space.size()), space(t_space),
-    symmetry(), fullySymmetric(false), fullyAntiSymmetric(false)
+    symmetry(), fullySymmetric(false), fullyAntiSymmetric(false), valued(false)
 {}
+
+IndicialParent::IndicialParent(const string& t_name,
+                               const Space* t_space,
+                               const Expr& t_tensor)
+    :name(t_name), commutable(true), dim(2), space(vector<const Space*>(2,t_space)),
+    symmetry(), fullySymmetric(true), fullyAntiSymmetric(false), valued(true)
+{
+    if (t_tensor->getType() != smType::Matrix
+            or t_tensor->getShape() != vector<int>(2,t_space->getDim())) {
+        callError(smError::InvalidIndicialParent,
+                "IndicialParent(const string&, const Space*, const Expr&)");
+    }
+    tensor = t_tensor;
+}
+
 
 string IndicialParent::getName() const {
     return name;
@@ -302,8 +324,14 @@ vector<Expr> ITensor::getPermutations() const
             initPerm[i] = i;
         vector<Permutation > perm = permutations(initPerm);
         res = vector<Expr>(0);
+        bool getSign = parent->getFullyAntiSymmetric();
         for (size_t i=0; i!=perm.size(); ++i)
-            res.push_back(applyPermutation(perm[i]));
+            if (getSign)
+                res.push_back(int_(perm[i].getSign())
+                        *applyPermutation(perm[i]));
+            else
+                res.push_back(applyPermutation(perm[i]));
+
         return res;
     }
     vector<Permutation> perm = parent->getPermutation();

@@ -12,8 +12,7 @@ void printVector(const vector<Expr >& vector)
 void addAlternateForm(vector<Expr >& alternateForms, const Expr& newAlternate, bool add_factor_develop)
 {
     if (alternateForms.size() == 0) alternateForms.push_back(newAlternate);
-    iter it;
-    it = find(alternateForms.begin(), alternateForms.end(), newAlternate);
+    iter it = find(alternateForms.begin(), alternateForms.end(), newAlternate);
     if (it == alternateForms.end()) // We did not find the newAlternate
         alternateForms.push_back(newAlternate);
 
@@ -53,6 +52,7 @@ vector<Expr > getRecursiveAlternateForms(const Expr& expr, int depth)
     vector<Expr > alternateForms;
     //taking alternateForms a first time
     vector<Expr > toReturn = internalRecursiveAlternateForms(expr,depth-1);
+    clearRedundancyAlternate(toReturn);
     if (toReturn.size() == 0) // no alternate form for expr
         return expr->getAlternateForms();
     vector<Expr > fooVec = toReturn;
@@ -70,10 +70,17 @@ vector<Expr > getRecursiveAlternateForms(const Expr& expr, int depth)
             if (fooVec.size() == 0)
                 fooVec.push_back(Copy(alternateForms[j]));
             
+            size_t fooSize = toReturn.size();
             for (size_t k=0; k<fooVec.size(); k++)
                 addAlternateForm(toReturn, fooVec[k]);
+            // If there is no new alternate
+            if (fooSize == toReturn.size()) {
+                reduceAlternate(toReturn);
+                return toReturn;
+            }
         }
     }
+    clearRedundancyAlternate(toReturn);
     reduceAlternate(toReturn);
 
     return toReturn;
@@ -112,18 +119,23 @@ vector<Expr > internalRecursiveAlternateForms(const Expr& expr, int depth)
         vector<vector<Expr > > newArguments(0);
         if (nArgs > 1)
         {
-            fooVec = internalRecursiveAlternateForms(argument[0],depth-1);
-            if (fooVec.size() == 0) // if no alternate, we keep at least the argument itself
-                fooVec = vector<Expr >(1,Copy(argument[0]));
-            for (int i=1; i<nArgs; i++)
+            //fooVec = internalRecursiveAlternateForms(argument[0],depth-1);
+            //if (fooVec.size() == 0) // if no alternate, we keep at least the argument itself
+            //    fooVec = vector<Expr >(1,Copy(argument[0]));
+            for (int i=0; i<nArgs; i++)
             {
                 fooVec = internalRecursiveAlternateForms(argument[i],depth-1);
+                //cout<<"Alternates of "; expr->print();
+                //printVector(fooVec);
                 if (fooVec.size() == 0)
                     fooVec = vector<Expr >(1,Copy(argument[i]));
-                for (size_t j=0; j<fooVec.size()-1; j++) // We take 1+n-1 copies of actual alternates
+                for (size_t j=0; j<fooVec.size(); j++) // We take 1+n-1 copies of actual alternates
                 {
+                    //cout<<"Adding alternate "; fooVec[j]->print();
                     foo = Copy(expr);
                     foo->setArgument(Refresh(fooVec[j]),i);
+                    //cout<<"Refreshing";foo->print();
+                    //cout<<"          ";Refresh(foo)->print();
                     addAlternateForm(alternateForms, Refresh(foo));
                 }
             }
@@ -141,6 +153,8 @@ vector<Expr > internalRecursiveAlternateForms(const Expr& expr, int depth)
                 alternateForms[i] = Refresh(alternateForms[i]);
             }*/
             clearRedundancyAlternate(alternateForms);
+            //cout<<"HERE\n";
+            //printVector(alternateForms);
         }
         else
         {
@@ -180,7 +194,8 @@ vector<Expr > internalRecursiveAlternateForms(const Expr& expr, int depth)
         }
         if (countTHIS == 0 and toReturn.size() > 0)
             toReturn.push_back(Copy(expr));*/
-
+        //cout<<"FINAL ALTERNATES OF "; expr->print();
+        //printVector(toReturn);
         return toReturn;
     }
     return expr->getAlternateForms();
@@ -203,6 +218,7 @@ Expr Simplify(const Expr& expr, int depth)
     int maxIter = 50;
     bool simplified = true;
     bool checkIndexExpressions = expr->isIndexed();
+    //cout<<"Simplifying "; expr->print();
     while(simplified and iter < maxIter)
     {
         simplified = false;
@@ -210,13 +226,20 @@ Expr Simplify(const Expr& expr, int depth)
         trials = getRecursiveAlternateForms(simplifiedAbstract, depth);
         if (checkIndexExpressions)
             for (size_t i=0; i<trials.size(); i++)
+            {
+                //cout<<"trial "<<i<<endl;
+                //trials[i]->print();
                 if (*trials[i] == -1*simplifiedAbstract)
                     return ZERO;
+            }
         for (size_t i=0; i<trials.size(); i++)
         {
             trials[i] = DeepRefresh(trials[i]);
             if (*trials[i] < simplifiedAbstract)
             {
+                //trials[i]->print();
+                //cout<<"Simpler than ";
+                //simplifiedAbstract->print();
                 simplified = true;
                 simplifiedAbstract = trials[i];
             }

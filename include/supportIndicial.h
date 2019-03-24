@@ -3,64 +3,7 @@
 
 #include "abstract.h"
 
-// Only using Space* type. Non-copyable class, One space corresponds to only
-// one instance --> comparison of spaces <==> comparison of pointers.
-class Space{
-
-    private:
-
-    std::string name;
-    int dim;
-    bool signedIndex;
-
-    public:
-
-    Space() = delete;
-    Space(const Space&) = delete;
-    Space(const std::string& t_name, int t_dim);
-    Space(const std::string& t_name, int t_dim, bool t_signedIndexed);
-    ~Space(){};
-
-    std::string getName() const;
-    int getDim() const;
-    bool getSignedIndex() const;
-
-    Space& operator=(const Space&) = delete;
-};
-
-///////////////////////////////////////////////////
-//// Inline functions
-///////////////////////////////////////////////////
-
-inline Space::Space(const std::string& t_name, int t_dim)
-    :name(t_name), dim(t_dim), signedIndex(false) 
-{}
-
-inline Space::Space(const std::string& t_name, int t_dim, bool t_signedIndexed)
-    :name(t_name), dim(t_dim), signedIndex(t_signedIndexed) 
-{}
-
-inline std::string Space::getName() const {
-    return name;
-}
-
-inline int Space::getDim() const {
-    return dim;
-}
-
-inline bool Space::getSignedIndex() const {
-    return signedIndex;
-}
-
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-
-
-static const Space Euclid_R("R", 1);
-static const Space Euclid_R2("R2", 2);
-static const Space Euclid_R3("R3", 3);
-static const Space Euclid_R4("R4", 4);
-static const Space Lorentz("L",4,true);
+class Space;
 
 class Index{
 
@@ -68,6 +11,7 @@ class Index{
 
     std::string name;
     bool free;
+    bool sign;
     const Space* space;
 
     public:
@@ -84,6 +28,8 @@ class Index{
 
     std::string getName() const;
 
+    bool getSign() const;
+
     bool getFree() const;
 
     int getMax() const;
@@ -92,7 +38,11 @@ class Index{
 
     void setName(const std::string& t_name);
 
+    void setSign(bool t_sign);
+
     void setFree(bool t_free);
+
+    bool testContraction(Index& t_index);
 
     void print() const;
 
@@ -101,6 +51,10 @@ class Index{
     Index& operator=(const Index& index) = default;
 
     bool compareWithDummy(const Index& t_index) const;
+
+    bool compareWithoutSign(const Index& t_index) const;
+
+    bool exactMatch(const Index& t_index) const;
 
     bool operator==(const Index& t_index) const;
 
@@ -118,26 +72,12 @@ class Index{
 
     bool operator>=(const Index& index) const;
 
+    friend Index operator+(const Index& index);
+     
+    friend Index operator-(const Index& index);
+
     friend std::ostream& operator<<(std::ostream& fout, const Index& index);
 };
-
-/////
-// Inline functions
-
-inline Index::Index(): name("i"), free(true), space(&Euclid_R3){}
-inline Index::Index(const std::string& t_name): name(t_name), free(true),
-                                              space(&Euclid_R3){}
-inline Index::Index(const std::string& t_name, const Space* t_space)
-     :name(t_name), free(true), space(t_space){}
-
-inline std::string Index::getName() const { return name;}
-inline bool Index::getFree() const { return free;}
-inline const Space* Index::getSpace() const { return space;}
-inline int Index::getMax() const { return space->getDim();}
-
-inline void Index::setName(const std::string& t_name) { name = t_name;}
-inline void Index::setFree(bool t_free) { free = t_free;}
-/////
 
 class IndexStructure{
 
@@ -219,7 +159,7 @@ inline IndexStructure::IndexStructure(int t_nIndices)
 inline IndexStructure::IndexStructure(const IndexStructure& t_index):
     nIndices(t_index.nIndices), index(t_index.index){}
 inline IndexStructure::IndexStructure(const std::initializer_list<Index>& t_index):
-    IndexStructure(std::vector<Index>(t_index.begin(), t_index.end())){}
+    IndexStructure(std::vector<Index>(t_index)){}
 
 inline int IndexStructure::getNIndices() const{
     return nIndices;

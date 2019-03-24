@@ -3715,7 +3715,7 @@ bool ITensor::operator<(const Expr& expr) const
             if (index < expr->getIndexStructure())
                 return true;
             if (not (index > expr->getIndexStructure()))
-                return name < expr->getName();
+                return (compare(name, expr->getName()) == -1);
             return false;
         }
         break;
@@ -3833,7 +3833,7 @@ bool ITensor::operator>(const Expr& expr) const
             if (index > expr->getIndexStructure())
                 return true;
             if (not (index < expr->getIndexStructure()))
-                return name > expr->getName();
+                return (compare(name, expr->getName()) == 1);
             return false;
         }
         break;

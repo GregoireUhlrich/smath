@@ -1,3 +1,4 @@
+#include "space.h"
 #include "supportIndicial.h"
 
 using namespace std;
@@ -8,7 +9,39 @@ using namespace std;
 /*************************************************/
 ///////////////////////////////////////////////////
 
+Index::Index(): name("i"), free(true), sign(0), space(&Euclid_R3){}
+
+Index::Index(const std::string& t_name): name(t_name), free(true),
+                                                sign(0), space(&Euclid_R3){}
+Index::Index(const std::string& t_name, const Space* t_space)
+     :name(t_name), free(true), sign(0), space(t_space){}
+
+std::string Index::getName() const { return name;}
+
+bool Index::getFree() const { return free;}
+
+bool Index::getSign() const { return sign;}
+
+const Space* Index::getSpace() const { return space;}
+
+int Index::getMax() const { return space->getDim();}
+
+void Index::setName(const std::string& t_name) { name = t_name;}
+
+void Index::setFree(bool t_free) { free = t_free;}
+
+void Index::setSign(bool t_sign) {
+    if (space->getSignedIndex())
+        sign = t_sign;
+}
+
 void Index::print() const {
+    if (space->getSignedIndex()) {
+        if (sign)
+            cout<<"+";
+        else 
+            cout<<"-";
+    }
     if (not free)
         cout<<"%";
     cout<<name;
@@ -27,13 +60,50 @@ bool Index::compareWithDummy(const Index& t_index) const
         return operator==(t_index);
     else
         return (not t_index.free
+                //and sign == t_index.sign
                 and space == t_index.space);
+}
+
+bool Index::compareWithoutSign(const Index& t_index) const
+{
+    return (name == t_index.name
+            and free == t_index.free
+            and space == t_index.space);
+}
+
+bool Index::testContraction(Index& t_index)
+{
+    if (space != t_index.space
+            or name != t_index.name
+            or not free
+            or not t_index.free)
+        return false;
+
+    if (space->getSignedIndex()) 
+        if (not (sign xor t_index.sign)) {
+            callError(smError::BadContraction,
+                    "Index::testContraction(Index&)",
+                    *this);
+        }
+    free = false;
+    t_index.free = false;
+
+    return true;
+}
+
+bool Index::exactMatch(const Index& t_index) const
+{
+    return (name == t_index.name
+            and free == t_index.free
+            and sign == t_index.sign
+            and space == t_index.space);
 }
 
 bool Index::operator==(const Index& t_index) const
 {
     return (name == t_index.name
             and free == t_index.free
+            //and sign == t_index.sign
             and space == t_index.space);
 }
 
@@ -55,14 +125,14 @@ bool Index::operator<(const Index& t_index) const
 {
     return ((free and not t_index.free)
             or (free == t_index.free
-                and name < t_index.name));
+                and compare(name,t_index.name) == -1));
 }
 
 bool Index::operator>(const Index& t_index) const
 {
     return ((not free and t_index.free)
             or (free == t_index.free
-                and name > t_index.name));
+                and compare(name,t_index.name) == 1));
 }
 
 bool Index::operator<=(const Index& t_index) const
@@ -77,6 +147,23 @@ bool Index::operator>=(const Index& t_index) const
             or operator|=(t_index));
 }
 
+Index operator+(const Index& index)
+{
+    Index newIndex = index;
+    if (index.space->getSignedIndex())
+        newIndex.sign = 1;
+
+    return newIndex;
+}
+
+Index operator-(const Index& index)
+{
+    Index newIndex = index;
+    newIndex.sign = 0;
+
+    return newIndex;
+}
+
 ostream& operator<<(ostream& fout, const Index& index)
 {
     if (not index.free)
@@ -89,23 +176,26 @@ ostream& operator<<(ostream& fout, const Index& index)
 IndexStructure::IndexStructure(const vector<Index>& t_index): 
     nIndices(t_index.size()), index(t_index)
 {
-    for (auto it=index.begin(); it!=index.end()-1; ++it) {
-        for (auto jt=it+1; jt!=index.end(); ++jt) {
-            if (*it == *jt) {
-                if (it->getFree() xor jt->getFree()) {
-                    ostringstream sout;
-                    sout<<it->getName()<<"<->"<<jt->getName();
-                    callError(smError::ContractionMismatch,
-"IndicialParent::IndicialParent(string t_name, vector<Index> t_t_index)", 
-sout.str());
-                }
-                else if (it->getFree()){
-                    it->setFree(false);
-                    *jt = *it;
-                }
-            }
-        }
-    }
+    for (auto it=index.begin(); it!=index.end()-1; ++it) 
+        for (auto jt=it+1; jt!=index.end(); ++jt) 
+            it->testContraction(*jt);
+    //for (auto it=index.begin(); it!=index.end()-1; ++it) {
+    //    for (auto jt=it+1; jt!=index.end(); ++jt) {
+    //        if (*it == *jt) {
+    //            if (it->getFree() xor jt->getFree()) {
+    //                ostringstream sout;
+    //                sout<<it->getName()<<"<->"<<jt->getName();
+    //                callError(smError::ContractionMismatch,
+//"IndicialParent::IndicialParent(string t_name, vector<Index> t_t_index)", 
+//sout.str());
+    //            }
+    //            else if (it->getFree()){
+    //                it->setFree(false);
+    //                *jt = *it;
+    //            }
+    //        }
+    //    }
+    //}
 }
 
 Index IndexStructure::getIndex(int i) const
@@ -167,28 +257,32 @@ permutation.size());
 
 IndexStructure& IndexStructure::operator+=(const Index& newIndex)
 {
-    bool contracted = false;
-    for (auto& i : index) {
-        if (i == newIndex) {
-            if (i.getFree()) {
-                // If the index is equal to an already existing index,
-                // Einstein convention: summation
-                i.setFree(false);
-                ++nIndices;
-                index.push_back(i);
-                return *this;
-            }
-            else if (not contracted)
-                contracted = true;
-            //else // Index equal to a dummy index: Error
-            //    callError(smError::ContractDummy, 
-            //            "IndexStructure::operator+=(const Index& newIndex)", 
-            //            i.getName()+"<->"+newIndex.getName());
-        }
-    }
-    // New index (not already present: we add it simply)
+    //bool contracted = false;
+    //for (auto& i : index) {
+    //    if (i == newIndex) {
+    //        if (i.getFree()) {
+    //            // If the index is equal to an already existing index,
+    //            // Einstein convention: summation
+    //            i.setFree(false);
+    //            ++nIndices;
+    //            index.push_back(i);
+    //            return *this;
+    //        }
+    //        else if (not contracted)
+    //            contracted = true;
+    //        //else // Index equal to a dummy index: Error
+    //        //    callError(smError::ContractDummy, 
+    //        //            "IndexStructure::operator+=(const Index& newIndex)", 
+    //        //            i.getName()+"<->"+newIndex.getName());
+    //    }
+    //}
+    //// New index (not already present: we add it simply)
+    Index t_new = newIndex;
+    for (auto& i : index)
+        if (i.testContraction(t_new))
+            break;
     ++nIndices;
-    index.push_back(newIndex);
+    index.push_back(t_new);
 
     return *this;
 }
@@ -218,8 +312,8 @@ bool IndexStructure::exactMatch(const IndexStructure& structure) const
         return false;
 
     for (int i=0; i!=nIndices; ++i)
-        if (index[i] != structure.index[i])
-            return false;
+        if (not index[i].exactMatch(structure.index[i]))
+                return false;
 
     return true;
 }
@@ -248,7 +342,7 @@ bool IndexStructure::compareWithDummy(const IndexStructure& structure,
     for (int i=0; i!=nIndices; ++i) {
         // If the index is free, they must be the same
         if (index[i].getFree()) {
-            if (index[i] != t_index[i])
+            if (not index[i].exactMatch(t_index[i]))
                 return false;
         }
         // Else we check if the dummie are already constrained, if the 
@@ -305,7 +399,7 @@ bool IndexStructure::operator==(const IndexStructure& structure) const
         if (index[i].getFree()) {
             bool match = false;
             for (size_t j=0; j!=indicesLeft.size(); ++j) {
-                if (index[i] == t_index[indicesLeft[j]]) {
+                if (index[i].exactMatch(t_index[indicesLeft[j]])) {
                     match = true;
                     indicesLeft.erase(indicesLeft.begin()+j);
                     break;
@@ -343,6 +437,9 @@ bool IndexStructure::operator<(const IndexStructure& structure) const
     for (int i=0; i!=n; ++i) 
         if (index[i] < structure.index[i])
             return true;
+        else if (index[i] > structure.index[i])
+            return false;
+
     return nIndices > structure.nIndices;
 }
 

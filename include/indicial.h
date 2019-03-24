@@ -32,6 +32,9 @@ class IndicialParent{
     bool fullySymmetric;
     bool fullyAntiSymmetric;
 
+    bool valued;
+    Expr tensor;
+
     public:
 
     IndicialParent();
@@ -41,7 +44,16 @@ class IndicialParent{
     IndicialParent(const IndicialParent& abstract) = default;
 
     IndicialParent(const std::string& t_name,
+                   const Space* t_space);
+
+    IndicialParent(const std::string& t_name,
                    std::initializer_list<const Space*> t_space);
+
+    // Constructor for a metric,
+    // By default 2 indices, symmetric, in the same space t_space.
+    IndicialParent(const std::string& t_name,
+                   const Space* t_space,
+                   const Expr& t_tensor);
      
     ~IndicialParent(){};
 

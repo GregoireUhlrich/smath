@@ -40,6 +40,7 @@ namespace smError{
         UnknownProperty, /*!<  Trying to get a property of Abstract that is not
                           defined..*/
         InvalidITensor, /*!<  Invalid creation of ITensor: bad indices. */
+        InvalidIndicialParent,  /*!<  Invalid parent: tensor not corresponding. */
         InvalidIndicialSum, /*!<  Summing to terms that have not the same index 
                              structure */
         BadDependency, /*!<  Setting a contradictory dependency for a variable. */
@@ -104,6 +105,8 @@ inline void callError(smError::Error error, const std::string& caller, T spec)
                std::cout<<"Unknown property in "<<caller<<": "<<spec<<std::endl; break;
         case InvalidITensor:
                std::cout<<"Bad set of indices in creation of ITensor in "<<caller<<std::endl; break;
+        case InvalidIndicialParent:
+               std::cout<<"Invalid initialization of IndicialParent in "<<caller<<": bad tensor.\n"; break;
         case InvalidIndicialSum:
                std::cout<<"Invalid sum of indicial objects in "<<caller<<std::endl; break;
         case BadDependency:

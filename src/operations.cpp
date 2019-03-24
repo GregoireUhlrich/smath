@@ -691,8 +691,7 @@ Times::Times(const Expr& leftOperand,
         nArgs = argument.size();
         insert(rightOperand, true); // rightOperand inserted to the right
                                     // of leftOperand
-        if (rightOperand->getPrimaryType() == smType::Indicial)
-            selfCheckIndexStructure();
+        selfCheckIndexStructure();
     }
     else if (not explicitTimes 
              and rightOperand->getType() == smType::Times 
@@ -702,8 +701,7 @@ Times::Times(const Expr& leftOperand,
         nArgs = argument.size();
         insert(leftOperand, false); // leftOperand inserted to the left
                                     // of rightOperand
-        if (leftOperand->getPrimaryType() == smType::Indicial)
-            selfCheckIndexStructure();
+        selfCheckIndexStructure();
     }
     else {
         nArgs = 2;
@@ -848,25 +846,26 @@ void Times::selfCheckIndexStructure()
                         // If the index is already present
                         if (structure[i][j] == fooStruct[k]
                                 and fooStruct[k].getFree()) {
-                            structure[i][j].setFree(false);
+                            Index fooS = structure[i][j];
+                            Index fooF = fooStruct[k];
+                            structure[i][j].testContraction(fooStruct[k]);
                             // We replace fooStruct[k] (not contracted)
                             // by structure[i][j] (contracted).
                             // If the contraction is not valid, we raise an 
                             // error.
-                            if (not argument[i]->contractIndex(fooStruct[k],
+                            if (not argument[i]->contractIndex(fooS,
                                                                structure[i][j],
                                                                (*arg).get()))
                                 callError(smError::BadContraction,
                                         "Times::selfCheckIndexStructure()",
                                         fooStruct[k]);
-                            if (not (*arg)->contractIndex(fooStruct[k],
-                                                          structure[i][j],
+                            if (not (*arg)->contractIndex(fooF,
+                                                          fooStruct[k],
                                                           argument[i].get()))
                                 callError(smError::BadContraction,
                                         "Times::selfCheckIndexStructure()",
                                         fooStruct[k]);
 
-                            fooStruct[k].setFree(false);
                             breakValue = true;
                             break;
                         }

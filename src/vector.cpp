@@ -986,6 +986,15 @@ Expr matrix_(const vector<Expr >& t_argument)
     return make_shared<Matrix>(t_argument);
 }
 
+Expr matrix_(const initializer_list<initializer_list<Expr> >& t_matrix)
+{
+    vector<Expr> intermediate(0);
+    for (const auto& vec : t_matrix)
+        intermediate.push_back(vector_(vec));
+
+    return matrix_(intermediate);
+}
+
 ///////////////////////////////////////////////////
 /*************************************************/
 // Class HighDTensor                             //

@@ -3,6 +3,7 @@
 #include "operations.h"
 #include "symbol.h"
 #include "simplification.h"
+#include "space.h"
 #include "support.h"
 #include "equation.h"
 #include <chrono>
@@ -204,10 +205,10 @@ ofojeogz
     S.addSymmetry(antiSym2,-1);
     cout<<S<<endl;
 
-    IndicialParent Riemann("R",{&Lorentz, &Lorentz, &Lorentz, &Lorentz});
+    IndicialParent Riemann("R",{&Minkowski, &Minkowski, &Minkowski, &Minkowski});
     Riemann.setSymmetry(S);
-    Index mu("\\mu",&Lorentz), nu("\\nu",&Lorentz),
-          rho("\\rho",&Lorentz), sigma("\\sigma",&Lorentz);
+    Index mu("\\mu",&Minkowski), nu("\\nu",&Minkowski),
+          rho("\\rho",&Minkowski), sigma("\\sigma",&Minkowski);
     mu.setFree(false);
     Riemann({mu,nu,rho,sigma})->print();
     vector<Expr> riemannPermutations = Riemann({mu,nu,rho,sigma})->getPermutations();
@@ -336,6 +337,31 @@ ofojeogz
     derivative_(a*b,x,3).evaluate().print();
     derivative_(derivative_(a*b,x,2),x,3).print();
     derivative_(derivative_(a*b,x,2),x,3).evaluate().print();
+
+    IndicialParent g = Minkowski.metric;
+    mu.setFree(true);
+    g({mu,nu})->print();
+
+    IndicialParent X("X",&Minkowski);
+    IndicialParent Y("Y",&Minkowski);
+
+    (g({mu,nu})*X({+rho})*Y({+sigma}))->print();
+    // error: (X(mu)*g({mu,nu}))->print();
+    (X(+mu)*g({mu,nu}))->print();
+    (X(+mu)*g({mu,nu})*(X(+nu)+Y(+nu)))->print();
+    (X(+mu)*(g({mu,nu})*(X(+nu)+Y(+nu))))->print();
+
+    IndicialParent AS("A", {&Minkowski, &Minkowski});
+    AS.setFullyAntiSymmetric();
+    cout<<"A_{\\mu\\nu}*g_{\\mu\\nu} = ";
+    Simplify(g({mu,nu})*AS({+mu,+nu}))->print();
+
+    cout<<(g({mu,nu}) == g({mu,nu}))<<"1"<<endl;
+    cout<<(g({mu,nu}) == g({nu,mu}))<<"0"<<endl;
+    cout<<(AS({+mu,+nu})*g({mu,nu}) == AS({+mu,+nu})*g({mu,nu}))<<"1"<<endl;
+    cout<<(AS({+mu,+nu})*g({mu,nu}) == AS({+nu,+mu})*g({nu,mu}))<<"1"<<endl;
+    cout<<(AS({+mu,+nu})*g({mu,nu}) == AS({+nu,+mu})*g({mu,nu}))<<"0"<<endl;
+
 
     return 0;
     /*Symbol i("i"), j("j");

@@ -194,6 +194,9 @@ Expr matrix_(int t_x_nArgs, int t_y_nArgs,
 
 Expr matrix_(const std::vector<Expr >& t_argument);
 
+Expr matrix_(const std::initializer_list<std::initializer_list<Expr> >&
+        t_matrix);
+
 class HighDTensor: public AbstractVectorial{
 
     public:
