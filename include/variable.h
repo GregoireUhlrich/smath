@@ -32,6 +32,8 @@ class AbstractBuildingBlock: public AbstractScalar,
     Expr getRealPart() override;
     Expr getComplexModulus() override;
     Expr getPolynomialTerm(const Expr& expr, int order) override;
+    Expr findSubExpression(const Expr& subExpression,
+                           const Expr& newExpression) override;
 };
 
 /*! \class AbstractNumerical

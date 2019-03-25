@@ -301,12 +301,12 @@ Symbol Symbol::antisymmetrise() const
     return Symbol(abstract->antisymmetrise());
 }
 
-bool Symbol::checkIndexStructure(const vector<Index>& t_index) const
+bool Symbol::checkIndexStructure(const vector<Idx>& t_index) const
 {
     return abstract->checkIndexStructure(t_index);
 }
 
-bool Symbol::checkIndexStructure(initializer_list<Index> t_index) const
+bool Symbol::checkIndexStructure(initializer_list<Idx> t_index) const
 {
     return abstract->checkIndexStructure(t_index);
 }
@@ -399,6 +399,19 @@ Symbol Symbol::operator[](int iArg) const
 Symbol Symbol::operator[](const vector<int>& indices) const
 {
     return Symbol(abstract->getArgument(indices));
+}
+
+Symbol Symbol::operator()(const initializer_list<Idx>& indices) const
+{
+    Expr newAbstract = Copy(abstract);
+    IndexStructure freeStructure = abstract->getFreeIndexStructure();
+    if (indices.size() != freeStructure.getNIndices())
+        callError(smError::InvalidITensor,
+                "Symbol::operator()(const initializer_list<Idx>&) const");
+    for (auto i=indices.begin(); i!=indices.end(); ++i)
+        newAbstract->replaceIndex(freeStructure[distance(indices.begin(),i)],*i);
+
+    return Symbol(newAbstract);
 }
 
 bool Symbol::operator|=(const Symbol& t_symbol) const
@@ -851,11 +864,13 @@ Expr Copy(const Abstract* expr)
     switch(type)
     {
         case smType::Plus:
-        newAbstract = make_shared<Plus>(expr->getVectorArgument(), true);
+        newAbstract = make_shared<Plus>();
+        newAbstract->setVectorArgument(expr->getVectorArgument());
         break;
     
         case smType::Times:
-        newAbstract = make_shared<Times>(expr->getVectorArgument(), true);
+        newAbstract = make_shared<Times>();
+        newAbstract->setVectorArgument(expr->getVectorArgument());
         break;
     
         case smType::Fraction:
@@ -867,7 +882,8 @@ Expr Copy(const Abstract* expr)
         break;
 
         case smType::Polynomial:
-        newAbstract = polynomial_(expr->getVectorArgument(), expr->getVariable());
+        newAbstract = make_shared<Polynomial>(ZERO,expr->getVariable());
+        newAbstract->setVectorArgument(expr->getVectorArgument());
         break;
     
         case smType::Exp:
@@ -983,20 +999,25 @@ Expr DeepCopy(const Abstract* expr)
                 "DeepCopy(const Abstract* expr)", expr->printLaTeX(1));
     int type = expr->getType();
     vector<Expr > foo(0), foo2(0);
+    Expr fooExpr;
     switch(type)
     {
         case smType::Plus:
         foo = expr->getVectorArgument();
         for (size_t i=0; i<foo.size(); i++)
             foo2.push_back(DeepCopy(foo[i]));
-        return make_shared<Plus>(foo2, true);
+        fooExpr = make_shared<Plus>();
+        fooExpr->setVectorArgument(foo2);
+        return fooExpr;
         break;
 
         case smType::Times:
         foo = expr->getVectorArgument();
         for (size_t i=0; i<foo.size(); i++)
             foo2.push_back(DeepCopy(foo[i]));
-        return make_shared<Times>(foo2,true);
+        fooExpr = make_shared<Times>();
+        fooExpr->setVectorArgument(foo2);
+        return fooExpr;
         break;
 
         case smType::Fraction:
@@ -1010,7 +1031,9 @@ Expr DeepCopy(const Abstract* expr)
         case smType::Polynomial:
         for (int i=0; i<expr->getNArgs(); i++)
             foo.push_back(DeepCopy(expr->getArgument(i)));
-        return polynomial_(foo, DeepCopy(expr->getVariable()));
+        fooExpr = make_shared<Polynomial>(ZERO,DeepCopy(expr->getVariable()));
+        fooExpr->setVectorArgument(foo);
+        return fooExpr;
         break;
 
         case smType::Exp:

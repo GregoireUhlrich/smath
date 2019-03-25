@@ -251,9 +251,9 @@ class Symbol{
 
     Symbol inverseMatrix() const;
 
-    bool checkIndexStructure(const std::vector<Index>& t_index) const;
+    bool checkIndexStructure(const std::vector<Idx>& t_index) const;
 
-    bool checkIndexStructure(std::initializer_list<Index> index) const;
+    bool checkIndexStructure(std::initializer_list<Idx> index) const;
 
     /*! \brief \b Compares the Symbol with another, does not consider the name.
      * \param t_symbol Symbol to compare.
@@ -302,6 +302,8 @@ class Symbol{
     Symbol operator[](int iArg) const;
 
     Symbol operator[](const std::vector<int>& indices) const;
+
+    Symbol operator()(const std::initializer_list<Idx>& indices) const;
 
     bool operator|=(const Symbol& t_symbol) const;
 

@@ -85,9 +85,9 @@ class IndicialParent{
 
     void setSymmetry(const Symmetry& t_symetry);
 
-    Expr operator()(const Index& index) const;
+    Expr operator()(const Idx& index) const;
 
-    Expr operator()(const std::initializer_list<Index>& indices) const;
+    Expr operator()(const std::initializer_list<Idx>& indices) const;
 
 };
 
@@ -103,10 +103,11 @@ class AbstractIndicial: public AbstractBuildingBlock{
     AbstractIndicial();
     explicit AbstractIndicial(const std::string& t_name);
     explicit AbstractIndicial(const IndexStructure& t_index);
+    AbstractIndicial(const std::string& t_name, const IndexStructure& t_index);
     AbstractIndicial(const std::string& t_name,
-                     const Index& t_index);
+                     const Idx& t_index);
     AbstractIndicial(const std::string& t_name,
-                     const std::initializer_list<Index>& indices);
+                     const std::vector<Idx>& indices);
     ~AbstractIndicial(){};
 
     smType::PrimaryType getPrimaryType() const override {
@@ -147,12 +148,17 @@ class ITensor: public AbstractIndicial{
 
     ITensor(const std::string& t_name,
             bool t_commutable, 
-            const Index& t_index,
+            const Idx& t_index,
             const IndicialParent* t_parent);
 
     ITensor(const std::string& t_name,
             bool t_commutable, 
-            const std::initializer_list<Index>& indices, 
+            const std::vector<Idx>& indices, 
+            const IndicialParent* t_parent);
+
+    ITensor(const std::string& t_name,
+            bool t_commutable, 
+            const IndexStructure& indices, 
             const IndicialParent* t_parent);
 
     explicit ITensor(const Abstract*& expression);
@@ -165,17 +171,16 @@ class ITensor: public AbstractIndicial{
         return smType::ITensor;
     }
 
-    Index getIndex(int i) const override;
+    Idx getIndex(int i) const override;
     
     const IndicialParent* getParent() const override;
 
-    bool checkIndexStructure(const std::vector<Index>& t_index) const override;
+    bool checkIndexStructure(const std::vector<Idx>& t_index) const override;
 
-    bool checkIndexStructure(const std::initializer_list<Index>& index) const override;
+    bool checkIndexStructure(const std::initializer_list<Idx>& index) const override;
 
-    bool contractIndex(const Index& indexToContract,
-                       const Index& newIndex,
-                       Abstract* conctracted) override;
+    bool replaceIndex(const Idx& indexToReplace,
+                       const Idx& newIndex) override;
 
     void setIndexStructure(const IndexStructure& t_index) override;
 

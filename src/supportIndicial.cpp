@@ -107,6 +107,16 @@ bool Index::operator==(const Index& t_index) const
             and space == t_index.space);
 }
 
+bool operator==(const Idx& i, const Idx& j)
+{
+    return i->operator==(*j);
+}
+
+bool operator!=(const Idx& i, const Idx& j)
+{
+    return i->operator!=(*j);
+}
+
 bool Index::operator!=(const Index& t_index) const {
     return !(*this==t_index);
 }
@@ -164,8 +174,27 @@ Index operator-(const Index& index)
     return newIndex;
 }
 
+Idx operator+(const Idx& index)
+{
+    Idx newIndex = make_shared<Index>(*index);
+    if (index->getSpace()->getSignedIndex())
+        newIndex->setSign(1);
+
+    return newIndex;
+}
+Idx operator-(const Idx& index)
+{
+    Idx newIndex = make_shared<Index>(*index);
+    if (index->getSpace()->getSignedIndex())
+        newIndex->setSign(0);
+
+    return newIndex;
+}
+
 ostream& operator<<(ostream& fout, const Index& index)
 {
+    if (index.getSpace()->getSignedIndex() and index.getSign())
+        cout<<"+";
     if (not index.free)
         fout<<"%";
     fout<<index.name;
@@ -173,12 +202,12 @@ ostream& operator<<(ostream& fout, const Index& index)
     return fout;
 }
 
-IndexStructure::IndexStructure(const vector<Index>& t_index): 
+IndexStructure::IndexStructure(const vector<Idx>& t_index): 
     nIndices(t_index.size()), index(t_index)
 {
     for (auto it=index.begin(); it!=index.end()-1; ++it) 
         for (auto jt=it+1; jt!=index.end(); ++jt) 
-            it->testContraction(*jt);
+            (*it)->testContraction(**jt);
     //for (auto it=index.begin(); it!=index.end()-1; ++it) {
     //    for (auto jt=it+1; jt!=index.end(); ++jt) {
     //        if (*it == *jt) {
@@ -198,21 +227,21 @@ IndexStructure::IndexStructure(const vector<Index>& t_index):
     //}
 }
 
-Index IndexStructure::getIndex(int i) const
+Idx IndexStructure::getIndex(int i) const
 {
     if (i >= 0 and i<nIndices)
         return index[i];
     else 
         callError(smError::OutOfBounds,
                 "IndexStructure::getIndex(int i) const", i);
-    return Index();
+    return make_shared<Index>();
 }
 
-vector<Index> IndexStructure::getFreeIndex() const
+vector<Idx> IndexStructure::getFreeIndex() const
 {
-    vector<Index> rep(0);
+    vector<Idx> rep(0);
     for (const auto& i: index)
-        if (i.getFree())
+        if (i->getFree())
             rep.push_back(i);
 
     return rep;
@@ -222,7 +251,7 @@ IndexStructure IndexStructure::getFreeStructure() const
 {
     IndexStructure structure;
     for (const auto& i : index)
-        if (i.getFree())
+        if (i->getFree())
             structure += i;
     return structure;
 }
@@ -248,14 +277,14 @@ IndexStructure IndexStructure::getPermutation(const vector<int>& permutation) co
 "IndexStructure::getPermutation(const vector<int>& permutation) const",
 permutation.size());
     }
-    vector<Index> newIndex(0);
+    vector<Idx> newIndex(0);
     for (int i=0; i<nIndices; ++i)
         newIndex.push_back(index[permutation[i]]);
 
     return IndexStructure(newIndex);
 }
 
-IndexStructure& IndexStructure::operator+=(const Index& newIndex)
+IndexStructure& IndexStructure::operator+=(const Idx& newIndex)
 {
     //bool contracted = false;
     //for (auto& i : index) {
@@ -277,14 +306,22 @@ IndexStructure& IndexStructure::operator+=(const Index& newIndex)
     //    }
     //}
     //// New index (not already present: we add it simply)
-    Index t_new = newIndex;
+    Idx t_new = newIndex;
     for (auto& i : index)
-        if (i.testContraction(t_new))
+        if (i->testContraction(*t_new))
             break;
     ++nIndices;
     index.push_back(t_new);
 
     return *this;
+}
+void IndexStructure::setIndex(const Index& newIndex, int iIndex)
+{
+    if (iIndex < 0 or iIndex >= nIndices)
+        callError(smError::OutOfBounds,
+                "IndexStructure::setIndex(const Index&, int)",
+                iIndex);
+    *index[iIndex] = newIndex;
 }
 
 IndexStructure& IndexStructure::operator+=(const IndexStructure& structure)
@@ -312,7 +349,7 @@ bool IndexStructure::exactMatch(const IndexStructure& structure) const
         return false;
 
     for (int i=0; i!=nIndices; ++i)
-        if (not index[i].exactMatch(structure.index[i]))
+        if (not index[i]->exactMatch(*structure.index[i]))
                 return false;
 
     return true;
@@ -338,11 +375,11 @@ bool IndexStructure::compareWithDummy(const IndexStructure& structure,
     if (nIndices != structure.getNIndices())
         return false;
 
-    const vector<Index>& t_index = structure.getIndex();
+    const vector<Idx>& t_index = structure.getIndex();
     for (int i=0; i!=nIndices; ++i) {
         // If the index is free, they must be the same
-        if (index[i].getFree()) {
-            if (not index[i].exactMatch(t_index[i]))
+        if (index[i]->getFree()) {
+            if (not index[i]->exactMatch(*t_index[i]))
                 return false;
         }
         // Else we check if the dummie are already constrained, if the 
@@ -350,29 +387,29 @@ bool IndexStructure::compareWithDummy(const IndexStructure& structure,
         else {
             // t_index[i] must also be dummy here and must correspond (to a 
             // renaming) to index[i]
-            if (not index[i].compareWithDummy(t_index[i]))
+            if (not index[i]->compareWithDummy(*t_index[i]))
                 return false;
-            if (constraints.find(index[i]) == constraints.end()) {
-                if (constraints.find(t_index[i]) == constraints.end()) {
+            if (constraints.find(*index[i]) == constraints.end()) {
+                if (constraints.find(*t_index[i]) == constraints.end()) {
                     // Here the dummies are not constrained: comparison
                     // is ok, and we add the new correspondance
-                    constraints[index[i]] = t_index[i];
+                    constraints[*index[i]] = *t_index[i];
                 }
                 else {
-                    if (constraints[t_index[i]] != index[i])
+                    if (constraints[*t_index[i]] != *index[i])
                         return false;
-                    constraints[index[i]] = t_index[i];
+                    constraints[*index[i]] = *t_index[i];
                 }
             }
             else {
-                if (constraints.find(t_index[i]) == constraints.end()) {
-                    if (not (constraints[index[i]] == t_index[i]))
+                if (constraints.find(*t_index[i]) == constraints.end()) {
+                    if (not (constraints[*index[i]] == *t_index[i]))
                         return false;
                 }
-                else if (constraints[index[i]] != t_index[i]
-                        or constraints[t_index[i]] != index[i])
+                else if (constraints[*index[i]] != *t_index[i]
+                        or constraints[*t_index[i]] != *index[i])
                     return false;
-                constraints.erase(index[i]);
+                constraints.erase(*index[i]);
             }
         }
     }
@@ -387,19 +424,19 @@ bool IndexStructure::operator==(const IndexStructure& structure) const
     // Compare only free index Structure,
     // ignore dummy indices (just check compatibility)
     int t_nIndices = structure.getNIndices();
-    const vector<Index>& t_index = structure.getIndex();
+    const vector<Idx>& t_index = structure.getIndex();
     vector<int> indicesLeft(0);
     for (int i=0; i<t_nIndices; ++i)
         // comparing only free indices
-        if (t_index[i].getFree())
+        if (t_index[i]->getFree())
             indicesLeft.push_back(i);
 
     for (int i=0; i!=nIndices; ++i) {
         // Comparing only free indices
-        if (index[i].getFree()) {
+        if (index[i]->getFree()) {
             bool match = false;
             for (size_t j=0; j!=indicesLeft.size(); ++j) {
-                if (index[i].exactMatch(t_index[indicesLeft[j]])) {
+                if (index[i]->exactMatch(*t_index[indicesLeft[j]])) {
                     match = true;
                     indicesLeft.erase(indicesLeft.begin()+j);
                     break;
@@ -435,9 +472,9 @@ bool IndexStructure::operator<(const IndexStructure& structure) const
 {
     const int n = min(nIndices, structure.nIndices);
     for (int i=0; i!=n; ++i) 
-        if (index[i] < structure.index[i])
+        if (*index[i] < *structure.index[i])
             return true;
-        else if (index[i] > structure.index[i])
+        else if (*index[i] > *structure.index[i])
             return false;
 
     return nIndices > structure.nIndices;
@@ -447,8 +484,10 @@ bool IndexStructure::operator>(const IndexStructure& structure) const
 {
     const int n = min(nIndices, structure.nIndices);
     for (int i=0; i!=n; ++i) 
-        if (index[i] > structure.index[i])
+        if (*index[i] > *structure.index[i])
             return true;
+        else if (*index[i] < *structure.index[i])
+            return false;
     return nIndices < structure.nIndices;
 }
 
@@ -464,17 +503,17 @@ bool IndexStructure::operator>=(const IndexStructure& structure) const
             or operator|=(structure));
 }
 
-Index IndexStructure::operator[](int i) const
+Idx IndexStructure::operator[](int i) const
 {
     if (i >= 0 and i < nIndices)
         return index[i];
     else
         callError(smError::OutOfBounds,
                 "IndexStructure::operator[](int i)", i);
-    return Index();
+    return make_shared<Index>();
 }
 
-Index& IndexStructure::operator[](int i)
+Idx& IndexStructure::operator[](int i)
 {
     if (i >= 0 and i < nIndices)
         return index[i];

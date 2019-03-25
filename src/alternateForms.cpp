@@ -11,18 +11,22 @@ void printVector(const vector<Expr >& vector)
 
 void addAlternateForm(vector<Expr >& alternateForms, const Expr& newAlternate, bool add_factor_develop)
 {
-    if (alternateForms.size() == 0) alternateForms.push_back(newAlternate);
-    iter it = find(alternateForms.begin(), alternateForms.end(), newAlternate);
-    if (it == alternateForms.end()) // We did not find the newAlternate
+    bool found = false;
+    for (const auto& al : alternateForms)
+        if (*al == newAlternate) {
+            found = true;
+            break;
+        }
+    if (alternateForms.size() == 0 or not found) {
         alternateForms.push_back(newAlternate);
-
-    if (add_factor_develop) {
-        Expr foo = newAlternate->develop();
-        if (*foo != newAlternate)
-            addAlternateForm(alternateForms, foo, false);
-        foo = newAlternate->factor();
-        if (*foo != newAlternate)
-            addAlternateForm(alternateForms, foo, false);
+        if (add_factor_develop) {
+            Expr foo = newAlternate->develop();
+            if (*foo != newAlternate)
+                addAlternateForm(alternateForms, foo, false);
+            foo = newAlternate->factor();
+            if (*foo != newAlternate)
+                addAlternateForm(alternateForms, foo, false);
+        }
     }
 }
 
@@ -32,7 +36,15 @@ void reduceAlternate(vector<Expr >& alternateForms)
 {
     int nArgs = alternateForms.size();
     if (nArgs <= MAX_ALTERNATE_FORMS) return;
-    partial_sort(alternateForms.begin(), alternateForms.begin()+MAX_ALTERNATE_FORMS, alternateForms.end());
+    //partial_sort(alternateForms.begin(), alternateForms.begin()+MAX_ALTERNATE_FORMS, alternateForms.end());
+    for (int i=0; i<MAX_ALTERNATE_FORMS; ++i) {
+        int iMin = i;
+        for (size_t j=i+1; j!=alternateForms.size(); ++j)
+            if (*alternateForms[j] < alternateForms[iMin])
+                iMin = j;
+        if (iMin != i)
+            swap(alternateForms[i],alternateForms[iMin]);
+    }
     alternateForms.erase(alternateForms.begin()+MAX_ALTERNATE_FORMS, alternateForms.end());
 }
 
@@ -46,22 +58,21 @@ void clearRedundancyAlternate(vector<Expr >& alternateForms)
             }
 }
 
-//Returns alternateForms of expr recursively (get alternateForms of alternateForms etc up to MAX_RECURSION_ALTERNATE). 
-vector<Expr > getRecursiveAlternateForms(const Expr& expr, int depth)
+vector<Expr> getRecursiveAlternateForms(const Expr& expr, int depth)
 {
     vector<Expr > alternateForms;
     //taking alternateForms a first time
     vector<Expr > toReturn = internalRecursiveAlternateForms(expr,depth-1);
-    clearRedundancyAlternate(toReturn);
+    reduceAlternate(toReturn);
     if (toReturn.size() == 0) // no alternate form for expr
         return expr->getAlternateForms();
-    vector<Expr > fooVec = toReturn;
+    alternateForms = toReturn;
     //We take alternate of alternate MAX_RECURSION_ALTERNATE-1 times
+    //cout<<"Alternated of "; expr->print();
     for (int i=1; i<MAX_RECURSION_ALTERNATE; i++)
     {
-        reduceAlternate(toReturn);
-        alternateForms = toReturn;
         toReturn = vector<Expr >(0);
+        vector<Expr> fooVec(0);
         Expr foo;
         for (size_t j=0; j<alternateForms.size(); j++)
         {
@@ -71,27 +82,40 @@ vector<Expr > getRecursiveAlternateForms(const Expr& expr, int depth)
                 fooVec.push_back(Copy(alternateForms[j]));
             
             size_t fooSize = toReturn.size();
-            for (size_t k=0; k<fooVec.size(); k++)
+            for (size_t k=0; k<fooVec.size(); ++k) {
+                if (*fooVec[k] == ZERO)
+                    return vector<Expr>(1,ZERO);
                 addAlternateForm(toReturn, fooVec[k]);
-            // If there is no new alternate
-            if (fooSize == toReturn.size()) {
-                reduceAlternate(toReturn);
-                return toReturn;
+                if (fooSize < toReturn.size()) 
+                    fooSize = toReturn.size();
+                else {
+                    fooVec.erase(fooVec.begin()+k);
+                    --k;
+                }
             }
+            // If there is no new alternate
+            if (fooVec.size() == 0) 
+                return toReturn;
         }
+        alternateForms = fooVec;
+        reduceAlternate(alternateForms);
     }
-    clearRedundancyAlternate(toReturn);
-    reduceAlternate(toReturn);
 
     return toReturn;
 }
 
-vector<Expr > internalRecursiveAlternateForms(const Expr& expr, int depth) 
+vector<Expr> internalRecursiveAlternateForms(const Expr& expr, int depth)
 {
     int nArgs = expr->getNArgs();
     vector<Expr > alternateForms(0);
     // if no Argument, no alternate form (for now)
-    if (nArgs == 0) return expr->getAlternateForms();
+    if (nArgs == 0) {
+        vector<Expr> toReturn = expr->getAlternateForms();
+        if (toReturn.size() == 0)
+            return vector<Expr>(1,expr);
+        else
+            return toReturn;
+    }
     if (depth != 0)
     {
         vector<Expr> argument(0);
@@ -116,89 +140,54 @@ vector<Expr > internalRecursiveAlternateForms(const Expr& expr, int depth)
 
         vector<Expr > fooVec;
         Expr foo;
-        vector<vector<Expr > > newArguments(0);
-        if (nArgs > 1)
+        //cout<<"RECURSIVE ALTERNATES OF \n";
+        //expr->print();
+        for (int i=0; i<nArgs; i++)
         {
-            //fooVec = internalRecursiveAlternateForms(argument[0],depth-1);
-            //if (fooVec.size() == 0) // if no alternate, we keep at least the argument itself
-            //    fooVec = vector<Expr >(1,Copy(argument[0]));
-            for (int i=0; i<nArgs; i++)
+            fooVec = internalRecursiveAlternateForms(argument[i],depth-1);
+            //cout<<"FOR "; argument[i]->print();
+            //cout<<"ADDING ";
+            //printVector(fooVec);
+            for (size_t j=0; j<fooVec.size(); j++)
+           // We take 1+n-1 copies of actual alternates
             {
-                fooVec = internalRecursiveAlternateForms(argument[i],depth-1);
-                //cout<<"Alternates of "; expr->print();
-                //printVector(fooVec);
-                if (fooVec.size() == 0)
-                    fooVec = vector<Expr >(1,Copy(argument[i]));
-                for (size_t j=0; j<fooVec.size(); j++) // We take 1+n-1 copies of actual alternates
-                {
-                    //cout<<"Adding alternate "; fooVec[j]->print();
-                    foo = Copy(expr);
-                    foo->setArgument(Refresh(fooVec[j]),i);
-                    //cout<<"Refreshing";foo->print();
-                    //cout<<"          ";Refresh(foo)->print();
-                    addAlternateForm(alternateForms, Refresh(foo));
-                }
+                foo = Copy(expr);
+                foo->setArgument(Refresh(fooVec[j]),i);
+                //cout<<"TRY TO ADD "; Refresh(foo)->print();
+                addAlternateForm(alternateForms, Refresh(foo));
             }
-            /*foo = Copy(expr); // Create an Abstract of same type as expr
-            foo->setVectorArgument(vector<Expr >(1,ZERO)); // filling it with a short expr
-            alternateForms = vector<Expr >(newArguments.size(),foo);
-            for (int i=0; i<alternateForms.size(); i++)
-            {
-                if (i % 1000 == 0)
-                {
-                    cout<<"NEW "<<i<<"/"<<alternateForms.size()<<endl;
-                    alternateForms[i]->print();
-                }
-                alternateForms[i]->setVectorArgument(newArguments[i]);
-                alternateForms[i] = Refresh(alternateForms[i]);
-            }*/
-            clearRedundancyAlternate(alternateForms);
-            //cout<<"HERE\n";
+            //cout<<"After the arg:\n";
+            //printVector(alternateForms);
+            reduceAlternate(alternateForms);
+            //cout<<"After reducing:\n";
             //printVector(alternateForms);
         }
-        else
-        {
-            fooVec = internalRecursiveAlternateForms(expr->getArgument(),depth-1);
-            for (size_t i=0; i<fooVec.size(); i++)
-            {
-                alternateForms.push_back(Copy(expr));
-                alternateForms[i]->setArgument(Refresh(fooVec[i]));
-            }
-        }
 
-        // Now that we have a list of all possible alternates for the arguments
-        // we take the specific alternate forms of the results
-        if (alternateForms.size() == 0)
-            alternateForms.push_back(Copy(expr));
+        //cout<<"AFTER ALL ARGS: \n";
+        //printVector(alternateForms);
         vector<Expr > toReturn(0);
         for (size_t i=0; i<alternateForms.size(); i++)
         {
             alternateForms[i] = Refresh(alternateForms[i]);
+            if (*alternateForms[i] == ZERO)
+                return vector<Expr>(1,ZERO);
             fooVec = alternateForms[i]->getAlternateForms();
             if (fooVec.size() == 0)
-                fooVec.push_back(Copy(alternateForms[i]));
+                fooVec.push_back(alternateForms[i]);
             for (size_t j=0; j<fooVec.size(); j++)
                 addAlternateForm(toReturn, Refresh(fooVec[j]));
         }
+        //cout<<"AFTER SPECIFIC ALTERNATES: \n";
+        //printVector(alternateForms);
         reduceAlternate(toReturn);
-        /*int countTHIS = 0;
-        for (int i=0; i<toReturn.size(); i++)
-        {
-            if (*expr == toReturn[i])
-                countTHIS++;
-            if (countTHIS > 1)
-            {
-                toReturn.erase(toReturn.begin()+i);
-                i--;
-            }
-        }
-        if (countTHIS == 0 and toReturn.size() > 0)
-            toReturn.push_back(Copy(expr));*/
-        //cout<<"FINAL ALTERNATES OF "; expr->print();
-        //printVector(toReturn);
+
         return toReturn;
     }
-    return expr->getAlternateForms();
+    vector<Expr> toReturn = expr->getAlternateForms();
+    if (toReturn.size() == 0)
+        return vector<Expr>(1,expr);
+    else
+        return toReturn;
 }
 
 Expr Simplify(const Expr& expr, int depth)
@@ -697,3 +686,160 @@ vector<Expr> ITensor::getAlternateForms() const
 {
     return getPermutations();
 }
+
+/*
+//Returns alternateForms of expr recursively (get alternateForms of alternateForms etc up to MAX_RECURSION_ALTERNATE). 
+vector<Expr > getRecursiveAlternateFormsBis(const Expr& expr, int depth)
+{
+    vector<Expr > alternateForms;
+    //taking alternateForms a first time
+    vector<Expr > toReturn = internalRecursiveAlternateForms(expr,depth-1);
+    clearRedundancyAlternate(toReturn);
+    if (toReturn.size() == 0) // no alternate form for expr
+        return expr->getAlternateForms();
+    vector<Expr > fooVec = toReturn;
+    //We take alternate of alternate MAX_RECURSION_ALTERNATE-1 times
+    for (int i=1; i<MAX_RECURSION_ALTERNATE; i++)
+    {
+        reduceAlternate(toReturn);
+        alternateForms = toReturn;
+        toReturn = vector<Expr >(0);
+        Expr foo;
+        for (size_t j=0; j<alternateForms.size(); j++)
+        {
+            //taking alternate of alternate
+            fooVec = internalRecursiveAlternateForms(alternateForms[j],depth-1);
+            if (fooVec.size() == 0)
+                fooVec.push_back(Copy(alternateForms[j]));
+            
+            size_t fooSize = toReturn.size();
+            for (size_t k=0; k<fooVec.size(); k++)
+                addAlternateForm(toReturn, fooVec[k]);
+            // If there is no new alternate
+            if (fooSize == toReturn.size()) {
+                reduceAlternate(toReturn);
+                return toReturn;
+            }
+        }
+    }
+    clearRedundancyAlternate(toReturn);
+    reduceAlternate(toReturn);
+
+    return toReturn;
+}
+
+vector<Expr > internalRecursiveAlternateFormsBis(const Expr& expr, int depth) 
+{
+    int nArgs = expr->getNArgs();
+    vector<Expr > alternateForms(0);
+    // if no Argument, no alternate form (for now)
+    if (nArgs == 0) return expr->getAlternateForms();
+    if (depth != 0)
+    {
+        vector<Expr> argument(0);
+        ////
+        // Warning: here specific if-else conditions on types,
+        // could be wrong if changes occur in structure....
+        ////
+        if (nArgs == 1) argument = vector<Expr>(1,expr->getArgument());
+        else if (expr->getPrimaryType() == smType::Vectorial or
+                 expr->getType() == smType::Plus or
+                 expr->getType() == smType::Times or
+                 expr->getType() == smType::Polynomial)
+            argument = expr->getVectorArgument();
+        else if (nArgs == 2) {
+            argument = vector<Expr>(2);
+            argument[0] = expr->getArgument(0);
+            argument[1] = expr->getArgument(1);
+        }
+        else 
+            callError(smError::UndefinedBehaviour,
+                    "internalRecursiveAlternateForms(const Expr& expr, int depth)");
+
+        vector<Expr > fooVec;
+        Expr foo;
+        vector<vector<Expr > > newArguments(0);
+        if (nArgs > 1)
+        {
+            //fooVec = internalRecursiveAlternateForms(argument[0],depth-1);
+            //if (fooVec.size() == 0) // if no alternate, we keep at least the argument itself
+            //    fooVec = vector<Expr >(1,Copy(argument[0]));
+            for (int i=0; i<nArgs; i++)
+            {
+                fooVec = internalRecursiveAlternateForms(argument[i],depth-1);
+                //cout<<"Alternates of "; expr->print();
+                //printVector(fooVec);
+                if (fooVec.size() == 0)
+                    fooVec = vector<Expr >(1,Copy(argument[i]));
+                for (size_t j=0; j<fooVec.size(); j++) // We take 1+n-1 copies of actual alternates
+                {
+                    //cout<<"Adding alternate "; fooVec[j]->print();
+                    foo = Copy(expr);
+                    foo->setArgument(Refresh(fooVec[j]),i);
+                    //cout<<"Refreshing";foo->print();
+                    //cout<<"          ";Refresh(foo)->print();
+                    addAlternateForm(alternateForms, Refresh(foo));
+                }
+            }
+            //foo = Copy(expr); // Create an Abstract of same type as expr
+            //foo->setVectorArgument(vector<Expr >(1,ZERO)); // filling it with a short expr
+            //alternateForms = vector<Expr >(newArguments.size(),foo);
+            //for (int i=0; i<alternateForms.size(); i++)
+            //{
+            //    if (i % 1000 == 0)
+            //    {
+            //        cout<<"NEW "<<i<<"/"<<alternateForms.size()<<endl;
+            //        alternateForms[i]->print();
+            //    }
+            //    alternateForms[i]->setVectorArgument(newArguments[i]);
+            //    alternateForms[i] = Refresh(alternateForms[i]);
+            //}
+            clearRedundancyAlternate(alternateForms);
+            //cout<<"HERE\n";
+            //printVector(alternateForms);
+        }
+        else
+        {
+            fooVec = internalRecursiveAlternateForms(expr->getArgument(),depth-1);
+            for (size_t i=0; i<fooVec.size(); i++)
+            {
+                alternateForms.push_back(Copy(expr));
+                alternateForms[i]->setArgument(Refresh(fooVec[i]));
+            }
+        }
+
+        // Now that we have a list of all possible alternates for the arguments
+        // we take the specific alternate forms of the results
+        if (alternateForms.size() == 0)
+            alternateForms.push_back(Copy(expr));
+        vector<Expr > toReturn(0);
+        for (size_t i=0; i<alternateForms.size(); i++)
+        {
+            alternateForms[i] = Refresh(alternateForms[i]);
+            fooVec = alternateForms[i]->getAlternateForms();
+            if (fooVec.size() == 0)
+                fooVec.push_back(Copy(alternateForms[i]));
+            for (size_t j=0; j<fooVec.size(); j++)
+                addAlternateForm(toReturn, Refresh(fooVec[j]));
+        }
+        reduceAlternate(toReturn);
+        //int countTHIS = 0;
+        //for (int i=0; i<toReturn.size(); i++)
+        //{
+        //    if (*expr == toReturn[i])
+        //        countTHIS++;
+        //    if (countTHIS > 1)
+        //    {
+        //        toReturn.erase(toReturn.begin()+i);
+        //        i--;
+        //    }
+        //}
+        //if (countTHIS == 0 and toReturn.size() > 0)
+            //toReturn.push_back(Copy(expr));
+        //cout<<"FINAL ALTERNATES OF "; expr->print();
+        //printVector(toReturn);
+        return toReturn;
+    }
+    return expr->getAlternateForms();
+}
+*/

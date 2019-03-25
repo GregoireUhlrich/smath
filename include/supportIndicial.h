@@ -79,12 +79,15 @@ class Index{
     friend std::ostream& operator<<(std::ostream& fout, const Index& index);
 };
 
+Idx operator+(const Idx& index);
+Idx operator-(const Idx& index);
+
 class IndexStructure{
 
     private:
 
     int nIndices;
-    std::vector<Index> index;
+    std::vector<Idx> index;
 
     public:
 
@@ -94,19 +97,19 @@ class IndexStructure{
 
     IndexStructure(const IndexStructure& structure);
 
-    explicit IndexStructure(const std::initializer_list<Index>& structure);
+    explicit IndexStructure(const std::initializer_list<Idx>& structure);
 
-    explicit IndexStructure(const std::vector<Index>& structure);
+    explicit IndexStructure(const std::vector<Idx>& structure);
 
     ~IndexStructure(){}
 
     int getNIndices() const;
 
-    Index getIndex(int i) const;
+    Idx getIndex(int i) const;
 
-    std::vector<Index> getIndex() const;
+    std::vector<Idx> getIndex() const;
 
-    std::vector<Index> getFreeIndex() const;
+    std::vector<Idx> getFreeIndex() const;
 
     IndexStructure getFreeStructure() const;
 
@@ -114,9 +117,11 @@ class IndexStructure{
 
     IndexStructure getPermutation(const std::vector<int>& permutation) const;
 
+    void setIndex(const Index& newIndex, int iIndex=0);
+
     IndexStructure& operator=(const IndexStructure& structure) = default;
 
-    IndexStructure& operator+=(const Index& newIndex);
+    IndexStructure& operator+=(const Idx& newIndex);
 
     IndexStructure& operator+=(const IndexStructure& structure);
 
@@ -143,9 +148,9 @@ class IndexStructure{
 
     bool operator>=(const IndexStructure& structure) const;
 
-    Index operator[](int i) const;
+    Idx operator[](int i) const;
 
-    Index& operator[](int i);
+    Idx& operator[](int i);
 
     friend std::ostream& operator<<(std::ostream& fout, const IndexStructure& structure);
 };
@@ -155,16 +160,17 @@ class IndexStructure{
 
 inline IndexStructure::IndexStructure(): nIndices(0){}
 inline IndexStructure::IndexStructure(int t_nIndices)
-    :nIndices(t_nIndices), index(std::vector<Index>(t_nIndices,Index())){}
+    :nIndices(t_nIndices),
+    index(std::vector<Idx>(t_nIndices,std::make_shared<Index>())){}
 inline IndexStructure::IndexStructure(const IndexStructure& t_index):
     nIndices(t_index.nIndices), index(t_index.index){}
-inline IndexStructure::IndexStructure(const std::initializer_list<Index>& t_index):
-    IndexStructure(std::vector<Index>(t_index)){}
+inline IndexStructure::IndexStructure(const std::initializer_list<Idx>& t_index):
+    IndexStructure(std::vector<Idx>(t_index)){}
 
 inline int IndexStructure::getNIndices() const{
     return nIndices;
 }
-inline std::vector<Index> IndexStructure::getIndex() const{
+inline std::vector<Idx> IndexStructure::getIndex() const{
     return index;
 }
 /////

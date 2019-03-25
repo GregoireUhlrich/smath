@@ -65,11 +65,11 @@ int Abstract::getNIndices() const
     return 0;
 }
 
-Index Abstract::getIndex(int i) const
+Idx Abstract::getIndex(int i) const
 {
     print();
     callError(smError::AbstractFuncCalled, "Abstract::getIndex(int i) const");
-    return Index();
+    return make_shared<Index>();
 }
 
 IndexStructure Abstract::getIndexStructure() const
@@ -93,9 +93,8 @@ const IndicialParent* Abstract::getParent() const
     return nullptr;
 }
 
-bool Abstract::contractIndex(const Index& indexToContract,
-                             const Index& newIndex,
-                             Abstract* contracted)
+bool Abstract::replaceIndex(const Idx& indexToReplace,
+                             const Idx& newIndex)
 {
     return false;
 }
@@ -107,7 +106,7 @@ void Abstract::setIndexStructure(const IndexStructure& index)
             "Abstract::setIndexStructure(const vector<Index>& t_index) const");
 }
 
-bool Abstract::checkIndexStructure(const vector<Index>& t_index) const
+bool Abstract::checkIndexStructure(const vector<Idx>& t_index) const
 {
     print();
     callError(smError::AbstractFuncCalled,
@@ -115,7 +114,7 @@ bool Abstract::checkIndexStructure(const vector<Index>& t_index) const
     return (t_index.size()==0);
 }
 
-bool Abstract::checkIndexStructure(const initializer_list<Index>& index) const
+bool Abstract::checkIndexStructure(const initializer_list<Idx>& index) const
 {
     print();
     callError(smError::AbstractFuncCalled,
@@ -472,6 +471,14 @@ bool Abstract::dependsExplicitelyOn(const Expr& expr) const
     return operator==(expr);
 }
 
+Expr Abstract::findSubExpression(const Expr& subExpression,
+                                 const Expr& newExpression)
+{
+    if (operator==(subExpression))
+        return newExpression;
+    return Copy(this);
+}
+
 int Abstract::isPolynomial(const Expr& expr) const
 {
     return dependsExplicitelyOn(expr);
@@ -749,6 +756,7 @@ bool operator|=(const Expr& a, const Expr& b) {
 bool operator&=(const Expr& a, const Expr& b) {
     return (*a&=b);
 }
+
 
 ostream& operator<<(ostream& fout, smType::Type type)
 {

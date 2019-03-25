@@ -25,14 +25,14 @@ static const int SIMPLIFICATION_METHOD=1;
  * When getting alternate forms of an expression, we keep only the 
  * MAX_ALTERNATE_FORMS simpler.
  */
-static const int MAX_ALTERNATE_FORMS=10;
+static const int MAX_ALTERNATE_FORMS=7;
 
 /*! \var MAX_RECURSION_ALTERNATE
  * \brief When getting alternateForms, we iterate MAX_RECURSION_ALTERNATE times
  * (getting alternate forms of the alternate forms) in order to allow alternates
  * that need several steps of transformation.
  */
-static const int MAX_RECURSION_ALTERNATE=3;
+static const int MAX_RECURSION_ALTERNATE=7;
 
 /*! \fn printVector(const std::vector<Expr>& vector)
  * \brief Display a vector of expressions. Useful in debug.

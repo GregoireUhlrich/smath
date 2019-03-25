@@ -38,15 +38,25 @@ Expr AbstractFunc::getComplexConjugate()
     return foo;
 }
 
+Expr AbstractFunc::findSubExpression(const Expr& subExpression,
+                                     const Expr& newExpression)
+{
+    if (operator==(subExpression))
+        return newExpression;
+    Expr res = Copy(this);
+    res->setArgument(argument->findSubExpression(subExpression,newExpression));
+
+    return Refresh(res);
+}
+
 void AbstractFunc::setArgument(const Expr& t_argument, int iArg) {
     argument = t_argument;
 }
 
-bool AbstractFunc::contractIndex(const Index& indexToContract,
-                                 const Index& newIndex,
-                                 Abstract* contracted)
+bool AbstractFunc::replaceIndex(const Idx& indexToReplace,
+                                 const Idx& newIndex)
 {
-    return argument->contractIndex(indexToContract, newIndex, contracted);
+    return argument->replaceIndex(indexToReplace, newIndex);
 }
 
 Expr AbstractFunc::factor(bool full)
@@ -151,6 +161,20 @@ Expr AbstractDuoFunc::getArgument(int iArg) const
     return argument[iArg];
 }
 
+Expr AbstractDuoFunc::findSubExpression(const Expr& subExpression,
+                                        const Expr& newExpression)
+{
+    if (operator==(subExpression))
+        return newExpression;
+    Expr res = Copy(this);
+    res->setArgument(argument[0]->findSubExpression(
+                subExpression,newExpression), 0);
+    res->setArgument(argument[1]->findSubExpression(
+                subExpression,newExpression), 1);
+
+    return Refresh(res);
+}
+
 void AbstractDuoFunc::setArgument(const Expr& t_argument, int iArg) 
 {
     if (iArg != 1 and iArg != 0) {
@@ -162,12 +186,11 @@ void AbstractDuoFunc::setArgument(const Expr& t_argument, int iArg)
     argument[iArg] = t_argument;
 }
 
-bool AbstractDuoFunc::contractIndex(const Index& indexToContract,
-                                    const Index& newIndex,
-                                    Abstract* contracted)
+bool AbstractDuoFunc::replaceIndex(const Idx& indexToReplace,
+                                    const Idx& newIndex)
 {
-    return (argument[0]->contractIndex(indexToContract, newIndex, contracted)
-         or argument[1]->contractIndex(indexToContract, newIndex, contracted));
+    return (argument[0]->replaceIndex(indexToReplace, newIndex)
+         or argument[1]->replaceIndex(indexToReplace, newIndex));
 }
 
 Expr AbstractDuoFunc::factor(bool full) 
@@ -270,6 +293,20 @@ Expr AbstractMultiFunc::getArgument(int iArg) const
     return argument[iArg];
 }
 
+Expr AbstractMultiFunc::findSubExpression(const Expr& subExpression,
+                                        const Expr& newExpression)
+{
+    if (operator==(subExpression))
+        return newExpression;
+    Expr res = Copy(this);
+    for (int i=0; i!=nArgs; ++i)
+        res->setArgument(argument[i]->findSubExpression(
+                    subExpression, newExpression), i);
+
+    return Refresh(res);
+}
+
+
 iter AbstractMultiFunc::begin()
 {
     return argument.begin();
@@ -307,12 +344,11 @@ void AbstractMultiFunc::setVectorArgument(const vector<Expr >& t_argument)
     nArgs = argument.size();
 }
 
-bool AbstractMultiFunc::contractIndex(const Index& indexToContract,
-                                      const Index& newIndex,
-                                      Abstract* contracted)
+bool AbstractMultiFunc::replaceIndex(const Idx& indexToReplace,
+                                      const Idx& newIndex)
 {
     for (auto& arg : argument)
-        if (arg->contractIndex(indexToContract, newIndex, contracted))
+        if (arg->replaceIndex(indexToReplace, newIndex))
             return true;
 
     return false;

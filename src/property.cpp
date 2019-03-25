@@ -11,10 +11,12 @@ Property::Property(const Equation& t_eq): eq(t_eq)
         callError(smError::BadPropertySetting,
                 "Property::Property(const Equation&)",
                 eq.getType());
+
+    eq.makeLHSimple();
 }
 
 Property::Property(const Expr& leftHandSide, const Expr& rightHandSide)
-    :eq(leftHandSide, rightHandSide){}
+    :Property(Equation(leftHandSide, rightHandSide)){}
 
 Expr Property::apply(const Expr& expr) const
 {

@@ -114,6 +114,12 @@ void Plus::selfCheckIndexStructure() const
                 != (**arg).getFreeIndexStructure())
             callError(smError::InvalidIndicialSum,
                     "Plus::selfCheckIndexStructure() const");
+        else {
+            IndexStructure toCopy = structure.getFreeStructure();
+            IndexStructure target = (**arg).getFreeIndexStructure();
+            for (int i=0; i!=toCopy.getNIndices(); ++i)
+                (*arg)->replaceIndex(target[i],toCopy[i]);
+        }
 }
 
 void Plus::insert(const Expr& expr, bool side)
@@ -221,19 +227,18 @@ double Plus::evaluateScalar() const
     return sum;
 }
 
-bool Plus::contractIndex(const Index& indexToContract,
-                         const Index& newIndices,
-                         Abstract* contracted)
+bool Plus::replaceIndex(const Idx& indexToReplace,
+                         const Idx& newIndices)
 {
     bool contraction = false;
     for (auto& arg : argument) {
-        if (not arg->contractIndex(indexToContract, newIndices, contracted)) {
+        if (not arg->replaceIndex(indexToReplace, newIndices)) {
             if (not contraction)
                 return false;
             else
                 callError(smError::BadContraction,
-                        "Plus::contractIndex(const Index&, const Index&)",
-                        indexToContract);
+                        "Plus::replaceIndex(const Index&, const Index&)",
+                        indexToReplace);
         }
         else 
             contraction = true;
@@ -579,13 +584,13 @@ bool Plus::operator==(const Expr& expr) const
     for (int i=0; i<nArgs;i++) 
         indicesLeft[i] = i;
 
-    map<Index,Index> constraints;
     bool checkIndexExpressions = false;
     if (isIndexed())
         checkIndexExpressions = true;
     for (int i=0; i<nArgs; i++) {
         bool matched = false;
         for (size_t j=0; j<indicesLeft.size(); j++) {
+            map<Index,Index> constraints;
             Expr foo = expr->getArgument(indicesLeft[j]);    
             if ((not checkIndexExpressions
                 or not (argument[i]->getType() == smType::ITensor))
@@ -597,7 +602,8 @@ bool Plus::operator==(const Expr& expr) const
             else if (checkIndexExpressions 
                 and argument[i]->getType() == smType::ITensor
                 and foo->getType() == smType::ITensor) {
-                if (argument[i]->compareWithDummy(foo, constraints)) {
+                if (argument[i]->compareWithDummy(foo, constraints)
+                        and constraints.empty()) {
                     indicesLeft.erase(indicesLeft.begin()+j);
                     matched = true;
                     break;
@@ -607,8 +613,8 @@ bool Plus::operator==(const Expr& expr) const
         if (not matched)
             return false;
     }
-    if (checkIndexExpressions and not constraints.empty())
-        return false;
+    //if (checkIndexExpressions and not constraints.empty())
+    //    return false;
 
     return true;
 }
@@ -844,28 +850,28 @@ void Times::selfCheckIndexStructure()
                     // For each index in the structure
                     for (int j=0; j!=nIndices; ++j) {
                         // If the index is already present
-                        if (structure[i][j] == fooStruct[k]
-                                and fooStruct[k].getFree()) {
-                            Index fooS = structure[i][j];
-                            Index fooF = fooStruct[k];
-                            structure[i][j].testContraction(fooStruct[k]);
-                            // We replace fooStruct[k] (not contracted)
-                            // by structure[i][j] (contracted).
-                            // If the contraction is not valid, we raise an 
-                            // error.
-                            if (not argument[i]->contractIndex(fooS,
-                                                               structure[i][j],
-                                                               (*arg).get()))
-                                callError(smError::BadContraction,
-                                        "Times::selfCheckIndexStructure()",
-                                        fooStruct[k]);
-                            if (not (*arg)->contractIndex(fooF,
-                                                          fooStruct[k],
-                                                          argument[i].get()))
-                                callError(smError::BadContraction,
-                                        "Times::selfCheckIndexStructure()",
-                                        fooStruct[k]);
-
+                        if (*structure[i][j] == *fooStruct[k]
+                                and fooStruct[k]->getFree()) {
+                            structure[i][j]->testContraction(*fooStruct[k]);
+                        //    Index fooS = structure[i][j];
+                        //    Index fooF = fooStruct[k];
+                        //    structure[i][j].testContraction(fooStruct[k]);
+                        //    // We replace fooStruct[k] (not contracted)
+                        //    // by structure[i][j] (contracted).
+                        //    // If the contraction is not valid, we raise an 
+                        //    // error.
+                        //    if (not argument[i]->contractIndex(fooS,
+                        //                                       structure[i][j],
+                        //                                       (*arg).get()))
+                        //        callError(smError::BadContraction,
+                        //                "Times::selfCheckIndexStructure()",
+                        //                fooStruct[k]);
+                        //    if (not (*arg)->contractIndex(fooF,
+                        //                                  fooStruct[k],
+                        //                                  argument[i].get()))
+                        //        callError(smError::BadContraction,
+                        //                "Times::selfCheckIndexStructure()",
+                        //                fooStruct[k]);
                             breakValue = true;
                             break;
                         }
@@ -932,7 +938,7 @@ Expr Times::getComplexArgument()
     Expr im = getImaginaryPart();
     return make_shared<Angle>(im,real);
 }
-
+     
 void Times::print(int mode) const
 {
     if (mode == 0 and name != "")
@@ -1546,12 +1552,15 @@ bool Times::operator==(const Expr& expr) const
         }
         if (not matched) return false;
     }
-     //   for (auto i=constraints.begin(); i!=constraints.end(); ++i)
-     //       cout<<i->first<<"  "<<i->second<<endl;
-    if (checkIndexExpressions and not constraints.empty())
-        return false;
 
-    //cout<<"Equal ! \n";
+    // If there is some constraints on dummy indices left (we found only 
+    // one dummy of the pair), we check that there are the same.
+    // Ex: A_i.B_%j != A_i.B_%k but A_i.B_%j == A_i.B_%j
+    if (checkIndexExpressions and not constraints.empty()) 
+        for (auto it=constraints.begin(); it!=constraints.end(); ++it)
+            if (it->first != it->second)
+                return false;
+
     return true;
 }
 

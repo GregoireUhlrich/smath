@@ -68,6 +68,9 @@ class AbstractFunc: public AbstractScalar{
 
     Expr getComplexConjugate() override;
 
+    Expr findSubExpression(const Expr& subExpression,
+                           const Expr& newExpression) override;
+
     /*! \brief Replace the \b argument of the AbstractFunc.
      * \details The parameter \a iArg is usefull for AbstractMultiFunc. 
      * It is present ere in order to have only one access function for 
@@ -77,9 +80,8 @@ class AbstractFunc: public AbstractScalar{
      */
     void setArgument(const Expr& t_argument, int iArg=0) override;
 
-    virtual bool contractIndex(const Index& indexToContract,
-                               const Index& newIndex,
-                               Abstract* contracted) override;
+    virtual bool replaceIndex(const Idx& indexToReplace,
+                               const Idx& newIndex) override;
 
     virtual Expr factor(bool full=false) override;
 
@@ -167,15 +169,17 @@ class AbstractDuoFunc: public AbstractScalar{
      */
     Expr getArgument(int iArg=0) const override;
 
+    Expr findSubExpression(const Expr& subExpression,
+                           const Expr& newExpression) override;
+
     /*! \brief Replaces one particular \b argument.
      * \param t_argument      New argument.
      * \param iArg(default=0) Index of the argument to replace with t_argument.
      */
     void setArgument(const Expr& t_argument, int iArg=0) override;
 
-    virtual bool contractIndex(const Index& indexToContract,
-                               const Index& newIndex,
-                               Abstract* contracted) override;
+    virtual bool replaceIndex(const Idx& indexToReplace,
+                               const Idx& newIndex) override;
 
     virtual Expr factor(bool full=false) override;
 
@@ -258,6 +262,9 @@ class AbstractMultiFunc: public AbstractScalar{
      */
     Expr getArgument(int iArg=0) const override;
 
+    Expr findSubExpression(const Expr& subExpression,
+                           const Expr& newExpression) override;
+
     /*! \return A std::vector<Expr>::iterator at the beginning of argument
      * for multi-argument expressions.
      */    
@@ -286,9 +293,8 @@ class AbstractMultiFunc: public AbstractScalar{
 
     void setVectorArgument(const std::vector<Expr >& t_argument) override;
 
-    virtual bool contractIndex(const Index& indexToContract,
-                               const Index& newIndex,
-                               Abstract* contracted) override;
+    virtual bool replaceIndex(const Idx& indexToReplace,
+                               const Idx& newIndex) override;
 
     virtual Expr factor(bool full=false) override;
 

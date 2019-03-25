@@ -117,30 +117,36 @@ void IndicialParent::setSymmetry(const Symmetry& t_symmetry)
     fullyAntiSymmetric = false;
 }
 
-Expr IndicialParent::operator()(const Index& index) const
+Expr IndicialParent::operator()(const Idx& index) const
 {
     if (dim != 1)
         callError(smError::InvalidITensor, 
-    "IndicialParent::operator()(const initializer_list<Index>& indices) const");
-    if (index.getSpace() != space[0])
+    "IndicialParent::operator()(const initializer_list<Idx>& indices) const");
+    if (index->getSpace() != space[0])
             callError(smError::InvalidITensor, 
-    "IndicialParent::operator()(const initializer_list<Index>& indices) const");
+    "IndicialParent::operator()(const initializer_list<Idx>& indices) const");
 
-    return make_shared<ITensor>(name, commutable, index, this);
+    Idx copyIndex = make_shared<Index>(*index);
+
+    return make_shared<ITensor>(name, commutable, copyIndex, this);
 }
 
-Expr IndicialParent::operator()(const initializer_list<Index>& indices) const
+Expr IndicialParent::operator()(const initializer_list<Idx>& indices) const
 {
     if (indices.size() != (size_t)dim) {
         callError(smError::InvalidITensor, 
-    "IndicialParent::operator()(const initializer_list<Index>& indices) const");
+    "IndicialParent::operator()(const initializer_list<Idx>& indices) const");
     }
     for (auto index=indices.begin(); index!=indices.end(); ++index)
-        if (index->getSpace() != space[distance(indices.begin(), index)])
+        if ((*index)->getSpace() != space[distance(indices.begin(), index)])
             callError(smError::InvalidITensor, 
-    "IndicialParent::operator()(const initializer_list<Index>& indices) const");
+    "IndicialParent::operator()(const initializer_list<Idx>& indices) const");
 
-    return make_shared<ITensor>(name, commutable, indices, this);
+    vector<Idx> copyIndices(0);
+    for (const auto& index : indices)
+        copyIndices.push_back(make_shared<Index>(*index));
+
+    return make_shared<ITensor>(name, commutable, copyIndices, this);
 }
 
 
@@ -162,12 +168,17 @@ AbstractIndicial::AbstractIndicial(const IndexStructure& t_index)
 {}
 
 AbstractIndicial::AbstractIndicial(const string& t_name,
-                                   const Index& t_index)
-    :AbstractBuildingBlock(t_name), nIndices(1), index(vector<Index>(1,t_index))
+                                   const IndexStructure& t_index)
+    :AbstractBuildingBlock(t_name), index(t_index)
 {}
 
 AbstractIndicial::AbstractIndicial(const string& t_name,
-                                   const initializer_list<Index>& indices)
+                                   const Idx& t_index)
+    :AbstractBuildingBlock(t_name), nIndices(1), index(vector<Idx>(1,t_index))
+{}
+
+AbstractIndicial::AbstractIndicial(const string& t_name,
+                                   const vector<Idx>& indices)
     :AbstractBuildingBlock(t_name), nIndices(indices.size()), index(indices)
 {}
 
@@ -187,7 +198,7 @@ bool AbstractIndicial::compareWithDummy(const Expr& expr,
 
 ITensor::ITensor(const string& t_name,
                  bool t_commutable,
-                 const Index& t_index,
+                 const Idx& t_index,
                  const IndicialParent* t_parent)
     :AbstractIndicial(t_name, t_index), contractions(vector<Abstract*>(1)),
     parent(t_parent)
@@ -197,7 +208,7 @@ ITensor::ITensor(const string& t_name,
 
 ITensor::ITensor(const string& t_name,
                  bool t_commutable,
-                 const initializer_list<Index>& indices,
+                 const vector<Idx>& indices,
                  const IndicialParent* t_parent)
     :AbstractIndicial(t_name, indices), 
     contractions(vector<Abstract*>(indices.size())),
@@ -206,38 +217,47 @@ ITensor::ITensor(const string& t_name,
     commutable = t_commutable;
 }
 
+ITensor::ITensor(const string& t_name,
+                 bool t_commutable,
+                 const IndexStructure& indices,
+                 const IndicialParent* t_parent)
+    :AbstractIndicial(t_name, indices), 
+    contractions(vector<Abstract*>(indices.getNIndices())),
+    parent(t_parent)
+{
+    commutable = t_commutable;
+}
+
 // Constructor crashes if expr is not an ITensor
 ITensor::ITensor(const Abstract*& expr)
-    :contractions(vector<Abstract*>(expr->getNIndices())), parent(expr->getParent())
+    :ITensor(expr->getName(), expr->getCommutable(),
+            expr->getIndexStructure(), expr->getParent())
 {
-    name = expr->getName();
     commutable = expr->getCommutable();
-    nIndices = expr->getNIndices();
-    index = expr->getIndexStructure();
 }
+
 
 // Constructor crashes if expr is not an ITensor
-ITensor::ITensor(const Expr& expr): parent(expr->getParent())
+ITensor::ITensor(const Expr& expr)
+    :AbstractIndicial(expr->getName(), expr->getIndexStructure()),
+    parent(expr->getParent())
 {
-    name = expr->getName();
     commutable = expr->getCommutable();
-    nIndices = expr->getNIndices();
-    index = expr->getIndexStructure();
 }
 
-Index ITensor::getIndex(int i) const
+Idx ITensor::getIndex(int i) const
 {
     if (i >= 0 and i < index.getNIndices()) 
         return index[i];
     callError(smError::OutOfBounds,"ITensor::getIndex(int i) const",i);
-    return Index();
+    return make_shared<Index>();
 }
 
 const IndicialParent* ITensor::getParent() const {
     return parent;
 }
 
-bool ITensor::checkIndexStructure(const vector<Index>& t_indices) const
+bool ITensor::checkIndexStructure(const vector<Idx>& t_indices) const
 {
     const int nIndices = index.getNIndices();
     if (nIndices != (int)t_indices.size()) 
@@ -247,11 +267,11 @@ bool ITensor::checkIndexStructure(const vector<Index>& t_indices) const
         indicesLeft[i] = i;
 
     for (int i=0; i<nIndices; i++) {
-        if (index[i].getFree()) {
+        if (index[i]->getFree()) {
             bool matched = 0;
             for (size_t j=0; j<indicesLeft.size(); j++) {
-                Index foo = t_indices[indicesLeft[j]];
-                if (not foo.getFree() or index[i] == foo) {
+                Idx foo = t_indices[indicesLeft[j]];
+                if (not foo->getFree() or *index[i] == *foo) {
                     indicesLeft.erase(indicesLeft.begin()+j);
                     matched = 1;
                     break;
@@ -265,19 +285,17 @@ bool ITensor::checkIndexStructure(const vector<Index>& t_indices) const
 }
 
 bool ITensor::checkIndexStructure(
-        const initializer_list<Index>& t_indices) const 
+        const initializer_list<Idx>& t_indices) const 
 {
-    return checkIndexStructure(vector<Index>(t_indices.begin(), t_indices.end()));
+    return checkIndexStructure(vector<Idx>(t_indices.begin(), t_indices.end()));
 }
 
-bool ITensor::contractIndex(const Index& indexToContract,
-                            const Index& newIndex,
-                            Abstract* contracted)
+bool ITensor::replaceIndex(const Idx& indexToReplace,
+                            const Idx& newIndex)
 {
     for (int i=0; i!=nIndices; ++i)
-        if (index[i] == indexToContract) {
+        if (*index[i] == *indexToReplace) {
             index[i] = newIndex;
-            contractions[i] = contracted;
             return true;
         }
 
@@ -354,11 +372,11 @@ void ITensor::print(int mode) const
         if (nIndices > 1) {
             cout<<"{";
             for (int i=0; i<nIndices; i++)
-                index[i].print();
+                index[i]->print();
             cout<<"}";
         }
         else 
-            index[0].print();
+            index[0]->print();
     }
     if (mode == 0)
         cout<<endl;
@@ -374,11 +392,11 @@ string ITensor::printLaTeX(int mode) const
         if (nIndices > 1) {
             sout<<"{";
             for (int i=0; i<nIndices; i++)
-                index[i].print();
+                index[i]->print();
             sout<<"}";
         }
         else 
-            index[0].print();
+            index[0]->print();
     }
     if (mode == 0)
         sout<<endl;

@@ -49,10 +49,13 @@ class Equation{
     ~Equation(){};
 
     smEquation::Type getType() const;
+    Expr getLHS() const;
+    Expr getRHS() const;
 
     void replace(const Expr& oldE, const Expr& newE);
     void replace(const Symbol& oldS, const Symbol& newS);
     void simplify();
+    void makeLHSimple();
     void isolate(const Expr& expr);
     void isolate(const Symbol& expr);
 

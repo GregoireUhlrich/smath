@@ -36,6 +36,13 @@ Expr AbstractBuildingBlock::getPolynomialTerm(const Expr& expr, int order){
 
     return ZERO;
 }
+Expr AbstractBuildingBlock::findSubExpression(const Expr& subExpression,
+                                              const Expr& newExpression)
+{
+    if (operator==(subExpression))
+        return newExpression;
+    return shared_from_this();
+}
 
 ///////////////////////////////////////////////////
 /*************************************************/

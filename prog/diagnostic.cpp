@@ -6,6 +6,7 @@
 #include "space.h"
 #include "support.h"
 #include "equation.h"
+#include "property.h"
 #include <chrono>
 #include <cmath>
 #include <fstream>
@@ -207,9 +208,11 @@ ofojeogz
 
     IndicialParent Riemann("R",{&Minkowski, &Minkowski, &Minkowski, &Minkowski});
     Riemann.setSymmetry(S);
-    Index mu("\\mu",&Minkowski), nu("\\nu",&Minkowski),
-          rho("\\rho",&Minkowski), sigma("\\sigma",&Minkowski);
-    mu.setFree(false);
+    Idx mu = make_shared<Index>("\\mu",&Minkowski);
+    Idx nu = make_shared<Index>("\\nu",&Minkowski);
+    Idx rho = make_shared<Index>("\\rho",&Minkowski);
+    Idx sigma = make_shared<Index>("\\sigma",&Minkowski);
+    mu->setFree(false);
     Riemann({mu,nu,rho,sigma})->print();
     vector<Expr> riemannPermutations = Riemann({mu,nu,rho,sigma})->getPermutations();
     cout<<"Riemann Tensor: \n";
@@ -238,8 +241,11 @@ ofojeogz
     S.addSymmetry(Permutation(3,{1,2}),-1);
     S.addSymmetry(Permutation(3,{0,2}),-1);
     eps_.setSymmetry(S);
-    Index i("i", &Euclid_R3), j("j",&Euclid_R3), k("k",&Euclid_R3);
-    Index l("l", &Euclid_R3), n("n",&Euclid_R3);
+    Idx i = make_shared<Index>("i", &Euclid_R3);
+    Idx j = make_shared<Index>("j",&Euclid_R3);
+    Idx k = make_shared<Index>("k",&Euclid_R3);
+    Idx l = make_shared<Index>("l", &Euclid_R3);
+    Idx n = make_shared<Index>("n",&Euclid_R3);
     eps_({i,j,k})->print();
     eps_({i,i,j})->print();
     eps_({i,i,i})->print();
@@ -256,11 +262,6 @@ ofojeogz
     (eps_({i,j,k})*A_(j)*B_(k) + eps_({i,j,k})*B_(k)*A_(j))->print();
     (eps_({i,j,k})*A_(j)*A_(k) + eps_({i,j,k})*B_(k)*A_(j))->print();
     (A_(i)*(eps_({i,j,k}) + B_(i)*A_(j)*A_(k)))->print();
-
-    cout<<"eps_ijk + eps_jik = ";
-    Simplify(eps_({i,j,k}) + eps_({j,i,k}))->print();
-    cout<<"eps_ijk.Aj.Ak + eps_jik.Bk.Aj = ";
-    Simplify(eps_({i,j,k})*A_(j)*A_(k) + eps_({i,j,k})*B_(k)*A_(j))->print();
     //(eps_({i,j,k})*C_(j)*B_(k))->print();
     //(eps_({i,j})*A_(i)*B_(j))->print();
     cout<<((x.getAbstract()*A_(i)*A_(i)) == (A_(j)*x.getAbstract()*A_(j)))<<"1"<<endl;
@@ -268,11 +269,11 @@ ofojeogz
     cout<<(2*x.getAbstract()*eps_({i,j,j}) == eps_({j,i,j})*x.getAbstract()*2)<<"0"<<endl;
     cout<<(2*x.getAbstract()*eps_({i,j,j}) == eps_({i,k,k})*x.getAbstract()*2)<<"1"<<endl;
     cout<<(2*x.getAbstract()*eps_({i,j,j}) == eps_({i,j,j})*x.getAbstract()*2)<<"1"<<endl;
-    j.setFree(false);
-    k.setFree(false);
+    j->setFree(false);
+    k->setFree(false);
     cout<<(eps_({i,j,k}) == eps_({i,k,j}))<<"0"<<endl;
-    j.setFree(true);
-    k.setFree(true);
+    j->setFree(true);
+    k->setFree(true);
     cout<<(eps_({i,j,k}) == eps_({i,k,j}))<<"0"<<endl;
     cout<<(eps_({i,j,k})*A_(j)*B_(k) == eps_({i,k,j})*B_(j)*A_(k))<<"0"<<endl;
     cout<<(eps_({i,j,k})*A_(j)*B_(k) == eps_({i,k,j})*A_(k)*B_(j))<<"1"<<endl;
@@ -280,6 +281,15 @@ ofojeogz
     B_.setCommutable(true);
     A_.setCommutable(true);
     cout<<(eps_({i,j,k})*A_(j)*B_(k) == eps_({i,k,j})*B_(j)*A_(k))<<"1"<<endl;
+    cout<<((eps_({i,j,k})*A_(j)*A_(k) + eps_({i,j,k})*A_(j)*B_(k)) == (eps_({i,j,k})*A_(j)*A_(k) + eps_({i,j,k})*A_(j)*B_(k)))<<"1"<<endl;
+    cout<<(-1*eps_({i,j,k}) == -1*eps_({i,j,k}))<<"1"<<endl;
+    cout<<((-1*eps_({i,j,k}))*A_(j)*B_(k) == (-1*eps_({i,j,k}))*A_(j)*B_(k))<<"1"<<endl;
+
+    cout<<"eps_ijk + eps_jik = ";
+    Simplify(eps_({i,j,k}) + eps_({j,i,k}))->print();
+    cout<<"eps_ijk.Aj.Ak + eps_jik.Bk.Aj = ";
+    Simplify(eps_({i,j,k})*A_(j)*A_(k) + eps_({i,j,k})*B_(k)*A_(j))->print();
+
 
     (derivative_(x,1)*y).print();
     y.getAbstract()->setElementary(false);
@@ -338,8 +348,14 @@ ofojeogz
     derivative_(derivative_(a*b,x,2),x,3).print();
     derivative_(derivative_(a*b,x,2),x,3).evaluate().print();
 
+    Symbol jcoupech = matrix_({{1,0,-1},
+                             {2,1,3},
+                             {-1,-1,-2}});
+
+    dot(jcoupech.inverseMatrix(), vector_({-1,3,0})).print();
+
     IndicialParent g = Minkowski.metric;
-    mu.setFree(true);
+    mu->setFree(true);
     g({mu,nu})->print();
 
     IndicialParent X("X",&Minkowski);
@@ -362,6 +378,23 @@ ofojeogz
     cout<<(AS({+mu,+nu})*g({mu,nu}) == AS({+nu,+mu})*g({nu,mu}))<<"1"<<endl;
     cout<<(AS({+mu,+nu})*g({mu,nu}) == AS({+nu,+mu})*g({mu,nu}))<<"0"<<endl;
 
+    Symbol P("P");
+    IndicialParent Ricci("R",{&Minkowski,&Minkowski});
+    Symbol R("R");
+    P = 1/(a-2)*(Symbol(Ricci({mu,nu}))-1/(2*(a-1))*R*Symbol(g({mu,nu})));
+
+    cout<<"P_{mu,nu} = "; P({mu,nu}).print();
+    cout<<"P_{rho,sigma} = ";P({rho,sigma}).print();
+    cout<<"P_{rho,+sigma} = ";P({rho,+sigma}).print();
+    cout<<"P_{mu,+mu} = ";P({mu,+mu}).print();
+    // Error: cout<<"P_{mu,nu} = ";P({mu,mu}).print();
+
+    PROPERTIES->addProperty(Equation(derivative_(a.getAbstract(), x.getAbstract())
+                                   +derivative_(b.getAbstract(),y.getAbstract())
+                                   +derivative_(c.getAbstract(),z.getAbstract()), ZERO));
+    PROPERTIES->addProperty(Equation(Riemann({mu,nu,rho,sigma})+Riemann({nu,mu,rho,sigma}), ZERO));
+
+    cout<<*PROPERTIES<<endl;
 
     return 0;
     /*Symbol i("i"), j("j");

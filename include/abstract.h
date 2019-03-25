@@ -174,6 +174,7 @@ Expr Empty(smType::Type type); // source in symbol.cpp
 // Forward declaration of Index IndicialParent 
 // and IndexStructure classes (indicial.h)
 class Index;
+typedef std::shared_ptr<Index> Idx;
 class IndexStructure;
 class IndicialParent;
 class Property;
@@ -449,7 +450,7 @@ class Abstract{
     /*! \param i Spot of the index to get.
      * \return the i^{th} index of an \b Indicial expression.
      */
-    virtual Index getIndex(int i=0) const;
+    virtual Idx getIndex(int i=0) const;
 
     /*! \return The index structure of the \b Indicial expression
      */
@@ -599,9 +600,8 @@ class Abstract{
       * \return \b True if the index has been found.
       * \return \b False else.
       */
-     virtual bool contractIndex(const Index& indexToContract,
-                                const Index& newIndex,
-                                Abstract* contracted);
+     virtual bool replaceIndex(const Idx& indexToReplace,
+                                const Idx& newIndex);
 
      /*! \brief Replaces the index structure of the object, that must be an 
       * \b Indicial expression.
@@ -698,7 +698,7 @@ class Abstract{
      * \return \b True if the two structures match.
      * \return \b False else.
      */
-    virtual bool checkIndexStructure(const std::vector<Index>& t_index) const;
+    virtual bool checkIndexStructure(const std::vector<Idx>& t_index) const;
 
     /*! \brief Checks the compatibility of the index structure of an \b Indicial
      * expression with another. In a sum, two terms must have exaclty the same
@@ -707,7 +707,7 @@ class Abstract{
      * \return \b True if the two structures match.
      * \return \b False else.
      */
-    virtual bool checkIndexStructure(const std::initializer_list<Index>& index) const;
+    virtual bool checkIndexStructure(const std::initializer_list<Idx>& index) const;
 
     virtual bool compareWithDummy(const Expr& expr,
             std::map<Index,Index>& constraints) const;
@@ -751,6 +751,14 @@ class Abstract{
      * \return \b False else.
      */
     virtual bool dependsExplicitelyOn(const Expr& expr) const;
+
+    /*! \brief Searches a sub-expression and replaces it.
+     * \param subExpression Expression to search.
+     * \param newExpression Expression that replaces \b subExpression if it is found.
+     * \return The expression with the replacement done.
+     */
+    virtual Expr findSubExpression(const Expr& subExpression,
+                                   const Expr& newExpression);
 
     /*! \brief Determines if the expression is a mononomial term in \b expr, i.e.
      * a term of the form C*expr^n with C independent of expr, n integer.
@@ -1257,6 +1265,7 @@ bool operator&=(const Expr& a, const Expr& b);
 // Usefull function of Copy/Refresh of Expr      //
 /*************************************************/
 ///////////////////////////////////////////////////
+
 
 /*! \fn Expr Copy(const Abstract* expr)
  * \brief See Copy(const Expr& expr).

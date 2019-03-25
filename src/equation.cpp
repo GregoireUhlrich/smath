@@ -53,6 +53,16 @@ smEquation::Type Equation::getType() const
     return type;
 }
 
+Expr Equation::getLHS() const
+{
+    return leftHandSide;
+}
+
+Expr Equation::getRHS() const
+{
+    return rightHandSide;
+}
+
 
 void Equation::searchBuildingBlocks()
 {
@@ -87,6 +97,44 @@ void Equation::simplify()
 {
     leftHandSide = Simplify(leftHandSide);
     rightHandSide = Simplify(rightHandSide);
+}
+
+void Equation::makeLHSimple()
+{
+    if (buildingBlocks.size() == 0)
+        return;
+    Expr bb = buildingBlocks[0];
+    if (not leftHandSide->dependsExplicitelyOn(bb)) 
+        swap(leftHandSide, rightHandSide);
+    if (leftHandSide->getType() == smType::Plus) {
+        bool dependencyFound = false;
+        Expr sum = ZERO;
+        for (iter arg=leftHandSide->begin(); arg!=leftHandSide->end(); ++arg) {
+            if (not dependencyFound and (*arg)->dependsExplicitelyOn(bb))
+                dependencyFound = true;
+            else {
+                sum = sum + (*arg);
+            }
+        }
+        leftHandSide = leftHandSide - sum;
+        rightHandSide = rightHandSide - sum;
+    }
+    if (leftHandSide->getType() == smType::Times) {
+        bool dependencyFound = false;
+        Expr product = ONE;
+        for (iter arg=leftHandSide->begin(); arg!=leftHandSide->end(); ++arg) {
+            if (not dependencyFound and (*arg)->dependsExplicitelyOn(bb))
+                dependencyFound = true;
+            else {
+                product = product * (*arg);
+            }
+        }
+        leftHandSide = (leftHandSide/product)->develop();
+        rightHandSide = (rightHandSide/product)->develop();
+    }
+    if (leftHandSide->getType() == smType::Plus
+            or leftHandSide->getType() == smType::Times)
+        makeLHSimple();
 }
 
 void Equation::isolate(const Expr& expr)

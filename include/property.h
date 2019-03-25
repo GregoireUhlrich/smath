@@ -13,7 +13,7 @@ class Property{
     public:
 
     Property();
-    explicit Property(const Equation& t_eq);
+    Property(const Equation& t_eq);
     Property(const Expr& leftHandSide, const Expr& rightHandSide);
     //Property(const Property& p) = delete;
     //Property& operator=(const Property& p) = delete;
@@ -40,6 +40,8 @@ class PropertyList{
     static PropertyList* Construct();
     void addProperty(const Property& property);
     void removeProperty(const Property& property);
+
+    friend std::ostream& operator<<(std::ostream& fout, const PropertyList& prop);
 };
 
 PropertyList* PropertyList::self = nullptr;
