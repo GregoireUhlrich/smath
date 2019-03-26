@@ -71,6 +71,8 @@ namespace smType{
       (i.e. list of all possible specializations).*/
     enum Type {
 
+        Arbitrary=-1, /*!<  Arbitrary Abstract in comparisons */
+
         Integer, /*!<  = 0. Abstract specialized in Integer */
         CFraction, /*!<  = 1. Abstract specialized in CFraction */
         Double, /*!<  = 2. Abstract specialized in Double */
@@ -177,7 +179,7 @@ class Index;
 typedef std::shared_ptr<Index> Idx;
 class IndexStructure;
 class IndicialParent;
-class Property;
+class Equation;
 
 
 /*! \class Abstract
@@ -305,7 +307,7 @@ class Abstract{
 
     /*! \return The properties of the object.
      */
-    virtual const std::vector<Property*>& getProperties() const;
+    virtual const std::vector<Equation*>& getProperties() const;
                                                        
 
 
@@ -464,7 +466,7 @@ class Abstract{
      * to the parent object of type IndicialParent (not an expression).
      * \return \b parent for ITensor-type expression.
      */
-    virtual const IndicialParent* getParent() const;
+    virtual IndicialParent* getParent() const;
 
     /*! \brief Returns the number of contracted pairs of indices **in an Indicial
      * expression**.
@@ -506,12 +508,12 @@ class Abstract{
     /*! \brief Adds a property to the object.
      * \param property The new property to add in \b props.
      */
-    virtual void addProperty(Property* property);
+    virtual void addProperty(Equation* property);
 
     /*! \brief Removes a property to the object.
      * \param property Property to remove from \b props.
      */
-    virtual void removeProperty(Property* property);
+    virtual void removeProperty(Equation* property);
 
                                                        
                                                        

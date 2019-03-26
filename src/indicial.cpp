@@ -1,8 +1,58 @@
 #include "indicial.h"
 #include "error.h"
 #include "space.h"
+#include "equation.h"
+#include "variable.h"
 
 using namespace std;
+
+void nameTensor(const string& name, Expr& tensor, bool first)
+{
+    if (tensor->getPrimaryType() != smType::Vectorial)
+        callError(smError::UndefinedBehaviour,
+                "nameTensor(const string&, Expr&)");
+    if (tensor->getDim() == 1) {
+        if (first)
+            for (iter arg=tensor->begin(); arg!=tensor->end(); ++arg) {
+                ostringstream sout;
+                sout<<distance(tensor->begin(), arg);
+                (*arg) = var_(name+"_"+sout.str());
+            }
+        else
+            for (iter arg=tensor->begin(); arg!=tensor->end(); ++arg) {
+                ostringstream sout;
+                sout<<distance(tensor->begin(), arg);
+                (*arg) = var_(name+","+sout.str()+"}");
+            }
+    }
+    else {
+        if (first)
+            for (iter arg=tensor->begin(); arg!=tensor->end(); ++arg) {
+                ostringstream sout;
+                sout<<distance(tensor->begin(), arg);
+                nameTensor(name+"_{"+sout.str(), *arg, false);
+            }
+        else
+            for (iter arg=tensor->begin(); arg!=tensor->end(); ++arg) {
+                ostringstream sout;
+                sout<<distance(tensor->begin(), arg);
+                nameTensor(name+","+sout.str(), *arg, false);
+            }
+    }
+}
+
+Expr generateTensor(const string& name, const vector<const Space*>& spaces)
+{
+    vector<int> shape(0);
+    for (const auto& s : spaces)
+        shape.push_back(s->getDim());
+
+    Expr tensor = tensor_(shape);
+    nameTensor(name, tensor);
+    tensor->print();
+
+    return tensor;
+}
 
 ///////////////////////////////////////////////////
 /*************************************************/
@@ -24,13 +74,17 @@ IndicialParent::IndicialParent(const string& t_name,
                                const Space* t_space)
     :name(t_name), commutable(true), dim(1), space(vector<const Space*>(1,t_space)),
     symmetry(), fullySymmetric(false), fullyAntiSymmetric(false), valued(false)
-{}
+{
+    tensor = generateTensor(name,space);
+}
 
 IndicialParent::IndicialParent(const string& t_name,
                                const std::initializer_list<const Space*> t_space)
     :name(t_name), commutable(true), dim(t_space.size()), space(t_space),
     symmetry(), fullySymmetric(false), fullyAntiSymmetric(false), valued(false)
-{}
+{
+    tensor = generateTensor(name,space);
+}
 
 IndicialParent::IndicialParent(const string& t_name,
                                const Space* t_space,
@@ -107,6 +161,26 @@ void IndicialParent::addAntiSymmetry(int i1, int i2)
                 (i1<0 or i1>=dim) ? i1 : i2);
 }
 
+const vector<Equation*>& IndicialParent::getProperties() const
+{
+    return props;
+}
+
+void IndicialParent::addProperty(Equation* property)
+{
+    for (const auto& p : props)
+        if (*p == *property)
+            return;
+    props.push_back(property);
+}
+
+void IndicialParent::removeProperty(Equation* property)
+{
+    auto p = find(props.begin(), props.end(), property);
+    if (p != props.end())
+        props.erase(p);
+}
+
 void IndicialParent::setSymmetry(const Symmetry& t_symmetry)
 {
     if (t_symmetry.getDim() != dim)
@@ -117,7 +191,7 @@ void IndicialParent::setSymmetry(const Symmetry& t_symmetry)
     fullyAntiSymmetric = false;
 }
 
-Expr IndicialParent::operator()(const Idx& index) const
+Expr IndicialParent::operator()(const Idx& index)
 {
     if (dim != 1)
         callError(smError::InvalidITensor, 
@@ -127,11 +201,10 @@ Expr IndicialParent::operator()(const Idx& index) const
     "IndicialParent::operator()(const initializer_list<Idx>& indices) const");
 
     Idx copyIndex = make_shared<Index>(*index);
-
     return make_shared<ITensor>(name, commutable, copyIndex, this);
 }
 
-Expr IndicialParent::operator()(const initializer_list<Idx>& indices) const
+Expr IndicialParent::operator()(const initializer_list<Idx>& indices)
 {
     if (indices.size() != (size_t)dim) {
         callError(smError::InvalidITensor, 
@@ -199,7 +272,7 @@ bool AbstractIndicial::compareWithDummy(const Expr& expr,
 ITensor::ITensor(const string& t_name,
                  bool t_commutable,
                  const Idx& t_index,
-                 const IndicialParent* t_parent)
+                 IndicialParent *const t_parent)
     :AbstractIndicial(t_name, t_index), contractions(vector<Abstract*>(1)),
     parent(t_parent)
 {
@@ -209,7 +282,7 @@ ITensor::ITensor(const string& t_name,
 ITensor::ITensor(const string& t_name,
                  bool t_commutable,
                  const vector<Idx>& indices,
-                 const IndicialParent* t_parent)
+                 IndicialParent *const t_parent)
     :AbstractIndicial(t_name, indices), 
     contractions(vector<Abstract*>(indices.size())),
     parent(t_parent)
@@ -220,7 +293,7 @@ ITensor::ITensor(const string& t_name,
 ITensor::ITensor(const string& t_name,
                  bool t_commutable,
                  const IndexStructure& indices,
-                 const IndicialParent* t_parent)
+                 IndicialParent *const t_parent)
     :AbstractIndicial(t_name, indices), 
     contractions(vector<Abstract*>(indices.getNIndices())),
     parent(t_parent)
@@ -253,8 +326,23 @@ Idx ITensor::getIndex(int i) const
     return make_shared<Index>();
 }
 
-const IndicialParent* ITensor::getParent() const {
+IndicialParent* ITensor::getParent() const {
     return parent;
+}
+
+const std::vector<Equation*>& ITensor::getProperties() const
+{
+    return parent->getProperties();
+}
+
+void ITensor::addProperty(Equation* property)
+{
+    parent->addProperty(property);
+}
+
+void ITensor::removeProperty(Equation* property) 
+{
+    parent->removeProperty(property);
 }
 
 bool ITensor::checkIndexStructure(const vector<Idx>& t_indices) const

@@ -4,15 +4,32 @@ using namespace std;
 
 vector<Expr> listBuildingBlocks(const Expr& expr)
 {
-    if (expr->isBuildingBlock())
+    if (expr->getType() == smType::Variable
+            or expr->getType() == smType::Constant
+            or expr->getType() == smType::ITensor)
         return vector<Expr>(1,expr);
     vector<Expr> list(0);
     int nArgs = expr->getNArgs();
-    for (int i=0; i!=nArgs; ++i) {
-        vector<Expr> list2 = listBuildingBlocks(expr->getArgument(i));
-        if (list2.size() != 0)
-            list.insert(list.end(), list2.begin(), list2.end());
-    }
+    if (expr->getPrimaryType() == smType::ScalarFunction
+            or expr->getType() == smType::Derivative)
+        list = listBuildingBlocks(expr->getArgument());
+    else
+        for (int i=0; i!=nArgs; ++i) {
+            vector<Expr> list2 = listBuildingBlocks(expr->getArgument(i));
+            if (list2.size() != 0)
+                list.insert(list.end(), list2.begin(), list2.end());
+        }
+
+    if (not list.empty())
+        for (auto bb1=list.begin(); bb1!=list.end()-1; ++bb1) {
+            for (auto bb2=bb1+1; bb2!=list.end(); ++bb2)
+                if (**bb1 == *bb2) {
+                    list.erase(bb2);
+                    break;
+                }
+            if (bb1 == list.end()-1)
+                break;
+        }
 
     return list;
 }
@@ -63,6 +80,15 @@ Expr Equation::getRHS() const
     return rightHandSide;
 }
 
+const std::vector<Expr>& Equation::getBuildingBlocks() const
+{
+    return buildingBlocks;
+}
+
+void Equation::setBuildingBlocks(const vector<Expr>& t_buildingBlocks)
+{
+    buildingBlocks = t_buildingBlocks;
+}
 
 void Equation::searchBuildingBlocks()
 {
@@ -113,11 +139,11 @@ void Equation::makeLHSimple()
             if (not dependencyFound and (*arg)->dependsExplicitelyOn(bb))
                 dependencyFound = true;
             else {
-                sum = sum + (*arg);
+                sum = sum - (*arg);
             }
         }
-        leftHandSide = leftHandSide - sum;
-        rightHandSide = rightHandSide - sum;
+        leftHandSide = leftHandSide + sum;
+        rightHandSide = rightHandSide + sum;
     }
     if (leftHandSide->getType() == smType::Times) {
         bool dependencyFound = false;
@@ -295,6 +321,17 @@ void Equation::isolate(const Symbol& expr)
     isolate(expr.getAbstract());
 }
 
+bool Equation::operator==(const Equation& eq) const
+{
+    return (leftHandSide->operator==(eq.getLHS())
+            and rightHandSide->operator==(eq.getRHS()));
+}
+
+bool Equation::operator!=(const Equation& eq) const
+{
+    return not operator==(eq);
+}
+
 ostream& operator<<(ostream& fout, const Equation& eq)
 {
     eq.leftHandSide->print(1);
@@ -316,7 +353,7 @@ ostream& operator<<(ostream& fout, smEquation::Type type)
         case smEquation::ESmaller: fout<<" <= "; break;
 
         default: callError(smError::UnknownEquation,
-                "operator<<(ostream&, smEquation::Type)", type);
+                "operator<<(ostream&, smEquation::Type)", (int)type);
     }
 
     return fout;

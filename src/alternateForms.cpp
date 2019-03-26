@@ -1,4 +1,5 @@
 #include "simplification.h"
+#include "property.h"
 
 using namespace std;
 
@@ -48,6 +49,18 @@ void reduceAlternate(vector<Expr >& alternateForms)
     alternateForms.erase(alternateForms.begin()+MAX_ALTERNATE_FORMS, alternateForms.end());
 }
 
+vector<Expr> applyProperties(const vector<Expr>& alternateForms)
+{
+    vector<Expr> toReturn(alternateForms);
+    for (const auto& expr : alternateForms) {
+        vector<Expr> newForms = PROPERTIES.apply(expr);
+        toReturn.insert(toReturn.end(), newForms.begin(), newForms.end());
+    }
+
+    reduceAlternate(toReturn);
+    return toReturn;
+}
+
 void clearRedundancyAlternate(vector<Expr >& alternateForms)
 {
     for (size_t i=0; i!=alternateForms.size(); ++i) 
@@ -95,13 +108,13 @@ vector<Expr> getRecursiveAlternateForms(const Expr& expr, int depth)
             }
             // If there is no new alternate
             if (fooVec.size() == 0) 
-                return toReturn;
+                return applyProperties(toReturn);
         }
         alternateForms = fooVec;
         reduceAlternate(alternateForms);
     }
 
-    return toReturn;
+    return applyProperties(toReturn);
 }
 
 vector<Expr> internalRecursiveAlternateForms(const Expr& expr, int depth)

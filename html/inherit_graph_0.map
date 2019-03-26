@@ -1,46 +1,47 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classAbstract.html" title="Root class of the inheritance tree of abstracts. " alt="" coords="5,1247,76,1273"/>
-<area shape="rect" id="node2" href="$classAbstractScalar.html" title="Abstract class concerning all scalars (dim = 0). Allows to implement one time getDim() = 0 for all sc..." alt="" coords="131,968,239,995"/>
-<area shape="rect" id="node41" href="$classAbstractVectorial.html" title="AbstractVectorial" alt="" coords="124,1475,247,1501"/>
-<area shape="rect" id="node3" href="$classAbstractBuildingBlock.html" title="Abstract class from which derive all building blocks of exprs, i.e. objects not function of further e..." alt="" coords="295,284,445,311"/>
-<area shape="rect" id="node15" href="$classAbstractDuoFunc.html" title="Handle functions of multiple arguments. In the case of the call of a simplification function..." alt="" coords="308,487,432,513"/>
-<area shape="rect" id="node20" href="$classAbstractFunc.html" title="Base class for scalar functions of one argument. " alt="" coords="320,968,420,995"/>
-<area shape="rect" id="node37" href="$classAbstractMultiFunc.html" title="Handle functions of multiple arguments. In the case of the call of a simplification function..." alt="" coords="306,1399,434,1425"/>
-<area shape="rect" id="node4" href="$classAbstractIndicial.html" title="AbstractIndicial" alt="" coords="503,56,615,83"/>
-<area shape="rect" id="node6" href="$classAbstractLiteral.html" title="Abstract class from which derive literal building blocks: Constant, Variable, Imaginary and CFactoria..." alt="" coords="505,157,612,184"/>
-<area shape="rect" id="node11" href="$classAbstractNumerical.html" title="Abstract class from which derive numerical types, i.e. Double, Integer, CFraction. " alt="" coords="493,284,624,311"/>
+<area shape="rect" id="node1" href="$classAbstract.html" title="Root class of the inheritance tree of abstracts. " alt="" coords="5,1297,76,1324"/>
+<area shape="rect" id="node2" href="$classAbstractScalar.html" title="Abstract class concerning all scalars (dim = 0). Allows to implement one time getDim() = 0 for all sc..." alt="" coords="131,1019,239,1045"/>
+<area shape="rect" id="node42" href="$classAbstractVectorial.html" title="AbstractVectorial" alt="" coords="124,1525,247,1552"/>
+<area shape="rect" id="node3" href="$classAbstractBuildingBlock.html" title="Abstract class from which derive all building blocks of exprs, i.e. objects not function of further e..." alt="" coords="295,335,445,361"/>
+<area shape="rect" id="node16" href="$classAbstractDuoFunc.html" title="Handle functions of multiple arguments. In the case of the call of a simplification function..." alt="" coords="308,537,432,564"/>
+<area shape="rect" id="node21" href="$classAbstractFunc.html" title="Base class for scalar functions of one argument. " alt="" coords="320,1019,420,1045"/>
+<area shape="rect" id="node38" href="$classAbstractMultiFunc.html" title="Handle functions of multiple arguments. In the case of the call of a simplification function..." alt="" coords="306,1449,434,1476"/>
+<area shape="rect" id="node4" href="$classAbstractIndicial.html" title="AbstractIndicial" alt="" coords="503,68,615,95"/>
+<area shape="rect" id="node6" href="$classAbstractLiteral.html" title="Abstract class from which derive literal building blocks: Constant, Variable, Imaginary and CFactoria..." alt="" coords="505,183,612,209"/>
+<area shape="rect" id="node12" href="$classAbstractNumerical.html" title="Abstract class from which derive numerical types, i.e. Double, Integer, CFraction. " alt="" coords="493,335,624,361"/>
 <area shape="rect" id="node5" href="$classITensor.html" title="ITensor" alt="" coords="722,5,789,32"/>
-<area shape="rect" id="node7" href="$classCFactorial.html" title="Handles factorial of a Number. " alt="" coords="714,56,797,83"/>
-<area shape="rect" id="node8" href="$classConstant.html" title="Handle an object with a name and a value. " alt="" coords="718,107,793,133"/>
-<area shape="rect" id="node9" href="$classImaginary.html" title="Numerical representation of i. " alt="" coords="716,157,795,184"/>
-<area shape="rect" id="node10" href="$classVariable.html" title="Handle an object with a name and a value. " alt="" coords="721,208,790,235"/>
-<area shape="rect" id="node12" href="$classCFraction.html" title="Handles fractions of Number. " alt="" coords="716,259,795,285"/>
-<area shape="rect" id="node13" href="$classDouble.html" title="Handle numbers in expr. " alt="" coords="724,309,787,336"/>
-<area shape="rect" id="node14" href="$classInteger.html" title="Handle numbers in expr. " alt="" coords="672,360,839,387"/>
-<area shape="rect" id="node16" href="$classAngle.html" title="Handles a angle of 2 arguments. " alt="" coords="531,385,586,412"/>
-<area shape="rect" id="node17" href="$classDerivative.html" title="Handles the exponentiation of one Abstract wrt another. " alt="" coords="518,436,599,463"/>
-<area shape="rect" id="node18" href="$classFraction.html" title="Handles a fraction of 2 arguments. " alt="" coords="524,487,593,513"/>
-<area shape="rect" id="node19" href="$classPow.html" title="Handles the exponentiation of one Abstract wrt another. " alt="" coords="535,537,583,564"/>
-<area shape="rect" id="node21" href="$classAbs.html" title="Final specialization of AbstractFunc, the abs function. " alt="" coords="536,588,581,615"/>
-<area shape="rect" id="node22" href="$classACos.html" title="Final specialization of AbstractFunc, the acos function. " alt="" coords="531,639,586,665"/>
-<area shape="rect" id="node23" href="$classACosh.html" title="Final specialization of AbstractFunc, the acosh function. " alt="" coords="527,689,590,716"/>
-<area shape="rect" id="node24" href="$classASin.html" title="Final specialization of AbstractFunc, the asin function. " alt="" coords="533,740,584,767"/>
-<area shape="rect" id="node25" href="$classASinh.html" title="Final specialization of AbstractFunc, the asinh function. " alt="" coords="530,791,587,817"/>
-<area shape="rect" id="node26" href="$classATan.html" title="Final specialization of AbstractFunc, the atan function. " alt="" coords="532,841,585,868"/>
-<area shape="rect" id="node27" href="$classATanh.html" title="Final specialization of AbstractFunc, the atanh function. " alt="" coords="529,892,589,919"/>
-<area shape="rect" id="node28" href="$classCos.html" title="Final specialization of AbstractFunc, the cos function. " alt="" coords="535,943,582,969"/>
-<area shape="rect" id="node29" href="$classCosh.html" title="Final specialization of AbstractFunc, the cosh function. " alt="" coords="532,993,585,1020"/>
-<area shape="rect" id="node30" href="$classExp.html" title="Final specialization of AbstractFunc, the exponential function. " alt="" coords="536,1044,581,1071"/>
-<area shape="rect" id="node31" href="$classFactorial.html" title="Final specialization of AbstractFunc, the factorial function. " alt="" coords="523,1095,595,1121"/>
-<area shape="rect" id="node32" href="$classLog.html" title="Final specialization of AbstractFunc, the logarithm function. " alt="" coords="537,1145,580,1172"/>
-<area shape="rect" id="node33" href="$classSin.html" title="Final specialization of AbstractFunc, the sin function. " alt="" coords="538,1196,579,1223"/>
-<area shape="rect" id="node34" href="$classSinh.html" title="Final specialization of AbstractFunc, the sinh function. " alt="" coords="535,1247,583,1273"/>
-<area shape="rect" id="node35" href="$classTan.html" title="Final specialization of AbstractFunc, the tan function. " alt="" coords="537,1297,581,1324"/>
-<area shape="rect" id="node36" href="$classTanh.html" title="Final specialization of AbstractFunc, the tanh function. " alt="" coords="533,1348,584,1375"/>
-<area shape="rect" id="node38" href="$classPlus.html" title="Handles a sum, function of multiple arguments. " alt="" coords="535,1399,583,1425"/>
-<area shape="rect" id="node39" href="$classPolynomial.html" title="Handles a polynomial, function of multiple arguments. " alt="" coords="515,1449,602,1476"/>
-<area shape="rect" id="node40" href="$classTimes.html" title="Handles a product, function of multiple arguments. " alt="" coords="529,1500,588,1527"/>
-<area shape="rect" id="node42" href="$classHighDTensor.html" title="HighDTensor" alt="" coords="321,1449,419,1476"/>
-<area shape="rect" id="node43" href="$classMatrix.html" title="Matrix" alt="" coords="341,1500,399,1527"/>
-<area shape="rect" id="node44" href="$classVector.html" title="Vector" alt="" coords="340,1551,400,1577"/>
+<area shape="rect" id="node7" href="$classArbitrary.html" title="Arbitrary" alt="" coords="720,56,791,83"/>
+<area shape="rect" id="node8" href="$classCFactorial.html" title="Handles factorial of a Number. " alt="" coords="714,107,797,133"/>
+<area shape="rect" id="node9" href="$classConstant.html" title="Handle an object with a name and a value. " alt="" coords="718,157,793,184"/>
+<area shape="rect" id="node10" href="$classImaginary.html" title="Numerical representation of i. " alt="" coords="716,208,795,235"/>
+<area shape="rect" id="node11" href="$classVariable.html" title="Handle an object with a name and a value. " alt="" coords="721,259,790,285"/>
+<area shape="rect" id="node13" href="$classCFraction.html" title="Handles fractions of Number. " alt="" coords="716,309,795,336"/>
+<area shape="rect" id="node14" href="$classDouble.html" title="Handle numbers in expr. " alt="" coords="672,411,839,437"/>
+<area shape="rect" id="node15" href="$classInteger.html" title="Handle numbers in expr. " alt="" coords="724,360,787,387"/>
+<area shape="rect" id="node17" href="$classAngle.html" title="Handles a angle of 2 arguments. " alt="" coords="531,436,586,463"/>
+<area shape="rect" id="node18" href="$classDerivative.html" title="Handles the exponentiation of one Abstract wrt another. " alt="" coords="518,487,599,513"/>
+<area shape="rect" id="node19" href="$classFraction.html" title="Handles a fraction of 2 arguments. " alt="" coords="524,537,593,564"/>
+<area shape="rect" id="node20" href="$classPow.html" title="Handles the exponentiation of one Abstract wrt another. " alt="" coords="535,588,583,615"/>
+<area shape="rect" id="node22" href="$classAbs.html" title="Final specialization of AbstractFunc, the abs function. " alt="" coords="536,639,581,665"/>
+<area shape="rect" id="node23" href="$classACos.html" title="Final specialization of AbstractFunc, the acos function. " alt="" coords="531,689,586,716"/>
+<area shape="rect" id="node24" href="$classACosh.html" title="Final specialization of AbstractFunc, the acosh function. " alt="" coords="527,740,590,767"/>
+<area shape="rect" id="node25" href="$classASin.html" title="Final specialization of AbstractFunc, the asin function. " alt="" coords="533,791,584,817"/>
+<area shape="rect" id="node26" href="$classASinh.html" title="Final specialization of AbstractFunc, the asinh function. " alt="" coords="530,841,587,868"/>
+<area shape="rect" id="node27" href="$classATan.html" title="Final specialization of AbstractFunc, the atan function. " alt="" coords="532,892,585,919"/>
+<area shape="rect" id="node28" href="$classATanh.html" title="Final specialization of AbstractFunc, the atanh function. " alt="" coords="529,943,589,969"/>
+<area shape="rect" id="node29" href="$classCos.html" title="Final specialization of AbstractFunc, the cos function. " alt="" coords="535,993,582,1020"/>
+<area shape="rect" id="node30" href="$classCosh.html" title="Final specialization of AbstractFunc, the cosh function. " alt="" coords="532,1044,585,1071"/>
+<area shape="rect" id="node31" href="$classExp.html" title="Final specialization of AbstractFunc, the exponential function. " alt="" coords="536,1095,581,1121"/>
+<area shape="rect" id="node32" href="$classFactorial.html" title="Final specialization of AbstractFunc, the factorial function. " alt="" coords="523,1145,595,1172"/>
+<area shape="rect" id="node33" href="$classLog.html" title="Final specialization of AbstractFunc, the logarithm function. " alt="" coords="537,1196,580,1223"/>
+<area shape="rect" id="node34" href="$classSin.html" title="Final specialization of AbstractFunc, the sin function. " alt="" coords="538,1247,579,1273"/>
+<area shape="rect" id="node35" href="$classSinh.html" title="Final specialization of AbstractFunc, the sinh function. " alt="" coords="535,1297,583,1324"/>
+<area shape="rect" id="node36" href="$classTan.html" title="Final specialization of AbstractFunc, the tan function. " alt="" coords="537,1348,581,1375"/>
+<area shape="rect" id="node37" href="$classTanh.html" title="Final specialization of AbstractFunc, the tanh function. " alt="" coords="533,1399,584,1425"/>
+<area shape="rect" id="node39" href="$classPlus.html" title="Handles a sum, function of multiple arguments. " alt="" coords="535,1449,583,1476"/>
+<area shape="rect" id="node40" href="$classPolynomial.html" title="Handles a polynomial, function of multiple arguments. " alt="" coords="515,1500,602,1527"/>
+<area shape="rect" id="node41" href="$classTimes.html" title="Handles a product, function of multiple arguments. " alt="" coords="529,1551,588,1577"/>
+<area shape="rect" id="node43" href="$classHighDTensor.html" title="HighDTensor" alt="" coords="321,1500,419,1527"/>
+<area shape="rect" id="node44" href="$classMatrix.html" title="Matrix" alt="" coords="341,1551,399,1577"/>
+<area shape="rect" id="node45" href="$classVector.html" title="Vector" alt="" coords="340,1601,400,1628"/>
 </map>

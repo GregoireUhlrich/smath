@@ -257,6 +257,9 @@ class Times: public AbstractMultiFunc{
     
     Expr getComplexArgument() override;
 
+    Expr findSubExpression(const Expr& subExpression,
+                           const Expr& newExpression) override;
+
     /*! \return The numerical factor of the product.
      */
     Expr getNumericalFactor() const override;
@@ -336,6 +339,8 @@ class Times: public AbstractMultiFunc{
     int getParity(const Expr& t_variable) const override;
     
     bool operator==(const Expr& expr) const override;
+
+    bool partialComparison(const Expr& expr) const;
 
     std::vector<Expr > getAlternateForms() const override;
 

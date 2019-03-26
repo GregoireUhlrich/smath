@@ -1,4 +1,5 @@
 #include "variable.h"
+#include "equation.h"
 #include "operations.h"
 
 using namespace std;
@@ -66,24 +67,37 @@ Expr AbstractNumerical::getTerm()
 /*************************************************/
 ///////////////////////////////////////////////////
 
-const vector<Property*>& AbstractLiteral::getProperties() const
+AbstractLiteral::~AbstractLiteral()
+{
+    for (auto& p : props)
+        delete p;
+    props.clear();
+}
+
+const vector<Equation*>& AbstractLiteral::getProperties() const
 {
     return props;
 }
 
-void AbstractLiteral::addProperty(Property* property)
+void AbstractLiteral::addProperty(Equation* property)
 {
     for (const auto& p : props)
-        if (p == property)
+        if (*p == *property) {
+            delete property;
             return;
+        }
     props.push_back(property);
 }
 
-void AbstractLiteral::removeProperty(Property* property)
+void AbstractLiteral::removeProperty(Equation* property)
 {
-    auto p = find(props.begin(), props.end(), property);
-    if (p != props.end())
-        props.erase(p);
+    for (auto p_iter=props.begin(); p_iter!=props.end(); ++p_iter)
+        if (**p_iter == *property) {
+            delete *p_iter;
+            props.erase(p_iter);
+            break;
+        }
+    delete property;
 }
 
 ///////////////////////////////////////////////////

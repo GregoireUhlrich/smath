@@ -46,7 +46,7 @@ if (edges && edges.length) {
         </defs>
 
 <script type="text/javascript">
-var viewWidth = 568;
+var viewWidth = 640;
 var viewHeight = 263;
 var sectionId = 'dynsection-0';
 </script>
@@ -54,100 +54,100 @@ var sectionId = 'dynsection-0';
 <svg id="graph" class="graph">
 <g id="viewport">
 <title>AbstractBuildingBlock</title>
-<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-259 563.5,-259 563.5,4 -4,4"/>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-259 635.5,-259 635.5,4 -4,4"/>
 <!-- Node0 -->
 <g id="node1" class="node">
 <title>Node0</title>
-<polygon fill="#bfbfbf" stroke="#000000" points="157.5,-112.5 157.5,-131.5 270.5,-131.5 270.5,-112.5 157.5,-112.5"/>
-<text text-anchor="middle" x="214" y="-119.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">AbstractBuildingBlock</text>
+<polygon fill="#bfbfbf" stroke="#000000" points="191.5,-112.5 191.5,-131.5 304.5,-131.5 304.5,-112.5 191.5,-112.5"/>
+<text text-anchor="middle" x="248" y="-119.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">AbstractBuildingBlock</text>
 </g>
 <!-- Node4 -->
 <g id="node5" class="node">
 <title>Node4</title>
 <g id="a_node5"><a xlink:href="classAbstractIndicial.html" target="_top" xlink:title="AbstractIndicial">
-<polygon fill="#ffffff" stroke="#000000" points="47,-56.5 47,-75.5 131,-75.5 131,-56.5 47,-56.5"/>
-<text text-anchor="middle" x="89" y="-63.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">AbstractIndicial</text>
+<polygon fill="#ffffff" stroke="#000000" points="45,-56.5 45,-75.5 129,-75.5 129,-56.5 45,-56.5"/>
+<text text-anchor="middle" x="87" y="-63.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">AbstractIndicial</text>
 </a>
 </g>
 </g>
 <!-- Node0&#45;&gt;Node4 -->
 <g id="edge4" class="edge">
 <title>Node0&#45;&gt;Node4</title>
-<path fill="none" stroke="#191970" d="M183.302,-108.2473C160.6007,-98.0771 130.2685,-84.4883 110.2079,-75.5011"/>
-<polygon fill="#191970" stroke="#191970" points="181.9547,-111.4789 192.5117,-112.3733 184.8167,-105.0906 181.9547,-111.4789"/>
+<path fill="none" stroke="#191970" d="M210.7889,-109.057C181.3241,-98.8084 140.8459,-84.729 114.3157,-75.5011"/>
+<polygon fill="#191970" stroke="#191970" points="209.7283,-112.3937 220.3231,-112.3733 212.028,-105.7822 209.7283,-112.3937"/>
 </g>
 <!-- Node6 -->
 <g id="node7" class="node">
 <title>Node6</title>
 <g id="a_node7"><a xlink:href="classAbstractLiteral.html" target="_top" xlink:title="Abstract class from which derive literal building blocks: Constant, Variable, Imaginary and CFactoria...">
-<polygon fill="#ffffff" stroke="#000000" points="174,-56.5 174,-75.5 254,-75.5 254,-56.5 174,-56.5"/>
-<text text-anchor="middle" x="214" y="-63.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">AbstractLiteral</text>
+<polygon fill="#ffffff" stroke="#000000" points="208,-56.5 208,-75.5 288,-75.5 288,-56.5 208,-56.5"/>
+<text text-anchor="middle" x="248" y="-63.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">AbstractLiteral</text>
 </a>
 </g>
 </g>
 <!-- Node0&#45;&gt;Node6 -->
 <g id="edge6" class="edge">
 <title>Node0&#45;&gt;Node6</title>
-<path fill="none" stroke="#191970" d="M214,-102.1575C214,-93.155 214,-82.9199 214,-75.6427"/>
-<polygon fill="#191970" stroke="#191970" points="210.5001,-102.2455 214,-112.2455 217.5001,-102.2456 210.5001,-102.2455"/>
+<path fill="none" stroke="#191970" d="M248,-102.1575C248,-93.155 248,-82.9199 248,-75.6427"/>
+<polygon fill="#191970" stroke="#191970" points="244.5001,-102.2455 248,-112.2455 251.5001,-102.2456 244.5001,-102.2455"/>
 </g>
-<!-- Node11 -->
-<g id="node12" class="node">
-<title>Node11</title>
-<g id="a_node12"><a xlink:href="classAbstractNumerical.html" target="_top" xlink:title="Abstract class from which derive numerical types, i.e. Double, Integer, CFraction. ">
-<polygon fill="#ffffff" stroke="#000000" points="386,-56.5 386,-75.5 484,-75.5 484,-56.5 386,-56.5"/>
-<text text-anchor="middle" x="435" y="-63.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">AbstractNumerical</text>
+<!-- Node12 -->
+<g id="node13" class="node">
+<title>Node12</title>
+<g id="a_node13"><a xlink:href="classAbstractNumerical.html" target="_top" xlink:title="Abstract class from which derive numerical types, i.e. Double, Integer, CFraction. ">
+<polygon fill="#ffffff" stroke="#000000" points="458,-56.5 458,-75.5 556,-75.5 556,-56.5 458,-56.5"/>
+<text text-anchor="middle" x="507" y="-63.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">AbstractNumerical</text>
 </a>
 </g>
 </g>
-<!-- Node0&#45;&gt;Node11 -->
-<g id="edge11" class="edge">
-<title>Node0&#45;&gt;Node11</title>
-<path fill="none" stroke="#191970" d="M261.6863,-109.9166C302.336,-99.6162 359.9667,-85.013 397.4155,-75.5237"/>
-<polygon fill="#191970" stroke="#191970" points="260.5741,-106.5877 251.7401,-112.4369 262.2935,-113.3733 260.5741,-106.5877"/>
+<!-- Node0&#45;&gt;Node12 -->
+<g id="edge12" class="edge">
+<title>Node0&#45;&gt;Node12</title>
+<path fill="none" stroke="#191970" d="M302.0788,-110.3073C349.804,-99.9883 418.5072,-85.1336 462.953,-75.5237"/>
+<polygon fill="#191970" stroke="#191970" points="301.2639,-106.9025 292.2294,-112.4369 302.7432,-113.7444 301.2639,-106.9025"/>
 </g>
 <!-- Node1 -->
 <g id="node2" class="node">
 <title>Node1</title>
 <g id="a_node2"><a xlink:href="classAbstractScalar.html" target="_top" xlink:title="Abstract class concerning all scalars (dim = 0). Allows to implement one time getDim() = 0 for all sc...">
-<polygon fill="#ffffff" stroke="#000000" points="118.5,-174 118.5,-193 199.5,-193 199.5,-174 118.5,-174"/>
-<text text-anchor="middle" x="159" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">AbstractScalar</text>
+<polygon fill="#ffffff" stroke="#000000" points="152.5,-174 152.5,-193 233.5,-193 233.5,-174 152.5,-174"/>
+<text text-anchor="middle" x="193" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">AbstractScalar</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node0 -->
 <g id="edge1" class="edge">
 <title>Node1&#45;&gt;Node0</title>
-<path fill="none" stroke="#191970" d="M174.292,-166.4007C184.285,-155.2268 196.9763,-141.0356 205.2851,-131.7449"/>
-<polygon fill="#191970" stroke="#191970" points="171.6511,-164.1034 167.5938,-173.8906 176.8689,-168.7698 171.6511,-164.1034"/>
+<path fill="none" stroke="#191970" d="M208.292,-166.4007C218.285,-155.2268 230.9763,-141.0356 239.2851,-131.7449"/>
+<polygon fill="#191970" stroke="#191970" points="205.6511,-164.1034 201.5938,-173.8906 210.8689,-168.7698 205.6511,-164.1034"/>
 </g>
 <!-- Node2 -->
 <g id="node3" class="node">
 <title>Node2</title>
 <g id="a_node3"><a xlink:href="classAbstract.html" target="_top" xlink:title="Root class of the inheritance tree of abstracts. ">
-<polygon fill="#ffffff" stroke="#000000" points="132.5,-235.5 132.5,-254.5 185.5,-254.5 185.5,-235.5 132.5,-235.5"/>
-<text text-anchor="middle" x="159" y="-242.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">Abstract</text>
+<polygon fill="#ffffff" stroke="#000000" points="166.5,-235.5 166.5,-254.5 219.5,-254.5 219.5,-235.5 166.5,-235.5"/>
+<text text-anchor="middle" x="193" y="-242.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">Abstract</text>
 </a>
 </g>
 </g>
 <!-- Node2&#45;&gt;Node1 -->
 <g id="edge2" class="edge">
 <title>Node2&#45;&gt;Node1</title>
-<path fill="none" stroke="#191970" d="M159,-225.2462C159,-214.5519 159,-201.814 159,-193.2449"/>
-<polygon fill="#191970" stroke="#191970" points="155.5001,-225.3906 159,-235.3906 162.5001,-225.3907 155.5001,-225.3906"/>
+<path fill="none" stroke="#191970" d="M193,-225.2462C193,-214.5519 193,-201.814 193,-193.2449"/>
+<polygon fill="#191970" stroke="#191970" points="189.5001,-225.3906 193,-235.3906 196.5001,-225.3907 189.5001,-225.3906"/>
 </g>
 <!-- Node3 -->
 <g id="node4" class="node">
 <title>Node3</title>
-<polygon fill="#ffffff" stroke="#bfbfbf" points="218,-168.5 218,-198.5 322,-198.5 322,-168.5 218,-168.5"/>
-<text text-anchor="start" x="226" y="-186.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">enable_shared_from</text>
-<text text-anchor="middle" x="270" y="-175.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">_this&lt; Abstract &gt;</text>
+<polygon fill="#ffffff" stroke="#bfbfbf" points="252,-168.5 252,-198.5 356,-198.5 356,-168.5 252,-168.5"/>
+<text text-anchor="start" x="260" y="-186.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">enable_shared_from</text>
+<text text-anchor="middle" x="304" y="-175.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">_this&lt; Abstract &gt;</text>
 </g>
 <!-- Node3&#45;&gt;Node0 -->
 <g id="edge3" class="edge">
 <title>Node3&#45;&gt;Node0</title>
-<path fill="none" stroke="#191970" d="M249.2089,-160.6669C240.1578,-150.7269 230.0284,-139.6026 222.9663,-131.8469"/>
-<polygon fill="#191970" stroke="#191970" points="246.8367,-163.2602 256.1573,-168.2977 252.0125,-158.5473 246.8367,-163.2602"/>
+<path fill="none" stroke="#191970" d="M283.2089,-160.6669C274.1578,-150.7269 264.0284,-139.6026 256.9663,-131.8469"/>
+<polygon fill="#191970" stroke="#191970" points="280.8367,-163.2602 290.1573,-168.2977 286.0125,-158.5473 280.8367,-163.2602"/>
 </g>
 <!-- Node5 -->
 <g id="node6" class="node">
@@ -161,113 +161,128 @@ var sectionId = 'dynsection-0';
 <!-- Node4&#45;&gt;Node5 -->
 <g id="edge5" class="edge">
 <title>Node4&#45;&gt;Node5</title>
-<path fill="none" stroke="#191970" d="M70.3086,-49.645C59.1781,-39.9058 45.4337,-27.8795 36.0202,-19.6427"/>
-<polygon fill="#191970" stroke="#191970" points="68.0215,-52.2945 77.8521,-56.2455 72.631,-47.0264 68.0215,-52.2945"/>
+<path fill="none" stroke="#191970" d="M68.5779,-49.3607C57.8519,-39.6727 44.7066,-27.7995 35.6758,-19.6427"/>
+<polygon fill="#191970" stroke="#191970" points="66.4334,-52.14 76.2004,-56.2455 71.1254,-46.9453 66.4334,-52.14"/>
 </g>
 <!-- Node7 -->
 <g id="node8" class="node">
 <title>Node7</title>
-<g id="a_node8"><a xlink:href="classCFactorial.html" target="_top" xlink:title="Handles factorial of a Number. ">
-<polygon fill="#ffffff" stroke="#000000" points="68,-.5 68,-19.5 130,-19.5 130,-.5 68,-.5"/>
-<text text-anchor="middle" x="99" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">CFactorial</text>
+<g id="a_node8"><a xlink:href="classArbitrary.html" target="_top" xlink:title="Arbitrary">
+<polygon fill="#ffffff" stroke="#000000" points="68.5,-.5 68.5,-19.5 121.5,-19.5 121.5,-.5 68.5,-.5"/>
+<text text-anchor="middle" x="95" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">Arbitrary</text>
 </a>
 </g>
 </g>
 <!-- Node6&#45;&gt;Node7 -->
 <g id="edge7" class="edge">
 <title>Node6&#45;&gt;Node7</title>
-<path fill="none" stroke="#191970" d="M185.1967,-51.9741C164.375,-41.8348 136.8022,-28.408 118.5112,-19.5011"/>
-<polygon fill="#191970" stroke="#191970" points="183.7078,-55.1419 194.2308,-56.3733 186.7724,-48.8484 183.7078,-55.1419"/>
+<path fill="none" stroke="#191970" d="M212.2721,-52.9231C184.3029,-42.686 146.0607,-28.6889 120.9584,-19.5011"/>
+<polygon fill="#191970" stroke="#191970" points="211.1046,-56.2228 221.6984,-56.3733 213.5106,-49.6493 211.1046,-56.2228"/>
 </g>
 <!-- Node8 -->
 <g id="node9" class="node">
 <title>Node8</title>
-<g id="a_node9"><a xlink:href="classConstant.html" target="_top" xlink:title="Handle an object with a name and a value. ">
-<polygon fill="#ffffff" stroke="#000000" points="148,-.5 148,-19.5 204,-19.5 204,-.5 148,-.5"/>
-<text text-anchor="middle" x="176" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">Constant</text>
+<g id="a_node9"><a xlink:href="classCFactorial.html" target="_top" xlink:title="Handles factorial of a Number. ">
+<polygon fill="#ffffff" stroke="#000000" points="140,-.5 140,-19.5 202,-19.5 202,-.5 140,-.5"/>
+<text text-anchor="middle" x="171" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">CFactorial</text>
 </a>
 </g>
 </g>
 <!-- Node6&#45;&gt;Node8 -->
 <g id="edge8" class="edge">
 <title>Node6&#45;&gt;Node8</title>
-<path fill="none" stroke="#191970" d="M201.7321,-47.9209C195.3512,-38.5176 187.8069,-27.3997 182.5432,-19.6427"/>
-<polygon fill="#191970" stroke="#191970" points="198.8697,-49.936 207.3809,-56.2455 204.662,-46.0055 198.8697,-49.936"/>
+<path fill="none" stroke="#191970" d="M226.2884,-50.2097C212.7647,-40.3743 195.8042,-28.0394 184.2587,-19.6427"/>
+<polygon fill="#191970" stroke="#191970" points="224.4416,-53.1944 234.5876,-56.2455 228.5589,-47.5332 224.4416,-53.1944"/>
 </g>
 <!-- Node9 -->
 <g id="node10" class="node">
 <title>Node9</title>
-<g id="a_node10"><a xlink:href="classImaginary.html" target="_top" xlink:title="Numerical representation of i. ">
-<polygon fill="#ffffff" stroke="#000000" points="222.5,-.5 222.5,-19.5 281.5,-19.5 281.5,-.5 222.5,-.5"/>
-<text text-anchor="middle" x="252" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">Imaginary</text>
+<g id="a_node10"><a xlink:href="classConstant.html" target="_top" xlink:title="Handle an object with a name and a value. ">
+<polygon fill="#ffffff" stroke="#000000" points="220,-.5 220,-19.5 276,-19.5 276,-.5 220,-.5"/>
+<text text-anchor="middle" x="248" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">Constant</text>
 </a>
 </g>
 </g>
 <!-- Node6&#45;&gt;Node9 -->
 <g id="edge9" class="edge">
 <title>Node6&#45;&gt;Node9</title>
-<path fill="none" stroke="#191970" d="M226.2679,-47.9209C232.6488,-38.5176 240.1931,-27.3997 245.4568,-19.6427"/>
-<polygon fill="#191970" stroke="#191970" points="223.338,-46.0055 220.6191,-56.2455 229.1303,-49.936 223.338,-46.0055"/>
+<path fill="none" stroke="#191970" d="M248,-46.1575C248,-37.155 248,-26.9199 248,-19.6427"/>
+<polygon fill="#191970" stroke="#191970" points="244.5001,-46.2455 248,-56.2455 251.5001,-46.2456 244.5001,-46.2455"/>
 </g>
 <!-- Node10 -->
 <g id="node11" class="node">
 <title>Node10</title>
-<g id="a_node11"><a xlink:href="classVariable.html" target="_top" xlink:title="Handle an object with a name and a value. ">
-<polygon fill="#ffffff" stroke="#000000" points="300,-.5 300,-19.5 352,-19.5 352,-.5 300,-.5"/>
-<text text-anchor="middle" x="326" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">Variable</text>
+<g id="a_node11"><a xlink:href="classImaginary.html" target="_top" xlink:title="Numerical representation of i. ">
+<polygon fill="#ffffff" stroke="#000000" points="294.5,-.5 294.5,-19.5 353.5,-19.5 353.5,-.5 294.5,-.5"/>
+<text text-anchor="middle" x="324" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">Imaginary</text>
 </a>
 </g>
 </g>
 <!-- Node6&#45;&gt;Node10 -->
 <g id="edge10" class="edge">
 <title>Node6&#45;&gt;Node10</title>
-<path fill="none" stroke="#191970" d="M242.3263,-51.8368C262.5721,-41.7139 289.2642,-28.3679 306.9978,-19.5011"/>
-<polygon fill="#191970" stroke="#191970" points="240.6325,-48.7706 233.2535,-56.3733 243.763,-55.0316 240.6325,-48.7706"/>
+<path fill="none" stroke="#191970" d="M269.4297,-50.2097C282.7777,-40.3743 299.5179,-28.0394 310.9135,-19.6427"/>
+<polygon fill="#191970" stroke="#191970" points="267.2126,-47.4958 261.2382,-56.2455 271.365,-53.1312 267.2126,-47.4958"/>
 </g>
-<!-- Node12 -->
-<g id="node13" class="node">
-<title>Node12</title>
-<g id="a_node13"><a xlink:href="classCFraction.html" target="_top" xlink:title="Handles fractions of Number. ">
-<polygon fill="#ffffff" stroke="#000000" points="370.5,-.5 370.5,-19.5 429.5,-19.5 429.5,-.5 370.5,-.5"/>
-<text text-anchor="middle" x="400" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">CFraction</text>
+<!-- Node11 -->
+<g id="node12" class="node">
+<title>Node11</title>
+<g id="a_node12"><a xlink:href="classVariable.html" target="_top" xlink:title="Handle an object with a name and a value. ">
+<polygon fill="#ffffff" stroke="#000000" points="372,-.5 372,-19.5 424,-19.5 424,-.5 372,-.5"/>
+<text text-anchor="middle" x="398" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">Variable</text>
 </a>
 </g>
 </g>
-<!-- Node11&#45;&gt;Node12 -->
-<g id="edge12" class="edge">
-<title>Node11&#45;&gt;Node12</title>
-<path fill="none" stroke="#191970" d="M423.5185,-47.6296C417.6804,-38.2887 410.8248,-27.3197 406.0267,-19.6427"/>
-<polygon fill="#191970" stroke="#191970" points="420.6354,-49.6206 428.9035,-56.2455 426.5714,-45.9105 420.6354,-49.6206"/>
+<!-- Node6&#45;&gt;Node11 -->
+<g id="edge11" class="edge">
+<title>Node6&#45;&gt;Node11</title>
+<path fill="none" stroke="#191970" d="M283.3871,-52.7888C310.7753,-42.5639 348.0479,-28.6488 372.5506,-19.5011"/>
+<polygon fill="#191970" stroke="#191970" points="281.9302,-49.5967 273.7859,-56.3733 284.3785,-56.1546 281.9302,-49.5967"/>
 </g>
 <!-- Node13 -->
 <g id="node14" class="node">
 <title>Node13</title>
-<g id="a_node14"><a xlink:href="classDouble.html" target="_top" xlink:title="Handle numbers in expr. ">
-<polygon fill="#ffffff" stroke="#000000" points="447.5,-.5 447.5,-19.5 494.5,-19.5 494.5,-.5 447.5,-.5"/>
-<text text-anchor="middle" x="471" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">Double</text>
+<g id="a_node14"><a xlink:href="classCFraction.html" target="_top" xlink:title="Handles fractions of Number. ">
+<polygon fill="#ffffff" stroke="#000000" points="442.5,-.5 442.5,-19.5 501.5,-19.5 501.5,-.5 442.5,-.5"/>
+<text text-anchor="middle" x="472" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">CFraction</text>
 </a>
 </g>
 </g>
-<!-- Node11&#45;&gt;Node13 -->
+<!-- Node12&#45;&gt;Node13 -->
 <g id="edge13" class="edge">
-<title>Node11&#45;&gt;Node13</title>
-<path fill="none" stroke="#191970" d="M446.8096,-47.6296C452.8144,-38.2887 459.8659,-27.3197 464.8011,-19.6427"/>
-<polygon fill="#191970" stroke="#191970" points="443.7342,-45.9411 441.2707,-56.2455 449.6225,-49.7264 443.7342,-45.9411"/>
+<title>Node12&#45;&gt;Node13</title>
+<path fill="none" stroke="#191970" d="M495.5185,-47.6296C489.6804,-38.2887 482.8248,-27.3197 478.0267,-19.6427"/>
+<polygon fill="#191970" stroke="#191970" points="492.6354,-49.6206 500.9035,-56.2455 498.5714,-45.9105 492.6354,-49.6206"/>
 </g>
 <!-- Node14 -->
 <g id="node15" class="node">
 <title>Node14</title>
-<g id="a_node15"><a xlink:href="classInteger.html" target="_top" xlink:title="Handle numbers in expr. ">
-<polygon fill="#ffffff" stroke="#000000" points="512.5,-.5 512.5,-19.5 559.5,-19.5 559.5,-.5 512.5,-.5"/>
-<text text-anchor="middle" x="536" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">Integer</text>
+<g id="a_node15"><a xlink:href="classDouble.html" target="_top" xlink:title="Handle numbers in expr. ">
+<polygon fill="#ffffff" stroke="#000000" points="519.5,-.5 519.5,-19.5 566.5,-19.5 566.5,-.5 519.5,-.5"/>
+<text text-anchor="middle" x="543" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">Double</text>
 </a>
 </g>
 </g>
-<!-- Node11&#45;&gt;Node14 -->
+<!-- Node12&#45;&gt;Node14 -->
 <g id="edge14" class="edge">
-<title>Node11&#45;&gt;Node14</title>
-<path fill="none" stroke="#191970" d="M461.4719,-51.3225C479.5125,-41.3198 502.8877,-28.3593 518.6087,-19.6427"/>
-<polygon fill="#191970" stroke="#191970" points="459.6413,-48.3354 452.5929,-56.2455 463.0357,-54.4574 459.6413,-48.3354"/>
+<title>Node12&#45;&gt;Node14</title>
+<path fill="none" stroke="#191970" d="M518.8096,-47.6296C524.8144,-38.2887 531.8659,-27.3197 536.8011,-19.6427"/>
+<polygon fill="#191970" stroke="#191970" points="515.7342,-45.9411 513.2707,-56.2455 521.6225,-49.7264 515.7342,-45.9411"/>
+</g>
+<!-- Node15 -->
+<g id="node16" class="node">
+<title>Node15</title>
+<g id="a_node16"><a xlink:href="classInteger.html" target="_top" xlink:title="Handle numbers in expr. ">
+<polygon fill="#ffffff" stroke="#000000" points="584.5,-.5 584.5,-19.5 631.5,-19.5 631.5,-.5 584.5,-.5"/>
+<text text-anchor="middle" x="608" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">Integer</text>
+</a>
+</g>
+</g>
+<!-- Node12&#45;&gt;Node15 -->
+<g id="edge15" class="edge">
+<title>Node12&#45;&gt;Node15</title>
+<path fill="none" stroke="#191970" d="M533.4719,-51.3225C551.5125,-41.3198 574.8877,-28.3593 590.6087,-19.6427"/>
+<polygon fill="#191970" stroke="#191970" points="531.6413,-48.3354 524.5929,-56.2455 535.0357,-54.4574 531.6413,-48.3354"/>
 </g>
 </g>
 </svg>

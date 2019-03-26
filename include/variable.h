@@ -62,19 +62,19 @@ class AbstractLiteral: public AbstractBuildingBlock{
     protected:
 
     /*! Pointers to the specific properties of the object. */
-    std::vector<Property*> props;
+    std::vector<Equation*> props;
 
     public:
 
     AbstractLiteral();
     explicit AbstractLiteral(const std::string& t_name);
-    virtual ~AbstractLiteral(){};
+    virtual ~AbstractLiteral();
 
     smType::PrimaryType getPrimaryType() const override { return smType::Literal;}
 
-    const std::vector<Property*>& getProperties() const override;
-    void addProperty(Property* property) override;
-    void removeProperty(Property* property) override;
+    const std::vector<Equation*>& getProperties() const override;
+    void addProperty(Equation* property) override;
+    void removeProperty(Equation* property) override;
 };
 
 /*************************************************/
@@ -89,9 +89,9 @@ inline AbstractNumerical::AbstractNumerical(const std::string& t_name)
     :AbstractBuildingBlock(t_name){}
 
 inline AbstractLiteral::AbstractLiteral(): AbstractBuildingBlock(),
-    props(std::vector<Property*>(0)){}
+    props(std::vector<Equation*>(0)){}
 inline AbstractLiteral::AbstractLiteral(const std::string& t_name)
-    :AbstractBuildingBlock(t_name), props(std::vector<Property*>(0)){}
+    :AbstractBuildingBlock(t_name), props(std::vector<Equation*>(0)){}
 
 
 

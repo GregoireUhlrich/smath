@@ -19,6 +19,7 @@ var searchData=
   ['sin_5f',['sin_',['../mathFunctions_8h.html#ab247e9b07f40a67a98b95aac7d79e26d',1,'sin_(const Expr &amp;expr):&#160;mathFunctions.cpp'],['../symbol_8h.html#a12a0ed890c00b9cc7e1a6a4ff0b890ab',1,'sin_(const Symbol &amp;t_symbol):&#160;symbol.cpp']]],
   ['sinh',['Sinh',['../classSinh.html',1,'Sinh'],['../classSinh.html#a5bac5a214db251a6d673e19edc5fd8d7',1,'Sinh::Sinh()'],['../classSinh.html#a77ee91d1a159e00499d394ba6243e0bf',1,'Sinh::Sinh(const Expr &amp;t_argument)'],['../abstract_8h.html#a1d1cfd8ffb84e947f82999c682b666a7ab568cc39f568f3cdccd5fb19287a37c9',1,'smType::Sinh()']]],
   ['sinh_5f',['sinh_',['../mathFunctions_8h.html#ae7bc6821c2b64b8e407ab43727d083a7',1,'sinh_(const Expr &amp;expr):&#160;mathFunctions.cpp'],['../symbol_8h.html#a1c4ccfb476e5f62caa140f8000ecc4f0',1,'sinh_(const Symbol &amp;t_symbol):&#160;symbol.cpp']]],
+  ['smcomparator',['smComparator',['../classsmComparator.html',1,'']]],
   ['space',['Space',['../classSpace.html',1,'']]],
   ['stop_5ferror_5fdebug_5fmode',['STOP_ERROR_DEBUG_MODE',['../error_8h.html#a124945983e2cd7028c838b1c93f885b6',1,'error.h']]],
   ['support_2eh',['support.h',['../support_8h.html',1,'']]],

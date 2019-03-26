@@ -3,46 +3,69 @@
 
 using namespace std;
 
-Property::Property(): eq(){}
-
-Property::Property(const Equation& t_eq): eq(t_eq)
-{
-    if (eq.getType() != smEquation::Equal)
-        callError(smError::BadPropertySetting,
-                "Property::Property(const Equation&)",
-                eq.getType());
-
-    eq.makeLHSimple();
-}
-
-Property::Property(const Expr& leftHandSide, const Expr& rightHandSide)
-    :Property(Equation(leftHandSide, rightHandSide)){}
-
-Expr Property::apply(const Expr& expr) const
-{
-    // To implement
-   return expr; 
-}
-
-
-PropertyList::PropertyList(): props(vector<Property>(0)){}
+PropertyList::PropertyList(): props(vector<Equation>(0)){}
 
 PropertyList::~PropertyList()
 {}
 
-PropertyList* PropertyList::Construct()
+void PropertyList::addProperty(const Equation& property)
 {
-    if (not self)
-        return new PropertyList();
-    else
-        return self;
+    vector<Expr> BB = property.getBuildingBlocks();
+    const size_t size = props.size();
+    for (const auto& bb : BB) {
+        Equation newProp = property;
+        newProp.isolate(bb);
+        if (newProp != property) {
+            newProp.setBuildingBlocks(vector<Expr>(1,bb));
+            props.push_back(newProp);
+            bb->addProperty(new Equation(props[props.size()-1]));
+        }
+    }
+    if (size == props.size()) {
+        props.push_back(property);
+        for (const auto& bb : property.getBuildingBlocks())
+            bb->addProperty(new Equation(props[props.size()-1]));
+    }
 }
 
-void PropertyList::addProperty(const Property& property)
-{
-    props.push_back(property);
+void PropertyList::removeProperty(const Equation& property)
+{ 
+    vector<Expr> BB = property.getBuildingBlocks();
+    for (const auto& bb : BB) {
+        Equation newProp = property;
+        newProp.isolate(bb);
+        if (newProp != property) {
+            bb->removeProperty(new Equation(props[props.size()-1]));
+            for (auto iter=props.begin(); iter!=props.end(); ++iter)
+                if (*iter == newProp)
+                    props.erase(iter);
+        }
+    }
 }
 
-void PropertyList::removeProperty(const Property& property)
+vector<Expr> PropertyList::apply(const Expr& expr) const
 {
+    const vector<Expr>& buildingBlocks = listBuildingBlocks(expr);
+    if (buildingBlocks.size() == 0)
+        return vector<Expr>(0);
+
+    vector<Expr> res(0);
+    for (const auto& bb : buildingBlocks) {
+        vector<Equation*> propsToApply = bb->getProperties();
+        for (const auto& p : propsToApply) {
+            Expr foo = expr->findSubExpression(p->getLHS(), p->getRHS());
+            if (*foo != expr)
+                res.push_back(foo);
+        }
+    }
+
+    return res;
+}
+
+ostream& operator<<(ostream& fout, const PropertyList& props)
+{
+    for (const auto& p : props.props)
+        cout<<p<<endl;
+
+    return fout;
 }

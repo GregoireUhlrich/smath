@@ -49,6 +49,7 @@ namespace smError{
         BadContraction,  /*!<  Bad contraction of indices in expression. */
         UnknownEquation, /*!<  Unknown type of equation used. */
         BadPropertySetting,  /*!<  Setting a property that is not an equality. */
+        ArbitraryEvaluated, /*!<  An arbitrary Abstract is evaluated, should not. */
 
     };
 
@@ -121,7 +122,10 @@ inline void callError(smError::Error error, const std::string& caller, T spec)
                std::cout<<"Unknown type of equation in "<<caller<<": "<<spec<<".\n"; break;
         case BadPropertySetting:
                std::cout<<"Setting a property with something else than an equality in "<<caller<<": "<<spec<<".\n"; break;
+        case ArbitraryEvaluated:
+               std::cout<<"An arbitrary abstract has been evaluated from "<<caller<<". Should not be.\n"; break;
 
+               
         default:
                std::cout<<"SmError "<<(int)error<<" not recognized.\n";
     }

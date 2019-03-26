@@ -4,47 +4,25 @@
 #include "abstract.h"
 #include "equation.h"
 
-class Property{
-
-    protected:
-
-    Equation eq;
-
-    public:
-
-    Property();
-    Property(const Equation& t_eq);
-    Property(const Expr& leftHandSide, const Expr& rightHandSide);
-    //Property(const Property& p) = delete;
-    //Property& operator=(const Property& p) = delete;
-    ~Property(){};
-
-    Expr apply(const Expr& expr) const;
-};
-
 class PropertyList{
 
     protected:
 
-        // Singleton class
-    static PropertyList* self;
-    std::vector<Property> props;
+    std::vector<Equation> props;
 
-    private:
+    public:
 
     PropertyList();
     ~PropertyList();
 
-    public:
+    void addProperty(const Equation& property);
+    void removeProperty(const Equation& property);
 
-    static PropertyList* Construct();
-    void addProperty(const Property& property);
-    void removeProperty(const Property& property);
+    std::vector<Expr> apply(const Expr& expr) const;
 
     friend std::ostream& operator<<(std::ostream& fout, const PropertyList& prop);
 };
 
-PropertyList* PropertyList::self = nullptr;
-static PropertyList* PROPERTIES = PropertyList::Construct();
+static PropertyList PROPERTIES = PropertyList();
 
 #endif

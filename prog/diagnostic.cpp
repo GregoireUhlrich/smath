@@ -1,11 +1,4 @@
-#include "abstract.h"
-#include "variable.h"
-#include "operations.h"
-#include "symbol.h"
-#include "simplification.h"
 #include "space.h"
-#include "support.h"
-#include "equation.h"
 #include "property.h"
 #include <chrono>
 #include <cmath>
@@ -389,12 +382,22 @@ ofojeogz
     cout<<"P_{mu,+mu} = ";P({mu,+mu}).print();
     // Error: cout<<"P_{mu,nu} = ";P({mu,mu}).print();
 
-    PROPERTIES->addProperty(Equation(derivative_(a.getAbstract(), x.getAbstract())
-                                   +derivative_(b.getAbstract(),y.getAbstract())
-                                   +derivative_(c.getAbstract(),z.getAbstract()), ZERO));
-    PROPERTIES->addProperty(Equation(Riemann({mu,nu,rho,sigma})+Riemann({nu,mu,rho,sigma}), ZERO));
+    Symbol Bx("Bx"), By("By"), Bz("Bz");
+    PROPERTIES.addProperty(Equation(derivative_(Bx.getAbstract(), x.getAbstract())
+                                   +derivative_(By.getAbstract(),y.getAbstract())
+                                   +derivative_(Bz.getAbstract(),z.getAbstract()), ZERO));
+    PROPERTIES.addProperty(Equation(Riemann({mu,nu,rho,sigma})+Riemann({nu,mu,rho,sigma}), ZERO));
 
-    cout<<*PROPERTIES<<endl;
+    cout<<PROPERTIES<<endl;
+    Simplify(derivative_(Bx.getAbstract(), x.getAbstract())
+            +derivative_(By.getAbstract(),y.getAbstract())
+            +derivative_(Bz.getAbstract(),z.getAbstract()))->print();
+    Simplify(-1*x.getAbstract()*y.getAbstract()*derivative_(Bz.getAbstract(),z.getAbstract())
+            -y.getAbstract()*x.getAbstract()*derivative_(By.getAbstract(),y.getAbstract())
+            *((cos_(x.getAbstract())^2)+(sin_(x.getAbstract())^2)))->print();
+
+    Simplify(Riemann({mu,nu,rho,sigma}) + Riemann({nu,mu,rho,sigma}))->print();
+    
 
     return 0;
     /*Symbol i("i"), j("j");

@@ -74,15 +74,15 @@ Inheritance diagram for ITensor:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6fde550b0b960f2adbac94ceb8f7564f"><td class="memItemLeft" align="right" valign="top"><a id="a6fde550b0b960f2adbac94ceb8f7564f"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>ITensor</b> (const std::string &amp;t_name, bool t_commutable, const Idx &amp;t_index, const <a class="el" href="classIndicialParent.html">IndicialParent</a> *t_parent)</td></tr>
-<tr class="separator:a6fde550b0b960f2adbac94ceb8f7564f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35004541fc743f013831f7df8a1259d6"><td class="memItemLeft" align="right" valign="top"><a id="a35004541fc743f013831f7df8a1259d6"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>ITensor</b> (const std::string &amp;t_name, bool t_commutable, const std::vector&lt; Idx &gt; &amp;indices, const <a class="el" href="classIndicialParent.html">IndicialParent</a> *t_parent)</td></tr>
-<tr class="separator:a35004541fc743f013831f7df8a1259d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08644bbe3f49317a94b023a535f9ef48"><td class="memItemLeft" align="right" valign="top"><a id="a08644bbe3f49317a94b023a535f9ef48"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>ITensor</b> (const std::string &amp;t_name, bool t_commutable, const <a class="el" href="classIndexStructure.html">IndexStructure</a> &amp;indices, const <a class="el" href="classIndicialParent.html">IndicialParent</a> *t_parent)</td></tr>
-<tr class="separator:a08644bbe3f49317a94b023a535f9ef48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d68ab5f0fbf0900651a3b4228886683"><td class="memItemLeft" align="right" valign="top"><a id="a5d68ab5f0fbf0900651a3b4228886683"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>ITensor</b> (const std::string &amp;t_name, bool t_commutable, const Idx &amp;t_index, <a class="el" href="classIndicialParent.html">IndicialParent</a> *const t_parent)</td></tr>
+<tr class="separator:a5d68ab5f0fbf0900651a3b4228886683"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afefd61887fa1909f7705f4ba4fa58fac"><td class="memItemLeft" align="right" valign="top"><a id="afefd61887fa1909f7705f4ba4fa58fac"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>ITensor</b> (const std::string &amp;t_name, bool t_commutable, const std::vector&lt; Idx &gt; &amp;indices, <a class="el" href="classIndicialParent.html">IndicialParent</a> *const t_parent)</td></tr>
+<tr class="separator:afefd61887fa1909f7705f4ba4fa58fac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a140b1b21610d3aaafe7115090e57b9f9"><td class="memItemLeft" align="right" valign="top"><a id="a140b1b21610d3aaafe7115090e57b9f9"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>ITensor</b> (const std::string &amp;t_name, bool t_commutable, const <a class="el" href="classIndexStructure.html">IndexStructure</a> &amp;indices, <a class="el" href="classIndicialParent.html">IndicialParent</a> *const t_parent)</td></tr>
+<tr class="separator:a140b1b21610d3aaafe7115090e57b9f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afde187ade5f0a5a43e7c8527771350c6"><td class="memItemLeft" align="right" valign="top"><a id="afde187ade5f0a5a43e7c8527771350c6"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>ITensor</b> (const <a class="el" href="classAbstract.html">Abstract</a> *&amp;expression)</td></tr>
 <tr class="separator:afde187ade5f0a5a43e7c8527771350c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -94,9 +94,17 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7e3d0659d118ba83932b71540239d0b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adaa5c4cd3b65153a8bae7059f18fd6d4"><td class="memItemLeft" align="right" valign="top">Idx&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classITensor.html#adaa5c4cd3b65153a8bae7059f18fd6d4">getIndex</a> (int i) const override</td></tr>
 <tr class="separator:adaa5c4cd3b65153a8bae7059f18fd6d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8529c694aed6f2daf6ff5d2f9747b121"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classIndicialParent.html">IndicialParent</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classITensor.html#a8529c694aed6f2daf6ff5d2f9747b121">getParent</a> () const override</td></tr>
-<tr class="memdesc:a8529c694aed6f2daf6ff5d2f9747b121"><td class="mdescLeft">&#160;</td><td class="mdescRight">For indicial expressions this function returns a pointer to the parent object of type <a class="el" href="classIndicialParent.html">IndicialParent</a> (not an expression).  <a href="#a8529c694aed6f2daf6ff5d2f9747b121">More...</a><br /></td></tr>
-<tr class="separator:a8529c694aed6f2daf6ff5d2f9747b121"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41e630fdcc4c3abf3ac1e361b94a6bc3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classIndicialParent.html">IndicialParent</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classITensor.html#a41e630fdcc4c3abf3ac1e361b94a6bc3">getParent</a> () const override</td></tr>
+<tr class="memdesc:a41e630fdcc4c3abf3ac1e361b94a6bc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">For indicial expressions this function returns a pointer to the parent object of type <a class="el" href="classIndicialParent.html">IndicialParent</a> (not an expression).  <a href="#a41e630fdcc4c3abf3ac1e361b94a6bc3">More...</a><br /></td></tr>
+<tr class="separator:a41e630fdcc4c3abf3ac1e361b94a6bc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d1c9ef8c1e11cadefddbf57334f29db"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="classEquation.html">Equation</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classITensor.html#a4d1c9ef8c1e11cadefddbf57334f29db">getProperties</a> () const override</td></tr>
+<tr class="separator:a4d1c9ef8c1e11cadefddbf57334f29db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a2e5eac03d569a76ed43f9db508831b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classITensor.html#a9a2e5eac03d569a76ed43f9db508831b">addProperty</a> (<a class="el" href="classEquation.html">Equation</a> *property) override</td></tr>
+<tr class="memdesc:a9a2e5eac03d569a76ed43f9db508831b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a property to the object.  <a href="#a9a2e5eac03d569a76ed43f9db508831b">More...</a><br /></td></tr>
+<tr class="separator:a9a2e5eac03d569a76ed43f9db508831b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65633406ba9a2908ee112a2667f2b097"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classITensor.html#a65633406ba9a2908ee112a2667f2b097">removeProperty</a> (<a class="el" href="classEquation.html">Equation</a> *property) override</td></tr>
+<tr class="memdesc:a65633406ba9a2908ee112a2667f2b097"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a property to the object.  <a href="#a65633406ba9a2908ee112a2667f2b097">More...</a><br /></td></tr>
+<tr class="separator:a65633406ba9a2908ee112a2667f2b097"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae4c1a8d23bfb36d77584d22a327f9d87"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classITensor.html#ae4c1a8d23bfb36d77584d22a327f9d87">checkIndexStructure</a> (const std::vector&lt; Idx &gt; &amp;t_index) const override</td></tr>
 <tr class="memdesc:ae4c1a8d23bfb36d77584d22a327f9d87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks the compatibility of the index structure of an <b>Indicial</b> expression with another. In a sum, two terms must have exaclty the same index structure.  <a href="#ae4c1a8d23bfb36d77584d22a327f9d87">More...</a><br /></td></tr>
 <tr class="separator:ae4c1a8d23bfb36d77584d22a327f9d87"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -226,8 +234,6 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a008f58643c15d4f624e6aee7a98e699c inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a008f58643c15d4f624e6aee7a98e699c">getCommutable</a> () const</td></tr>
 <tr class="memdesc:a008f58643c15d4f624e6aee7a98e699c inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to know if the object commutes with all the others.  <a href="classAbstract.html#a008f58643c15d4f624e6aee7a98e699c">More...</a><br /></td></tr>
 <tr class="separator:a008f58643c15d4f624e6aee7a98e699c inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa88cf11a4fdc73bb8c6c3efd50f4f9b3 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual const std::vector&lt; <a class="el" href="classProperty.html">Property</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#aa88cf11a4fdc73bb8c6c3efd50f4f9b3">getProperties</a> () const</td></tr>
-<tr class="separator:aa88cf11a4fdc73bb8c6c3efd50f4f9b3 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f96f613f3813778606654fc57b9256b inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a8f96f613f3813778606654fc57b9256b">isInteger</a> () const</td></tr>
 <tr class="memdesc:a8f96f613f3813778606654fc57b9256b inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells if the expression is an integer. Either an <a class="el" href="classInteger.html" title="Handle numbers in expr. ">Integer</a> object directly, or a <a class="el" href="classDouble.html" title="Handle numbers in expr. ">Double</a> that has an integer value.  <a href="classAbstract.html#a8f96f613f3813778606654fc57b9256b">More...</a><br /></td></tr>
 <tr class="separator:a8f96f613f3813778606654fc57b9256b inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -288,12 +294,6 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a128daf984905d30e5c966492001c23b4 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a128daf984905d30e5c966492001c23b4">setCommutable</a> (bool t_commutable)</td></tr>
 <tr class="memdesc:a128daf984905d30e5c966492001c23b4 inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows the abstract to commute or not.  <a href="classAbstract.html#a128daf984905d30e5c966492001c23b4">More...</a><br /></td></tr>
 <tr class="separator:a128daf984905d30e5c966492001c23b4 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04156a34ae37f57a1e50382290d40c31 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a04156a34ae37f57a1e50382290d40c31">addProperty</a> (<a class="el" href="classProperty.html">Property</a> *property)</td></tr>
-<tr class="memdesc:a04156a34ae37f57a1e50382290d40c31 inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a property to the object.  <a href="classAbstract.html#a04156a34ae37f57a1e50382290d40c31">More...</a><br /></td></tr>
-<tr class="separator:a04156a34ae37f57a1e50382290d40c31 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac51597de4e4e156df92af3987755c442 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#ac51597de4e4e156df92af3987755c442">removeProperty</a> (<a class="el" href="classProperty.html">Property</a> *property)</td></tr>
-<tr class="memdesc:ac51597de4e4e156df92af3987755c442 inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a property to the object.  <a href="classAbstract.html#ac51597de4e4e156df92af3987755c442">More...</a><br /></td></tr>
-<tr class="separator:ac51597de4e4e156df92af3987755c442 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbf2751548904140aa7aa4a1e8e59346 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top"><a id="afbf2751548904140aa7aa4a1e8e59346"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#afbf2751548904140aa7aa4a1e8e59346">setValue</a> (double t_value)</td></tr>
 <tr class="memdesc:afbf2751548904140aa7aa4a1e8e59346 inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the value if there is one (for Numerical and Literal valued). <br /></td></tr>
@@ -483,9 +483,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:ade2c9cfaa0b50a88754fd7c20b7d34d1"><td class="memItemLeft" align="right" valign="top"><a id="ade2c9cfaa0b50a88754fd7c20b7d34d1"></a>
 std::vector&lt; <a class="el" href="classAbstract.html">Abstract</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>contractions</b></td></tr>
 <tr class="separator:ade2c9cfaa0b50a88754fd7c20b7d34d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa3a1ec0ebdeed240c589cf926eeb5ab"><td class="memItemLeft" align="right" valign="top"><a id="aaa3a1ec0ebdeed240c589cf926eeb5ab"></a>
-const <a class="el" href="classIndicialParent.html">IndicialParent</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>parent</b></td></tr>
-<tr class="separator:aaa3a1ec0ebdeed240c589cf926eeb5ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a293fb98a85485a6d015baf81229caf96"><td class="memItemLeft" align="right" valign="top"><a id="a293fb98a85485a6d015baf81229caf96"></a>
+<a class="el" href="classIndicialParent.html">IndicialParent</a> *const&#160;</td><td class="memItemRight" valign="bottom"><b>parent</b></td></tr>
+<tr class="separator:a293fb98a85485a6d015baf81229caf96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classAbstractIndicial"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classAbstractIndicial')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classAbstractIndicial.html">AbstractIndicial</a></td></tr>
 <tr class="memitem:aae84566949ec992a8f1a5d31c65cd791 inherit pro_attribs_classAbstractIndicial"><td class="memItemLeft" align="right" valign="top"><a id="aae84566949ec992a8f1a5d31c65cd791"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>nIndices</b></td></tr>
@@ -500,6 +500,42 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>nIndices</b></td></tr>
 <tr class="separator:a98b736117ed72bc3d8bc6813c97ca850 inherit pro_attribs_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9a2e5eac03d569a76ed43f9db508831b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a2e5eac03d569a76ed43f9db508831b">&#9670;&nbsp;</a></span>addProperty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void addProperty </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEquation.html">Equation</a> *&#160;</td>
+          <td class="paramname"><em>property</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adds a property to the object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">property</td><td>The new property to add in <b>props</b>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="classAbstract.html#ac0978d1c8d671975134de12d7f71d31f">Abstract</a>.</p>
+
+</div>
+</div>
 <a id="ae4c1a8d23bfb36d77584d22a327f9d87"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae4c1a8d23bfb36d77584d22a327f9d87">&#9670;&nbsp;</a></span>checkIndexStructure() <span class="overload">[1/2]</span></h2>
 
@@ -673,8 +709,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>nIndices</b></td></tr>
 
 </div>
 </div>
-<a id="a8529c694aed6f2daf6ff5d2f9747b121"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8529c694aed6f2daf6ff5d2f9747b121">&#9670;&nbsp;</a></span>getParent()</h2>
+<a id="a41e630fdcc4c3abf3ac1e361b94a6bc3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41e630fdcc4c3abf3ac1e361b94a6bc3">&#9670;&nbsp;</a></span>getParent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -683,7 +719,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>nIndices</b></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classIndicialParent.html">IndicialParent</a> * getParent </td>
+          <td class="memname"><a class="el" href="classIndicialParent.html">IndicialParent</a> * getParent </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -699,7 +735,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>nIndices</b></td></tr>
 <p>For indicial expressions this function returns a pointer to the parent object of type <a class="el" href="classIndicialParent.html">IndicialParent</a> (not an expression). </p>
 <dl class="section return"><dt>Returns</dt><dd><b>parent</b> for ITensor-type expression. </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classAbstract.html#a7960d79b133f222a433de92b9562c7cc">Abstract</a>.</p>
+<p>Reimplemented from <a class="el" href="classAbstract.html#a97560d38a511d2abe349521bb71b57ff">Abstract</a>.</p>
 
 </div>
 </div>
@@ -730,6 +766,34 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>nIndices</b></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A std::vector containing all possible permutations of the tensor. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classAbstract.html#a13bc1c2804eeb41a6ce2eaca0d741cf8">Abstract</a>.</p>
+
+</div>
+</div>
+<a id="a4d1c9ef8c1e11cadefddbf57334f29db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d1c9ef8c1e11cadefddbf57334f29db">&#9670;&nbsp;</a></span>getProperties()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; <a class="el" href="classEquation.html">Equation</a> * &gt; &amp; getProperties </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>The properties of the object. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classAbstract.html#a19b814b0ea2da2ab605b5073c6ff20e6">Abstract</a>.</p>
 
 </div>
 </div>
@@ -950,6 +1014,42 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>nIndices</b></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The string corresponding to the LaTeX output. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classAbstract.html#af21ac36bebac371e07ca725f91c9a21c">Abstract</a>.</p>
+
+</div>
+</div>
+<a id="a65633406ba9a2908ee112a2667f2b097"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65633406ba9a2908ee112a2667f2b097">&#9670;&nbsp;</a></span>removeProperty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void removeProperty </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEquation.html">Equation</a> *&#160;</td>
+          <td class="paramname"><em>property</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Removes a property to the object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">property</td><td>Property to remove from <b>props</b>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="classAbstract.html#a154f804eaf05e8fe148a4008bd60a746">Abstract</a>.</p>
 
 </div>
 </div>

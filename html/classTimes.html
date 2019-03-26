@@ -112,6 +112,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>selfCheckIndexStructu
 <tr class="memitem:a3d06a129ca3e2e920aecf3e4432c149e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTimes.html#a3d06a129ca3e2e920aecf3e4432c149e">getComplexArgument</a> () override</td></tr>
 <tr class="memdesc:a3d06a129ca3e2e920aecf3e4432c149e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>Evaluates</b> the <b>argument in the complex plane</b> of the <a class="el" href="classAbstract.html" title="Root class of the inheritance tree of abstracts. ">Abstract</a> and returns it.  <a href="#a3d06a129ca3e2e920aecf3e4432c149e">More...</a><br /></td></tr>
 <tr class="separator:a3d06a129ca3e2e920aecf3e4432c149e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc293938fdf598b9e2826a5a49abac82"><td class="memItemLeft" align="right" valign="top"><a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTimes.html#afc293938fdf598b9e2826a5a49abac82">findSubExpression</a> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;subExpression, const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;newExpression) override</td></tr>
+<tr class="memdesc:afc293938fdf598b9e2826a5a49abac82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Searches a sub-expression and replaces it.  <a href="#afc293938fdf598b9e2826a5a49abac82">More...</a><br /></td></tr>
+<tr class="separator:afc293938fdf598b9e2826a5a49abac82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0678331620669f2ad08c32a88615fe8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTimes.html#a0678331620669f2ad08c32a88615fe8c">getNumericalFactor</a> () const override</td></tr>
 <tr class="separator:a0678331620669f2ad08c32a88615fe8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abfb9626259e3fb5e719f638cff60b316"><td class="memItemLeft" align="right" valign="top"><a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTimes.html#abfb9626259e3fb5e719f638cff60b316">getTerm</a> () override</td></tr>
@@ -173,6 +176,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>orderTerms</b> ()</td
 <tr class="memitem:ac6b2bc11074fbdb41c70125a5d9bf1ab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTimes.html#ac6b2bc11074fbdb41c70125a5d9bf1ab">operator==</a> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;expr) const override</td></tr>
 <tr class="memdesc:ac6b2bc11074fbdb41c70125a5d9bf1ab"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>Compares</b> the <a class="el" href="classAbstract.html" title="Root class of the inheritance tree of abstracts. ">Abstract</a> with another.  <a href="#ac6b2bc11074fbdb41c70125a5d9bf1ab">More...</a><br /></td></tr>
 <tr class="separator:ac6b2bc11074fbdb41c70125a5d9bf1ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a265c9f7ef1d02403f405ec86407a5602"><td class="memItemLeft" align="right" valign="top"><a id="a265c9f7ef1d02403f405ec86407a5602"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>partialComparison</b> (const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;expr) const</td></tr>
+<tr class="separator:a265c9f7ef1d02403f405ec86407a5602"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ec4272e14880906aaebc6d2aa15cac6"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTimes.html#a9ec4272e14880906aaebc6d2aa15cac6">getAlternateForms</a> () const override</td></tr>
 <tr class="memdesc:a9ec4272e14880906aaebc6d2aa15cac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates and returns all possible alternate forms of the expression in terms of simplifications. For example 1-sin^2(x) is one of the alternate forms of cos^2(x).  <a href="#a9ec4272e14880906aaebc6d2aa15cac6">More...</a><br /></td></tr>
 <tr class="separator:a9ec4272e14880906aaebc6d2aa15cac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -274,8 +280,8 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a134526a9e561b38741398c32f76c91b8 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a134526a9e561b38741398c32f76c91b8">isBuildingBlock</a> () const</td></tr>
 <tr class="memdesc:a134526a9e561b38741398c32f76c91b8 inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells if the expression is a Building Block or not.  <a href="classAbstract.html#a134526a9e561b38741398c32f76c91b8">More...</a><br /></td></tr>
 <tr class="separator:a134526a9e561b38741398c32f76c91b8 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa88cf11a4fdc73bb8c6c3efd50f4f9b3 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual const std::vector&lt; <a class="el" href="classProperty.html">Property</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#aa88cf11a4fdc73bb8c6c3efd50f4f9b3">getProperties</a> () const</td></tr>
-<tr class="separator:aa88cf11a4fdc73bb8c6c3efd50f4f9b3 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19b814b0ea2da2ab605b5073c6ff20e6 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual const std::vector&lt; <a class="el" href="classEquation.html">Equation</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a19b814b0ea2da2ab605b5073c6ff20e6">getProperties</a> () const</td></tr>
+<tr class="separator:a19b814b0ea2da2ab605b5073c6ff20e6 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f96f613f3813778606654fc57b9256b inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a8f96f613f3813778606654fc57b9256b">isInteger</a> () const</td></tr>
 <tr class="memdesc:a8f96f613f3813778606654fc57b9256b inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells if the expression is an integer. Either an <a class="el" href="classInteger.html" title="Handle numbers in expr. ">Integer</a> object directly, or a <a class="el" href="classDouble.html" title="Handle numbers in expr. ">Double</a> that has an integer value.  <a href="classAbstract.html#a8f96f613f3813778606654fc57b9256b">More...</a><br /></td></tr>
 <tr class="separator:a8f96f613f3813778606654fc57b9256b inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -313,9 +319,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="separator:a3168305d646a6d19ec0f03186113145f inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d0155b96e56789963f35a026de1da02 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classIndexStructure.html">IndexStructure</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a3d0155b96e56789963f35a026de1da02">getFreeIndexStructure</a> () const</td></tr>
 <tr class="separator:a3d0155b96e56789963f35a026de1da02 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7960d79b133f222a433de92b9562c7cc inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="classIndicialParent.html">IndicialParent</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a7960d79b133f222a433de92b9562c7cc">getParent</a> () const</td></tr>
-<tr class="memdesc:a7960d79b133f222a433de92b9562c7cc inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">For indicial expressions this function returns a pointer to the parent object of type <a class="el" href="classIndicialParent.html">IndicialParent</a> (not an expression).  <a href="classAbstract.html#a7960d79b133f222a433de92b9562c7cc">More...</a><br /></td></tr>
-<tr class="separator:a7960d79b133f222a433de92b9562c7cc inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97560d38a511d2abe349521bb71b57ff inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classIndicialParent.html">IndicialParent</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a97560d38a511d2abe349521bb71b57ff">getParent</a> () const</td></tr>
+<tr class="memdesc:a97560d38a511d2abe349521bb71b57ff inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">For indicial expressions this function returns a pointer to the parent object of type <a class="el" href="classIndicialParent.html">IndicialParent</a> (not an expression).  <a href="classAbstract.html#a97560d38a511d2abe349521bb71b57ff">More...</a><br /></td></tr>
+<tr class="separator:a97560d38a511d2abe349521bb71b57ff inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae39a18f5d58508346e4c19d3c26a80d4 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#ae39a18f5d58508346e4c19d3c26a80d4">getNContractedPairs</a> () const</td></tr>
 <tr class="memdesc:ae39a18f5d58508346e4c19d3c26a80d4 inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of contracted pairs of indices <b>in an Indicial expression</b>.  <a href="classAbstract.html#ae39a18f5d58508346e4c19d3c26a80d4">More...</a><br /></td></tr>
 <tr class="separator:ae39a18f5d58508346e4c19d3c26a80d4 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -330,12 +336,12 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a128daf984905d30e5c966492001c23b4 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a128daf984905d30e5c966492001c23b4">setCommutable</a> (bool t_commutable)</td></tr>
 <tr class="memdesc:a128daf984905d30e5c966492001c23b4 inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows the abstract to commute or not.  <a href="classAbstract.html#a128daf984905d30e5c966492001c23b4">More...</a><br /></td></tr>
 <tr class="separator:a128daf984905d30e5c966492001c23b4 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04156a34ae37f57a1e50382290d40c31 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a04156a34ae37f57a1e50382290d40c31">addProperty</a> (<a class="el" href="classProperty.html">Property</a> *property)</td></tr>
-<tr class="memdesc:a04156a34ae37f57a1e50382290d40c31 inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a property to the object.  <a href="classAbstract.html#a04156a34ae37f57a1e50382290d40c31">More...</a><br /></td></tr>
-<tr class="separator:a04156a34ae37f57a1e50382290d40c31 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac51597de4e4e156df92af3987755c442 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#ac51597de4e4e156df92af3987755c442">removeProperty</a> (<a class="el" href="classProperty.html">Property</a> *property)</td></tr>
-<tr class="memdesc:ac51597de4e4e156df92af3987755c442 inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a property to the object.  <a href="classAbstract.html#ac51597de4e4e156df92af3987755c442">More...</a><br /></td></tr>
-<tr class="separator:ac51597de4e4e156df92af3987755c442 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0978d1c8d671975134de12d7f71d31f inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#ac0978d1c8d671975134de12d7f71d31f">addProperty</a> (<a class="el" href="classEquation.html">Equation</a> *property)</td></tr>
+<tr class="memdesc:ac0978d1c8d671975134de12d7f71d31f inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a property to the object.  <a href="classAbstract.html#ac0978d1c8d671975134de12d7f71d31f">More...</a><br /></td></tr>
+<tr class="separator:ac0978d1c8d671975134de12d7f71d31f inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a154f804eaf05e8fe148a4008bd60a746 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#a154f804eaf05e8fe148a4008bd60a746">removeProperty</a> (<a class="el" href="classEquation.html">Equation</a> *property)</td></tr>
+<tr class="memdesc:a154f804eaf05e8fe148a4008bd60a746 inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a property to the object.  <a href="classAbstract.html#a154f804eaf05e8fe148a4008bd60a746">More...</a><br /></td></tr>
+<tr class="separator:a154f804eaf05e8fe148a4008bd60a746 inherit pub_methods_classAbstract"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbf2751548904140aa7aa4a1e8e59346 inherit pub_methods_classAbstract"><td class="memItemLeft" align="right" valign="top"><a id="afbf2751548904140aa7aa4a1e8e59346"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAbstract.html#afbf2751548904140aa7aa4a1e8e59346">setValue</a> (double t_value)</td></tr>
 <tr class="memdesc:afbf2751548904140aa7aa4a1e8e59346 inherit pub_methods_classAbstract"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the value if there is one (for Numerical and Literal valued). <br /></td></tr>
@@ -768,6 +774,54 @@ std::vector&lt; <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec14
 <dl class="section note"><dt>Note</dt><dd>For this function to be justified, all the arguments must be <b>scalar</b> and <b>real</b>. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classAbstract.html#abd473f3a4f62f338f5b0ee3b10453f39">Abstract</a>.</p>
+
+</div>
+</div>
+<a id="afc293938fdf598b9e2826a5a49abac82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc293938fdf598b9e2826a5a49abac82">&#9670;&nbsp;</a></span>findSubExpression()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> findSubExpression </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;&#160;</td>
+          <td class="paramname"><em>subExpression</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="abstract_8h.html#a468d0bc0f5027352921401ec143639ae">Expr</a> &amp;&#160;</td>
+          <td class="paramname"><em>newExpression</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Searches a sub-expression and replaces it. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">subExpression</td><td>Expression to search. </td></tr>
+    <tr><td class="paramname">newExpression</td><td>Expression that replaces <b>subExpression</b> if it is found. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The expression with the replacement done. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classAbstract.html#adf2e0d6e4b236fe9162e952407dc0615">Abstract</a>.</p>
 
 </div>
 </div>

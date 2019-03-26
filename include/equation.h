@@ -46,11 +46,15 @@ class Equation{
     Equation(const Symbol& leftHandSide, smEquation::Type=smEquation::Equal);
     Equation(const Symbol& leftHandSide,
              const Symbol& rightHandSide, smEquation::Type=smEquation::Equal);
+    Equation(const Equation&) = default;
     ~Equation(){};
 
     smEquation::Type getType() const;
     Expr getLHS() const;
     Expr getRHS() const;
+    const std::vector<Expr>& getBuildingBlocks() const;
+
+    void setBuildingBlocks(const std::vector<Expr>& t_buildingBlocks);
 
     void replace(const Expr& oldE, const Expr& newE);
     void replace(const Symbol& oldS, const Symbol& newS);
@@ -58,6 +62,9 @@ class Equation{
     void makeLHSimple();
     void isolate(const Expr& expr);
     void isolate(const Symbol& expr);
+
+    bool operator==(const Equation& eq) const;
+    bool operator!=(const Equation& eq) const;
 
     friend std::ostream& operator<<(std::ostream& fout, const Equation& eq);
 };

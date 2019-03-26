@@ -1,15 +1,16 @@
 <map id="AbstractBuildingBlock" name="AbstractBuildingBlock">
-<area shape="rect" id="node5" href="$classAbstractIndicial.html" title="AbstractIndicial" alt="" coords="68,244,180,271"/>
-<area shape="rect" id="node7" href="$classAbstractLiteral.html" title="Abstract class from which derive literal building blocks: Constant, Variable, Imaginary and CFactoria..." alt="" coords="237,244,344,271"/>
-<area shape="rect" id="node12" href="$classAbstractNumerical.html" title="Abstract class from which derive numerical types, i.e. Double, Integer, CFraction. " alt="" coords="520,244,651,271"/>
-<area shape="rect" id="node2" href="$classAbstractScalar.html" title="Abstract class concerning all scalars (dim = 0). Allows to implement one time getDim() = 0 for all sc..." alt="" coords="163,87,271,114"/>
-<area shape="rect" id="node3" href="$classAbstract.html" title="Root class of the inheritance tree of abstracts. " alt="" coords="182,5,253,32"/>
+<area shape="rect" id="node5" href="$classAbstractIndicial.html" title="AbstractIndicial" alt="" coords="65,244,177,271"/>
+<area shape="rect" id="node7" href="$classAbstractLiteral.html" title="Abstract class from which derive literal building blocks: Constant, Variable, Imaginary and CFactoria..." alt="" coords="283,244,389,271"/>
+<area shape="rect" id="node13" href="$classAbstractNumerical.html" title="Abstract class from which derive numerical types, i.e. Double, Integer, CFraction. " alt="" coords="616,244,747,271"/>
+<area shape="rect" id="node2" href="$classAbstractScalar.html" title="Abstract class concerning all scalars (dim = 0). Allows to implement one time getDim() = 0 for all sc..." alt="" coords="209,87,317,114"/>
+<area shape="rect" id="node3" href="$classAbstract.html" title="Root class of the inheritance tree of abstracts. " alt="" coords="227,5,298,32"/>
 <area shape="rect" id="node6" href="$classITensor.html" title="ITensor" alt="" coords="5,319,72,345"/>
-<area shape="rect" id="node8" href="$classCFactorial.html" title="Handles factorial of a Number. " alt="" coords="96,319,179,345"/>
-<area shape="rect" id="node9" href="$classConstant.html" title="Handle an object with a name and a value. " alt="" coords="203,319,277,345"/>
-<area shape="rect" id="node10" href="$classImaginary.html" title="Numerical representation of i. " alt="" coords="302,319,381,345"/>
-<area shape="rect" id="node11" href="$classVariable.html" title="Handle an object with a name and a value. " alt="" coords="405,319,475,345"/>
-<area shape="rect" id="node13" href="$classCFraction.html" title="Handles fractions of Number. " alt="" coords="499,319,578,345"/>
-<area shape="rect" id="node14" href="$classDouble.html" title="Handle numbers in expr. " alt="" coords="602,319,665,345"/>
-<area shape="rect" id="node15" href="$classInteger.html" title="Handle numbers in expr. " alt="" coords="689,319,751,345"/>
+<area shape="rect" id="node8" href="$classArbitrary.html" title="Arbitrary" alt="" coords="97,319,167,345"/>
+<area shape="rect" id="node9" href="$classCFactorial.html" title="Handles factorial of a Number. " alt="" coords="192,319,275,345"/>
+<area shape="rect" id="node10" href="$classConstant.html" title="Handle an object with a name and a value. " alt="" coords="299,319,373,345"/>
+<area shape="rect" id="node11" href="$classImaginary.html" title="Numerical representation of i. " alt="" coords="398,319,477,345"/>
+<area shape="rect" id="node12" href="$classVariable.html" title="Handle an object with a name and a value. " alt="" coords="501,319,571,345"/>
+<area shape="rect" id="node14" href="$classCFraction.html" title="Handles fractions of Number. " alt="" coords="595,319,674,345"/>
+<area shape="rect" id="node15" href="$classDouble.html" title="Handle numbers in expr. " alt="" coords="698,319,761,345"/>
+<area shape="rect" id="node16" href="$classInteger.html" title="Handle numbers in expr. " alt="" coords="785,319,847,345"/>
 </map>

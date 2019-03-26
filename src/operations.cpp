@@ -938,6 +938,34 @@ Expr Times::getComplexArgument()
     Expr im = getImaginaryPart();
     return make_shared<Angle>(im,real);
 }
+
+Expr Times::findSubExpression(const Expr& subExpression,
+                              const Expr& newExpression) 
+{
+    if (subExpression->getType() == smType::Times) {
+        if (partialComparison(subExpression)) {
+            // We take care of commutation problems: we suppress
+            // all terms of subExpression and place newExpression
+            // at the place of the first term of subExpression.
+            Expr res = Copy(this);
+            int t_nArgs = subExpression->getNArgs();
+            const vector<Expr>& t_arg = subExpression->getVectorArgument();
+            for (int i=0; i<nArgs; ++i)
+                if (*t_arg[0] == argument[i]) {
+                    res->setArgument(newExpression, i);
+                    break;
+                }
+            for (int i=1; i<t_nArgs; ++i)
+                res = res->suppressTerm(t_arg[i]);
+
+            return Refresh(res);
+        }
+        else 
+            return Copy(this);
+    }
+
+    return AbstractMultiFunc::findSubExpression(subExpression, newExpression);
+}
      
 void Times::print(int mode) const
 {
@@ -1551,6 +1579,86 @@ bool Times::operator==(const Expr& expr) const
             
         }
         if (not matched) return false;
+    }
+
+    // If there is some constraints on dummy indices left (we found only 
+    // one dummy of the pair), we check that there are the same.
+    // Ex: A_i.B_%j != A_i.B_%k but A_i.B_%j == A_i.B_%j
+    if (checkIndexExpressions and not constraints.empty()) 
+        for (auto it=constraints.begin(); it!=constraints.end(); ++it)
+            if (it->first != it->second)
+                return false;
+
+    return true;
+}
+
+bool Times::partialComparison(const Expr& expr) const
+{
+    if (expr->getName() == WHATEVER->getName())
+        return true;
+    if (nArgs == 1)
+        return *argument[0]==expr;
+    if (expr->getType() != smType::Times)
+        return false;
+     //cout<<"Comparing :\n";
+    //print();
+    //expr->print();
+
+    int t_nArgs = expr->getNArgs();
+    vector<int> indicesLeft(t_nArgs);
+    for (int i=0; i<t_nArgs;i++)
+        indicesLeft[i] = i;
+
+    Expr foo;
+    map<Index,Index> constraints;
+    bool checkIndexExpressions = false;
+    if (isIndexed()) 
+        checkIndexExpressions = true;
+    for (int i=0; i<nArgs; i++) {
+        //cout<<"Treating arg ";
+        //argument[i]->print();
+        //for (auto i=constraints.begin(); i!=constraints.end(); ++i)
+        //    cout<<i->first<<"  "<<i->second<<endl;
+        bool matched = false;
+        for (size_t j=0; j<indicesLeft.size(); j++) {
+            foo = expr->getArgument(indicesLeft[j]);
+            if (!argument[i]-> getCommutable() and
+                !foo->getCommutable() and
+                *argument[i]!=foo)
+                if (argument[i]->getType() != smType::ITensor 
+                        or foo->getType() != smType::ITensor
+                        or foo->getName() != argument[i]->getName())
+                    break;
+            if ((not checkIndexExpressions
+                        or not (argument[i]->getType() == smType::ITensor))
+                    and *argument[i] == foo) {
+                indicesLeft.erase(indicesLeft.begin()+j);
+                matched = true;
+                break;
+            }
+            else if (checkIndexExpressions 
+                and argument[i]->getType() == smType::ITensor
+                and foo->getType() == smType::ITensor)  {
+
+         //       cout<<"Equal to argument :";
+         //       foo->print();
+        //for (auto i=constraints.begin(); i!=constraints.end(); ++i)
+        //    cout<<i->first<<"  "<<i->second<<endl;
+                if (argument[i]->compareWithDummy(foo, constraints)) {
+                    //cout<<"Really equal ! \n";
+        //for (auto i=constraints.begin(); i!=constraints.end(); ++i)
+        //    cout<<i->first<<"  "<<i->second<<endl;
+                    indicesLeft.erase(indicesLeft.begin()+j);
+                    matched = true;
+                    break;
+                }
+            }
+            
+        }
+        if (not matched)
+            return false;
+        else if (indicesLeft.size() == 0)
+            break;
     }
 
     // If there is some constraints on dummy indices left (we found only 

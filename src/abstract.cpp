@@ -10,11 +10,11 @@ bool Abstract::getCommutable() const {
     return commutable;
 }
 
-const vector<Property*>& Abstract::getProperties() const
+const vector<Equation*>& Abstract::getProperties() const
 {
     print();
     callError(smError::AbstractFuncCalled,
-            "vector<Property*>& Abstract::getProperties() const");
+            "vector<Equation*>& Abstract::getProperties() const");
 }
 
 void Abstract::printExplicit(int mode) const
@@ -85,7 +85,7 @@ IndexStructure Abstract::getFreeIndexStructure() const
     return getIndexStructure().getFreeStructure();
 }
 
-const IndicialParent* Abstract::getParent() const
+IndicialParent* Abstract::getParent() const
 {
     print();
     callError(smError::AbstractFuncCalled,
@@ -130,18 +130,18 @@ bool Abstract::compareWithDummy(const Expr& expr,
             "map<Index,Index>& constraints) const");
 }
 
-void Abstract::addProperty(Property* property)
+void Abstract::addProperty(Equation* property)
 {
     print();
     callError(smError::AbstractFuncCalled,
-            "Abstract::addProperty(Property* property)");
+            "Abstract::addProperty(Equation* property)");
 }
 
-void Abstract::removeProperty(Property* property)
+void Abstract::removeProperty(Equation* property)
 {
     print();
     callError(smError::AbstractFuncCalled,
-            "Abstract::removeProperty(Property* property)");
+            "Abstract::removeProperty(Equation* property)");
 }
 
 void Abstract::setFullySymmetric()

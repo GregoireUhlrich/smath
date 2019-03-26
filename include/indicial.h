@@ -35,6 +35,8 @@ class IndicialParent{
     bool valued;
     Expr tensor;
 
+    std::vector<Equation*> props;
+
     public:
 
     IndicialParent();
@@ -71,6 +73,8 @@ class IndicialParent{
     
     std::vector<Permutation> getPermutation() const;
 
+    const std::vector<Equation*>& getProperties() const;
+
     void setName(const std::string& t_name);
 
     void setCommutable(bool t_commutable);
@@ -85,9 +89,13 @@ class IndicialParent{
 
     void setSymmetry(const Symmetry& t_symetry);
 
-    Expr operator()(const Idx& index) const;
+    void addProperty(Equation* prop);
 
-    Expr operator()(const std::initializer_list<Idx>& indices) const;
+    void removeProperty(Equation* prop);
+
+    Expr operator()(const Idx& index);
+
+    Expr operator()(const std::initializer_list<Idx>& indices);
 
 };
 
@@ -135,7 +143,7 @@ class ITensor: public AbstractIndicial{
     protected:
 
     std::vector<Abstract*> contractions;
-    const IndicialParent* parent;
+    IndicialParent *const parent;
 
     public:
 
@@ -149,17 +157,17 @@ class ITensor: public AbstractIndicial{
     ITensor(const std::string& t_name,
             bool t_commutable, 
             const Idx& t_index,
-            const IndicialParent* t_parent);
+            IndicialParent *const t_parent);
 
     ITensor(const std::string& t_name,
             bool t_commutable, 
             const std::vector<Idx>& indices, 
-            const IndicialParent* t_parent);
+            IndicialParent *const t_parent);
 
     ITensor(const std::string& t_name,
             bool t_commutable, 
             const IndexStructure& indices, 
-            const IndicialParent* t_parent);
+            IndicialParent *const t_parent);
 
     explicit ITensor(const Abstract*& expression);
 
@@ -173,7 +181,13 @@ class ITensor: public AbstractIndicial{
 
     Idx getIndex(int i) const override;
     
-    const IndicialParent* getParent() const override;
+    IndicialParent* getParent() const override;
+
+    const std::vector<Equation*>& getProperties() const override;
+
+    void addProperty(Equation* property) override;
+
+    void removeProperty(Equation* property) override;
 
     bool checkIndexStructure(const std::vector<Idx>& t_index) const override;
 
@@ -202,5 +216,11 @@ class ITensor: public AbstractIndicial{
 
     bool operator<(const Expr& expr) const override;
 };
+
+
+void nameTensor(const std::string& name, Expr& tensor, bool first=true);
+
+Expr generateTensor(const std::string& name, const std::vector<const Space*>&);
+
 
 #endif

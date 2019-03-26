@@ -15,6 +15,7 @@ var searchData=
   ['acosh',['ACosh',['../classACosh.html',1,'']]],
   ['aint',['aInt',['../classaInt.html',1,'']]],
   ['angle',['Angle',['../classAngle.html',1,'']]],
+  ['arbitrary',['Arbitrary',['../classArbitrary.html',1,'']]],
   ['asin',['ASin',['../classASin.html',1,'']]],
   ['asinh',['ASinh',['../classASinh.html',1,'']]],
   ['atan',['ATan',['../classATan.html',1,'']]],
