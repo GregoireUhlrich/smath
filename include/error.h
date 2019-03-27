@@ -50,6 +50,7 @@ namespace smError{
         UnknownEquation, /*!<  Unknown type of equation used. */
         BadPropertySetting,  /*!<  Setting a property that is not an equality. */
         ArbitraryEvaluated, /*!<  An arbitrary Abstract is evaluated, should not. */
+        ComparingNotDummy,  /*!<  A non-dummy Abstract is sent in smComparator. */
 
     };
 
@@ -124,6 +125,8 @@ inline void callError(smError::Error error, const std::string& caller, T spec)
                std::cout<<"Setting a property with something else than an equality in "<<caller<<": "<<spec<<".\n"; break;
         case ArbitraryEvaluated:
                std::cout<<"An arbitrary abstract has been evaluated from "<<caller<<". Should not be.\n"; break;
+        case ComparingNotDummy:
+               std::cout<<"Comparing non-dummy Abstract in "<<caller<<".\n"; break;
 
                
         default:

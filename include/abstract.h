@@ -1329,6 +1329,8 @@ Expr Refresh(const Expr& expr);
  */
 Expr DeepRefresh(const Expr& expr);
 
+Expr DummyCopy(const Abstract* expr);
+
 /*! \fn Expr Replace(const Expr& expr,
                      const Expr& old_abstract,
                      const Expr& new_abstract)

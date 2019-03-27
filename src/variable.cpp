@@ -1,6 +1,7 @@
 #include "variable.h"
 #include "equation.h"
 #include "operations.h"
+#include "comparison.h"
 
 using namespace std;
 
@@ -149,8 +150,8 @@ void Double::operator=(double t_value) {
 
 bool Double::operator==(const Expr& expr) const
 {
-    if (expr->getName() == WHATEVER->getName()) 
-        return true;
+    if (expr->getName() == smComparator::dummyName) 
+        return expr->operator==(DummyCopy(this));
     if (expr->getPrimaryType() != smType::Numerical) 
         return 0;
 
@@ -319,8 +320,8 @@ void Integer::operator=(int t_value) {
 
 bool Integer::operator==(const Expr& expr) const
 {
-    if (expr->getName() == WHATEVER->getName())      
-        return true;
+    if (expr->getName() == smComparator::dummyName) 
+        return expr->operator==(DummyCopy(this));
     if (expr->getPrimaryType() != smType::Numerical) 
         return false;
 
@@ -604,8 +605,8 @@ void CFraction::operator=(double t_value)
 
 bool CFraction::operator==(const Expr& expr) const
 {
-    if (expr->getName() == WHATEVER->getName()) 
-        return true;
+    if (expr->getName() == smComparator::dummyName) 
+        return expr->operator==(DummyCopy(this));
     if (expr->getPrimaryType() == smType::Numerical) 
         return (expr->evaluateScalar()==(num*1./denom));
 
@@ -699,8 +700,8 @@ void Constant::operator=(double t_value) {
 
 bool Constant::operator==(const Expr& expr) const
 {
-    if (expr->getName() == WHATEVER->getName()) 
-        return true;
+    if (expr->getName() == smComparator::dummyName) 
+        return expr->operator==(DummyCopy(this));
     if (expr->getType() != smType::Constant) 
         return 0;
 
@@ -861,8 +862,8 @@ void Variable::operator=(double t_value) {
 
 bool Variable::operator==(const Expr& expr) const
 {
-    if (expr->getName() == WHATEVER->getName() or name==WHATEVER->getName())
-        return true;
+    if (expr->getName() == smComparator::dummyName) 
+        return expr->operator==(DummyCopy(this));
     if (expr->getType() != smType::Variable)
         return 0;
 
@@ -929,8 +930,8 @@ void CFactorial::operator=(int t_value) {
 
 bool CFactorial::operator==(const Expr& expr) const
 {
-    if (expr->getName() == WHATEVER->getName()) 
-        return true;
+    if (expr->getName() == smComparator::dummyName) 
+        return expr->operator==(DummyCopy(this));
     if (expr->getType() != smType::CFactorial) 
         return 0;
 
@@ -1006,8 +1007,8 @@ Expr Imaginary::derive(const Expr& expr) {
 
 bool Imaginary::operator==(const Expr& expr) const
 {
-    if (expr->getName() == WHATEVER->getName()) 
-        return true;
+    if (expr->getName() == smComparator::dummyName) 
+        return expr->operator==(DummyCopy(this));
 
     return (expr->getType() == smType::Imaginary);
 }

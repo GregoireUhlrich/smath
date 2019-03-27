@@ -4,6 +4,7 @@
 #include "vector.h"
 #include "simplification.h"
 #include "commutation.h"
+#include "comparison.h"
 using namespace std;
 
 ///////////////////////////////////////////////////
@@ -570,8 +571,8 @@ int Plus::getParity(const Expr& t_variable) const
 
 bool Plus::operator==(const Expr& expr) const
 {
-    if (expr->getName() == WHATEVER->getName()) 
-        return true;
+    if (expr->getName() == smComparator::dummyName) 
+        return expr->operator==(DummyCopy(this));
     if (nArgs == 1) 
         return *argument[0]==expr;
     if (expr->getType() == smType::Polynomial)
@@ -623,6 +624,9 @@ Expr plus_(const Expr& leftOperand, const Expr& rightOperand)
     // Creates a Plus object a priori but can return other types
     // in particular cases
 {
+    if (leftOperand->getType() == smType::Arbitrary
+            or rightOperand->getType() == smType::Arbitrary)
+        return make_shared<Plus>(vector<Expr>({leftOperand,rightOperand}),true);
     if (leftOperand->getPrimaryType() == smType::Vectorial)
         return leftOperand->addition_own(rightOperand);
     if (rightOperand->getPrimaryType() == smType::Vectorial)
@@ -1516,8 +1520,8 @@ int Times::getParity(const Expr& t_variable) const
 
 bool Times::operator==(const Expr& expr) const
 {
-    if (expr->getName() == WHATEVER->getName())
-        return true;
+    if (expr->getName() == smComparator::dummyName) 
+        return expr->operator==(DummyCopy(this));
     if (nArgs == 1)
         return *argument[0]==expr;
     if (expr->getType() != smType::Times)
@@ -1702,6 +1706,9 @@ void applyDerivative(Expr& product)
 
 Expr times_(const Expr& leftOperand, const Expr& rightOperand, bool explicitTimes)
 {
+    if (leftOperand->getType() == smType::Arbitrary
+            or rightOperand->getType() == smType::Arbitrary)
+        return make_shared<Times>(vector<Expr>({leftOperand,rightOperand}),true);
     if (leftOperand->getType() == smType::Derivative and
         leftOperand->isEmpty()) {
         return derivative_(leftOperand->getArgument(0)*rightOperand,
@@ -1936,8 +1943,8 @@ int Fraction::getParity(const Expr& t_variable) const
 
 bool Fraction::operator==(const Expr& expr) const
 {
-    if (expr->getName() == WHATEVER->getName())
-        return true;
+    if (expr->getName() == smComparator::dummyName) 
+        return expr->operator==(DummyCopy(this));
     if (expr->getType() != smType::Fraction)
         return false;
 
@@ -2316,8 +2323,8 @@ int Pow::getParity(const Expr& expr) const
 
 bool Pow::operator==(const Expr& expr) const
 {
-    if (expr->getName() == WHATEVER->getName())
-        return true;
+    if (expr->getName() == smComparator::dummyName) 
+        return expr->operator==(DummyCopy(this));
     if (expr->getType() != smType::Pow)
         return false;
     if (*argument[0] != expr->getArgument(0) or
@@ -2329,6 +2336,9 @@ bool Pow::operator==(const Expr& expr) const
 
 Expr pow_(const Expr& leftOperand, const Expr& rightOperand)
 {
+    if (leftOperand->getType() == smType::Arbitrary
+            or rightOperand->getType() == smType::Arbitrary)
+        return make_shared<Pow>(leftOperand,rightOperand);
     if (*leftOperand == i_ and
             (rightOperand->getType() == smType::Double or
              rightOperand->getType()  == smType::Integer))
@@ -2745,8 +2755,8 @@ Expr Polynomial::factor(bool full)
 
 bool Polynomial::operator==(const Expr& expr) const
 {
-    if (expr->getName() == WHATEVER->getName())
-        return true;
+    if (expr->getName() == smComparator::dummyName) 
+        return expr->operator==(DummyCopy(this));
     if (nArgs == 1)
         return *argument[0]==expr;
     if (expr->getType() == smType::Polynomial) {
@@ -2930,8 +2940,8 @@ int Derivative::getParity(const Expr& t_variable) const
 
 bool Derivative::operator==(const Expr& expr) const
 {
-    if (expr->getName() == WHATEVER->getName())
-        return true;
+    if (expr->getName() == smComparator::dummyName) 
+        return expr->operator==(DummyCopy(this));
     if (expr->getType() != smType::Derivative)
         return false;
     if (*argument[0] != expr->getArgument(0) or

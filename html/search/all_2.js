@@ -10,6 +10,7 @@ var searchData=
   ['clear',['clear',['../classSymbol.html#ac8bb3912a3ce86b15842e79d0b421204',1,'Symbol']]],
   ['clearredundancyalternate',['clearRedundancyAlternate',['../simplification_8h.html#adc2a0547b491254f4688cb3a3eccbce7',1,'simplification.h']]],
   ['commutable',['commutable',['../classAbstract.html#a98b736117ed72bc3d8bc6813c97ca850',1,'Abstract']]],
+  ['comparingnotdummy',['ComparingNotDummy',['../error_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5aa270aabd7de1b414312d3051a5d007f9',1,'smError']]],
   ['const_5fiter',['const_iter',['../abstract_8h.html#ac50bb217e67a9c51fa2b4322f56ec1a4',1,'abstract.h']]],
   ['constant',['Constant',['../classConstant.html',1,'Constant'],['../classConstant.html#a235b94727b0ddd8761eefacda57304bd',1,'Constant::Constant()'],['../classConstant.html#a6b2d867082fa7682b09d504189a67b49',1,'Constant::Constant(const std::string &amp;t_name)'],['../classConstant.html#abe2b5cd4dba58336fe59777b3e6c2ba6',1,'Constant::Constant(const std::string &amp;t_name, double t_value)'],['../abstract_8h.html#a1d1cfd8ffb84e947f82999c682b666a7aaeefcc3671b16fd4226e51cfe73a8da7',1,'smType::Constant()']]],
   ['constexpr',['constExpr',['../abstract_8h.html#a782373d180f82891bdde817e25059f06',1,'abstract.h']]],

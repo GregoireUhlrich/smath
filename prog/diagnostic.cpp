@@ -1,5 +1,6 @@
 #include "space.h"
 #include "property.h"
+#include "comparison.h"
 #include <chrono>
 #include <cmath>
 #include <fstream>
@@ -397,6 +398,15 @@ ofojeogz
             *((cos_(x.getAbstract())^2)+(sin_(x.getAbstract())^2)))->print();
 
     Simplify(Riemann({mu,nu,rho,sigma}) + Riemann({nu,mu,rho,sigma}))->print();
+
+    Expr E1 = var_("E1");
+    Expr E2 = var_("E2");
+    Expr E3 = var_("E3");
+
+    cout<<smComparator::dummyComparison((cos_(E1)+sin_(E2)*sin_(E2)),(cos_(smComparator::dummy(1)) + (sin_(smComparator::dummy(2))^2)))<<"1"<<endl;
+    cout<<smComparator::dummyComparison((cos_(E1)+sin_(E2)*sin_(E2)),(cos_(smComparator::dummy(1)) + (sin_(smComparator::dummy(1))^2)))<<"0"<<endl;
+    cout<<smComparator::dummyComparison((cos_(E1)+sin_(E1)*sin_(E1)),(cos_(smComparator::dummy(1)) + (sin_(smComparator::dummy(1))^2)))<<"1"<<endl;
+    cout<<smComparator::dummyComparison((cos_(E1)+sin_(E1)*sin_(E1)),(cos_(smComparator::dummy(1)) + (sin_(smComparator::dummy(2))^2)))<<"1"<<endl;
     
 
     return 0;

@@ -1,4 +1,5 @@
 #include "vector.h"
+#include "comparison.h"
 
 using namespace std;
 
@@ -595,8 +596,8 @@ Expr AbstractVectorial::factor(const Expr& expr, bool full)
 
 bool AbstractVectorial::operator==(const Expr& expr) const
 {
-    if (expr->getName() == WHATEVER->getName()) 
-        return true;
+    if (expr->getName() == smComparator::dummyName) 
+        return expr->operator==(DummyCopy(this));
     if (dim != expr->getDim() or nArgs != expr->getNArgs()) 
         return false;
     int i=0;

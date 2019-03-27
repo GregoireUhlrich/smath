@@ -1604,6 +1604,161 @@ Expr Replace(const Expr& expr, const Expr& old_abstract, const Expr& new_abstrac
     return expr;
 }
 
+Expr DummyCopy(const Abstract* expr)
+{
+    int type = expr->getType();
+    Expr newAbstract;
+    bool commutable = expr->getCommutable();
+    switch(type)
+    {
+        case smType::Integer:
+        newAbstract = int_(expr->evaluateScalar());
+        break;
+
+        case smType::Double:
+        newAbstract = double_(expr->evaluateScalar());
+        break;
+
+        case smType::CFraction:
+        newAbstract = _cfraction_(expr->getNum(), expr->getDenom());
+        break;
+
+        case smType::Constant:
+        newAbstract = constant_(expr->getName());
+        break;
+
+        case smType::Variable:
+        newAbstract = var_(expr->getName());
+        if (expr->getValued())
+            newAbstract->setValue(expr->evaluateScalar());
+        break;
+
+        case smType::CFactorial:
+        newAbstract = cfactorial_(expr->getValue());
+        break;
+
+        case smType::Imaginary:
+        newAbstract = i_;
+        break;
+
+        case smType::Plus:
+        newAbstract = make_shared<Plus>();
+        newAbstract->setVectorArgument(expr->getVectorArgument());
+        break;
+    
+        case smType::Times:
+        newAbstract = make_shared<Times>();
+        newAbstract->setVectorArgument(expr->getVectorArgument());
+        break;
+    
+        case smType::Fraction:
+        newAbstract = make_shared<Fraction>(expr->getArgument(0), expr->getArgument(1));
+        break;
+    
+        case smType::Pow:
+        newAbstract = make_shared<Pow>(expr->getArgument(0), expr->getArgument(1));
+        break;
+
+        case smType::Polynomial:
+        newAbstract = make_shared<Polynomial>(ZERO,expr->getVariable());
+        newAbstract->setVectorArgument(expr->getVectorArgument());
+        break;
+    
+        case smType::Exp:
+        newAbstract = make_shared<Exp>(expr->getArgument());
+        break;
+    
+        case smType::Log:
+        newAbstract = make_shared<Log>(expr->getArgument());
+        break;
+    
+        case smType::Cos:
+        newAbstract = make_shared<Cos>(expr->getArgument());
+        break;
+    
+        case smType::Sin:
+        newAbstract = make_shared<Sin>(expr->getArgument());
+        break;
+
+        case smType::Tan:
+        newAbstract = make_shared<Tan>(expr->getArgument());
+        break;
+
+        case smType::ACos:
+        newAbstract = make_shared<ACos>(expr->getArgument());
+        break;
+    
+        case smType::ASin:
+        newAbstract = make_shared<ASin>(expr->getArgument());
+        break;
+
+        case smType::ATan:
+        newAbstract = make_shared<ATan>(expr->getArgument());
+        break;
+
+        case smType::Angle:
+        newAbstract = make_shared<Angle>(expr->getArgument(0),expr->getArgument(1));
+        break;
+
+        case smType::Abs:
+        newAbstract = make_shared<Abs>(expr->getArgument());
+        break;
+
+        case smType::Derivative:
+        newAbstract = make_shared<Derivative>(expr->getArgument(0), expr->getArgument(1), expr->getOrder());
+        break;
+    
+        case smType::Cosh:
+        newAbstract = make_shared<Cosh>(expr->getArgument());
+        break;
+    
+        case smType::Sinh:
+        newAbstract = make_shared<Sinh>(expr->getArgument());
+        break;
+
+        case smType::Tanh:
+        newAbstract = make_shared<Tanh>(expr->getArgument());
+        break;
+    
+        case smType::ACosh:
+        newAbstract = make_shared<ACosh>(expr->getArgument());
+        break;
+    
+        case smType::ASinh:
+        newAbstract = make_shared<ASinh>(expr->getArgument());
+        break;
+
+        case smType::ATanh:
+        newAbstract = make_shared<ATanh>(expr->getArgument());
+        break;
+
+        case smType::Factorial:
+        newAbstract = make_shared<Factorial>(expr->getArgument());
+        break;
+
+        case smType::Vector:
+        newAbstract = make_shared<Vector>(expr->getVectorArgument());
+        break;
+
+        case smType::Matrix:
+        newAbstract = make_shared<Matrix>(expr->getVectorArgument());
+        break;
+
+        case smType::HighDTensor:
+        newAbstract = make_shared<HighDTensor>(expr->getVectorArgument());
+        break;
+
+        case smType::ITensor:
+        newAbstract = make_shared<ITensor>(expr);
+        break;
+        
+        default:
+        cout<<"Warning: type "<<type<<" not recognize in copy function.\n";
+    }
+    if (newAbstract) newAbstract->setCommutable(commutable);
+    return newAbstract;
+}
+
 Expr Empty(smType::Type type)
 {
     switch(type)

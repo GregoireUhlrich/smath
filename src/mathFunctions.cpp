@@ -1,4 +1,5 @@
 #include "mathFunctions.h"
+#include "comparison.h"
 
 using namespace std;
 
@@ -364,6 +365,8 @@ int Cos::getParity(const Expr& t_variable) const
 
 Expr cos_(const Expr& expr)
 {
+    if (expr->getType() == smType::Arbitrary)
+        return make_shared<Cos>(expr);
     //int type = expr->getPrimaryType();
     if (*expr == ZERO)
         return int_(1);
@@ -483,6 +486,8 @@ int Sin::getParity(const Expr& t_variable) const
 
 Expr sin_(const Expr& expr)
 {
+    if (expr->getType() == smType::Arbitrary)
+        return make_shared<Sin>(expr);
     if (*expr == ZERO)
         return ZERO;
     if (*expr == fraction_(pi_,int_(2)))
@@ -1585,8 +1590,8 @@ Expr Angle::derive(const Expr& expr) {
 
 bool Angle::operator==(const Expr& expr) const
 {
-    if (expr->getName() == WHATEVER->getName()) 
-        return true;
+    if (expr->getName() == smComparator::dummyName) 
+        return expr->operator==(DummyCopy(this));
     if (expr->getType() != smType::Angle) 
         return false;
     return (*fraction_(argument[0],

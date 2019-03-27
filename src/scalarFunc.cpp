@@ -1,5 +1,6 @@
 #include "scalarFunc.h"
 #include "indicial.h"
+#include "comparison.h"
 
 using namespace std;
 
@@ -119,8 +120,8 @@ Expr AbstractFunc::evaluate()
 
 bool AbstractFunc::operator==(const Expr& expr) const 
 {
-    if (expr->getName() == WHATEVER->getName()) 
-        return true;
+    if (expr->getName() == smComparator::dummyName) 
+        return expr->operator==(DummyCopy(this));
 
     return (expr->getType() == this->getType() and 
             *argument == expr->getArgument());

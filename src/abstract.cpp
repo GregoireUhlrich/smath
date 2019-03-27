@@ -545,11 +545,6 @@ bool Abstract::operator==(double t_value) const
     return false;
 }
 
-/*bool Abstract::operator==(const Expr& expr) const
-{
-    return 0;
-}*/
-
 Expr Abstract::operator[](int iArg) const
 {
     print();

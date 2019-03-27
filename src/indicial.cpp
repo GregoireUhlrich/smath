@@ -3,6 +3,7 @@
 #include "space.h"
 #include "equation.h"
 #include "variable.h"
+#include "comparison.h"
 
 using namespace std;
 
@@ -500,8 +501,8 @@ Expr ITensor::evaluate()
 
 bool ITensor::operator==(const Expr& expr) const
 {
-    if (expr->getName() == WHATEVER->getName()) 
-        return true;
+    if (expr->getName() == smComparator::dummyName) 
+        return expr->operator==(DummyCopy(this));
     if (expr->getType() != smType::ITensor) 
         return false;
 

@@ -7,8 +7,6 @@
 
 class Arbitrary: public AbstractLiteral{
 
-    friend class smComparator;
-
     public:
 
     explicit Arbitrary(int n);
@@ -18,6 +16,8 @@ class Arbitrary: public AbstractLiteral{
     void print(int mode=0) const override;
     std::string printLaTeX(int mode=0) const override;
     Expr evaluate() override;
+
+    int getNum() const override;
 
     bool operator==(const Expr& expr) const override;
     bool operator<(const Expr& expr) const override;
@@ -33,11 +33,24 @@ class smComparator{
 
     public:
 
+    static Expr dummy(int n);
+
+    static bool compare(const Expr& expr, const constExpr& dummy);
+    static bool dummyComparison(const Expr& expr, const Expr& dummyExpr);
+
+    static void clear();
+
+    public:
+
+    static std::string dummyName;
+
+    private:
+
+    static bool dummyComparisonActive;
+
     static std::map<int,Expr> arbitrary;
     static std::map<int,Expr> correspondance;
 
-    static Expr dummy(int n);
-    static void clear();
 };
 
 #endif
