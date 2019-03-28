@@ -7,7 +7,6 @@ DYNAMICLIBRARY=libsmath.so
 CC=gcc -Wall -Wextra -Wno-return-type -std=c++11 -O2 -fPIC
 CCDEBUG=$(CC) -g
  
-# Les différents répertoires contenant respectivement les fichiers : Sources *.c, Headers *.h, Objets *.o, l'exécutable
 SRCDIR=src
 HEADDIR=include
 OBJDIR=obj
@@ -19,14 +18,12 @@ LIBLOCALPATH=$(HOME)/.local/lib
 INCLUDELOCALPATH=$(HOME)/.local/include/smath
  
  
-# Les différentes options de compilations, soyons strictes !
 CFLAGS= -I$(HEADDIR) -lm -lstdc++ -lpthread
 # Les différents FrameWorks et bibliothèques pour le linkage
 #GLLIBS = -ltiff -framework OPENGL -framework GLUT -framework GLUI -lobjc -lstdc++ -lm
 #SFML=-L/usr/share/doc/  -lsfml-graphics-s -lsfml-window-s -lsfml-audio-s -lsfml-system-s -lfreetype -lX11 -lXrandr -lxcb -lxcb-randr -lxcb-image -lGL -lFLAC -logg -lvorbis -lvorbisenc -lvorbisfile -lopenal -lpthread -ludev
 # L'exécutable
  
-# Où trouver les différents sources *.c qu'il faudra compiler pour créer les objets correspondants
 SRC= $(wildcard $(SRCDIR)/*.cpp)
 PROG= $(wildcard $(PROGDIR)/*.cpp)
 OBJ= $(SRC:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o) 
@@ -36,14 +33,12 @@ BININTERMEDIATE=$(subst $(PROGDIR)/,,$(PROG))
 BIN=$(subst .cpp,.x,$(BININTERMEDIATE))
 BINDEBUG=$(subst .x,_debug.x,$(BIN))
 
+
+all: smath $(BIN)
 transfert_lib: 
 	cp $(LIBDIR)/* $(LIBLOCALPATH)
 	cp $(HEADDIR)/* $(INCLUDELOCALPATH)/
-
 smath: $(LIBDIR)/$(STATICLIBRARY) $(LIBDIR)/$(DYNAMICLIBRARY) transfert_lib
-
-all:  $(BIN)
-
 release: all
 debug: $(BINDEBUG)
 
@@ -74,7 +69,6 @@ $(PROGOBJDIR)/%_debug.o: $(PROGDIR)/%.cpp
 #app: $(OBJ) appli.cpp
 #	$(CC) -o app $^ -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window -lsfml-audio
 
-# Nettoyage des objets => Tout sera recompiler !
 clean:
 	rm $(OBJDIR)/*.o;
 	rm $(PROGOBJDIR)/*.o;
