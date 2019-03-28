@@ -1,4 +1,11 @@
 #include "equation.h"
+#include "variable.h"
+#include "mathFunctions.h"
+#include "operations.h"
+#include "vector.h"
+#include "indicial.h"
+#include "symbol.h"
+#include "simplification.h"
 
 using namespace std;
 

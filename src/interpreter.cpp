@@ -1,4 +1,5 @@
 #include "interpreter.h"
+#include "smath.h"
 using namespace std;
 
 Interpreter::Interpreter()

@@ -1,6 +1,4 @@
-#include "symbol.h"
-#include "abstract.h"
-
+#include "smath.h"
 using namespace std;
 
 int main(){

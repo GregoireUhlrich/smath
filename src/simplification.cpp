@@ -1,4 +1,9 @@
 #include "simplification.h"
+#include "variable.h"
+#include "operations.h"
+#include "mathFunctions.h"
+#include "vector.h"
+#include "indicial.h"
 #pragma GCC diagnostic ignored "-Wunused-variable"
 
 using namespace std;

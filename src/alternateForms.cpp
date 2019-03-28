@@ -1,5 +1,10 @@
 #include "simplification.h"
+#include "variable.h"
+#include "operations.h"
+#include "mathFunctions.h"
+#include "indicial.h"
 #include "property.h"
+#include "error.h"
 
 using namespace std;
 

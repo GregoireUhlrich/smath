@@ -1,7 +1,7 @@
 #ifndef EQUATION_H_INCLUDED
 #define EQUATION_H_INCLUDED
 
-#include "simplification.h"
+#include "abstract.h"
 
 namespace smEquation{
 
@@ -19,6 +19,9 @@ namespace smEquation{
 std::ostream& operator<<(std::ostream& fout, smEquation::Type type);
 
 std::vector<Expr> listBuildingBlocks(const Expr& expr);
+
+// Forward declaration of class Symbol
+class Symbol;
 
 class Equation{
 

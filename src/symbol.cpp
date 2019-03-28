@@ -1,4 +1,9 @@
 #include "symbol.h"
+#include "variable.h"
+#include "operations.h"
+#include "mathFunctions.h"
+#include "vector.h"
+#include "indicial.h"
 #include "simplification.h"
 
 using namespace std;
@@ -405,7 +410,7 @@ Symbol Symbol::operator()(const initializer_list<Idx>& indices) const
 {
     Expr newAbstract = Copy(abstract);
     IndexStructure freeStructure = abstract->getFreeIndexStructure();
-    if (indices.size() != freeStructure.getNIndices())
+    if ((int)indices.size() != freeStructure.getNIndices())
         callError(smError::InvalidITensor,
                 "Symbol::operator()(const initializer_list<Idx>&) const");
     for (auto i=indices.begin(); i!=indices.end(); ++i)

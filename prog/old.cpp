@@ -1,8 +1,5 @@
 #include <iostream>
-#include "abstract.h"
-#include "variable.h"
-#include "operations.h"
-#include "symbol.h"
+#include "smath.h"
 #include "simplification.h"
 using namespace std;
 

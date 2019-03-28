@@ -1,5 +1,7 @@
 #include "space.h"
 #include "supportIndicial.h"
+#include "support.h"
+#include "error.h"
 
 using namespace std;
 

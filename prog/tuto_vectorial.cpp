@@ -1,6 +1,5 @@
-#include "symbol.h"
-#include "equation.h"
 #include <iostream>
+#include "smath.h"
 
 using namespace std;
 

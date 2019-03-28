@@ -7,10 +7,6 @@
 #define Vector_H_INCLUDED
 
 #include "abstract.h"
-#include "variable.h"
-#include "operations.h"
-#include "mathFunctions.h"
-#include "support.h"
 
 class AbstractVectorial: public Abstract{
 

@@ -7,14 +7,8 @@
 #ifndef Indicial_H_INCLUDED
 #define Indicial_H_INCLUDED
 
-#include "abstract.h"
 #include "variable.h"
-#include "operations.h"
 #include "supportIndicial.h"
-#include <map>
-#include <string>
-#include <set>
-#include <initializer_list>
 
 class ITensor;
 

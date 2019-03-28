@@ -8,11 +8,6 @@
 #define SIMPLIFICATION_H_INCLUDED
 
 #include "abstract.h"
-#include "variable.h"
-#include "operations.h"
-#include "mathFunctions.h"
-#include "symbol.h"
-#include <algorithm>
 
 /*! \var SIMPLIFICATION_METHOD
  * \brief Determines which simplification method is applied. Ther used to be 2, 

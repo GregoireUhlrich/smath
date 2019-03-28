@@ -6,7 +6,6 @@
 #ifndef SCALARFUNC_H_INCLUDED
 #define SCALARFUNC_H_INCLUDED
 #include "variable.h"
-#include <vector>
 
 /*! \class AbstractFunc
  * \brief Base class for **scalar functions of one argument.**

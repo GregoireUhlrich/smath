@@ -1,5 +1,7 @@
 #include "vector.h"
 #include "comparison.h"
+#include "operations.h"
+#include "mathFunctions.h"
 
 using namespace std;
 

@@ -6,7 +6,6 @@
 #ifndef MATHFUNCTIONS_H_INCLUDED
 #define MATHFUNCTIONS_H_INCLUDED
 #include "scalarFunc.h"
-#include "operations.h"
 
 /*! \class Abs
  * \brief Final specialization of AbstractFunc, the abs function

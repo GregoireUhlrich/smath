@@ -1,4 +1,5 @@
 #include "mathFunctions.h"
+#include "operations.h"
 #include "comparison.h"
 
 using namespace std;

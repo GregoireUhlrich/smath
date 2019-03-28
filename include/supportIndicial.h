@@ -1,9 +1,16 @@
 #ifndef SUPPORTINDICIAL_H_INCLUDED
 #define SUPPORTINDICIAL_H_INCLUDED
 
-#include "abstract.h"
+#include <string>
+#include <vector>
+#include <map>
+#include <initializer_list>
+
+#include <memory>
 
 class Space;
+class Index;
+typedef std::shared_ptr<Index> Idx;
 
 class Index{
 

@@ -7,11 +7,8 @@
 #define SUPPORT_H_INCLUDED
 
 #include <cmath>
-#include <iostream>
 #include <string>
-#include <algorithm>
 #include <vector>
-#include <memory>
 
 /*! \fn int PGCD(double a, double b)
  * \brief Returns the PGCD of a and b.

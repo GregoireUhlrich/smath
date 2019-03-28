@@ -9,8 +9,6 @@
 #define ERROR_H_INCLUDED
 
 #include <iostream>
-#include <string>
-#include <memory>
 
 /*! \var STOP_ERROR_DEBUG_MODE
  * \brief This variable is set to true in debug mode, in order to intentionnaly
@@ -136,7 +134,8 @@ inline void callError(smError::Error error, const std::string& caller, T spec)
         exit((int)error);
     else
     {
-        std::shared_ptr<int> a = nullptr;
+        int* a = new int(4);
+        delete a;
         std::cout<<*a<<std::endl;
     }
 }

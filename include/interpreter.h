@@ -5,11 +5,13 @@
  */
 #ifndef INTERPRETER_H_INLUDED
 #define INTERPRETER_H_INLUDED
-#include <vector>
-#include "symbol.h"
 #include <iostream>
+#include <vector>
+#include <string>
 #include <sstream>
 #include <fstream>
+
+class Symbol;
 
 /*! \class Interpreter
  * \brief Interprets strings as exprs to manipulate them afterwards.

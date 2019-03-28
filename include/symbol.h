@@ -7,11 +7,6 @@
 #ifndef SYMBOL_H_INCLUDED
 #define SYMBOL_H_INCLUDED
 #include "abstract.h"
-#include "vector.h"
-#include "variable.h"
-#include "operations.h"
-#include "mathFunctions.h"
-#include "indicial.h"
 
 /*! \class Symbol
  * \brief Encapsulates a Expr in order to make the user's life easier.

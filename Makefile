@@ -1,12 +1,22 @@
-CC=gcc -Wall -Wextra -Wno-return-type -std=c++11 -O2 -g
+VERSION=1.0
+STATICLIBRARY=libsmath.out
+STATICLIBRARY2=libsmath.a
+DYNAMICLIBRARY=libsmath.so
+
+
+CC=gcc -Wall -Wextra -Wno-return-type -std=c++11 -O2 -fPIC
+CCDEBUG=$(CC) -g
  
 # Les différents répertoires contenant respectivement les fichiers : Sources *.c, Headers *.h, Objets *.o, l'exécutable
 SRCDIR=src
 HEADDIR=include
-LIBDIR=obj
+OBJDIR=obj
 BINDIR=bin
 PROGDIR=prog
-PROGLIBDIR=prog/obj
+LIBDIR=lib
+PROGOBJDIR=prog/obj
+LIBLOCALPATH=$(HOME)/.local/lib
+INCLUDELOCALPATH=$(HOME)/.local/include/smath
  
  
 # Les différentes options de compilations, soyons strictes !
@@ -19,38 +29,64 @@ CFLAGS= -I$(HEADDIR) -lm -lstdc++ -lpthread
 # Où trouver les différents sources *.c qu'il faudra compiler pour créer les objets correspondants
 SRC= $(wildcard $(SRCDIR)/*.cpp)
 PROG= $(wildcard $(PROGDIR)/*.cpp)
-OBJ= $(SRC:$(SRCDIR)/%.cpp=$(LIBDIR)/%.o) 
+OBJ= $(SRC:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o) 
+OBJDEBUG= $(SRC:$(SRCDIR)/%.cpp=$(OBJDIR)/%_debug.o) 
 	
-BIN=diagnostic.x pi.x old.x 
-all: $(BIN)
-tuto: tuto_pendulum.x tuto_vectorial.x
- 
+BININTERMEDIATE=$(subst $(PROGDIR)/,,$(PROG))
+BIN=$(subst .cpp,.x,$(BININTERMEDIATE))
+BINDEBUG=$(subst .x,_debug.x,$(BIN))
+
+transfert_lib: 
+	cp $(LIBDIR)/* $(LIBLOCALPATH)
+	cp $(HEADDIR)/* $(INCLUDELOCALPATH)/
+
+smath: $(LIBDIR)/$(STATICLIBRARY) $(LIBDIR)/$(DYNAMICLIBRARY) transfert_lib
+
+all:  $(BIN)
+
+release: all
+debug: $(BINDEBUG)
+
 # Création des différents *.o à partir des *.cpp
-$(LIBDIR)/%.o: $(SRCDIR)/%.cpp
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	$(CC) -o $@ -c $< $(CFLAGS)
-$(PROGLIBDIR)/%.o: $(PROGDIR)/%.cpp
+$(PROGOBJDIR)/%.o: $(PROGDIR)/%.cpp
 	$(CC) -o $@ -c $< $(CFLAGS)
+$(LIBDIR)/$(STATICLIBRARY): $(OBJ)
+	ar rcs $@ $(OBJ)
+	mv $(LIBDIR)/$(STATICLIBRARY) $(LIBDIR)/$(STATICLIBRARY2)
+$(LIBDIR)/$(DYNAMICLIBRARY): $(OBJ)
+	$(CC) -shared -o $@ $(OBJ)
+
+
+# Version avec deboggage gdb
+$(OBJDIR)/%_debug.o: $(SRCDIR)/%.cpp
+	$(CCDEBUG) -o $@ -c $< $(CFLAGS)
+$(PROGOBJDIR)/%_debug.o: $(PROGDIR)/%.cpp
+	$(CCDEBUG) -o $@ -c $< $(CFLAGS)
  
 #Création de l'exécutable
-diagnostic.x: $(OBJ) $(PROGLIBDIR)/diagnostic.o
-	$(CC) -o $(BINDIR)/$@ $^ $(CFLAGS)
-old.x: $(OBJ) $(PROGLIBDIR)/old.o
-	$(CC) -o $(BINDIR)/$@ $^ $(CFLAGS)
-pi.x: $(OBJ) $(PROGLIBDIR)/pi.o
-	$(CC) -o $(BINDIR)/$@ $^ $(CFLAGS)
-tuto_pendulum.x: $(OBJ) $(PROGLIBDIR)/tuto_pendulum.o
-	$(CC) -o $(BINDIR)/$@ $^ $(CFLAGS)
-tuto_vectorial.x: $(OBJ) $(PROGLIBDIR)/tuto_vectorial.o
+%_debug.x: $(OBJDEBUG) $(PROGOBJDIR)/%_debug.o
+	$(CCDEBUG) -o $(BINDIR)/$@ $^ $(CFLAGS)
+%.x: $(OBJ) $(PROGOBJDIR)/%.o
 	$(CC) -o $(BINDIR)/$@ $^ $(CFLAGS)
 
-app: $(OBJ) appli.cpp
-	$(CC) -o app $^ -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window -lsfml-audio
+#app: $(OBJ) appli.cpp
+#	$(CC) -o app $^ -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window -lsfml-audio
 
 # Nettoyage des objets => Tout sera recompiler !
 clean:
-	rm $(LIBDIR)/*.o
-	rm $(PROGLIBDIR)/*.o
+	rm $(OBJDIR)/*.o;
+	rm $(PROGOBJDIR)/*.o;
+	rm $(LIBDIR)/*
+
+clean_debug:
+	rm $(OBJDIR)/*_debug.o;
+	r* $(PROGOBJDIR)/*_debug.o;
  
-# Nettoyage complet => clean + effacement du l'exécutable
-Clean: clean
-	rm $(BINDIR)/*
+# Nettoyage complet => clean + effacement des executables
+Clean:
+	rm $(OBJDIR)/*.o;
+	rm $(PROGOBJDIR)/*.o;
+	rm $(BINDIR)/*;
+	rm $(LIBDIR)/*

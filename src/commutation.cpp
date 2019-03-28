@@ -1,5 +1,6 @@
 #include "commutation.h"
-#include "symbol.h"
+#include "variable.h"
+#include "operations.h"
 using namespace std;
 
 Expr Commutation(const Expr& A, const Expr& B)

@@ -6,8 +6,6 @@
 #ifndef OPERATIONS_H_INCLUDED
 #define OPERATIONS_H_INCLUDED
 #include "scalarFunc.h"
-#include "support.h"
-#include <iostream>
 
 /*! \class Plus
  * \brief Handles a sum, function of multiple arguments

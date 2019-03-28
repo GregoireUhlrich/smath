@@ -4,8 +4,6 @@
 #ifndef Variable_H_INCLUDED
 #define Variable_H_INCLUDED
 #include "abstract.h"
-#include "support.h"
-#include <iostream>
 
 /*************************************************/
 // Abstract classes                              //
@@ -216,7 +214,7 @@ class Double: public AbstractNumerical{
      */
     smType::Type getType() const override;
 
-    bool isInteger() const override { return (value==round(value));}
+    bool isInteger() const override;
 
     /*! \brief Sets the \b value of the Double.
      * \param t_value New \b value for the Double.

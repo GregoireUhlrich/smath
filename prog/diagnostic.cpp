@@ -1,9 +1,6 @@
-#include "space.h"
-#include "property.h"
-#include "comparison.h"
 #include <chrono>
-#include <cmath>
 #include <fstream>
+#include "smath.h"
 #pragma GCC diagnostic ignored "-Wunused-result"
 #pragma GCC diagnostic ignored "-Wsign-compare"
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"

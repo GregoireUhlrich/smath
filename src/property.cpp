@@ -1,4 +1,5 @@
 #include "property.h"
+#include "equation.h"
 #include "indicial.h"
 
 using namespace std;

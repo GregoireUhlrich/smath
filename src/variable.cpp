@@ -109,6 +109,11 @@ void AbstractLiteral::removeProperty(Equation* property)
 
 smType::Type Double::getType() const { return smType::Double;}
 
+bool Double::isInteger() const
+{
+    return value == round(value);
+}
+
 void Double::setValue(double t_value)
 {
     value = t_value;

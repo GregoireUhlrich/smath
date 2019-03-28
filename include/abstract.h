@@ -5,18 +5,26 @@
  */
 
 #pragma GCC diagnostic ignored "-Wunused-parameter"
-#ifndef AbsTRACT_H_INCLUDED
-#define AbsTRACT_H_INCLUDED
+#ifndef ABSTRACT_H_INCLUDED
+#define ABSTRACT_H_INCLUDED
+
+#include <iostream>
 #include <string>
 #include <sstream>
-#include <vector>
-#include <set>
-#include <map>
-#include <iostream>
+
 #include <memory>
+
+#include <cmath>
 #include <algorithm>
+#include <vector>
+#include <initializer_list>
+#include <map>
+#include <set>
+
 #include <thread>
 #include <mutex>
+
+#include "support.h"
 #include "error.h"
 
 // Forward declaration of Abstract class for the type definitions.

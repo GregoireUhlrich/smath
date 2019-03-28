@@ -1,7 +1,6 @@
 #ifndef PROPERTY_H_INCLUDED
 #define PROPERTY_H_INCLUDED
 
-#include "abstract.h"
 #include "equation.h"
 
 class PropertyList{
