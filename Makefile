@@ -60,7 +60,6 @@ $(OBJDIR)/%_debug.o: $(SRCDIR)/%.cpp
 $(PROGOBJDIR)/%_debug.o: $(PROGDIR)/%.cpp
 	$(CCDEBUG) -o $@ -c $< $(CFLAGS)
  
-#Création de l'exécutable
 %_debug.x: $(OBJDEBUG) $(PROGOBJDIR)/%_debug.o
 	$(CCDEBUG) -o $(BINDIR)/$@ $^ $(CFLAGS)
 %.x: $(OBJ) $(PROGOBJDIR)/%.o
@@ -78,7 +77,6 @@ clean_debug:
 	rm $(OBJDIR)/*_debug.o;
 	r* $(PROGOBJDIR)/*_debug.o;
  
-# Nettoyage complet => clean + effacement des executables
 Clean:
 	rm $(OBJDIR)/*.o;
 	rm $(PROGOBJDIR)/*.o;
