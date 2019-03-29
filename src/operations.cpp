@@ -701,7 +701,6 @@ Times::Times(const Expr& leftOperand,
         nArgs = argument.size();
         insert(rightOperand, true); // rightOperand inserted to the right
                                     // of leftOperand
-        selfCheckIndexStructure();
     }
     else if (not explicitTimes 
              and rightOperand->getType() == smType::Times 
@@ -711,7 +710,6 @@ Times::Times(const Expr& leftOperand,
         nArgs = argument.size();
         insert(leftOperand, false); // leftOperand inserted to the left
                                     // of rightOperand
-        selfCheckIndexStructure();
     }
     else {
         nArgs = 2;
@@ -722,7 +720,6 @@ Times::Times(const Expr& leftOperand,
             mergeTerms();
         else 
             orderTerms();
-        selfCheckIndexStructure();
     }
     nArgs = argument.size();
 }
@@ -807,87 +804,6 @@ Expr Times::suppressTerm(const Expr& expr) const
     }
 
     return newAbstract;
-}
-
-IndexStructure Times::getIndexStructure() const
-{
-    //print();
-    if (isIndexed()) {
-        IndexStructure structure;
-        for (auto arg=argument.rbegin(); arg!=argument.rend(); ++arg) {
-            //cout<<structure<<endl;
-            if ((**arg).isIndexed())
-                structure += (**arg).getIndexStructure();
-            else 
-                break;
-        }
-
-        return structure;
-    }
-
-    return IndexStructure();
-}
-
-void Times::selfCheckIndexStructure()
-{
-    // Check the indexStructure of a product and apply Einstein's convention
-    // in the case of a repeated index. This algorithm is O(N^2) with N the
-    // total number of indices in the product (check for each index if it is
-    // present elsewhere.
-
-    //Structure of each argument in a vector
-    vector<IndexStructure> structure(0);
-    //For each argument
-    for (iter arg=argument.begin(); arg!=argument.end(); ++arg) {
-        // We get its structure in fooStruct
-        IndexStructure fooStruct = (*arg)->getIndexStructure();
-        if ((*arg)->isIndexed()) {
-            // Now we check for each new index if it is present before in
-            // the structure, in which case we contract it
-            // (Einstein's convention).
-            // For each new index: 
-            for (int k=0; k!=fooStruct.getNIndices(); ++k) {
-                //For each former structure (former arguments)
-                for (size_t i=0; i!=structure.size(); ++i) {
-                    const int nIndices = structure[i].getNIndices();
-                    bool breakValue = false;
-                    // For each index in the structure
-                    for (int j=0; j!=nIndices; ++j) {
-                        // If the index is already present
-                        if (*structure[i][j] == *fooStruct[k]
-                                and fooStruct[k]->getFree()) {
-                            structure[i][j]->testContraction(*fooStruct[k]);
-                        //    Index fooS = structure[i][j];
-                        //    Index fooF = fooStruct[k];
-                        //    structure[i][j].testContraction(fooStruct[k]);
-                        //    // We replace fooStruct[k] (not contracted)
-                        //    // by structure[i][j] (contracted).
-                        //    // If the contraction is not valid, we raise an 
-                        //    // error.
-                        //    if (not argument[i]->contractIndex(fooS,
-                        //                                       structure[i][j],
-                        //                                       (*arg).get()))
-                        //        callError(smError::BadContraction,
-                        //                "Times::selfCheckIndexStructure()",
-                        //                fooStruct[k]);
-                        //    if (not (*arg)->contractIndex(fooF,
-                        //                                  fooStruct[k],
-                        //                                  argument[i].get()))
-                        //        callError(smError::BadContraction,
-                        //                "Times::selfCheckIndexStructure()",
-                        //                fooStruct[k]);
-                            breakValue = true;
-                            break;
-                        }
-                    }
-                    if (breakValue)
-                        break;
-                }
-            }
-            // We add fooStruct to the vector of structures
-        }
-        structure.push_back(fooStruct);
-    }
 }
 
 Expr Times::getRealPart()
@@ -1110,10 +1026,6 @@ void Times::leftInsert(const Expr& expr)
     Expr term, exponent;
     getExponentStructure(expr, term, exponent);
     for (int i=0; i<nArgs; i++) {
-        // We do not merge indicial expressions
-        // Ai.Ai does not give (Ai)^2
-        if (argument[i]->isIndexed())
-            continue;
         Expr term2, exponent2;
         getExponentStructure(argument[i], term2, exponent2);
         if (*Commutation(expr, argument[i]) == ZERO) {
@@ -1161,10 +1073,6 @@ void Times::rightInsert(const Expr& expr)
     Expr term, exponent;
     getExponentStructure(expr, term, exponent);
     for (int i=nArgs-1; i>=0; --i) {
-        // We do not merge indicial expressions
-        // Ai.Ai does not give (Ai)^2
-        if (argument[i]->isIndexed())
-            continue;
         Expr term2, exponent2;
         getExponentStructure(argument[i], term2, exponent2);
         if (*Commutation(expr, argument[i]) == ZERO) {
@@ -1287,10 +1195,6 @@ bool Times::mergeTerms()
     shared_ptr<Abstract> factor, factor2;
     bool matched;
     for (int i=numericalFactor; i<nArgs-1; i++) {
-        // We do not merge indicial expressions
-        // Ai.Ai does not give (Ai)^2
-        if (argument[i]->isIndexed())
-            continue;
         factor = ONE;
         if (argument[i]->getType() == smType::Pow) { //Pow 
             term = argument[i]->getArgument(1);
@@ -1302,55 +1206,7 @@ bool Times::mergeTerms()
                 term = argument[i];
         }
         else term = argument[i];
-        //bool indicial = (argument[i]->getPrimaryType() == smType::Indicial);
 
-        ///// 
-        // Must merge the two conditions with new commutability !!
-        /*if (false and argument[i]->getCommutable()) {
-            if (indicial) {
-                for (int j=i+1; j<nArgs; j++) {
-                    if (argument[j]->getPrimaryType() == smType::Indicial) {
-                        argument[i] = make_shared<ITerm>(argument[i], argument[j]);
-                        argument.erase(argument.begin()+j);
-                        j--;
-                        nArgs--;
-                    }
-                }
-            }
-            else {
-                for (int j=i+1; j<nArgs; j++) {
-                    factor2 = ONE;
-                    if (argument[j]->getType() == smType::Pow) { //Pow
-                        term2 = argument[j]->getArgument(1);
-                        if (term2->getPrimaryType() == smType::Numerical) {
-                            factor2 = term2;
-                            term2 = argument[j]->getArgument();
-                        }
-                        else 
-                            term2 = argument[j];
-                    }
-                    else term2 = argument[j];
-                    if (*term==term2) {
-                        factor = factor->addition_own(factor2);
-                        matched = true;
-                        argument.erase(argument.begin()+j);
-                        j--;
-                        nArgs--;
-                    }
-                }
-            }
-        }*/
-        /*if (indicial) { for (int j=i+1; j<nArgs; j++) {
-                if(*Commutation(argument[i],argument[j]) != ZERO)
-                    break;
-                if (argument[j]->getPrimaryType() == smType::Indicial) {
-                    argument[i] = make_shared<ITerm>(argument[i], argument[j]);
-                    argument.erase(argument.begin()+j);
-                    j--;
-                    nArgs--;
-                }
-            }
-        }*/
         for (int j=i+1; j<nArgs; j++) {
             if(*Commutation(argument[i], argument[j]) != ZERO)
                 break;
@@ -1528,70 +1384,26 @@ bool Times::operator==(const Expr& expr) const
         return false;
     if (nArgs != expr->getNArgs())
         return false;
-    //cout<<"Comparing :\n";
-    //print();
-    //expr->print();
 
     vector<int> indicesLeft(nArgs);
     for (int i=0; i<nArgs;i++)
         indicesLeft[i] = i;
 
     Expr foo;
-    map<Index,Index> constraints;
-    bool checkIndexExpressions = false;
-    if (isIndexed()) 
-        checkIndexExpressions = true;
     for (int i=0; i<nArgs; i++) {
-        //cout<<"Treating arg ";
-        //argument[i]->print();
-        //for (auto i=constraints.begin(); i!=constraints.end(); ++i)
-        //    cout<<i->first<<"  "<<i->second<<endl;
         bool matched = false;
         for (size_t j=0; j<indicesLeft.size(); j++) {
             foo = expr->getArgument(indicesLeft[j]);
-            if (!argument[i]-> getCommutable() and
-                !foo->getCommutable() and
-                *argument[i]!=foo)
-                if (argument[i]->getType() != smType::ITensor 
-                        or foo->getType() != smType::ITensor
-                        or foo->getName() != argument[i]->getName())
+            if (*Commutation(argument[i],foo) != ZERO)
                     break;
-            if ((not checkIndexExpressions
-                        or not (argument[i]->getType() == smType::ITensor))
-                    and *argument[i] == foo) {
+            if (*argument[i] == foo) {
                 indicesLeft.erase(indicesLeft.begin()+j);
                 matched = true;
                 break;
             }
-            else if (checkIndexExpressions 
-                and argument[i]->getType() == smType::ITensor
-                and foo->getType() == smType::ITensor)  {
-
-         //       cout<<"Equal to argument :";
-         //       foo->print();
-        //for (auto i=constraints.begin(); i!=constraints.end(); ++i)
-        //    cout<<i->first<<"  "<<i->second<<endl;
-                if (argument[i]->compareWithDummy(foo, constraints)) {
-                    //cout<<"Really equal ! \n";
-        //for (auto i=constraints.begin(); i!=constraints.end(); ++i)
-        //    cout<<i->first<<"  "<<i->second<<endl;
-                    indicesLeft.erase(indicesLeft.begin()+j);
-                    matched = true;
-                    break;
-                }
-            }
-            
         }
         if (not matched) return false;
     }
-
-    // If there is some constraints on dummy indices left (we found only 
-    // one dummy of the pair), we check that there are the same.
-    // Ex: A_i.B_%j != A_i.B_%k but A_i.B_%j == A_i.B_%j
-    if (checkIndexExpressions and not constraints.empty()) 
-        for (auto it=constraints.begin(); it!=constraints.end(); ++it)
-            if (it->first != it->second)
-                return false;
 
     return true;
 }
@@ -1604,9 +1416,6 @@ bool Times::partialComparison(const Expr& expr) const
         return *argument[0]==expr;
     if (expr->getType() != smType::Times)
         return false;
-     //cout<<"Comparing :\n";
-    //print();
-    //expr->print();
 
     int t_nArgs = expr->getNArgs();
     vector<int> indicesLeft(t_nArgs);
@@ -1614,64 +1423,23 @@ bool Times::partialComparison(const Expr& expr) const
         indicesLeft[i] = i;
 
     Expr foo;
-    map<Index,Index> constraints;
-    bool checkIndexExpressions = false;
-    if (isIndexed()) 
-        checkIndexExpressions = true;
     for (int i=0; i<nArgs; i++) {
-        //cout<<"Treating arg ";
-        //argument[i]->print();
-        //for (auto i=constraints.begin(); i!=constraints.end(); ++i)
-        //    cout<<i->first<<"  "<<i->second<<endl;
         bool matched = false;
         for (size_t j=0; j<indicesLeft.size(); j++) {
             foo = expr->getArgument(indicesLeft[j]);
-            if (!argument[i]-> getCommutable() and
-                !foo->getCommutable() and
-                *argument[i]!=foo)
-                if (argument[i]->getType() != smType::ITensor 
-                        or foo->getType() != smType::ITensor
-                        or foo->getName() != argument[i]->getName())
+            if (*Commutation(argument[i],foo) != ZERO)
                     break;
-            if ((not checkIndexExpressions
-                        or not (argument[i]->getType() == smType::ITensor))
-                    and *argument[i] == foo) {
+            if (*argument[i] == foo) {
                 indicesLeft.erase(indicesLeft.begin()+j);
                 matched = true;
                 break;
             }
-            else if (checkIndexExpressions 
-                and argument[i]->getType() == smType::ITensor
-                and foo->getType() == smType::ITensor)  {
-
-         //       cout<<"Equal to argument :";
-         //       foo->print();
-        //for (auto i=constraints.begin(); i!=constraints.end(); ++i)
-        //    cout<<i->first<<"  "<<i->second<<endl;
-                if (argument[i]->compareWithDummy(foo, constraints)) {
-                    //cout<<"Really equal ! \n";
-        //for (auto i=constraints.begin(); i!=constraints.end(); ++i)
-        //    cout<<i->first<<"  "<<i->second<<endl;
-                    indicesLeft.erase(indicesLeft.begin()+j);
-                    matched = true;
-                    break;
-                }
-            }
-            
         }
         if (not matched)
             return false;
         else if (indicesLeft.size() == 0)
             break;
     }
-
-    // If there is some constraints on dummy indices left (we found only 
-    // one dummy of the pair), we check that there are the same.
-    // Ex: A_i.B_%j != A_i.B_%k but A_i.B_%j == A_i.B_%j
-    if (checkIndexExpressions and not constraints.empty()) 
-        for (auto it=constraints.begin(); it!=constraints.end(); ++it)
-            if (it->first != it->second)
-                return false;
 
     return true;
 }
@@ -1706,9 +1474,14 @@ void applyDerivative(Expr& product)
 
 Expr times_(const Expr& leftOperand, const Expr& rightOperand, bool explicitTimes)
 {
+    bool indexed = (leftOperand->isIndexed() or rightOperand->isIndexed());
     if (leftOperand->getType() == smType::Arbitrary
-            or rightOperand->getType() == smType::Arbitrary)
-        return make_shared<Times>(vector<Expr>({leftOperand,rightOperand}),true);
+            or rightOperand->getType() == smType::Arbitrary) {
+        if (not indexed)
+            return make_shared<Times>(vector<Expr>({leftOperand,rightOperand}),true);
+        else
+            return make_shared<ITimes>(vector<Expr>({leftOperand,rightOperand}),true);
+    }
     if (leftOperand->getType() == smType::Derivative and
         leftOperand->isEmpty()) {
         return derivative_(leftOperand->getArgument(0)*rightOperand,
@@ -1720,13 +1493,21 @@ Expr times_(const Expr& leftOperand, const Expr& rightOperand, bool explicitTime
         return rightOperand->multiplication_own(leftOperand,0);
 
     if (leftOperand->getType() == smType::Polynomial) {
-        if (rightOperand->getType() == smType::Polynomial and explicitTimes)
-            return make_shared<Times>(leftOperand, rightOperand);
+        if (rightOperand->getType() == smType::Polynomial and explicitTimes) {
+            if (not indexed)
+                return make_shared<Times>(leftOperand, rightOperand);
+            else
+                return make_shared<ITimes>(leftOperand, rightOperand);
+        }
         return leftOperand->multiplication_own(rightOperand);
     }
     if (rightOperand->getType() == smType::Polynomial) {
-        if (leftOperand->getType() == smType::Polynomial and explicitTimes)
-            return make_shared<Times>(leftOperand, rightOperand);
+        if (leftOperand->getType() == smType::Polynomial and explicitTimes) {
+            if (not indexed)
+                return make_shared<Times>(leftOperand, rightOperand);
+            else
+                return make_shared<ITimes>(leftOperand, rightOperand);
+        }
         return rightOperand->multiplication_own(leftOperand,0);
     }
 
@@ -1734,7 +1515,11 @@ Expr times_(const Expr& leftOperand, const Expr& rightOperand, bool explicitTime
         if (rightOperand->getPrimaryType() == smType::Numerical) 
             return leftOperand->multiplication_own(rightOperand);
 
-    Expr foo = make_shared<Times>(leftOperand, rightOperand, explicitTimes);
+    Expr foo;
+    if (not indexed)
+        foo = make_shared<Times>(leftOperand, rightOperand, explicitTimes);
+    else
+        foo = make_shared<ITimes>(leftOperand, rightOperand, explicitTimes);
     applyDerivative(foo);
     if (foo->getPrimaryType() == smType::MultiFunction
             and foo->getNArgs() == 1)
@@ -1763,7 +1548,17 @@ Expr times_(const vector<Expr >& operands, bool explicitTimes)
         }
     }
 
-    Expr result = make_shared<Times>(operands, explicitTimes);
+    bool indexed = false;
+    for (const auto& op : operands)
+        if (op->isIndexed()) {
+            indexed = true;
+            break;
+        }
+    Expr result;
+    if (not indexed)
+        result = make_shared<Times>(operands, explicitTimes);
+    else 
+        result = make_shared<ITimes>(operands, explicitTimes);
     applyDerivative(result);
     if (result->getPrimaryType() == smType::MultiFunction
             and result->getNArgs() == 1)

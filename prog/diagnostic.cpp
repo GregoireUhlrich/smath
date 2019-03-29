@@ -1,9 +1,8 @@
-#include <chrono>
-#include <fstream>
-#include "smath.h"
 #pragma GCC diagnostic ignored "-Wunused-result"
 #pragma GCC diagnostic ignored "-Wsign-compare"
-#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+
+#include <smath>
+
 using namespace std;
 
 string convertTime(chrono::duration<double> dur)
@@ -42,8 +41,8 @@ cout<<variable->evaluateScalar()<<" "<<developed->evaluateScalar()<<endl;
     int a;
     cin>>a;*/
 
-    auto start = chrono::system_clock::now();
-    std::chrono::duration<double> dur;
+    //auto start = chrono::system_clock::now();
+    //std::chrono::duration<double> dur;
 
     system("bin/old.x");
 
@@ -334,7 +333,7 @@ ofojeogz
     eq.isolate(x);
     cout<<eq<<endl;
 
-    cout<<Simplify(((x^100)/(100^x)).derive(x))<<endl;
+    cout<<Simplify(((x^100)/(100^x)).derive(x).factor(x))<<endl;
     derivative_(a*b,x,3).evaluate().print();
     derivative_(derivative_(a*b,x,2),x,3).print();
     derivative_(derivative_(a*b,x,2),x,3).evaluate().print();
@@ -400,10 +399,17 @@ ofojeogz
     Expr E2 = var_("E2");
     Expr E3 = var_("E3");
 
-    cout<<smComparator::dummyComparison((cos_(E1)+sin_(E2)*sin_(E2)),(cos_(smComparator::dummy(1)) + (sin_(smComparator::dummy(2))^2)))<<"1"<<endl;
-    cout<<smComparator::dummyComparison((cos_(E1)+sin_(E2)*sin_(E2)),(cos_(smComparator::dummy(1)) + (sin_(smComparator::dummy(1))^2)))<<"0"<<endl;
-    cout<<smComparator::dummyComparison((cos_(E1)+sin_(E1)*sin_(E1)),(cos_(smComparator::dummy(1)) + (sin_(smComparator::dummy(1))^2)))<<"1"<<endl;
-    cout<<smComparator::dummyComparison((cos_(E1)+sin_(E1)*sin_(E1)),(cos_(smComparator::dummy(1)) + (sin_(smComparator::dummy(2))^2)))<<"1"<<endl;
+    cout<<smComparator::dummyComparison((cos_(E1)+sin_(E2)*sin_(E2)),
+                                        (cos_(smComparator::dummy(1)) + (sin_(smComparator::dummy(2))^2)))<<"1"<<endl;
+
+    cout<<smComparator::dummyComparison((cos_(E1)+sin_(E2)*sin_(E2)),
+                                        (cos_(smComparator::dummy(1)) + (sin_(smComparator::dummy(1))^2)))<<"0"<<endl;
+
+    cout<<smComparator::dummyComparison((cos_(E1)+sin_(E1)*sin_(E1)),
+                                        (cos_(smComparator::dummy(1)) + (sin_(smComparator::dummy(1))^2)))<<"1"<<endl;
+
+    cout<<smComparator::dummyComparison((cos_(E1)+sin_(E1)*sin_(E1)),
+                                        (cos_(smComparator::dummy(1)) + (sin_(smComparator::dummy(2))^2)))<<"1"<<endl;
     
 
     return 0;

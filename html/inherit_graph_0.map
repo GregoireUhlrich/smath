@@ -1,12 +1,12 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
 <area shape="rect" id="node1" href="$classAbstract.html" title="Root class of the inheritance tree of abstracts. " alt="" coords="5,1297,76,1324"/>
 <area shape="rect" id="node2" href="$classAbstractScalar.html" title="Abstract class concerning all scalars (dim = 0). Allows to implement one time getDim() = 0 for all sc..." alt="" coords="131,1019,239,1045"/>
-<area shape="rect" id="node42" href="$classAbstractVectorial.html" title="AbstractVectorial" alt="" coords="124,1525,247,1552"/>
+<area shape="rect" id="node43" href="$classAbstractVectorial.html" title="AbstractVectorial" alt="" coords="124,1525,247,1552"/>
 <area shape="rect" id="node3" href="$classAbstractBuildingBlock.html" title="Abstract class from which derive all building blocks of exprs, i.e. objects not function of further e..." alt="" coords="295,335,445,361"/>
 <area shape="rect" id="node16" href="$classAbstractDuoFunc.html" title="Handle functions of multiple arguments. In the case of the call of a simplification function..." alt="" coords="308,537,432,564"/>
 <area shape="rect" id="node21" href="$classAbstractFunc.html" title="Base class for scalar functions of one argument. " alt="" coords="320,1019,420,1045"/>
 <area shape="rect" id="node38" href="$classAbstractMultiFunc.html" title="Handle functions of multiple arguments. In the case of the call of a simplification function..." alt="" coords="306,1449,434,1476"/>
-<area shape="rect" id="node4" href="$classAbstractIndicial.html" title="AbstractIndicial" alt="" coords="503,68,615,95"/>
+<area shape="rect" id="node4" href="$classAbstractIndicial.html" title="AbstractIndicial" alt="" coords="503,69,615,96"/>
 <area shape="rect" id="node6" href="$classAbstractLiteral.html" title="Abstract class from which derive literal building blocks: Constant, Variable, Imaginary and CFactoria..." alt="" coords="505,183,612,209"/>
 <area shape="rect" id="node12" href="$classAbstractNumerical.html" title="Abstract class from which derive numerical types, i.e. Double, Integer, CFraction. " alt="" coords="493,335,624,361"/>
 <area shape="rect" id="node5" href="$classITensor.html" title="ITensor" alt="" coords="722,5,789,32"/>
@@ -41,7 +41,8 @@
 <area shape="rect" id="node39" href="$classPlus.html" title="Handles a sum, function of multiple arguments. " alt="" coords="535,1449,583,1476"/>
 <area shape="rect" id="node40" href="$classPolynomial.html" title="Handles a polynomial, function of multiple arguments. " alt="" coords="515,1500,602,1527"/>
 <area shape="rect" id="node41" href="$classTimes.html" title="Handles a product, function of multiple arguments. " alt="" coords="529,1551,588,1577"/>
-<area shape="rect" id="node43" href="$classHighDTensor.html" title="HighDTensor" alt="" coords="321,1500,419,1527"/>
-<area shape="rect" id="node44" href="$classMatrix.html" title="Matrix" alt="" coords="341,1551,399,1577"/>
-<area shape="rect" id="node45" href="$classVector.html" title="Vector" alt="" coords="340,1601,400,1628"/>
+<area shape="rect" id="node42" href="$classITimes.html" title="ITimes" alt="" coords="724,1551,787,1577"/>
+<area shape="rect" id="node44" href="$classHighDTensor.html" title="HighDTensor" alt="" coords="321,1500,419,1527"/>
+<area shape="rect" id="node45" href="$classMatrix.html" title="Matrix" alt="" coords="341,1551,399,1577"/>
+<area shape="rect" id="node46" href="$classVector.html" title="Vector" alt="" coords="340,1601,400,1628"/>
 </map>

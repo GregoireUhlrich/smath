@@ -8,6 +8,9 @@ std::map<int,Expr> smComparator::arbitrary = std::map<int,Expr>();
 std::map<int,Expr> smComparator::correspondance
             = std::map<int,Expr>();
 
+//std::map<Index,Index> smComparator::indexCorrepondance
+//            = std::map<Index,Index>();
+
 Arbitrary::Arbitrary(int n)
     :AbstractLiteral(smComparator::dummyName), number(n)
 {}

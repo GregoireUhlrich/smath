@@ -162,7 +162,7 @@ class Polynomial: public AbstractMultiFunc{
 
     Expr getVariable() const override;
 
-    bool isIndexed() const override;
+    virtual bool isIndexed() const override;
 
     IndexStructure getIndexStructure() const override;
 
@@ -243,9 +243,9 @@ class Times: public AbstractMultiFunc{
         return smType::Times;
     }
 
-    IndexStructure getIndexStructure() const override;
+    //IndexStructure getIndexStructure() const override;
 
-    void selfCheckIndexStructure();
+    //virtual void selfCheckIndexStructure();
 
     Expr getRealPart() override;
 
@@ -292,8 +292,8 @@ class Times: public AbstractMultiFunc{
     Expr suppressTerm(const Expr& expr) const override;
 
     void insert(const Expr& expr, bool side=1) override;
-    void leftInsert(const Expr& expr);
-    void rightInsert(const Expr& expr);
+    virtual void leftInsert(const Expr& expr);
+    virtual void rightInsert(const Expr& expr);
 
     void print(int mode=0) const override;
 
@@ -314,7 +314,7 @@ class Times: public AbstractMultiFunc{
      * \return \b True if terms have been merged.
      * \return \b False else.
      */
-    bool mergeTerms();
+    virtual bool mergeTerms();
 
     void orderTerms();
 
@@ -336,9 +336,9 @@ class Times: public AbstractMultiFunc{
 
     int getParity(const Expr& t_variable) const override;
     
-    bool operator==(const Expr& expr) const override;
+    virtual bool operator==(const Expr& expr) const override;
 
-    bool partialComparison(const Expr& expr) const;
+    virtual bool partialComparison(const Expr& expr) const;
 
     std::vector<Expr > getAlternateForms() const override;
 

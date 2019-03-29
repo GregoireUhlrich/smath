@@ -6,5 +6,6 @@ var searchData=
   ['indicialparent',['IndicialParent',['../classIndicialParent.html',1,'']]],
   ['integer',['Integer',['../classInteger.html',1,'']]],
   ['interpreter',['Interpreter',['../classInterpreter.html',1,'']]],
-  ['itensor',['ITensor',['../classITensor.html',1,'']]]
+  ['itensor',['ITensor',['../classITensor.html',1,'']]],
+  ['itimes',['ITimes',['../classITimes.html',1,'']]]
 ];

@@ -3,7 +3,6 @@
 
 #include "abstract.h"
 #include "variable.h"
-#include "supportIndicial.h"
 
 class Arbitrary: public AbstractLiteral{
 
@@ -31,14 +30,19 @@ class Arbitrary: public AbstractLiteral{
 
 class smComparator{
 
+    // Member functions
+
     public:
 
     static Expr dummy(int n);
 
     static bool compare(const Expr& expr, const constExpr& dummy);
+
     static bool dummyComparison(const Expr& expr, const Expr& dummyExpr);
 
     static void clear();
+
+    // Static Attributes
 
     public:
 
@@ -49,7 +53,10 @@ class smComparator{
     static bool dummyComparisonActive;
 
     static std::map<int,Expr> arbitrary;
+
     static std::map<int,Expr> correspondance;
+
+    //static std::map<Index,Index> indexCorrepondance;
 
 };
 

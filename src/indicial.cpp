@@ -4,6 +4,7 @@
 #include "equation.h"
 #include "variable.h"
 #include "comparison.h"
+#include "commutation.h"
 
 using namespace std;
 
@@ -510,4 +511,412 @@ bool ITensor::operator==(const Expr& expr) const
         return false;
 
     return index.exactMatch(expr->getIndexStructure());
+}
+
+///////////////////////////////////////////////////
+/*************************************************/
+// Class ITimes                                  //
+/*************************************************/
+///////////////////////////////////////////////////
+
+ITimes::ITimes(): Times(){}
+
+ITimes::ITimes(const vector<Expr>& t_argument, bool explicitTimes)
+    :Times(t_argument, explicitTimes)
+{
+    selfCheckIndexStructure();
+}
+
+ITimes::ITimes(const Expr& leftOperand, const Expr& rightOperand, 
+               bool explicitTimes)
+    :Times(leftOperand, rightOperand, explicitTimes)
+{
+    selfCheckIndexStructure();
+}
+
+bool ITimes::isIndexed() const
+{
+    return true;
+}
+
+IndexStructure ITimes::getIndexStructure() const
+{
+    IndexStructure structure;
+    for (const auto& s : indexArgument)
+        structure += s;
+
+    return structure;
+}
+
+void ITimes::selfCheckIndexStructure()
+{
+    // Check the indexStructure of a product and apply Einstein's convention
+    // in the case of a repeated index. This algorithm is O(N^2) with N the
+    // total number of indices in the product (check for each index if it is
+    // present elsewhere.
+
+    //For each argument
+    for (iter arg=argument.begin(); arg!=argument.end(); ++arg) {
+        // We get its structure in fooStruct
+        IndexStructure fooStruct = (*arg)->getIndexStructure();
+        if ((*arg)->isIndexed()) {
+            // Now we check for each new index if it is present before in
+            // the structure, in which case we contract it
+            // (Einstein's convention).
+            // For each new index: 
+            for (int k=0; k!=fooStruct.getNIndices(); ++k) {
+                //For each former structure (former arguments)
+                for (size_t i=0; i!=indexArgument.size(); ++i) {
+                    const int nIndices = indexArgument[i].getNIndices();
+                    bool breakValue = false;
+                    // For each index in the structure
+                    for (int j=0; j!=nIndices; ++j) {
+                        // If the index is already present
+                        if (*indexArgument[i][j] == *fooStruct[k]
+                                and fooStruct[k]->getFree()) {
+                            indexArgument[i][j]->testContraction(*fooStruct[k]);
+                            breakValue = true;
+                            break;
+                        }
+                    }
+                    if (breakValue)
+                        break;
+                }
+            }
+            // We add fooStruct to the vector of structures
+        }
+        indexArgument.push_back(fooStruct);
+    }
+}
+void ITimes::leftInsert(const Expr& expr)
+{
+    // If not numerical, we search for a similar term
+    int max = nArgs;
+    Expr term, exponent;
+    getExponentStructure(expr, term, exponent);
+    for (int i=0; i<nArgs; i++) {
+        // We do not merge indicial expressions
+        // Ai.Ai does not give (Ai)^2
+        if (argument[i]->isIndexed())
+            continue;
+        Expr term2, exponent2;
+        getExponentStructure(argument[i], term2, exponent2);
+        if (*Commutation(expr, argument[i]) == ZERO) {
+            // If we found the right term, it's done
+            if (*term == term2) {
+                argument[i] = pow_(term, exponent->addition_own(exponent2));
+                if (*argument[i] == ONE) {
+                    argument.erase(argument.begin()+i);
+                    --nArgs;
+                }
+                return;
+            }
+        }
+        else if (*term == term2) {
+            argument[i] = pow_(term, exponent->addition_own(exponent2));
+            if (*argument[i] == ONE) {
+                argument.erase(argument.begin()+i);
+                --nArgs;
+            }
+            return;
+        }
+        else {
+            // max is the position not reachable because of commutation not trivial
+            max = i;
+            break;
+        }
+    }
+
+    // No term corresponds, we order correctly the new term in the sum
+    for (int i=0; i<max; i++) 
+        if (expr < argument[i] or *Commutation(expr, argument[i]) != ZERO) {
+            ++nArgs;
+            argument.insert(argument.begin()+i, expr);
+            return;
+        }
+
+    // no term is more complicated than expr, we put it at the end
+    argument.insert(argument.begin()+max, expr);
+    ++nArgs;
+}
+void ITimes::rightInsert(const Expr& expr)
+{
+    // If not numerical, we search for a similar term
+    int max = -1;
+    Expr term, exponent;
+    getExponentStructure(expr, term, exponent);
+    for (int i=nArgs-1; i>=0; --i) {
+        // We do not merge indicial expressions
+        // Ai.Ai does not give (Ai)^2
+        if (argument[i]->isIndexed())
+            continue;
+        Expr term2, exponent2;
+        getExponentStructure(argument[i], term2, exponent2);
+        if (*Commutation(expr, argument[i]) == ZERO) {
+            // If we found the right term, it's done
+            if (*term == term2) {
+                argument[i] = pow_(term, exponent->addition_own(exponent2));
+                if (*argument[i] == ONE) {
+                    argument.erase(argument.begin()+i);
+                    --nArgs;
+                }
+                return;
+            }
+        }
+        else if (*term == term2) {
+            argument[i] = pow_(term, exponent->addition_own(exponent2));
+            if (*argument[i] == ONE) {
+                argument.erase(argument.begin()+i);
+                --nArgs;
+            }
+            return;
+        }
+        else {
+            // max is the position not reachable because of commutation not trivial
+            max = i;
+            break;
+        }
+    }
+
+    // No term corresponds, we order correctly the new term in the sum
+    for (int i=nArgs-1; i>max; --i)  {
+        if (expr > argument[i] or *Commutation(expr, argument[i]) != ZERO) {
+            ++nArgs;
+            argument.insert(argument.begin()+i+1, expr);
+            return;
+        }
+    }
+
+    // no term is more complicated than expr, we put it at the end
+    argument.insert(argument.begin()+max+1, expr);
+    ++nArgs;
+}
+
+bool ITimes::mergeTerms()
+{
+    bool simplified = false;
+    nArgs = argument.size();
+    for (int i=0; i<nArgs; i++) {
+        if (argument[i]->getType() == smType::Times) { 
+            vector<shared_ptr<Abstract> > t_argument =
+                argument[i]->getVectorArgument();
+
+            for (int j=i-1; j>=0; --j)
+                t_argument.insert(t_argument.begin(),argument[j]);
+            for (int j=i+1; j<nArgs; ++j)
+                t_argument.push_back(argument[j]);
+            nArgs += argument[i]->getNArgs()-1;
+            i += argument[i]->getNArgs()-1;
+            argument = t_argument;
+        }
+    }
+    bool numericalFactor = (argument[0]->getPrimaryType() == smType::Numerical);
+    for (int i=numericalFactor; i<nArgs; i++) {
+        if (argument[i]->getPrimaryType() == smType::Numerical) {
+            if (!numericalFactor) {
+                shared_ptr<Abstract> foo = argument[i];
+                argument.erase(argument.begin()+i);
+                argument.insert(argument.begin(),foo);
+                numericalFactor = true;
+                i--;
+            }
+            else {
+                argument[0] = argument[0]->multiplication_own(argument[i]);
+                argument.erase(argument.begin()+i);
+                nArgs--;
+                i--;
+            }
+        }
+    }
+    if (numericalFactor and argument[0]->evaluateScalar()==1 and nArgs > 1) {
+        argument.erase(argument.begin());
+        nArgs--;
+    }
+    else if (numericalFactor and argument[0]->evaluateScalar()==0) {
+        argument = vector<shared_ptr<Abstract>>(1);
+        argument[0] = ZERO;
+        nArgs = 1;
+        return false;
+    }
+    shared_ptr<Abstract> term, term2;
+    shared_ptr<Abstract> factor, factor2;
+    bool matched;
+    for (int i=numericalFactor; i<nArgs-1; i++) {
+        // We do not merge indicial expressions
+        // Ai.Ai does not give (Ai)^2
+        if (argument[i]->isIndexed())
+            continue;
+        factor = ONE;
+        if (argument[i]->getType() == smType::Pow) { //Pow 
+            term = argument[i]->getArgument(1);
+            if (term->getPrimaryType() == smType::Numerical) {
+                factor = term;
+                term = argument[i]->getArgument();
+            }
+            else 
+                term = argument[i];
+        }
+        else term = argument[i];
+        for (int j=i+1; j<nArgs; j++) {
+            if(*Commutation(argument[i], argument[j]) != ZERO)
+                break;
+            factor2 = ONE;
+            if (argument[j]->getType() == smType::Pow) {  //Pow
+                term2 = argument[j]->getArgument(1);
+                if (term2->getPrimaryType() == smType::Numerical) {
+                    factor2 = term2;
+                    term2 = argument[j]->getArgument();
+                }
+                else 
+                    term2 = argument[j];
+            }
+            else term2 = argument[j];
+            if (*term==term2) {
+                factor = factor->addition_own(factor2);
+                matched = true;
+                argument.erase(argument.begin()+j);
+                j--;
+                nArgs--;
+            }
+        }
+        if (matched) {
+            argument[i] = pow_(term, factor);
+            if (*argument[i] == ONE and nArgs > 1){
+                argument.erase(argument.begin()+i);
+                --i;
+                --nArgs;
+            }
+            simplified = true;
+        } 
+    }
+
+    orderTerms();
+    return simplified;
+}
+
+bool ITimes::operator==(const Expr& expr) const
+{
+    if (expr->getName() == smComparator::dummyName) 
+        return expr->operator==(DummyCopy(this));
+    if (nArgs == 1)
+        return *argument[0]==expr;
+    if (expr->getType() != smType::Times)
+        return false;
+    if (nArgs != expr->getNArgs())
+        return false;
+
+    vector<int> indicesLeft(nArgs);
+    for (int i=0; i<nArgs;i++)
+        indicesLeft[i] = i;
+
+    Expr foo;
+    map<Index,Index> constraints;
+    bool checkIndexExpressions = false;
+    if (isIndexed()) 
+        checkIndexExpressions = true;
+    for (int i=0; i<nArgs; i++) {
+        bool matched = false;
+        for (size_t j=0; j<indicesLeft.size(); j++) {
+            foo = expr->getArgument(indicesLeft[j]);
+            if (!argument[i]-> getCommutable() and
+                !foo->getCommutable() and
+                *argument[i]!=foo)
+                if (argument[i]->getType() != smType::ITensor 
+                        or foo->getType() != smType::ITensor
+                        or foo->getName() != argument[i]->getName())
+                    break;
+            if ((not checkIndexExpressions
+                        or not (argument[i]->getType() == smType::ITensor))
+                    and *argument[i] == foo) {
+                indicesLeft.erase(indicesLeft.begin()+j);
+                matched = true;
+                break;
+            }
+            else if (checkIndexExpressions 
+                and argument[i]->getType() == smType::ITensor
+                and foo->getType() == smType::ITensor)  {
+
+                if (argument[i]->compareWithDummy(foo, constraints)) {
+                    indicesLeft.erase(indicesLeft.begin()+j);
+                    matched = true;
+                    break;
+                }
+            }
+            
+        }
+        if (not matched) return false;
+    }
+
+    if (checkIndexExpressions and not constraints.empty()) 
+        for (auto it=constraints.begin(); it!=constraints.end(); ++it)
+            if (it->first != it->second)
+                return false;
+
+    return true;
+}
+
+bool ITimes::partialComparison(const Expr& expr) const
+{
+    if (expr->getName() == WHATEVER->getName())
+        return true;
+    if (nArgs == 1)
+        return *argument[0]==expr;
+    if (expr->getType() != smType::Times)
+        return false;
+
+    int t_nArgs = expr->getNArgs();
+    vector<int> indicesLeft(t_nArgs);
+    for (int i=0; i<t_nArgs;i++)
+        indicesLeft[i] = i;
+
+    Expr foo;
+    map<Index,Index> constraints;
+    bool checkIndexExpressions = false;
+    if (isIndexed()) 
+        checkIndexExpressions = true;
+    for (int i=0; i<nArgs; i++) {
+        bool matched = false;
+        for (size_t j=0; j<indicesLeft.size(); j++) {
+            foo = expr->getArgument(indicesLeft[j]);
+            if (!argument[i]-> getCommutable() and
+                !foo->getCommutable() and
+                *argument[i]!=foo)
+                if (argument[i]->getType() != smType::ITensor 
+                        or foo->getType() != smType::ITensor
+                        or foo->getName() != argument[i]->getName())
+                    break;
+            if ((not checkIndexExpressions
+                        or not (argument[i]->getType() == smType::ITensor))
+                    and *argument[i] == foo) {
+                indicesLeft.erase(indicesLeft.begin()+j);
+                matched = true;
+                break;
+            }
+            else if (checkIndexExpressions 
+                and argument[i]->getType() == smType::ITensor
+                and foo->getType() == smType::ITensor)  {
+
+                if (argument[i]->compareWithDummy(foo, constraints)) {
+                    indicesLeft.erase(indicesLeft.begin()+j);
+                    matched = true;
+                    break;
+                }
+            }
+            
+        }
+        if (not matched)
+            return false;
+        else if (indicesLeft.size() == 0)
+            break;
+    }
+
+    // If there is some constraints on dummy indices left (we found only 
+    // one dummy of the pair), we check that there are the same.
+    // Ex: A_i.B_%j != A_i.B_%k but A_i.B_%j == A_i.B_%j
+    if (checkIndexExpressions and not constraints.empty()) 
+        for (auto it=constraints.begin(); it!=constraints.end(); ++it)
+            if (it->first != it->second)
+                return false;
+
+    return true;
 }

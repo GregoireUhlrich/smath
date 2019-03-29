@@ -8,6 +8,7 @@
 #define Indicial_H_INCLUDED
 
 #include "variable.h"
+#include "operations.h"
 #include "supportIndicial.h"
 
 class ITensor;
@@ -215,6 +216,39 @@ class ITensor: public AbstractIndicial{
 void nameTensor(const std::string& name, Expr& tensor, bool first=true);
 
 Expr generateTensor(const std::string& name, const std::vector<const Space*>&);
+
+class ITimes: public Times{
+
+    protected:
+
+    std::vector<IndexStructure> indexArgument;
+
+    public:
+
+    ITimes();
+
+    ITimes(const std::vector<Expr >& t_argument, bool explicitTimes=0);
+
+    ITimes(const Expr& leftOperand, const Expr& rightOperand, bool explicitTimes=0); 
+
+    ~ITimes(){};
+
+    bool isIndexed() const override;
+
+    IndexStructure getIndexStructure() const override;
+
+    void selfCheckIndexStructure();
+
+    bool mergeTerms() override;
+
+    void leftInsert(const Expr& expr) override;
+
+    void rightInsert(const Expr& expr) override;
+
+    bool operator==(const Expr& expr) const override;
+
+    bool partialComparison(const Expr& expr) const override;
+};
 
 
 #endif
